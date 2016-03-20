@@ -8,6 +8,11 @@
 
 #import "AppDelegate.h"
 
+#import <RESideMenu/RESideMenu.h>
+
+#import "MSSlideViewController.h"
+#import "MSHomeViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -17,6 +22,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    // Create content and menu controllers
+    //
+    MSHomeViewController   *contentViewController = [[MSHomeViewController alloc] init];
+    MSSlideViewController *leftMenuViewController = [[MSSlideViewController alloc] init];
+    
+    // Create side menu controller
+    //
+    RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:contentViewController
+                                                                    leftMenuViewController:leftMenuViewController
+                                                                   rightMenuViewController:nil];
+    
+    //sideMenuViewController.backgroundImage = [UIImage imageNamed:@"Stars"];
+    
+    // Make it a root controller
+    //
+    self.window.rootViewController = sideMenuViewController;
+    
     return YES;
 }
 

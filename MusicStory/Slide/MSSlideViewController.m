@@ -1,22 +1,22 @@
 //
-//  ViewController.m
+//  MSSlideViewController.m
 //  MusicStory
 //
 //  Created by sys on 16/3/20.
 //  Copyright © 2016年 sys. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "MSSlideViewController.h"
 
-@interface ViewController ()
+@interface MSSlideViewController ()
 
 @end
 
-@implementation ViewController
+@implementation MSSlideViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {

@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MSSlideCenterView.h
 //  MusicStory
 //
 //  Created by sys on 16/3/20.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface MSSlideCenterView : UIView
 
 @end
-
