@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XMHomeViewModel : NSObject
+@interface MSHomeViewModel : NSObject
 
 @end
