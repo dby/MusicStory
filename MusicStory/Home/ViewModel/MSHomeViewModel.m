@@ -15,8 +15,10 @@
 #import "MSHomeBottomitemView.h"
 #import "MSHomeCenterItemView.h"
 
-typedef void (^successCallBack)(NSArray *datasource);
-typedef void (^errorCallBack)(NSError *error);
+#import "MusicStoryRequest.h"
+
+typedef void (^MSHomeViewModelSuccessBack)(NSArray *datasource);
+typedef void (^MSHomeVieModelErrorCallBack)(NSError *error);
 
 @interface MSHomeViewModel ()
 
@@ -26,8 +28,8 @@ typedef void (^errorCallBack)(NSError *error);
 @property (nonatomic, weak) MSHomeHeaderView *headerView;
 @property (nonatomic, weak) UICollectionView *centerView;
 @property (nonatomic, weak) UICollectionView *bottonView;
-@property (nonatomic, copy) successCallBack MSHomeViewModelSuccessBack;
-@property (nonatomic, copy) errorCallBack   MSHomeVieModelErrorCallBack;
+@property (nonatomic, copy) MSHomeViewModelSuccessBack successCallBack ;
+@property (nonatomic, copy) MSHomeVieModelErrorCallBack errorCallBack   ;
 
 @end
 
@@ -40,7 +42,6 @@ typedef void (^errorCallBack)(NSError *error);
     if (self) {
         _type = @"homeViewTodayType";
         _dataSource = [[NSArray alloc] init];
-        
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendNotify_success:) name:NOTIFY_SETUPHOMEVIEWTYPE object:nil];
     }
@@ -62,10 +63,10 @@ typedef void (^errorCallBack)(NSError *error);
 
 #pragma mark - Function
 
-- (void)getData:(NSNumber *)page withSuccessBack:(successCallBack )successCallBack withErrorCallBack:(errorCallBack )errorCallBack {
+- (void)getData:(NSNumber *)page withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeVieModelErrorCallBack )errorCallBack {
     
-    self.MSHomeViewModelSuccessBack = successCallBack;
-    self.MSHomeVieModelErrorCallBack = errorCallBack;
+    self.successCallBack = successCallBack;
+    self.errorCallBack = errorCallBack;
     
     NSDictionary *param = [NSDictionary dictionaryWithObject:page forKey:@"page"];
     NSString *httpString = @"";
@@ -85,7 +86,22 @@ typedef void (^errorCallBack)(NSError *error);
     } else {
         
     }
-        
+    
+    // 获得数据
+    MusicStoryRequest *msr = [[MusicStoryRequest alloc] initWithType:MusicStoryTypeSpecific withPara:NULL];
+    // 开始刷新
+    [msr startWithCompletionBlockWithSuccess:^(YTKBaseRequest *request) {
+        if (self.successCallBack) {
+            self.successCallBack([request.responseJSONObject objectForKey:@"data"]);
+        }
+        // 停止刷新
+        // 刷新界面
+        [self.centerView reloadData];
+        [self.bottonView reloadData];
+    } failure:^(YTKBaseRequest *request) {
+        if (self.errorCallBack) {
+        }
+    }];
 }
 
 - (void)sendNotify_success:(NSNotification *)notify

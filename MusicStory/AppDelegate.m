@@ -13,6 +13,10 @@
 #import "MSSlideViewController.h"
 #import "MSHomeViewController.h"
 
+#import <YTKNetworkConfig.h>
+#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
+#import "MSAPI.h"
+
 @interface AppDelegate ()
 
 @end
@@ -22,6 +26,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //Set Network
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    [YTKNetworkConfig sharedInstance].baseUrl = BaseURL;
+    
+    //Set UserAgent
+    NSDictionary *userAgent = @{@"UserAgent": @"Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H143 Safari/600.1.4"};
+    [[NSUserDefaults standardUserDefaults] registerDefaults:userAgent];
     
     // Create content and menu controllers
     //
