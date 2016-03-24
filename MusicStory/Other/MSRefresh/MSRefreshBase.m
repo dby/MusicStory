@@ -101,6 +101,7 @@ typedef void (^beginRefreshingBlock)();
             self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         }
     }
+    return self;
 }
 
 -(void)layoutSubviews {
@@ -174,8 +175,8 @@ typedef void (^beginRefreshingBlock)();
     double delayInSeconds = 0.3;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds);
     
-    dispatch_after(popTime, dispatch_get_main_queue(), {
-        self.State = RefreshStateNormal;
+    dispatch_after(popTime, dispatch_get_main_queue(), ^{
+        self.state = RefreshStateNormal;
     });
 }
 

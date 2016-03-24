@@ -16,6 +16,9 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="LxS-MS-CcY"/>
                     </constraints>
+                    <connections>
+                        <action selector="menuImgDidClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="W1A-G9-Vij"/>
+                    </connections>
                 </button>
                 <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mmH-qX-juy">
                     <rect key="frame" x="220" y="10" width="30" height="30"/>
@@ -25,6 +28,9 @@
                     </constraints>
                     <state key="normal" title="Button" image="backtohome_normal"/>
                     <state key="highlighted" image="backtohome_pressed"/>
+                    <connections>
+                        <action selector="moveToFirstImgDidClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Nuh-X5-ogg"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wh1-XB-3H5">
                     <rect key="frame" x="260" y="10" width="50" height="15"/>
@@ -82,6 +88,12 @@
                 <constraint firstAttribute="bottom" secondItem="xgL-EZ-0hc" secondAttribute="bottom" id="tgx-TA-G3J"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="dateLabel" destination="wh1-XB-3H5" id="zgW-BI-C1S"/>
+                <outlet property="moveToFirstBtn" destination="mmH-qX-juy" id="jt5-E2-aY3"/>
+                <outlet property="rightTitleLabel" destination="Hkx-ZV-WQk" id="1ya-QL-PsH"/>
+                <outlet property="weakLabel" destination="gov-Mw-e8J" id="RiZ-t2-Ed8"/>
+            </connections>
         </view>
     </objects>
     <resources>
