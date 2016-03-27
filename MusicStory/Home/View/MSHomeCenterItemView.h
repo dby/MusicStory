@@ -23,4 +23,8 @@
 
 // 作者
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
+
+
++ (MSHomeCenterItemView *) itemWithCollectionView:(UICollectionView *)collection :(NSIndexPath*)indexPath; 
+    
 @end

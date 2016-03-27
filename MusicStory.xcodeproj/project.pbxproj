@@ -7,14 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		431B23191CA195A50057ED50 /* MusicStoryRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 431B23181CA195A50057ED50 /* MusicStoryRequest.m */; };
+		431B231D1CA1A1650057ED50 /* MSHomeDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 431B231C1CA1A1650057ED50 /* MSHomeDataModel.m */; };
+		4330F3631CA4320000739118 /* NSDate+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 4330F3621CA4320000739118 /* NSDate+MS.m */; };
+		435151E41CA6E9DB00094EDD /* UIColor+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 435151E31CA6E9DB00094EDD /* UIColor+MS.m */; };
 		435159DA1C9EE24000EC1422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 435159D91C9EE24000EC1422 /* main.m */; };
 		435159DD1C9EE24000EC1422 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 435159DC1C9EE24000EC1422 /* AppDelegate.m */; };
-		435159E01C9EE24000EC1422 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 435159DF1C9EE24000EC1422 /* ViewController.m */; };
 		435159E31C9EE24000EC1422 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 435159E11C9EE24000EC1422 /* Main.storyboard */; };
 		435159E51C9EE24100EC1422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 435159E41C9EE24100EC1422 /* Assets.xcassets */; };
 		435159E81C9EE24100EC1422 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 435159E61C9EE24100EC1422 /* LaunchScreen.storyboard */; };
 		435159F31C9EE24100EC1422 /* MusicStoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 435159F21C9EE24100EC1422 /* MusicStoryTests.m */; };
 		435159FE1C9EE24100EC1422 /* MusicStoryUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 435159FD1C9EE24100EC1422 /* MusicStoryUITests.m */; };
+		43515A121C9EE8AF00EC1422 /* MSSlideCenterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43515A111C9EE8AF00EC1422 /* MSSlideCenterView.xib */; };
+		43515A151C9EE94B00EC1422 /* MSSlideCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A141C9EE94B00EC1422 /* MSSlideCenterView.m */; };
+		43515A1E1C9EECC100EC1422 /* MSSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A1D1C9EECC100EC1422 /* MSSlideViewController.m */; };
+		43515A221C9EF34100EC1422 /* MSHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A211C9EF34100EC1422 /* MSHomeViewController.m */; };
+		43515A261C9EF3C900EC1422 /* MSHomeBottomItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43515A231C9EF3C900EC1422 /* MSHomeBottomItemView.xib */; };
+		43515A271C9EF3C900EC1422 /* MSHomeCenterItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43515A241C9EF3C900EC1422 /* MSHomeCenterItemView.xib */; };
+		43515A281C9EF3C900EC1422 /* MSHomeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43515A251C9EF3C900EC1422 /* MSHomeHeaderView.xib */; };
+		43515A2B1C9EF4D500EC1422 /* MSHomeBottomitemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A2A1C9EF4D500EC1422 /* MSHomeBottomitemView.m */; };
+		43515A311C9EF53900EC1422 /* MSHomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A301C9EF53900EC1422 /* MSHomeHeaderView.m */; };
+		43515A341C9EFA4800EC1422 /* MSHomeCenterItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A331C9EFA4800EC1422 /* MSHomeCenterItemView.m */; };
+		43515A371C9EFF9600EC1422 /* MSHomeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A361C9EFF9600EC1422 /* MSHomeViewModel.m */; };
+		435640F71CA831C900D41FF3 /* MSHomeBottomFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 435640F61CA831C900D41FF3 /* MSHomeBottomFlowLayout.m */; };
+		435640FA1CA83A9200D41FF3 /* UIViewController+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 435640F91CA83A9200D41FF3 /* UIViewController+MS.m */; };
+		436895201CA7655100391424 /* MSHomeCenterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4368951F1CA7655100391424 /* MSHomeCenterFlowLayout.m */; };
+		436895231CA7690B00391424 /* MSHomeBottomCollectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436895221CA7690B00391424 /* MSHomeBottomCollectView.m */; };
+		436895261CA777EE00391424 /* UIView+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 436895251CA777EE00391424 /* UIView+MS.m */; };
+		43BD00D11CA04BFE006CEABC /* UIScrollView+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD00D01CA04BFE006CEABC /* UIScrollView+MS.m */; };
+		43BD00D41CA04C90006CEABC /* MSRefreshBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD00D31CA04C90006CEABC /* MSRefreshBase.m */; };
+		ECA66A0FE3EEC5B0ED58969A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DD75A942DE62E2C37E81E0 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,12 +57,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		37DD75A942DE62E2C37E81E0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		431B23171CA195A50057ED50 /* MusicStoryRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MusicStoryRequest.h; path = Home/ViewModel/MusicStoryRequest.h; sourceTree = "<group>"; };
+		431B23181CA195A50057ED50 /* MusicStoryRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MusicStoryRequest.m; path = Home/ViewModel/MusicStoryRequest.m; sourceTree = "<group>"; };
+		431B231A1CA199800057ED50 /* MSAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSAPI.h; sourceTree = "<group>"; };
+		431B231B1CA1A1650057ED50 /* MSHomeDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeDataModel.h; path = Home/Model/MSHomeDataModel.h; sourceTree = "<group>"; };
+		431B231C1CA1A1650057ED50 /* MSHomeDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeDataModel.m; path = Home/Model/MSHomeDataModel.m; sourceTree = "<group>"; };
+		4330F3611CA4320000739118 /* NSDate+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+MS.h"; path = "Other/extension/NSDate+MS.h"; sourceTree = "<group>"; };
+		4330F3621CA4320000739118 /* NSDate+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+MS.m"; path = "Other/extension/NSDate+MS.m"; sourceTree = "<group>"; };
+		435151E21CA6E9DB00094EDD /* UIColor+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+MS.h"; path = "Other/extension/UIColor+MS.h"; sourceTree = "<group>"; };
+		435151E31CA6E9DB00094EDD /* UIColor+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+MS.m"; path = "Other/extension/UIColor+MS.m"; sourceTree = "<group>"; };
 		435159D51C9EE24000EC1422 /* MusicStory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicStory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		435159D91C9EE24000EC1422 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		435159DB1C9EE24000EC1422 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		435159DC1C9EE24000EC1422 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		435159DE1C9EE24000EC1422 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		435159DF1C9EE24000EC1422 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		435159E21C9EE24000EC1422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		435159E41C9EE24100EC1422 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		435159E71C9EE24100EC1422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +81,43 @@
 		435159F91C9EE24100EC1422 /* MusicStoryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicStoryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		435159FD1C9EE24100EC1422 /* MusicStoryUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicStoryUITests.m; sourceTree = "<group>"; };
 		435159FF1C9EE24100EC1422 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43515A111C9EE8AF00EC1422 /* MSSlideCenterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSSlideCenterView.xib; path = Slide/MSSlideCenterView.xib; sourceTree = "<group>"; };
+		43515A131C9EE94B00EC1422 /* MSSlideCenterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSlideCenterView.h; path = Slide/MSSlideCenterView.h; sourceTree = "<group>"; };
+		43515A141C9EE94B00EC1422 /* MSSlideCenterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSlideCenterView.m; path = Slide/MSSlideCenterView.m; sourceTree = "<group>"; };
+		43515A1C1C9EECC100EC1422 /* MSSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSlideViewController.h; path = Slide/MSSlideViewController.h; sourceTree = "<group>"; };
+		43515A1D1C9EECC100EC1422 /* MSSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSlideViewController.m; path = Slide/MSSlideViewController.m; sourceTree = "<group>"; };
+		43515A201C9EF34100EC1422 /* MSHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeViewController.h; path = Home/Controller/MSHomeViewController.h; sourceTree = "<group>"; };
+		43515A211C9EF34100EC1422 /* MSHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeViewController.m; path = Home/Controller/MSHomeViewController.m; sourceTree = "<group>"; };
+		43515A231C9EF3C900EC1422 /* MSHomeBottomItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSHomeBottomItemView.xib; path = Home/View/MSHomeBottomItemView.xib; sourceTree = "<group>"; };
+		43515A241C9EF3C900EC1422 /* MSHomeCenterItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSHomeCenterItemView.xib; path = Home/View/MSHomeCenterItemView.xib; sourceTree = "<group>"; };
+		43515A251C9EF3C900EC1422 /* MSHomeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSHomeHeaderView.xib; path = Home/View/MSHomeHeaderView.xib; sourceTree = "<group>"; };
+		43515A291C9EF4D500EC1422 /* MSHomeBottomitemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeBottomitemView.h; path = Home/View/MSHomeBottomitemView.h; sourceTree = "<group>"; };
+		43515A2A1C9EF4D500EC1422 /* MSHomeBottomitemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeBottomitemView.m; path = Home/View/MSHomeBottomitemView.m; sourceTree = "<group>"; };
+		43515A2F1C9EF53900EC1422 /* MSHomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeHeaderView.h; path = Home/View/MSHomeHeaderView.h; sourceTree = "<group>"; };
+		43515A301C9EF53900EC1422 /* MSHomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeHeaderView.m; path = Home/View/MSHomeHeaderView.m; sourceTree = "<group>"; };
+		43515A321C9EFA4800EC1422 /* MSHomeCenterItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeCenterItemView.h; path = Home/View/MSHomeCenterItemView.h; sourceTree = "<group>"; };
+		43515A331C9EFA4800EC1422 /* MSHomeCenterItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeCenterItemView.m; path = Home/View/MSHomeCenterItemView.m; sourceTree = "<group>"; };
+		43515A351C9EFF9600EC1422 /* MSHomeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeViewModel.h; path = Home/ViewModel/MSHomeViewModel.h; sourceTree = "<group>"; };
+		43515A361C9EFF9600EC1422 /* MSHomeViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeViewModel.m; path = Home/ViewModel/MSHomeViewModel.m; sourceTree = "<group>"; };
+		43515A391C9F088900EC1422 /* AppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppConfig.h; sourceTree = "<group>"; };
+		435640F51CA831C900D41FF3 /* MSHomeBottomFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeBottomFlowLayout.h; path = Home/View/MSHomeBottomFlowLayout.h; sourceTree = "<group>"; };
+		435640F61CA831C900D41FF3 /* MSHomeBottomFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeBottomFlowLayout.m; path = Home/View/MSHomeBottomFlowLayout.m; sourceTree = "<group>"; };
+		435640F81CA83A9200D41FF3 /* UIViewController+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+MS.h"; path = "Other/extension/UIViewController+MS.h"; sourceTree = "<group>"; };
+		435640F91CA83A9200D41FF3 /* UIViewController+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+MS.m"; path = "Other/extension/UIViewController+MS.m"; sourceTree = "<group>"; };
+		4368951E1CA7655100391424 /* MSHomeCenterFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeCenterFlowLayout.h; path = Home/View/MSHomeCenterFlowLayout.h; sourceTree = "<group>"; };
+		4368951F1CA7655100391424 /* MSHomeCenterFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeCenterFlowLayout.m; path = Home/View/MSHomeCenterFlowLayout.m; sourceTree = "<group>"; };
+		436895211CA7690B00391424 /* MSHomeBottomCollectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeBottomCollectView.h; path = Home/View/MSHomeBottomCollectView.h; sourceTree = "<group>"; };
+		436895221CA7690B00391424 /* MSHomeBottomCollectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeBottomCollectView.m; path = Home/View/MSHomeBottomCollectView.m; sourceTree = "<group>"; };
+		436895241CA777EE00391424 /* UIView+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+MS.h"; path = "Other/extension/UIView+MS.h"; sourceTree = "<group>"; };
+		436895251CA777EE00391424 /* UIView+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+MS.m"; path = "Other/extension/UIView+MS.m"; sourceTree = "<group>"; };
+		43BD00C91CA043BB006CEABC /* APIConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = APIConfig.h; path = Other/APIConfig.h; sourceTree = "<group>"; };
+		43BD00CF1CA04BFE006CEABC /* UIScrollView+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+MS.h"; path = "Other/MSRefresh/UIScrollView+MS.h"; sourceTree = "<group>"; };
+		43BD00D01CA04BFE006CEABC /* UIScrollView+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+MS.m"; path = "Other/MSRefresh/UIScrollView+MS.m"; sourceTree = "<group>"; };
+		43BD00D21CA04C90006CEABC /* MSRefreshBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSRefreshBase.h; path = Other/MSRefresh/MSRefreshBase.h; sourceTree = "<group>"; };
+		43BD00D31CA04C90006CEABC /* MSRefreshBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSRefreshBase.m; path = Other/MSRefresh/MSRefreshBase.m; sourceTree = "<group>"; };
+		43BD00D61CA05BE1006CEABC /* MSRefreshConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MSRefreshConst.h; path = Other/MSRefresh/MSRefreshConst.h; sourceTree = "<group>"; };
+		4E27EEC89F913136E278B0D9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		EAFDEC95948FAEB5D450CF68 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECA66A0FE3EEC5B0ED58969A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +146,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4330F3601CA431D500739118 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				4330F3611CA4320000739118 /* NSDate+MS.h */,
+				4330F3621CA4320000739118 /* NSDate+MS.m */,
+				435151E21CA6E9DB00094EDD /* UIColor+MS.h */,
+				435151E31CA6E9DB00094EDD /* UIColor+MS.m */,
+				436895241CA777EE00391424 /* UIView+MS.h */,
+				436895251CA777EE00391424 /* UIView+MS.m */,
+				435640F81CA83A9200D41FF3 /* UIViewController+MS.h */,
+				435640F91CA83A9200D41FF3 /* UIViewController+MS.m */,
+			);
+			name = extension;
+			sourceTree = "<group>";
+		};
 		435159CC1C9EE24000EC1422 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +168,8 @@
 				435159F11C9EE24100EC1422 /* MusicStoryTests */,
 				435159FC1C9EE24100EC1422 /* MusicStoryUITests */,
 				435159D61C9EE24000EC1422 /* Products */,
+				E22BB7BCD107C2A8FB1E373E /* Pods */,
+				B2BE5A3B35D48F917D9593E4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,9 +188,10 @@
 			children = (
 				435159DB1C9EE24000EC1422 /* AppDelegate.h */,
 				435159DC1C9EE24000EC1422 /* AppDelegate.m */,
-				435159DE1C9EE24000EC1422 /* ViewController.h */,
-				435159DF1C9EE24000EC1422 /* ViewController.m */,
-				435159E11C9EE24000EC1422 /* Main.storyboard */,
+				43515A0D1C9EE6D500EC1422 /* Slide */,
+				43515A0C1C9EE6C400EC1422 /* Base */,
+				43515A0B1C9EE6BD00EC1422 /* Home */,
+				43515A381C9F084400EC1422 /* Other */,
 				435159E41C9EE24100EC1422 /* Assets.xcassets */,
 				435159E61C9EE24100EC1422 /* LaunchScreen.storyboard */,
 				435159E91C9EE24100EC1422 /* Info.plist */,
@@ -140,6 +226,161 @@
 			path = MusicStoryUITests;
 			sourceTree = "<group>";
 		};
+		43515A0B1C9EE6BD00EC1422 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				43515A1F1C9EF22F00EC1422 /* ViewModel */,
+				43515A181C9EEAAF00EC1422 /* Controller */,
+				43515A171C9EEAA700EC1422 /* Model */,
+				43515A161C9EEAA100EC1422 /* View */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		43515A0C1C9EE6C400EC1422 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				431B231A1CA199800057ED50 /* MSAPI.h */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		43515A0D1C9EE6D500EC1422 /* Slide */ = {
+			isa = PBXGroup;
+			children = (
+				43515A101C9EE79200EC1422 /* View */,
+				43515A0F1C9EE78B00EC1422 /* Model */,
+				43515A0E1C9EE78200EC1422 /* Controller */,
+			);
+			name = Slide;
+			sourceTree = "<group>";
+		};
+		43515A0E1C9EE78200EC1422 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				43515A1C1C9EECC100EC1422 /* MSSlideViewController.h */,
+				43515A1D1C9EECC100EC1422 /* MSSlideViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		43515A0F1C9EE78B00EC1422 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		43515A101C9EE79200EC1422 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				43515A111C9EE8AF00EC1422 /* MSSlideCenterView.xib */,
+				43515A131C9EE94B00EC1422 /* MSSlideCenterView.h */,
+				43515A141C9EE94B00EC1422 /* MSSlideCenterView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		43515A161C9EEAA100EC1422 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				43515A251C9EF3C900EC1422 /* MSHomeHeaderView.xib */,
+				43515A2F1C9EF53900EC1422 /* MSHomeHeaderView.h */,
+				43515A301C9EF53900EC1422 /* MSHomeHeaderView.m */,
+				43515A241C9EF3C900EC1422 /* MSHomeCenterItemView.xib */,
+				43515A321C9EFA4800EC1422 /* MSHomeCenterItemView.h */,
+				43515A331C9EFA4800EC1422 /* MSHomeCenterItemView.m */,
+				4368951E1CA7655100391424 /* MSHomeCenterFlowLayout.h */,
+				4368951F1CA7655100391424 /* MSHomeCenterFlowLayout.m */,
+				43515A231C9EF3C900EC1422 /* MSHomeBottomItemView.xib */,
+				43515A291C9EF4D500EC1422 /* MSHomeBottomitemView.h */,
+				43515A2A1C9EF4D500EC1422 /* MSHomeBottomitemView.m */,
+				436895211CA7690B00391424 /* MSHomeBottomCollectView.h */,
+				436895221CA7690B00391424 /* MSHomeBottomCollectView.m */,
+				435640F51CA831C900D41FF3 /* MSHomeBottomFlowLayout.h */,
+				435640F61CA831C900D41FF3 /* MSHomeBottomFlowLayout.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		43515A171C9EEAA700EC1422 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				431B231B1CA1A1650057ED50 /* MSHomeDataModel.h */,
+				431B231C1CA1A1650057ED50 /* MSHomeDataModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		43515A181C9EEAAF00EC1422 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				43515A201C9EF34100EC1422 /* MSHomeViewController.h */,
+				43515A211C9EF34100EC1422 /* MSHomeViewController.m */,
+				435159E11C9EE24000EC1422 /* Main.storyboard */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		43515A1F1C9EF22F00EC1422 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				43515A351C9EFF9600EC1422 /* MSHomeViewModel.h */,
+				43515A361C9EFF9600EC1422 /* MSHomeViewModel.m */,
+				431B23171CA195A50057ED50 /* MusicStoryRequest.h */,
+				431B23181CA195A50057ED50 /* MusicStoryRequest.m */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		43515A381C9F084400EC1422 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				4330F3601CA431D500739118 /* extension */,
+				43BD00CA1CA0487B006CEABC /* lib */,
+				43515A391C9F088900EC1422 /* AppConfig.h */,
+				43BD00C91CA043BB006CEABC /* APIConfig.h */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		43BD00CA1CA0487B006CEABC /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				43BD00CB1CA048A7006CEABC /* MSRefresh */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		43BD00CB1CA048A7006CEABC /* MSRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				43BD00CF1CA04BFE006CEABC /* UIScrollView+MS.h */,
+				43BD00D01CA04BFE006CEABC /* UIScrollView+MS.m */,
+				43BD00D21CA04C90006CEABC /* MSRefreshBase.h */,
+				43BD00D31CA04C90006CEABC /* MSRefreshBase.m */,
+				43BD00D61CA05BE1006CEABC /* MSRefreshConst.h */,
+			);
+			name = MSRefresh;
+			sourceTree = "<group>";
+		};
+		B2BE5A3B35D48F917D9593E4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				37DD75A942DE62E2C37E81E0 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E22BB7BCD107C2A8FB1E373E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4E27EEC89F913136E278B0D9 /* Pods.debug.xcconfig */,
+				EAFDEC95948FAEB5D450CF68 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +388,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 43515A021C9EE24100EC1422 /* Build configuration list for PBXNativeTarget "MusicStory" */;
 			buildPhases = (
+				46099ACB6DE8A3C2BAF73283 /* Check Pods Manifest.lock */,
 				435159D11C9EE24000EC1422 /* Sources */,
 				435159D21C9EE24000EC1422 /* Frameworks */,
 				435159D31C9EE24000EC1422 /* Resources */,
+				54D1DF15F4EA3CEA43A3B5F5 /* Embed Pods Frameworks */,
+				BAF0A93850F500DC0D507749 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -207,7 +451,6 @@
 				TargetAttributes = {
 					435159D41C9EE24000EC1422 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3G3JV73KM2;
 					};
 					435159ED1C9EE24100EC1422 = {
 						CreatedOnToolsVersion = 7.2;
@@ -246,7 +489,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43515A121C9EE8AF00EC1422 /* MSSlideCenterView.xib in Resources */,
+				43515A281C9EF3C900EC1422 /* MSHomeHeaderView.xib in Resources */,
 				435159E81C9EE24100EC1422 /* LaunchScreen.storyboard in Resources */,
+				43515A271C9EF3C900EC1422 /* MSHomeCenterItemView.xib in Resources */,
+				43515A261C9EF3C900EC1422 /* MSHomeBottomItemView.xib in Resources */,
 				435159E51C9EE24100EC1422 /* Assets.xcassets in Resources */,
 				435159E31C9EE24000EC1422 /* Main.storyboard in Resources */,
 			);
@@ -268,14 +515,79 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		46099ACB6DE8A3C2BAF73283 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		54D1DF15F4EA3CEA43A3B5F5 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BAF0A93850F500DC0D507749 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		435159D11C9EE24000EC1422 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				435159E01C9EE24000EC1422 /* ViewController.m in Sources */,
+				43515A221C9EF34100EC1422 /* MSHomeViewController.m in Sources */,
+				436895231CA7690B00391424 /* MSHomeBottomCollectView.m in Sources */,
+				43515A311C9EF53900EC1422 /* MSHomeHeaderView.m in Sources */,
+				43515A1E1C9EECC100EC1422 /* MSSlideViewController.m in Sources */,
+				436895201CA7655100391424 /* MSHomeCenterFlowLayout.m in Sources */,
+				435151E41CA6E9DB00094EDD /* UIColor+MS.m in Sources */,
+				435640F71CA831C900D41FF3 /* MSHomeBottomFlowLayout.m in Sources */,
+				43BD00D41CA04C90006CEABC /* MSRefreshBase.m in Sources */,
 				435159DD1C9EE24000EC1422 /* AppDelegate.m in Sources */,
 				435159DA1C9EE24000EC1422 /* main.m in Sources */,
+				43515A341C9EFA4800EC1422 /* MSHomeCenterItemView.m in Sources */,
+				431B231D1CA1A1650057ED50 /* MSHomeDataModel.m in Sources */,
+				435640FA1CA83A9200D41FF3 /* UIViewController+MS.m in Sources */,
+				43515A371C9EFF9600EC1422 /* MSHomeViewModel.m in Sources */,
+				43515A151C9EE94B00EC1422 /* MSSlideCenterView.m in Sources */,
+				431B23191CA195A50057ED50 /* MusicStoryRequest.m in Sources */,
+				43515A2B1C9EF4D500EC1422 /* MSHomeBottomitemView.m in Sources */,
+				4330F3631CA4320000739118 /* NSDate+MS.m in Sources */,
+				436895261CA777EE00391424 /* UIView+MS.m in Sources */,
+				43BD00D11CA04BFE006CEABC /* UIScrollView+MS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,8 +724,10 @@
 		};
 		43515A031C9EE24100EC1422 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E27EEC89F913136E278B0D9 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MusicStory/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sys.MusicStory;
@@ -423,8 +737,10 @@
 		};
 		43515A041C9EE24100EC1422 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EAFDEC95948FAEB5D450CF68 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MusicStory/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sys.MusicStory;
@@ -499,6 +815,7 @@
 				43515A041C9EE24100EC1422 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		43515A051C9EE24100EC1422 /* Build configuration list for PBXNativeTarget "MusicStoryTests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +824,7 @@
 				43515A071C9EE24100EC1422 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		43515A081C9EE24100EC1422 /* Build configuration list for PBXNativeTarget "MusicStoryUITests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +833,7 @@
 				43515A0A1C9EE24100EC1422 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,28 +8,7 @@
 
 #import "MSHomeViewModel.h"
 
-#import "AppConfig.h"
-#import "APIConfig.h"
-
-#import "MSHomeHeaderView.h"
-#import "MSHomeBottomitemView.h"
-#import "MSHomeCenterItemView.h"
-
-#import "MusicStoryRequest.h"
-
-typedef void (^MSHomeViewModelSuccessBack)(NSArray *datasource);
-typedef void (^MSHomeVieModelErrorCallBack)(NSError *error);
-
 @interface MSHomeViewModel ()
-
-@property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSArray *dataSource;
-
-@property (nonatomic, weak) MSHomeHeaderView *headerView;
-@property (nonatomic, weak) UICollectionView *centerView;
-@property (nonatomic, weak) UICollectionView *bottonView;
-@property (nonatomic, copy) MSHomeViewModelSuccessBack successCallBack ;
-@property (nonatomic, copy) MSHomeVieModelErrorCallBack errorCallBack   ;
 
 @end
 
@@ -63,12 +42,12 @@ typedef void (^MSHomeVieModelErrorCallBack)(NSError *error);
 
 #pragma mark - Function
 
-- (void)getData:(NSNumber *)page withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeVieModelErrorCallBack )errorCallBack {
+- (void)getData:(NSInteger)page withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeVieModelErrorCallBack )errorCallBack {
     
     self.successCallBack = successCallBack;
     self.errorCallBack = errorCallBack;
     
-    NSDictionary *param = [NSDictionary dictionaryWithObject:page forKey:@"page"];
+    NSDictionary *param = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     NSString *httpString = @"";
     
     if ([_type isEqualToString: NOTIFY_OBJ_TODAY]) {

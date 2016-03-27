@@ -1,5 +1,5 @@
 //
-//  UIColor+MS.h
+//  MSHomeCenterFlowLayout.h
 //  MusicStory
 //
 //  Created by sys on 16/3/27.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIColor (MS)
-
-+(UIColor *) colorWithHexString: (NSString *)stringToConvert;
+@interface MSHomeCenterFlowLayout : UICollectionViewFlowLayout
 
 @end

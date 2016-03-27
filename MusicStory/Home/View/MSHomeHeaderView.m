@@ -25,7 +25,6 @@
 #pragma mark - Setter Getter
 -(void)setRightTitle:(NSString *)rightTitle
 {
-    
     _rightTitle = rightTitle;
     self.rightTitleLabel.text = _rightTitle;
 }
