@@ -37,7 +37,8 @@
     NSMutableArray *imgArray = [[NSMutableArray alloc] init];
     // 添加图片
     for (int i = 0; i < 8; i++) {
-        UIImage *image = [UIImage imageNamed:@"loading_\(i+1)"];
+        NSString *name = [NSString stringWithFormat:@"loading_%d", i+1];
+        UIImage *image = [UIImage imageNamed: name];
         [imgArray addObject:image];
     }
     progressView.animationImages = imgArray;

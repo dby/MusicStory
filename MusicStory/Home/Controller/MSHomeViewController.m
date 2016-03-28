@@ -23,7 +23,7 @@
 #import "UIViewController+MS.h"
 
 
-@interface MSHomeViewController () <MSHomeHeaderViewDelegate, MSHomeHeaderViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface MSHomeViewController () <MSHomeHeaderViewDelegate, MSHomeHeaderViewDelegate,MSHomeBottomCollectViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 // 页数
 @property (nonatomic, assign) NSInteger page;
@@ -182,7 +182,127 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 100) {
-#warning 写到这里
+        // 设置底部动画
+        [self bottomAnimation: [NSIndexPath indexPathForRow:_index inSection:0]];
+        // 发送通知改变侧边栏的颜色
+        MSHomeDataModel *model = self.viewModel.dataSource[_index];
+        NSNotification *noti = [NSNotification notificationWithName:NOTIFY_SETUPBG object:model.recommanded_background_color];
+        [[NSNotificationCenter defaultCenter] postNotification:noti];
+    }
+}
+
+
+#pragma mark - UICollectionView Delegate
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [self.viewModel.dataSource count];
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    MSHomeDataModel *model = [self.viewModel.dataSource objectAtIndex:indexPath.row];
+    if (collectionView.tag == 100) {
+        MSHomeCenterItemView *cell= [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
+        cell.homeModel = model;
+        
+        return cell;
+    } else {
+        MSHomeBottomitemView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeBottomItemViewID" forIndexPath:indexPath];
+        cell.y = 50;
+        cell.iconUrl = model.icon_image;
+        return cell;
+    }
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"didselect");
+}
+
+#pragma mark - Custom Delegate
+-(void)homeHeaderViewMoveToFirstDidClick:(MSHomeHeaderView *)headerView :(UIButton *)moveToFirstBtn {
+    [_centerCollectView setContentOffset:CGPointZero animated:false];
+    [_bottomCollectView setContentOffset:CGPointZero animated:false];
+    self.index = 0;
+    [self scrollViewDidEndDecelerating:self.centerCollectView];
+}
+
+-(void)homeHeaderViewMenuDidClick:(MSHomeHeaderView *)header :(UIButton *)menuBtn {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SHOWMENU object:nil];
+}
+
+-(void)homeBottomCollectView:(UICollectionView *)bottomView touchIndexDidChangeWithIndexPath:(NSIndexPath *)indexPath cellArrayCount:(NSUInteger)cellArrayCount {
+    
+}
+
+#pragma mark - Event or Action
+- (void) errorBtnDidClick {
+    //self.centerCollectView.headerViewBeginRefreshing()
+}
+
+#pragma mark - Private Method
+// 底部标签动画
+- (void)bottomAnimation:(NSIndexPath *)indexpath {
+    if (self.lastIndex.row == indexpath.row) {
+        return;
+    }
+    UICollectionViewCell *cell = [self.bottomCollectView cellForItemAtIndexPath:indexpath];
+    if (cell == nil) {
+        [self.bottomCollectView layoutIfNeeded];
+        cell = [self.bottomCollectView cellForItemAtIndexPath:indexpath];
+    }
+    
+    if (cell != nil) {
+        // 底部横向动画
+        // self.bottomHorizontalAnimation(cell!, indexPath: indexPath)
+        // 底部纵向动画
+        // self.bottomVertical(cell!)
+        
+        self.lastIndex = indexpath;
+    }
+}
+
+// 横向动画
+- (void)bottomHorizontalAnimation:(UICollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([self.viewModel.dataSource count] > 8) {
+        
+    } else {
+        return;
+    }
+    
+    if (cell.x < SCREEN_WIDTH * 0.6) {
+        [self.bottomCollectView setContentOffset:CGPointZero animated:true];
+    } else {
+        CGFloat newX = 0;
+        // 判断下一个还是上一个
+        if (self.lastIndex.row < indexPath.row) {
+            // 下一个
+            newX = self.bottomCollectView.contentOffset.x + cell.width + 2;
+        } else {
+            newX = self.bottomCollectView.contentOffset.x - cell.width - 2;
+        }
+        [self.bottomCollectView setContentOffset:CGPointMake(newX, 0) animated:true];
+    }
+}
+
+// 纵向动画
+- (void)bottomVertical:(UICollectionViewCell *)cell {
+    [UIView animateWithDuration:0.2 animations:^{
+        cell.y = 10;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.05 animations:^{
+            cell.y = 15;
+        }];
+    }];
+    if (self.lastIndex != nil) {
+        UICollectionViewCell *lastBottomView = [self.bottomCollectView cellForItemAtIndexPath:self.lastIndex];
+        if (lastBottomView != nil) {
+            [UIView animateWithDuration:0.2 animations:^{
+                lastBottomView.y = 60;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.05 animations:^{
+                    lastBottomView.y = 50;
+                }];
+            }];
+        }
     }
 }
 

@@ -6,14 +6,11 @@
 //  Copyright © 2016年 sys. All rights reserved.
 //
 
-#import "MSHomeCenterItemView.h"
-
-#import "MSHomeDataModel.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
-@interface MSHomeCenterItemView()
+#import "MSHomeCenterItemView.h"
 
-@property (nonatomic, strong) MSHomeDataModel *homeModel;
+@interface MSHomeCenterItemView()
 
 @end
 

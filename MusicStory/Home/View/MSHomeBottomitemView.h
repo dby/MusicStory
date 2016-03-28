@@ -10,5 +10,6 @@
 
 @interface MSHomeBottomitemView : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;
+@property (nonatomic, strong) NSString *iconUrl;
 
 @end

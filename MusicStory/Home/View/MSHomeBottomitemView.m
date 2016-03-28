@@ -7,8 +7,24 @@
 //
 
 #import "MSHomeBottomitemView.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
+
+@interface MSHomeBottomitemView()
+
+@end
 
 @implementation MSHomeBottomitemView
+
+@synthesize iconUrl = _iconUrl;
+
+-(NSString *)iconUrl {
+    return _iconUrl;
+}
+
+-(void)setIconUrl:(NSString *)iconUrl {
+    _iconUrl = iconUrl;
+    [self.iconView setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:@"ic_launcher"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+}
 
 -(void)awakeFromNib
 {

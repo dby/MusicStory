@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSHomeDataModel.h"
 
 @interface MSHomeCenterItemView : UICollectionViewCell
 // 大标题
@@ -24,6 +25,7 @@
 // 作者
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 
+@property (strong, nonatomic) MSHomeDataModel *homeModel;
 
 + (MSHomeCenterItemView *) itemWithCollectionView:(UICollectionView *)collection :(NSIndexPath*)indexPath; 
     
