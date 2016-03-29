@@ -8,6 +8,8 @@
 
 #import "MusicStoryRequest.h"
 
+#import "APIConfig.h"
+
 @interface MusicStoryRequest()
 
 @property (nonatomic, strong) NSDictionary *para;
@@ -33,7 +35,7 @@
     NSString *url = @"";
     switch (_type) {
         case MusicStoryTypeSpecific:
-            
+            url = [NSString stringWithFormat:@"%@%@%@%@%@%@%@", @"/apps/app/daily/?", API_appVersion,API_openUDID,  API_resolution, API_systemVersion, API_pageSize, API_platform];
             break;
             
         default:

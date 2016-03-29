@@ -10,7 +10,7 @@
 
 @implementation MSHomeDataModel
 
--(instancetype)init:(NSDictionary *)dict {
+-(instancetype)initWithDic:(NSDictionary *)dict {
     
     self = [super init];
     if (self) {

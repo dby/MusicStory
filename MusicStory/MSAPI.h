@@ -9,6 +9,6 @@
 #ifndef MSAPI_h
 #define MSAPI_h
 
-#define BaseURL   @"http://myfilms.applinzi.com"
+#define BaseURL   @""
 
 #endif /* MSAPI_h */

@@ -20,7 +20,7 @@
     self = [super init];
     if (self) {
         _type = @"homeViewTodayType";
-        _dataSource = [[NSArray alloc] init];
+        _dataSource = [[NSMutableArray alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendNotify_success:) name:NOTIFY_SETUPHOMEVIEWTYPE object:nil];
     }
@@ -47,11 +47,12 @@
     self.successCallBack = successCallBack;
     self.errorCallBack = errorCallBack;
     
-    NSDictionary *param = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    //NSDictionary *param = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     NSString *httpString = @"";
     
     if ([_type isEqualToString: NOTIFY_OBJ_TODAY]) {
-        httpString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@", API_Server, @"/apps/app/daily/?", API_appVersion,API_openUDID,  API_resolution, API_systemVersion, API_pageSize, API_platform];
+        httpString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@", API_Server, @"/apps/app/daily/?", API_appVersion,API_openUDID,  API_resolution, API_systemVersion, API_pageSize, API_platform];
+        NSLog(@"httpString: %@", httpString);
         //self.centerView.setHeaderHidden(false)
         //self.centerView.setFooterHidden(false)
         // 隐藏右标题
@@ -70,15 +71,34 @@
     MusicStoryRequest *msr = [[MusicStoryRequest alloc] initWithType:MusicStoryTypeSpecific withPara:NULL];
     // 开始刷新
     [msr startWithCompletionBlockWithSuccess:^(YTKBaseRequest *request) {
-        if (self.successCallBack) {
-            self.successCallBack([request.responseJSONObject objectForKey:@"data"]);
+        
+        NSDictionary *dataDic = [request.responseJSONObject objectForKey:@"data"];
+        if ([dataDic[@"apps"] count] > 0) {
+            NSArray *array = dataDic[@"apps"];
+            
+            if (page == 1) {
+                [self.dataSource removeAllObjects];
+            }
+            
+            // 字典转模型
+            for (NSDictionary *dic in array) {
+                MSHomeDataModel *homeModel = [[MSHomeDataModel alloc] initWithDic:dic];
+                [self.dataSource addObject:homeModel];
+            }
+            // 刷新界面
+            [self.centerView reloadData];
+            [self.bottonView reloadData];
+            
+            // 回调给Controller
+            if (self.successCallBack) {
+                self.successCallBack(self.dataSource);
+            }
+        
+            // 停止刷新
         }
-        // 停止刷新
-        // 刷新界面
-        [self.centerView reloadData];
-        [self.bottonView reloadData];
     } failure:^(YTKBaseRequest *request) {
         if (self.errorCallBack) {
+            self.errorCallBack(nil);
         }
     }];
 }

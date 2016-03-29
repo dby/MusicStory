@@ -22,6 +22,7 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - Masonry (0.6.4)
   - RESideMenu (4.0.7)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
@@ -33,6 +34,7 @@ PODS:
     - AFNetworking (~> 2.0)
 
 DEPENDENCIES:
+  - Masonry
   - RESideMenu
   - SDWebImage
   - UIActivityIndicator-for-SDWebImage
@@ -41,6 +43,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFDownloadRequestOperation: 748a1643423e1ddb23f2178f778087d4f0ae8ac7
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c

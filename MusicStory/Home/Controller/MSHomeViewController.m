@@ -20,6 +20,7 @@
 
 #import "UIColor+MS.h"
 #import "UIView+MS.h"
+#import "Masonry.h"
 #import "UIViewController+MS.h"
 
 
@@ -50,14 +51,15 @@
     return _index;
 }
 -(void)setIndex:(NSInteger)index {
-    self.index = index;
+    _index = index;
     if ([self.viewModel.dataSource count] == 0) {
         return;
     }
     // 获取模型
     MSHomeDataModel *model = self.viewModel.dataSource[index];
     // 设置header的模型
-    // self.headerView.homeModel = model;
+    self.headerView.homeModel = model;
+    // 设置背景动画
     [UIView animateWithDuration:0.5 animations:^{
         self.view.backgroundColor = [UIColor colorWithHexString: model.recommanded_background_color];
     }];
@@ -108,6 +110,7 @@
 
 #pragma mark life circle
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initComponents];
@@ -157,8 +160,7 @@
         
     }];
     // 适配屏幕
-    //self.setupLayout()
-    
+    [self setupLayout];
 }
 
 #pragma mark Init
@@ -304,6 +306,25 @@
             }];
         }
     }
+}
+
+- (void)setupLayout {
+    [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_topMargin).offset(20);
+        make.height.equalTo(@(SCREEN_HEIGHT*50/IPHONE5_HEIGHT));
+        make.left.right.equalTo(self.view);
+    }];
+    
+    [_centerCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(_headerView).offset(_headerView.height);
+        make.height.equalTo(@(SCREEN_HEIGHT*420/IPHONE5_HEIGHT));
+    }];
+    
+    [_bottomCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.height.equalTo(@(SCREEN_HEIGHT*60/IPHONE5_HEIGHT));
+    }];
 }
 
 @end

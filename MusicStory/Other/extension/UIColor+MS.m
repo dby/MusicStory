@@ -30,7 +30,7 @@
         return DEFAULT_VOID_COLOR;
     }
     
-    NSRange range = NSMakeRange(0, 12);
+    NSRange range = NSMakeRange(0, 2);
     NSString *rString = [(NSString *)cString substringWithRange:range];
     
     range.location = 2;

@@ -9,11 +9,8 @@
 #import "MSHomeHeaderView.h"
 
 #import "NSDate+MS.h"
-#import "MSHomeDataModel.h"
 
 @interface MSHomeHeaderView()
-
-@property (nonatomic, strong) MSHomeDataModel *homeModel;
 
 @end
 

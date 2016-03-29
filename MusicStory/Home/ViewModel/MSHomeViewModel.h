@@ -12,6 +12,7 @@
 #import "APIConfig.h"
 
 #import "MSHomeHeaderView.h"
+#import "MSHomeDataModel.h"
 #import "MSHomeBottomitemView.h"
 #import "MSHomeCenterItemView.h"
 
@@ -23,7 +24,7 @@ typedef void (^MSHomeVieModelErrorCallBack)(NSError *error);
 @interface MSHomeViewModel : NSObject
 
 @property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 
 @property (nonatomic, weak) MSHomeHeaderView *headerView;
 @property (nonatomic, weak) UICollectionView *centerView;

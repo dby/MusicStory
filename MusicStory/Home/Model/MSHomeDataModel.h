@@ -52,7 +52,7 @@
 // info 模型
 //var info : XMInfoDataModel?
 
--(instancetype)init :(NSDictionary *)dic;
+-(instancetype)initWithDic :(NSDictionary *)dic;
 
 
 @end
