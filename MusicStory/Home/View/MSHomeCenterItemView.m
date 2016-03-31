@@ -21,20 +21,21 @@
 {
     [super awakeFromNib];
     
-    self.backgroundColor = [UIColor clearColor];
-    self.layer.cornerRadius = 5;
+    //self.backgroundColor        = [UIColor clearColor];
+    self.layer.cornerRadius     = 5;
+    self.layer.masksToBounds    = YES;
 }
 
 #pragma mark - Setter Getter
 -(void)setHomeModel:(MSHomeDataModel *)homeModel
 {
-    self.homeModel = homeModel;
+    _homeModel = homeModel;
     
     // 设置数据
-    self.titleLabel.text = homeModel.title;
-    self.subTitleLabel.text = homeModel.sub_title;
-    [self.centerImgView setImageWithURL:[NSURL URLWithString:homeModel.cover_image] placeholderImage:[UIImage imageNamed:@"home_logo_pressed"] usingActivityIndicatorStyle:YES];
-    self.detailLabel.text = homeModel.digest;
+    _titleLabel.text = homeModel.title;
+    _subTitleLabel.text = homeModel.sub_title;
+    [_centerImgView setImageWithURL:[NSURL URLWithString:homeModel.cover_image] placeholderImage:[UIImage imageNamed:@"home_logo_pressed"] usingActivityIndicatorStyle:YES];
+    _detailLabel.text = homeModel.digest;
     //            self.detailLabel.sizeToFit()
     
     /*
@@ -44,7 +45,7 @@
         self.fovCountLabel.text = homeModel.info.fav;
     }
      */
-    self.authorLabel.text = homeModel.author_username;
+    _authorLabel.text = homeModel.author_username;
 }
 
 // 加载cell

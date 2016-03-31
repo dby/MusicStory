@@ -14,6 +14,7 @@
 #import "MSHomeHeaderView.h"
 #import "MSHomeDataModel.h"
 #import "MSHomeBottomitemView.h"
+#import "MSHomeBottomCollectView.h"
 #import "MSHomeCenterItemView.h"
 
 #import "MusicStoryRequest.h"
@@ -28,7 +29,7 @@ typedef void (^MSHomeVieModelErrorCallBack)(NSError *error);
 
 @property (nonatomic, weak) MSHomeHeaderView *headerView;
 @property (nonatomic, weak) UICollectionView *centerView;
-@property (nonatomic, weak) UICollectionView *bottonView;
+@property (nonatomic, weak) UICollectionView *bottomView;
 @property (nonatomic, copy) MSHomeViewModelSuccessBack successCallBack ;
 @property (nonatomic, copy) MSHomeVieModelErrorCallBack errorCallBack   ;
 

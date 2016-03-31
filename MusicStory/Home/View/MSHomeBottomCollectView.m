@@ -35,13 +35,15 @@
 #pragma mark - Touch
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    NSLog(@"touchBegan");
     // 获取显示的cell,保存cell的rect数组, 排序按cell的x从小到大
     NSMutableArray *cellArray = [[NSMutableArray alloc] init];
     UICollectionViewCell *cell;
     for (cell in self.visibleCells) {
         [cellArray addObject:cell];
     }
-    [cellArray sortUsingComparator:^NSComparisonResult(UIView *obj1,UIView *obj2) {
+    [cellArray sortUsingComparator:^NSComparisonResult(UICollectionViewCell *obj1,UICollectionViewCell *obj2) {
         return obj1.x < obj2.x;
     }];
     
@@ -52,12 +54,13 @@
 }
 
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    NSLog(@"touchMoved");
     [self resetCellFrame:touches];
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    
-    [UIView animateKeyframesWithDuration:0.2 delay:0.5 options:@[] animations:^{
+    NSLog(@"touchEnded");
+    [UIView animateKeyframesWithDuration:0.2 delay:0.5 options:UIViewKeyframeAnimationOptionLayoutSubviews animations:^{
         for (int i = 0; i < [self.cellArray count]; i++) {
             UICollectionViewCell *cell = [self.cellArray objectAtIndex:i];
             if (cell != self.indexCell) {
@@ -91,13 +94,12 @@
             }
             self.indexCell = cell;
             // 重新设置cellframe
-            [UIView animateKeyframesWithDuration:0.6 delay:0 options: @[] animations:^{
+            [UIView animateKeyframesWithDuration:0.6 delay:0 options:UIViewKeyframeAnimationOptionLayoutSubviews animations:^{
                 [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
                     for (int i = 0; i < [self.cellArray count]; i++) {
                         UICollectionViewCell *cell = [self.cellArray objectAtIndex:i];
                         CGFloat gap = fabs((CGFloat)(i - index) * 5);
                         cell.y = self.maxItemY + gap;
-                        
                     }
                 }];
                 

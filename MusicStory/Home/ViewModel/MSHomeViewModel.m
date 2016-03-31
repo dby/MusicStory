@@ -29,13 +29,11 @@
 }
 
 - (instancetype)initWithHeaderView:(MSHomeHeaderView *)regiHeaderView withCenterView:(UICollectionView *)centerView withBottomView:(UICollectionView*) bottomView {
-
     self = [self init];
-    
     if (self) {
         self.headerView = regiHeaderView;
         self.centerView = centerView;
-        self.bottonView = bottomView;
+        self.bottomView = bottomView;
     }
     return self;
 }
@@ -73,6 +71,7 @@
     [msr startWithCompletionBlockWithSuccess:^(YTKBaseRequest *request) {
         
         NSDictionary *dataDic = [request.responseJSONObject objectForKey:@"data"];
+        NSLog(@"Apps Count: %lu", (unsigned long)[dataDic count]);
         if ([dataDic[@"apps"] count] > 0) {
             NSArray *array = dataDic[@"apps"];
             
@@ -87,7 +86,7 @@
             }
             // 刷新界面
             [self.centerView reloadData];
-            [self.bottonView reloadData];
+            [self.bottomView reloadData];
             
             // 回调给Controller
             if (self.successCallBack) {

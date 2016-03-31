@@ -35,7 +35,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8Q-hp-c3Y" userLabel="Fov View" customClass="XMView" customModule="MusicStory" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8Q-hp-c3Y" userLabel="Fov View" customClass="MSView">
                         <rect key="frame" x="15" y="385" width="60" height="20"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_flower_home_like" translatesAutoresizingMaskIntoConstraints="NO" id="Kea-YN-OlY">

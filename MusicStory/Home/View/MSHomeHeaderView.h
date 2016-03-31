@@ -10,7 +10,6 @@
 #import "MSHomeDataModel.h"
 
 @class MSHomeHeaderView;
-
 @protocol MSHomeHeaderViewDelegate
 - (void) homeHeaderViewMoveToFirstDidClick:(MSHomeHeaderView *)headerView :(UIButton *)moveToFirstBtn;
 - (void) homeHeaderViewMenuDidClick:(MSHomeHeaderView *)header :(UIButton *)menuBtn;
@@ -23,8 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *weakLabel;                // 星期
 @property (weak, nonatomic) IBOutlet UILabel *rightTitleLabel;          // 右边标题
 @property (assign, nonatomic) id<MSHomeHeaderViewDelegate> delegate;
-
 @property (nonatomic, strong) MSHomeDataModel *homeModel;
-
 @property (strong, nonatomic) NSString *rightTitle;
+
 @end

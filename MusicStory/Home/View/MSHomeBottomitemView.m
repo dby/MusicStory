@@ -9,10 +9,6 @@
 #import "MSHomeBottomitemView.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
-@interface MSHomeBottomitemView()
-
-@end
-
 @implementation MSHomeBottomitemView
 
 @synthesize iconUrl = _iconUrl;
@@ -28,7 +24,7 @@
 
 -(void)awakeFromNib
 {
-    [self awakeFromNib];
+    [super awakeFromNib];
     
     self.layer.cornerRadius             = 8;
     self.iconView.layer.cornerRadius    = 8;

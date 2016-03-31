@@ -12,8 +12,8 @@
 
 -(void)viewAddTarget:(NSObject *)target :(SEL)action {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
-    self.userInteractionEnabled = YES;
-    [self addGestureRecognizer:tap];
+    self.userInteractionEnabled = true;
+    //[self addGestureRecognizer:tap];
 }
 
 #pragma mark - Setter Getter

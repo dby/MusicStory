@@ -42,9 +42,7 @@
 @end
 
 @implementation MSHomeViewController
-@synthesize index = _index;
-@synthesize headerView = _headerView;
-@synthesize centerCollectView = _centerCollectView;
+@synthesize index               = _index;
 
 #pragma mark - Setter Getter
 -(NSInteger)index {
@@ -72,10 +70,6 @@
     return _headerView;
 }
 
--(void)setHeaderView:(MSHomeHeaderView *)headerView {
-    _headerView = headerView;
-}
-
 -(UICollectionView *)centerCollectView {
     MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
     UICollectionView *collectView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420) collectionViewLayout:collectLayout];
@@ -90,11 +84,6 @@
     collectView.tag  = 100;
     
     return collectView;
-}
-
-- (void)setCenterCollectView:(UICollectionView *)centerCollectView
-{
-    _centerCollectView = centerCollectView;
 }
 
 -(MSHomeBottomCollectView *)bottomCollectView {
@@ -166,7 +155,9 @@
 #pragma mark Init
 
 - (void)initComponents {
-    //[self.view setBackgroundColor:[UIColor orangeColor]];
+    self.headerView = [self headerView];
+    self.centerCollectView = [self centerCollectView];
+    self.bottomCollectView = [self bottomCollectView];
 }
 
 #pragma mark - scrollerDelegate
@@ -232,6 +223,18 @@
 
 -(void)homeBottomCollectView:(UICollectionView *)bottomView touchIndexDidChangeWithIndexPath:(NSIndexPath *)indexPath cellArrayCount:(NSUInteger)cellArrayCount {
     
+    [_centerCollectView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
+    self.index = indexPath.row;
+    // 执行底部横向动画
+    UICollectionViewCell *cell = [self.bottomCollectView cellForItemAtIndexPath:indexPath];
+    // 如果当前不够8个item就不让他滚动
+    [self bottomHorizontalAnimation:cell forIndexPath:indexPath];
+    // 发送通知改变侧滑菜单的颜色
+    MSHomeDataModel *model = [self.viewModel.dataSource objectAtIndex:_index];
+    NSNotification *noti = [NSNotification notificationWithName:NOTIFY_SETUPBG object:model.recommanded_background_color];
+    [[NSNotificationCenter defaultCenter] postNotification:noti];
+    
+    self.lastIndex = indexPath;
 }
 
 #pragma mark - Event or Action
@@ -253,9 +256,9 @@
     
     if (cell != nil) {
         // 底部横向动画
-        // self.bottomHorizontalAnimation(cell!, indexPath: indexPath)
+        [self bottomHorizontalAnimation:cell forIndexPath:indexpath];
         // 底部纵向动画
-        // self.bottomVertical(cell!)
+        [self bottomVertical:cell];
         
         self.lastIndex = indexpath;
     }
@@ -294,7 +297,7 @@
             cell.y = 15;
         }];
     }];
-    if (self.lastIndex != nil) {
+    if (self.lastIndex!= nil) {
         UICollectionViewCell *lastBottomView = [self.bottomCollectView cellForItemAtIndexPath:self.lastIndex];
         if (lastBottomView != nil) {
             [UIView animateWithDuration:0.2 animations:^{
@@ -310,9 +313,14 @@
 
 - (void)setupLayout {
     [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_topMargin).offset(20);
+        make.top.equalTo(self.view.mas_top);
         make.height.equalTo(@(SCREEN_HEIGHT*50/IPHONE5_HEIGHT));
         make.left.right.equalTo(self.view);
+    }];
+    
+    [_bottomCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.height.equalTo(@(SCREEN_HEIGHT*60/IPHONE5_HEIGHT));
     }];
     
     [_centerCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -320,11 +328,5 @@
         make.top.equalTo(_headerView).offset(_headerView.height);
         make.height.equalTo(@(SCREEN_HEIGHT*420/IPHONE5_HEIGHT));
     }];
-    
-    [_bottomCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(self.view);
-        make.height.equalTo(@(SCREEN_HEIGHT*60/IPHONE5_HEIGHT));
-    }];
 }
-
 @end

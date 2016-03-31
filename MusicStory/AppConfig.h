@@ -9,17 +9,17 @@
 #ifndef AppConfig_h
 #define AppConfig_h
 
-#define IPHONE5_WIDTH 320
+#define IPHONE5_WIDTH  320
 #define IPHONE5_HEIGHT 568
-#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 /// 网络超时时间
 #define NETWORK_TIMEOUT 15
 
 // MARK: - 颜色
 // 默认背景色
-#define UI_COLOR_APPNORMAL [UIColor colorWithRed:54/255.0 green:142/255.0 blue:198/155.0 alpha:1]
-#define UI_COLOR_BORDER UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
+#define UI_COLOR_APPNORMAL  [UIColor colorWithRed:54/255.0 green:142/255.0 blue:198/155.0 alpha:1]
+#define UI_COLOR_BORDER     [UIColor colorWithRed: 240/255.0  green: 240/255.0 blue: 240/255.0 alpha: 1]
 // MARK: - 字体
 #define UI_FONT_20 UIFont.systemFontOfSize(20)
 #define UI_FONT_18 UIFont.systemFontOfSize(18)

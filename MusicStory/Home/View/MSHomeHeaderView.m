@@ -31,12 +31,11 @@
     return _rightTitle;
 }
 
-- (MSHomeDataModel *)model
-{
+-(MSHomeDataModel *)homeModel {
     return _homeModel;
 }
 
--(void)setModel:(MSHomeDataModel *)homeModel
+-(void)setHomeModel:(MSHomeDataModel *)homeModel
 {
     _homeModel = homeModel;
     
@@ -53,12 +52,15 @@
     self.weakLabel.text = [NSDate weekWithDateString:homeModel.publish_date];
 }
 
-- (MSHomeHeaderView *) headerView {
-    return [[NSBundle mainBundle] loadNibNamed:@"MSHomeHeaderView" owner:self options:nil].firstObject;
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        self = [[NSBundle mainBundle] loadNibNamed:@"MSHomeHeaderView" owner:self options:nil].firstObject;
+    }
+    return self;
 }
 
 //MARK: --- ACTION EVENT
-
 - (IBAction)menuImgDidClick:(id)sender {
     [self.delegate homeHeaderViewMenuDidClick:self :sender];
 }
@@ -68,14 +70,12 @@
 }
 
 //MARK: --- PRIVATE
-
 - (void) hiddenMoveToFirstAnimation
 {
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.moveToFirstBtn.alpha = 0;
     } completion:nil];
 }
-
 - (void) showMoveToFirstAnimation {
     [UIView animateWithDuration:0.2 delay: 0.0 options: UIViewAnimationOptionCurveEaseOut animations: ^{
         self.moveToFirstBtn.alpha = 1;
