@@ -50,7 +50,7 @@
     
     if ([_type isEqualToString: NOTIFY_OBJ_TODAY]) {
         httpString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@", API_Server, @"/apps/app/daily/?", API_appVersion,API_openUDID,  API_resolution, API_systemVersion, API_pageSize, API_platform];
-        NSLog(@"httpString: %@", httpString);
+        //NSLog(@"httpString: %@", httpString);
         //self.centerView.setHeaderHidden(false)
         //self.centerView.setFooterHidden(false)
         // 隐藏右标题
@@ -92,7 +92,6 @@
             if (self.successCallBack) {
                 self.successCallBack(self.dataSource);
             }
-        
             // 停止刷新
         }
     } failure:^(YTKBaseRequest *request) {

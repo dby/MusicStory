@@ -20,8 +20,9 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
+    NSLog(@"%@%s", @"MSHomeCenterItemView", __func__);
     
-    //self.backgroundColor        = [UIColor clearColor];
+    self.backgroundColor        = [UIColor whiteColor];
     self.layer.cornerRadius     = 5;
     self.layer.masksToBounds    = YES;
 }
@@ -29,6 +30,7 @@
 #pragma mark - Setter Getter
 -(void)setHomeModel:(MSHomeDataModel *)homeModel
 {
+    NSLog(@"%@%s", @"MSHomeCenterItemView", __func__);
     _homeModel = homeModel;
     
     // 设置数据
@@ -51,6 +53,7 @@
 // 加载cell
 +(MSHomeCenterItemView *)itemWithCollectionView:(UICollectionView *)collection :(NSIndexPath *)indexPath
 {
+    NSLog(@"%@%s", @"MSHomeCenterItemView", __func__);
     
     MSHomeCenterItemView *cell = [collection dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
     

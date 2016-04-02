@@ -27,6 +27,6 @@
 
 @property (strong, nonatomic) MSHomeDataModel *homeModel;
 
-+ (MSHomeCenterItemView *) itemWithCollectionView:(UICollectionView *)collection :(NSIndexPath*)indexPath; 
++ (MSHomeCenterItemView *) itemWithCollectionView:(UICollectionView *)collection :(NSIndexPath*)indexPath;
     
 @end

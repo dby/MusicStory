@@ -17,9 +17,11 @@
 @implementation MSHomeBottomCollectView
 
 -(instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
+    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
         [self registerNib:[UINib nibWithNibName:@"MSHomeBottomItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeBottomItemViewID"];
+        [self initComponent];
         self.scrollEnabled = false;
         self.backgroundColor = [UIColor clearColor];
         self.showsHorizontalScrollIndicator = false;
@@ -29,6 +31,7 @@
 }
 
 - (void)initComponent {
+    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     self.maxItemY = 10;
 }
 
@@ -36,7 +39,7 @@
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"touchBegan");
+    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     // 获取显示的cell,保存cell的rect数组, 排序按cell的x从小到大
     NSMutableArray *cellArray = [[NSMutableArray alloc] init];
     UICollectionViewCell *cell;
@@ -48,19 +51,20 @@
     }];
     
     self.cellArray = cellArray;
-    
     // 重新设置frame
     [self resetCellFrame:touches];
 }
 
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NSLog(@"touchMoved");
+    // 重新设置frame
+    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     [self resetCellFrame:touches];
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NSLog(@"touchEnded");
-    [UIView animateKeyframesWithDuration:0.2 delay:0.5 options:UIViewKeyframeAnimationOptionLayoutSubviews animations:^{
+    
+    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
+    [UIView animateWithDuration:0.2 delay:0.5 options:UIViewAnimationOptionOverrideInheritedDuration animations:^{
         for (int i = 0; i < [self.cellArray count]; i++) {
             UICollectionViewCell *cell = [self.cellArray objectAtIndex:i];
             if (cell != self.indexCell) {
@@ -82,13 +86,15 @@
 
 - (void)resetCellFrame :(NSSet<UITouch *> *) touches {
     
+    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     // 获取点击的位置
     UITouch *touch = (UITouch *)touches.anyObject;
     CGPoint clickPoint = [touch locationInView:self];
     // 判断点在哪个cell
     for (int index = 0; index < [_cellArray count]; index++) {
         UICollectionViewCell *cell = [self.cellArray objectAtIndex:index];
-        if (CGRectContainsPoint(CGRectMake(cell.x, 0, cell.width, cell.height), clickPoint)) {
+        //???: cell的大小
+        if (CGRectContainsPoint(CGRectMake(cell.x - 10, 0, cell.width, cell.height), clickPoint)) {
             if (self.indexCell == cell) {
                 return;
             }

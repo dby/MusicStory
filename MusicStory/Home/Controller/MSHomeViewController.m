@@ -42,13 +42,17 @@
 @end
 
 @implementation MSHomeViewController
+
 @synthesize index               = _index;
 
 #pragma mark - Setter Getter
 -(NSInteger)index {
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     return _index;
 }
 -(void)setIndex:(NSInteger)index {
+    
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     _index = index;
     if ([self.viewModel.dataSource count] == 0) {
         return;
@@ -63,44 +67,13 @@
     }];
 }
 
--(MSHomeHeaderView *)headerView {
-    _headerView = [[MSHomeHeaderView alloc] init];
-    _headerView.delegate = self;
-    
-    return _headerView;
-}
-
--(UICollectionView *)centerCollectView {
-    MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
-    UICollectionView *collectView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420) collectionViewLayout:collectLayout];
-    
-    collectView.delegate = self;
-    collectView.dataSource = self;
-    collectView.showsHorizontalScrollIndicator = false;
-    collectView.pagingEnabled = true;
-    
-    [collectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
-    collectView.backgroundColor = [UIColor clearColor];
-    collectView.tag  = 100;
-    
-    return collectView;
-}
-
--(MSHomeBottomCollectView *)bottomCollectView {
-    MSHomeBottomFlowLayout *collectionLayout = [[MSHomeBottomFlowLayout alloc] init];
-    MSHomeBottomCollectView *collectView = [[MSHomeBottomCollectView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH-60, SCREEN_WIDTH, 60) collectionViewLayout:collectionLayout];
-    
-    collectView.bottomViewDelegate = self;
-    collectView.delegate = self;
-    collectView.dataSource = self;
-    
-    return collectView;
-}
-
 #pragma mark life circle
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
+    
     // Do any additional setup after loading the view.
     [self initComponents];
     
@@ -117,20 +90,9 @@
     
     // 获取ViewModel
     _viewModel = [[MSHomeViewModel alloc] initWithHeaderView:_headerView withCenterView:_centerCollectView withBottomView:_bottomCollectView];
-    // 获取数据
-    [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
-        // 默认选择0
-        self.lastIndex = nil;
-        self.index = 0;
-        [self.bottomCollectView setContentOffset:CGPointZero animated:false];
-        [self scrollViewDidEndDecelerating:self.centerCollectView];
-        
-    } withErrorCallBack:^(NSError *error) {
-        
-    }];
     
     // 加载更多
-#warning 加载更多未完成
+//TODO:  加载更多未完成
     // 首次加载时， 中间显示加载框
     
     [self showProgress];
@@ -153,16 +115,38 @@
 }
 
 #pragma mark Init
-
 - (void)initComponents {
-    self.headerView = [self headerView];
-    self.centerCollectView = [self centerCollectView];
-    self.bottomCollectView = [self bottomCollectView];
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
+    
+    // init HeaderView
+    _headerView = [[MSHomeHeaderView alloc] init];
+    _headerView.delegate = self;
+    
+    // init CenterCollectView
+    MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
+    self.centerCollectView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420) collectionViewLayout:collectLayout];
+    
+    self.centerCollectView.delegate = self;
+    self.centerCollectView.dataSource = self;
+    self.centerCollectView.showsHorizontalScrollIndicator = false;
+    self.centerCollectView.pagingEnabled = true;
+    
+    [self.centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
+    self.centerCollectView.backgroundColor = [UIColor clearColor];
+    self.centerCollectView.tag  = 100;
+    
+    // init BottomCollectView
+    MSHomeBottomFlowLayout *collectionLayout = [[MSHomeBottomFlowLayout alloc] init];
+    self.bottomCollectView = [[MSHomeBottomCollectView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH-60, SCREEN_WIDTH, 60) collectionViewLayout:collectionLayout];
+    self.bottomCollectView.bottomViewDelegate = self;
+    self.bottomCollectView.delegate = self;
+    self.bottomCollectView.dataSource = self;
 }
 
 #pragma mark - scrollerDelegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     if (scrollView.tag == 100) {
         int index = (int)((scrollView.contentOffset.x + 0.5*scrollView.width) / scrollView.width);
         if (index > [self.viewModel.dataSource count] - 1) {
@@ -174,6 +158,7 @@
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     if (scrollView.tag == 100) {
         // 设置底部动画
         [self bottomAnimation: [NSIndexPath indexPathForRow:_index inSection:0]];
@@ -187,14 +172,19 @@
 
 #pragma mark - UICollectionView Delegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSLog(@"%@%s%ld", @"MSHomeViewController", __func__, [self.viewModel.dataSource count]);
     return [self.viewModel.dataSource count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     MSHomeDataModel *model = [self.viewModel.dataSource objectAtIndex:indexPath.row];
     if (collectionView.tag == 100) {
         MSHomeCenterItemView *cell= [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
         cell.homeModel = model;
+        
+        //NSLog(@"visible cell count: %ld", [[self.bottomCollectView visibleCells] count]);
+        //NSLog(@"visible cell count: %ld", [[self.centerCollectView visibleCells] count]);
         
         return cell;
     } else {
@@ -211,6 +201,7 @@
 
 #pragma mark - Custom Delegate
 -(void)homeHeaderViewMoveToFirstDidClick:(MSHomeHeaderView *)headerView :(UIButton *)moveToFirstBtn {
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     [_centerCollectView setContentOffset:CGPointZero animated:false];
     [_bottomCollectView setContentOffset:CGPointZero animated:false];
     self.index = 0;
@@ -218,11 +209,13 @@
 }
 
 -(void)homeHeaderViewMenuDidClick:(MSHomeHeaderView *)header :(UIButton *)menuBtn {
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SHOWMENU object:nil];
 }
 
 -(void)homeBottomCollectView:(UICollectionView *)bottomView touchIndexDidChangeWithIndexPath:(NSIndexPath *)indexPath cellArrayCount:(NSUInteger)cellArrayCount {
     
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     [_centerCollectView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
     self.index = indexPath.row;
     // 执行底部横向动画
@@ -245,13 +238,22 @@
 #pragma mark - Private Method
 // 底部标签动画
 - (void)bottomAnimation:(NSIndexPath *)indexpath {
-    if (self.lastIndex.row == indexpath.row) {
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
+    
+    if (self.lastIndex != nil && self.lastIndex.row == indexpath.row) {
         return;
     }
-    UICollectionViewCell *cell = [self.bottomCollectView cellForItemAtIndexPath:indexpath];
+    
+    MSHomeBottomitemView *cell = (MSHomeBottomitemView *)[self.bottomCollectView cellForItemAtIndexPath:indexpath];
     if (cell == nil) {
         [self.bottomCollectView layoutIfNeeded];
-        cell = [self.bottomCollectView cellForItemAtIndexPath:indexpath];
+        cell = (MSHomeBottomitemView *)[self.bottomCollectView cellForItemAtIndexPath:indexpath];
+    }
+    
+    if (cell == nil) {
+        [self.bottomCollectView reloadData];
+        [self.bottomCollectView layoutIfNeeded];
+        cell = (MSHomeBottomitemView *)[self.bottomCollectView cellForItemAtIndexPath:indexpath];
     }
     
     if (cell != nil) {
@@ -267,9 +269,8 @@
 // 横向动画
 - (void)bottomHorizontalAnimation:(UICollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
     
-    if ([self.viewModel.dataSource count] > 8) {
-        
-    } else {
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
+    if ([self.viewModel.dataSource count] < 8) {
         return;
     }
     
@@ -290,6 +291,8 @@
 
 // 纵向动画
 - (void)bottomVertical:(UICollectionViewCell *)cell {
+    
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     [UIView animateWithDuration:0.2 animations:^{
         cell.y = 10;
     } completion:^(BOOL finished) {
@@ -297,23 +300,25 @@
             cell.y = 15;
         }];
     }];
-    if (self.lastIndex!= nil) {
-        UICollectionViewCell *lastBottomView = [self.bottomCollectView cellForItemAtIndexPath:self.lastIndex];
-        if (lastBottomView != nil) {
-            [UIView animateWithDuration:0.2 animations:^{
-                lastBottomView.y = 60;
-            } completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.05 animations:^{
-                    lastBottomView.y = 50;
-                }];
+    
+    UICollectionViewCell *lastBottomView = [self.bottomCollectView cellForItemAtIndexPath:self.lastIndex];
+    
+    if (lastBottomView != nil) {
+        [UIView animateWithDuration:0.2 animations:^{
+            lastBottomView.y = 60;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.05 animations:^{
+                lastBottomView.y = 50;
             }];
-        }
+        }];
     }
 }
 
 - (void)setupLayout {
+    
+    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top);
+        make.top.equalTo(self.view.mas_top).offset(20);
         make.height.equalTo(@(SCREEN_HEIGHT*50/IPHONE5_HEIGHT));
         make.left.right.equalTo(self.view);
     }];
@@ -323,9 +328,11 @@
         make.height.equalTo(@(SCREEN_HEIGHT*60/IPHONE5_HEIGHT));
     }];
     
+    
     [_centerCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.top.equalTo(_headerView).offset(_headerView.height);
+        //TODO: 这里需要查找为什么 headerView Height 为 320
+        make.top.equalTo(_headerView).offset(50);
         make.height.equalTo(@(SCREEN_HEIGHT*420/IPHONE5_HEIGHT));
     }];
 }

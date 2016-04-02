@@ -22,8 +22,7 @@
 // 判断是否是今天
 +(BOOL)isToDay:(NSString *)dateString
 {
-    //        let date : String = NSDate.formattDay(dateString)
-    return dateString == [self today];
+    return [dateString isEqualToString:[self today]];
 }
 
 // 判断是否是昨天
