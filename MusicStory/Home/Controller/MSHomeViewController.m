@@ -20,8 +20,11 @@
 
 #import "UIColor+MS.h"
 #import "UIView+MS.h"
-#import "Masonry.h"
 #import "UIViewController+MS.h"
+
+#import "Masonry.h"
+#import <RESideMenu/RESideMenu.h>
+
 
 
 @interface MSHomeViewController () <MSHomeHeaderViewDelegate, MSHomeHeaderViewDelegate,MSHomeBottomCollectViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
@@ -115,6 +118,7 @@
 }
 
 #pragma mark Init
+
 - (void)initComponents {
     NSLog(@"%@%s", @"MSHomeViewController", __func__);
     
@@ -141,6 +145,13 @@
     self.bottomCollectView.bottomViewDelegate = self;
     self.bottomCollectView.delegate = self;
     self.bottomCollectView.dataSource = self;
+    
+    [self initRESlideMenu];
+}
+
+- (void)initRESlideMenu {
+    self.sideMenuViewController.scaleMenuView = false;
+    self.sideMenuViewController.scaleContentView = false;
 }
 
 #pragma mark - scrollerDelegate
@@ -211,6 +222,8 @@
 -(void)homeHeaderViewMenuDidClick:(MSHomeHeaderView *)header :(UIButton *)menuBtn {
     NSLog(@"%@%s", @"MSHomeViewController", __func__);
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SHOWMENU object:nil];
+    
+    [self.sideMenuViewController presentLeftMenuViewController];
 }
 
 -(void)homeBottomCollectView:(UICollectionView *)bottomView touchIndexDidChangeWithIndexPath:(NSIndexPath *)indexPath cellArrayCount:(NSUInteger)cellArrayCount {

@@ -8,20 +8,35 @@
 
 #import "MSSlideViewController.h"
 
+#import "UIColor+MS.h"
+#import "AppConfig.h"
+
 @interface MSSlideViewController ()
 
 @end
 
 @implementation MSSlideViewController
 
+#pragma mark - life cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.view.backgroundColor = [UIColor clearColor];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(leftMenuSetupBackColor:) name:NOTIFY_SETUPBG object:nil];
+}
+
+#pragma mark - Private Function
+
+- (void)leftMenuSetupBackColor:(NSNotification *)notify {
+
+    NSString *bg = notify.object;
+    self.view.backgroundColor = [UIColor colorWithHexString:bg];
 }
 
 @end
