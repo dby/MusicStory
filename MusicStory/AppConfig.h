@@ -47,4 +47,17 @@
 // 设置menu centreview 类型 - 用于切换centerView
 #define NOTIFY_SETUPCENTERVIEW      @"NOTIFY_SETUPCENTERVIEW"
 
+#define debugdebug
+#ifdef debugdebug
+
+#define debugLog(...) NSLog(__VA_ARGS__)
+#define debugMethod() NSLog(@"%s", __func__)
+
+#else
+
+#define debugLog(...)
+#define debugMethod()
+
+#endif
+
 #endif /* AppConfig_h */

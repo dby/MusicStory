@@ -18,9 +18,6 @@
 		435159E81C9EE24100EC1422 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 435159E61C9EE24100EC1422 /* LaunchScreen.storyboard */; };
 		435159F31C9EE24100EC1422 /* MusicStoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 435159F21C9EE24100EC1422 /* MusicStoryTests.m */; };
 		435159FE1C9EE24100EC1422 /* MusicStoryUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 435159FD1C9EE24100EC1422 /* MusicStoryUITests.m */; };
-		43515A121C9EE8AF00EC1422 /* MSSlideCenterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43515A111C9EE8AF00EC1422 /* MSSlideCenterView.xib */; };
-		43515A151C9EE94B00EC1422 /* MSSlideCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A141C9EE94B00EC1422 /* MSSlideCenterView.m */; };
-		43515A1E1C9EECC100EC1422 /* MSSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A1D1C9EECC100EC1422 /* MSSlideViewController.m */; };
 		43515A221C9EF34100EC1422 /* MSHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43515A211C9EF34100EC1422 /* MSHomeViewController.m */; };
 		43515A261C9EF3C900EC1422 /* MSHomeBottomItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43515A231C9EF3C900EC1422 /* MSHomeBottomItemView.xib */; };
 		43515A271C9EF3C900EC1422 /* MSHomeCenterItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43515A241C9EF3C900EC1422 /* MSHomeCenterItemView.xib */; };
@@ -34,6 +31,9 @@
 		436895201CA7655100391424 /* MSHomeCenterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4368951F1CA7655100391424 /* MSHomeCenterFlowLayout.m */; };
 		436895231CA7690B00391424 /* MSHomeBottomCollectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436895221CA7690B00391424 /* MSHomeBottomCollectView.m */; };
 		436895261CA777EE00391424 /* UIView+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 436895251CA777EE00391424 /* UIView+MS.m */; };
+		439F22811CBD59A20045287B /* MSSlideCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 439F227F1CBD59A20045287B /* MSSlideCenterView.m */; };
+		439F22821CBD59A20045287B /* MSSlideCenterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 439F22801CBD59A20045287B /* MSSlideCenterView.xib */; };
+		439F22851CBD59B50045287B /* MSSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 439F22841CBD59B50045287B /* MSSlideViewController.m */; };
 		43BD00D11CA04BFE006CEABC /* UIScrollView+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD00D01CA04BFE006CEABC /* UIScrollView+MS.m */; };
 		43BD00D41CA04C90006CEABC /* MSRefreshBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD00D31CA04C90006CEABC /* MSRefreshBase.m */; };
 		ECA66A0FE3EEC5B0ED58969A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DD75A942DE62E2C37E81E0 /* libPods.a */; };
@@ -81,11 +81,6 @@
 		435159F91C9EE24100EC1422 /* MusicStoryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicStoryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		435159FD1C9EE24100EC1422 /* MusicStoryUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicStoryUITests.m; sourceTree = "<group>"; };
 		435159FF1C9EE24100EC1422 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		43515A111C9EE8AF00EC1422 /* MSSlideCenterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSSlideCenterView.xib; path = Slide/MSSlideCenterView.xib; sourceTree = "<group>"; };
-		43515A131C9EE94B00EC1422 /* MSSlideCenterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSlideCenterView.h; path = Slide/MSSlideCenterView.h; sourceTree = "<group>"; };
-		43515A141C9EE94B00EC1422 /* MSSlideCenterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSlideCenterView.m; path = Slide/MSSlideCenterView.m; sourceTree = "<group>"; };
-		43515A1C1C9EECC100EC1422 /* MSSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSlideViewController.h; path = Slide/MSSlideViewController.h; sourceTree = "<group>"; };
-		43515A1D1C9EECC100EC1422 /* MSSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSlideViewController.m; path = Slide/MSSlideViewController.m; sourceTree = "<group>"; };
 		43515A201C9EF34100EC1422 /* MSHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeViewController.h; path = Home/Controller/MSHomeViewController.h; sourceTree = "<group>"; };
 		43515A211C9EF34100EC1422 /* MSHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeViewController.m; path = Home/Controller/MSHomeViewController.m; sourceTree = "<group>"; };
 		43515A231C9EF3C900EC1422 /* MSHomeBottomItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSHomeBottomItemView.xib; path = Home/View/MSHomeBottomItemView.xib; sourceTree = "<group>"; };
@@ -110,6 +105,11 @@
 		436895221CA7690B00391424 /* MSHomeBottomCollectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeBottomCollectView.m; path = Home/View/MSHomeBottomCollectView.m; sourceTree = "<group>"; };
 		436895241CA777EE00391424 /* UIView+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+MS.h"; path = "Other/extension/UIView+MS.h"; sourceTree = "<group>"; };
 		436895251CA777EE00391424 /* UIView+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+MS.m"; path = "Other/extension/UIView+MS.m"; sourceTree = "<group>"; };
+		439F227E1CBD59A20045287B /* MSSlideCenterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSlideCenterView.h; path = Slide/View/MSSlideCenterView.h; sourceTree = "<group>"; };
+		439F227F1CBD59A20045287B /* MSSlideCenterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSlideCenterView.m; path = Slide/View/MSSlideCenterView.m; sourceTree = "<group>"; };
+		439F22801CBD59A20045287B /* MSSlideCenterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSSlideCenterView.xib; path = Slide/View/MSSlideCenterView.xib; sourceTree = "<group>"; };
+		439F22831CBD59B50045287B /* MSSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSlideViewController.h; path = Slide/Controller/MSSlideViewController.h; sourceTree = "<group>"; };
+		439F22841CBD59B50045287B /* MSSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSlideViewController.m; path = Slide/Controller/MSSlideViewController.m; sourceTree = "<group>"; };
 		43BD00C91CA043BB006CEABC /* APIConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = APIConfig.h; path = Other/APIConfig.h; sourceTree = "<group>"; };
 		43BD00CF1CA04BFE006CEABC /* UIScrollView+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+MS.h"; path = "Other/MSRefresh/UIScrollView+MS.h"; sourceTree = "<group>"; };
 		43BD00D01CA04BFE006CEABC /* UIScrollView+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+MS.m"; path = "Other/MSRefresh/UIScrollView+MS.m"; sourceTree = "<group>"; };
@@ -258,8 +258,8 @@
 		43515A0E1C9EE78200EC1422 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				43515A1C1C9EECC100EC1422 /* MSSlideViewController.h */,
-				43515A1D1C9EECC100EC1422 /* MSSlideViewController.m */,
+				439F22831CBD59B50045287B /* MSSlideViewController.h */,
+				439F22841CBD59B50045287B /* MSSlideViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -274,9 +274,9 @@
 		43515A101C9EE79200EC1422 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				43515A111C9EE8AF00EC1422 /* MSSlideCenterView.xib */,
-				43515A131C9EE94B00EC1422 /* MSSlideCenterView.h */,
-				43515A141C9EE94B00EC1422 /* MSSlideCenterView.m */,
+				439F227E1CBD59A20045287B /* MSSlideCenterView.h */,
+				439F227F1CBD59A20045287B /* MSSlideCenterView.m */,
+				439F22801CBD59A20045287B /* MSSlideCenterView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -489,10 +489,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43515A121C9EE8AF00EC1422 /* MSSlideCenterView.xib in Resources */,
 				43515A281C9EF3C900EC1422 /* MSHomeHeaderView.xib in Resources */,
 				435159E81C9EE24100EC1422 /* LaunchScreen.storyboard in Resources */,
 				43515A271C9EF3C900EC1422 /* MSHomeCenterItemView.xib in Resources */,
+				439F22821CBD59A20045287B /* MSSlideCenterView.xib in Resources */,
 				43515A261C9EF3C900EC1422 /* MSHomeBottomItemView.xib in Resources */,
 				435159E51C9EE24100EC1422 /* Assets.xcassets in Resources */,
 				435159E31C9EE24000EC1422 /* Main.storyboard in Resources */,
@@ -571,18 +571,18 @@
 				43515A221C9EF34100EC1422 /* MSHomeViewController.m in Sources */,
 				436895231CA7690B00391424 /* MSHomeBottomCollectView.m in Sources */,
 				43515A311C9EF53900EC1422 /* MSHomeHeaderView.m in Sources */,
-				43515A1E1C9EECC100EC1422 /* MSSlideViewController.m in Sources */,
 				436895201CA7655100391424 /* MSHomeCenterFlowLayout.m in Sources */,
 				435151E41CA6E9DB00094EDD /* UIColor+MS.m in Sources */,
+				439F22811CBD59A20045287B /* MSSlideCenterView.m in Sources */,
 				435640F71CA831C900D41FF3 /* MSHomeBottomFlowLayout.m in Sources */,
 				43BD00D41CA04C90006CEABC /* MSRefreshBase.m in Sources */,
 				435159DD1C9EE24000EC1422 /* AppDelegate.m in Sources */,
 				435159DA1C9EE24000EC1422 /* main.m in Sources */,
+				439F22851CBD59B50045287B /* MSSlideViewController.m in Sources */,
 				43515A341C9EFA4800EC1422 /* MSHomeCenterItemView.m in Sources */,
 				431B231D1CA1A1650057ED50 /* MSHomeDataModel.m in Sources */,
 				435640FA1CA83A9200D41FF3 /* UIViewController+MS.m in Sources */,
 				43515A371C9EFF9600EC1422 /* MSHomeViewModel.m in Sources */,
-				43515A151C9EE94B00EC1422 /* MSSlideCenterView.m in Sources */,
 				431B23191CA195A50057ED50 /* MusicStoryRequest.m in Sources */,
 				43515A2B1C9EF4D500EC1422 /* MSHomeBottomitemView.m in Sources */,
 				4330F3631CA4320000739118 /* NSDate+MS.m in Sources */,

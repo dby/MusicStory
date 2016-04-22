@@ -194,9 +194,6 @@
         MSHomeCenterItemView *cell= [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
         cell.homeModel = model;
         
-        //NSLog(@"visible cell count: %ld", [[self.bottomCollectView visibleCells] count]);
-        //NSLog(@"visible cell count: %ld", [[self.centerCollectView visibleCells] count]);
-        
         return cell;
     } else {
         MSHomeBottomitemView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeBottomItemViewID" forIndexPath:indexPath];
