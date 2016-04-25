@@ -22,6 +22,14 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - AVOSCloud (3.2.8)
+  - AVOSCloudCrashReporting (3.2.8):
+    - AVOSCloud
+  - AVOSCloudIM (3.2.8):
+    - AVOSCloud
+  - GRMustache (7.3.2):
+    - JRSwizzle (~> 1.0)
+  - JRSwizzle (1.0)
   - Masonry (0.6.4)
   - RESideMenu (4.0.7)
   - SDWebImage (3.7.5):
@@ -34,6 +42,10 @@ PODS:
     - AFNetworking (~> 2.0)
 
 DEPENDENCIES:
+  - AVOSCloud
+  - AVOSCloudCrashReporting
+  - AVOSCloudIM
+  - GRMustache (~> 7.3.2)
   - Masonry
   - RESideMenu
   - SDWebImage
@@ -43,6 +55,11 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFDownloadRequestOperation: 748a1643423e1ddb23f2178f778087d4f0ae8ac7
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  AVOSCloud: b789619942a4275e615f8f0782e7475675951b95
+  AVOSCloudCrashReporting: 2dddc7dfc8ef423492a01c0076b3e97716854701
+  AVOSCloudIM: d2f6a13d64f9676a43e4d68b822bd1be3f96fb76
+  GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461

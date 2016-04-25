@@ -12,6 +12,7 @@
 
 #import "MSSlideViewController.h"
 #import "MSHomeViewController.h"
+#import "MSBaseNavController.h"
 
 #import <YTKNetworkConfig.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
@@ -43,8 +44,9 @@
     
     // Create side menu controller
     //
-    RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:contentViewController
-                                                                    leftMenuViewController:leftMenuViewController
+    RESideMenu *sideMenuViewController = [[RESideMenu alloc]
+                                          initWithContentViewController: [[MSBaseNavController alloc] initWithRootViewController: contentViewController]
+                                          leftMenuViewController:leftMenuViewController
                                                                    rightMenuViewController:nil];
     
     //sideMenuViewController.backgroundImage = [UIImage imageNamed:@"Stars"];
