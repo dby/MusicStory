@@ -31,8 +31,9 @@
         self.singer_id      = [avo objectForKey:@"singer_id"];
         self.singer_name    = [avo objectForKey:@"singer_name"];
         self.singer_brief   = [avo objectForKey:@"singer_brief"];
-        self.singer_portrait = [avo objectForKey:@"singer_portrait"];
         
+        self.singer_portrait                = [avo objectForKey:@"singer_portrait"];
+        self.recommanded_background_color   = [avo objectForKey:@"recommanded_background_color"];
     }
     
     return self;

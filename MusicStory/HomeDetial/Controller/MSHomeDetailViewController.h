@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSMusicModel.h"
 
 @interface MSHomeDetailViewController : UIViewController
+
+@property(nonatomic, strong) MSMusicModel *model;
 
 @end

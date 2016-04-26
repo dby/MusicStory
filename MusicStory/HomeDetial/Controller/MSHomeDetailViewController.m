@@ -26,6 +26,19 @@
     [self initComponent];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setTitle:_model.music_name];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
+
 #pragma mark - init
 
 - (void)initComponent {
@@ -36,16 +49,19 @@
     
     NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     
-    [self.contentView loadHTMLString:[self demoFormatWithName:@"dubinyuan" value:@"<p> Objective </p> -C语言调用J<p>avaScript语言，</p>是通过UIWebView实现额。起来，不愿做奴隶的人们，起来起来"] baseURL:baseURL];
+    [self.contentView loadHTMLString:[self demoFormatWithName:_model.music_name
+                                                        value:_model.music_story
+                                                     musicImg:_model.music_imgs
+                                      ] baseURL:baseURL];
 }
 
-- (NSString *)demoFormatWithName:(NSString *)name value:(NSString *)value {
+- (NSString *)demoFormatWithName:(NSString *)name value:(NSString *)value musicImg:(NSString *)imgurl {
     
     NSString *filename  = @"template.html";
     NSString *path      = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:filename];
     NSString *template  = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     
-    NSDictionary *renderObject  = @{ @"name": name, @"content":value };
+    NSDictionary *renderObject  = @{ @"name": name, @"content":value, @"music_img":imgurl};
     NSString *content           = [GRMustacheTemplate renderObject:renderObject fromString:template error:nil];
     
     return content;

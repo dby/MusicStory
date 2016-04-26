@@ -206,6 +206,8 @@
     debugMethod();
     
     MSHomeDetailViewController *mshdc = [[MSHomeDetailViewController alloc] init];
+    mshdc.model = [self.viewModel.dataSource objectAtIndex:indexPath.row];
+    
     [self.navigationController pushViewController:mshdc animated:YES];
 }
 
