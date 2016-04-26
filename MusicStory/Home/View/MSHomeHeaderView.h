@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MSHomeDataModel.h"
+#import "MSMusicModel.h"
 
 @class MSHomeHeaderView;
 @protocol MSHomeHeaderViewDelegate
@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *weakLabel;                // 星期
 @property (weak, nonatomic) IBOutlet UILabel *rightTitleLabel;          // 右边标题
 @property (assign, nonatomic) id<MSHomeHeaderViewDelegate> delegate;
-@property (nonatomic, strong) MSHomeDataModel *homeModel;
+@property (nonatomic, strong) MSMusicModel *homeModel;
 @property (strong, nonatomic) NSString *rightTitle;
 
 @end

@@ -17,31 +17,27 @@
 
 @implementation MSHomeHeaderView
 
-@synthesize rightTitle = _rightTitle;
-@synthesize homeModel = _homeModel;
+@synthesize rightTitle  = _rightTitle;
+@synthesize homeModel   = _homeModel;
 
 #pragma mark - Setter Getter
 -(void)setRightTitle:(NSString *)rightTitle
 {
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
     _rightTitle = rightTitle;
     self.rightTitleLabel.text = _rightTitle;
 }
 
 -(NSString *)rightTitle
 {
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
     return _rightTitle;
 }
 
--(MSHomeDataModel *)homeModel {
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
+-(MSMusicModel *)homeModel {
     return _homeModel;
 }
 
--(void)setHomeModel:(MSHomeDataModel *)homeModel
+-(void)setHomeModel:(MSMusicModel *)homeModel
 {
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
     _homeModel = homeModel;
     
     if ([NSDate isToDay:homeModel.publish_date]) {
@@ -58,7 +54,6 @@
 }
 
 -(instancetype)init {
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
     self = [super init];
     if (self) {
         self = [[NSBundle mainBundle] loadNibNamed:@"MSHomeHeaderView" owner:nil options:nil].firstObject;
@@ -68,11 +63,9 @@
 
 //MARK: --- ACTION EVENT
 - (IBAction)menuImgDidClick:(id)sender {
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
     [self.delegate homeHeaderViewMenuDidClick:self :sender];
 }
 - (IBAction)moveToFirstImgDidClick:(id)sender {
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
     [self.delegate homeHeaderViewMoveToFirstDidClick:self :sender];
     [self hiddenMoveToFirstAnimation];
 }
@@ -80,13 +73,11 @@
 //MARK: --- PRIVATE
 - (void) hiddenMoveToFirstAnimation
 {
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.moveToFirstBtn.alpha = 0;
     } completion:nil];
 }
 - (void) showMoveToFirstAnimation {
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
     [UIView animateWithDuration:0.2 delay: 0.0 options: UIViewAnimationOptionCurveEaseOut animations: ^{
         self.moveToFirstBtn.alpha = 1;
     } completion: nil];
@@ -95,7 +86,6 @@
 //MARK : -- Public
 - (void) setRightTitleHidden:(BOOL)flag {
     
-    NSLog(@"%@%s", @"MSHomeHeaderView", __func__);
     self.rightTitleLabel.hidden = flag;
     self.dateLabel.hidden = !flag;
     self.weakLabel.hidden = !flag;

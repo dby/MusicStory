@@ -30,12 +30,13 @@
 
 - (void)initComponent {
     
-    self.contentView = [[MSDetailContentView alloc] initWithFrame:self.view.frame];
+    self.contentView            = [[MSDetailContentView alloc] initWithFrame:self.view.frame];
+    self.contentView.delegate   = self;
     [self.view addSubview:self.contentView];
     
     NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     
-    [self.contentView loadHTMLString:[self demoFormatWithName:@"dubinyuan" value:@"Objective-C语言调用JavaScript语言，是通过UIWebView实现额。起来，不愿做奴隶的人们，起来起来"] baseURL:baseURL];
+    [self.contentView loadHTMLString:[self demoFormatWithName:@"dubinyuan" value:@"<p> Objective </p> -C语言调用J<p>avaScript语言，</p>是通过UIWebView实现额。起来，不愿做奴隶的人们，起来起来"] baseURL:baseURL];
 }
 
 - (NSString *)demoFormatWithName:(NSString *)name value:(NSString *)value {
@@ -53,6 +54,14 @@
 #pragma mark - UIWebViewDelegate
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    NSString *urlStr = request.URL.absoluteString;
+    
+    if ([urlStr containsString:@"imgsrc"]) {
+        NSRange range = [urlStr rangeOfString:@"imgsrc="];
+        NSString *url = [urlStr substringWithRange:NSMakeRange(range.location + range.length, urlStr.length - range.location - range.length)];
+        debugLog(@"URL: %@", url);
+    }
     
     return YES;
 }

@@ -7,6 +7,7 @@
 //
 
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
+#import "AppConfig.h"
 
 #import "MSHomeCenterItemView.h"
 
@@ -20,7 +21,6 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    NSLog(@"%@%s", @"MSHomeCenterItemView", __func__);
     
     self.backgroundColor        = [UIColor whiteColor];
     self.layer.cornerRadius     = 5;
@@ -28,33 +28,24 @@
 }
 
 #pragma mark - Setter Getter
--(void)setHomeModel:(MSHomeDataModel *)homeModel
+-(void)setHomeModel:(MSMusicModel *)homeModel
 {
-    NSLog(@"%@%s", @"MSHomeCenterItemView", __func__);
     _homeModel = homeModel;
     
     // 设置数据
-    _titleLabel.text = homeModel.title;
-    _subTitleLabel.text = homeModel.sub_title;
-    [_centerImgView setImageWithURL:[NSURL URLWithString:homeModel.cover_image] placeholderImage:[UIImage imageNamed:@"home_logo_pressed"] usingActivityIndicatorStyle:YES];
-    _detailLabel.text = homeModel.digest;
-    //            self.detailLabel.sizeToFit()
+    _titleLabel.text        = homeModel.music_name;
+    _subTitleLabel.text     = homeModel.singer_name;
+    debugLog(@"url: %@" ,homeModel.music_imgs);
+    [_centerImgView setImageWithURL:[NSURL URLWithString:homeModel.music_imgs]
+                   placeholderImage:[UIImage imageNamed:@"home_logo_pressed"] usingActivityIndicatorStyle:YES];
     
-    /*
-    if (homeModel.info.fav == nil) {
-        self.fovCountLabel.text = @"0";
-    } else {
-        self.fovCountLabel.text = homeModel.info.fav;
-    }
-     */
-    _authorLabel.text = homeModel.author_username;
+    _detailLabel.text = homeModel.music_story;
+    _authorLabel.text = homeModel.author_name;
 }
 
 // 加载cell
 +(MSHomeCenterItemView *)itemWithCollectionView:(UICollectionView *)collection :(NSIndexPath *)indexPath
 {
-    NSLog(@"%@%s", @"MSHomeCenterItemView", __func__);
-    
     MSHomeCenterItemView *cell = [collection dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
     
     if (cell == nil) {
@@ -62,5 +53,4 @@
     }
     return cell;
 }
-
 @end

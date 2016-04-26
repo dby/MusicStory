@@ -18,6 +18,7 @@
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 #import "APIConfig.h"
+#import <AVOSCloud/AVOSCloud.h>
 
 @interface AppDelegate ()
 
@@ -54,6 +55,11 @@
     // Make it a root controller
     //
     self.window.rootViewController = sideMenuViewController;
+    
+    [AVOSCloud setApplicationId:@"xJVf4uf6o6dV0zJAX9d8JOK1-gzGzoHsz"
+                      clientKey:@"p1aMdhAX9b3AnJSOxXOrcodl"];
+    [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+
     
     return YES;
 }

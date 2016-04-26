@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MSHomeDataModel.h"
+#import "MSMusicModel.h"
 
 @interface MSHomeCenterItemView : UICollectionViewCell
 // 大标题
@@ -25,7 +25,7 @@
 // 作者
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 
-@property (strong, nonatomic) MSHomeDataModel *homeModel;
+@property (strong, nonatomic) MSMusicModel *homeModel;
 
 + (MSHomeCenterItemView *) itemWithCollectionView:(UICollectionView *)collection :(NSIndexPath*)indexPath;
     

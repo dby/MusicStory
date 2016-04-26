@@ -11,8 +11,11 @@
 #import "AppConfig.h"
 #import "APIConfig.h"
 
+#import "AppConfig.h"
+#import "MSMusicModel.h"
+#import <AVOSCloud/AVOSCloud.h>
+
 #import "MSHomeHeaderView.h"
-#import "MSHomeDataModel.h"
 #import "MSHomeBottomitemView.h"
 #import "MSHomeBottomCollectView.h"
 #import "MSHomeCenterItemView.h"

@@ -17,13 +17,12 @@
 @implementation MSHomeBottomCollectView
 
 -(instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
-    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
         [self registerNib:[UINib nibWithNibName:@"MSHomeBottomItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeBottomItemViewID"];
         [self initComponent];
-        self.scrollEnabled = false;
-        self.backgroundColor = [UIColor clearColor];
+        self.scrollEnabled      = false;
+        self.backgroundColor    = [UIColor clearColor];
         self.showsHorizontalScrollIndicator = false;
         self.tag = 101;
     }
@@ -31,7 +30,6 @@
 }
 
 - (void)initComponent {
-    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     self.maxItemY = 10;
 }
 
@@ -39,7 +37,6 @@
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     // 获取显示的cell,保存cell的rect数组, 排序按cell的x从小到大
     NSMutableArray *cellArray = [[NSMutableArray alloc] init];
     UICollectionViewCell *cell;
@@ -57,13 +54,11 @@
 
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     // 重新设置frame
-    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     [self resetCellFrame:touches];
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     [UIView animateWithDuration:0.2 delay:0.5 options:UIViewAnimationOptionOverrideInheritedDuration animations:^{
         for (int i = 0; i < [self.cellArray count]; i++) {
             UICollectionViewCell *cell = [self.cellArray objectAtIndex:i];
@@ -86,7 +81,6 @@
 
 - (void)resetCellFrame :(NSSet<UITouch *> *) touches {
     
-    NSLog(@"%@%s", @"MSHomeBottomCollectView", __func__);
     // 获取点击的位置
     UITouch *touch = (UITouch *)touches.anyObject;
     CGPoint clickPoint = [touch locationInView:self];

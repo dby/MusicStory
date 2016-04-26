@@ -45,16 +45,8 @@
     self.successCallBack = successCallBack;
     self.errorCallBack = errorCallBack;
     
-    //NSDictionary *param = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:page] forKey:@"page"];
-    NSString *httpString = @"";
-    
     if ([_type isEqualToString: NOTIFY_OBJ_TODAY]) {
-        httpString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@", API_Server, @"/apps/app/daily/?", API_appVersion,API_openUDID,  API_resolution, API_systemVersion, API_pageSize, API_platform];
-        //NSLog(@"httpString: %@", httpString);
-        //self.centerView.setHeaderHidden(false)
-        //self.centerView.setFooterHidden(false)
-        // 隐藏右标题
-        //self.headerView.setRightTitleHidden(true)
+        
     }
     else if ([_type isEqualToString:NOTIFY_OBJ_RECOMMEND]) {
         
@@ -65,38 +57,28 @@
         
     }
     
-    // 获得数据
-    MusicStoryRequest *msr = [[MusicStoryRequest alloc] initWithType:MusicStoryTypeSpecific withPara:NULL];
-    // 开始刷新
-    [msr startWithCompletionBlockWithSuccess:^(YTKBaseRequest *request) {
+    AVQuery *query = [AVQuery queryWithClassName:@"Musics"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
-        NSDictionary *dataDic = [request.responseJSONObject objectForKey:@"data"];
-        NSLog(@"Apps Count: %lu", (unsigned long)[dataDic count]);
-        if ([dataDic[@"apps"] count] > 0) {
-            NSArray *array = dataDic[@"apps"];
+        if (!error) {
+        
+            NSArray<AVObject *> *nearbyTodos = objects;
+            for (AVObject *obj in nearbyTodos) {
             
-            if (page == 1) {
-                [self.dataSource removeAllObjects];
+                MSMusicModel *model = [[MSMusicModel alloc] initWithAVO:obj];
+                [self.dataSource addObject:model];
             }
-            
-            // 字典转模型
-            for (NSDictionary *dic in array) {
-                MSHomeDataModel *homeModel = [[MSHomeDataModel alloc] initWithDic:dic];
-                [self.dataSource addObject:homeModel];
-            }
-            // 刷新界面
             [self.centerView reloadData];
             [self.bottomView reloadData];
-            
-            // 回调给Controller
-            if (self.successCallBack) {
+                
+            if (successCallBack) {
                 self.successCallBack(self.dataSource);
             }
-            // 停止刷新
         }
-    } failure:^(YTKBaseRequest *request) {
-        if (self.errorCallBack) {
-            self.errorCallBack(nil);
+        else {
+            if (errorCallBack) {
+                self.errorCallBack(nil);
+            }
         }
     }];
 }

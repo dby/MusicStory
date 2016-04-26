@@ -18,7 +18,7 @@
 #import "MSHomeDetailViewController.h"
 
 #import "MSHomeViewModel.h"
-#import "MSHomeDataModel.h"
+#import "MSMusicModel.h"
 
 #import "UIColor+MS.h"
 #import "UIView+MS.h"
@@ -53,18 +53,16 @@
 
 #pragma mark - Setter Getter
 -(NSInteger)index {
-    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     return _index;
 }
 -(void)setIndex:(NSInteger)index {
     
-    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     _index = index;
     if ([self.viewModel.dataSource count] == 0) {
         return;
     }
     // 获取模型
-    MSHomeDataModel *model = self.viewModel.dataSource[index];
+    MSMusicModel *model = self.viewModel.dataSource[index];
     // 设置header的模型
     self.headerView.homeModel = model;
     // 设置背景动画
@@ -78,9 +76,6 @@
     
     [super viewDidLoad];
     
-    NSLog(@"%@%s", @"MSHomeViewController", __func__);
-    
-    // Do any additional setup after loading the view.
     [self initComponents];
     
     self.automaticallyAdjustsScrollViewInsets = false;
@@ -104,8 +99,8 @@
     [self showProgress];
     [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
         // 默认选中0
-        self.lastIndex = nil;
-        self.index = 0;
+        self.lastIndex  = nil;
+        self.index      = 0;
         [self.bottomCollectView setContentOffset:CGPointZero animated:false];
         [self scrollViewDidEndDecelerating:self.centerCollectView];
         
@@ -123,38 +118,36 @@
 #pragma mark Init
 
 - (void)initComponents {
-    NSLog(@"%@%s", @"MSHomeViewController", __func__);
     
-    // init HeaderView
-    _headerView = [[MSHomeHeaderView alloc] init];
-    _headerView.delegate = self;
+    debugMethod();
     
-    // init CenterCollectView
+    _headerView             = [[MSHomeHeaderView alloc] init];
+    _headerView.delegate    = self;
+    
     MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
     self.centerCollectView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420) collectionViewLayout:collectLayout];
     
-    self.centerCollectView.delegate = self;
-    self.centerCollectView.dataSource = self;
-    self.centerCollectView.showsHorizontalScrollIndicator = false;
-    self.centerCollectView.pagingEnabled = true;
+    self.centerCollectView.delegate                         = self;
+    self.centerCollectView.dataSource                       = self;
+    self.centerCollectView.showsHorizontalScrollIndicator   = false;
+    self.centerCollectView.pagingEnabled                    = true;
     
     [self.centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
-    self.centerCollectView.backgroundColor = [UIColor clearColor];
-    self.centerCollectView.tag  = 100;
+    self.centerCollectView.backgroundColor  = [UIColor clearColor];
+    self.centerCollectView.tag              = 100;
     
-    // init BottomCollectView
     MSHomeBottomFlowLayout *collectionLayout = [[MSHomeBottomFlowLayout alloc] init];
     self.bottomCollectView = [[MSHomeBottomCollectView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH-60, SCREEN_WIDTH, 60) collectionViewLayout:collectionLayout];
-    self.bottomCollectView.bottomViewDelegate = self;
-    self.bottomCollectView.delegate = self;
-    self.bottomCollectView.dataSource = self;
+    self.bottomCollectView.bottomViewDelegate   = self;
+    self.bottomCollectView.delegate             = self;
+    self.bottomCollectView.dataSource           = self;
     
     [self initRESlideMenu];
 }
 
 - (void)initRESlideMenu {
-    self.sideMenuViewController.scaleMenuView = false;
-    self.sideMenuViewController.scaleContentView = false;
+    self.sideMenuViewController.scaleMenuView       = false;
+    self.sideMenuViewController.scaleContentView    = false;
 }
 
 #pragma mark - scrollerDelegate
@@ -177,12 +170,11 @@
         // 设置底部动画
         [self bottomAnimation: [NSIndexPath indexPathForRow:_index inSection:0]];
         // 发送通知改变侧边栏的颜色
-        MSHomeDataModel *model = self.viewModel.dataSource[_index];
+        MSMusicModel *model = self.viewModel.dataSource[_index];
         NSNotification *noti = [NSNotification notificationWithName:NOTIFY_SETUPBG object:model.recommanded_background_color];
         [[NSNotificationCenter defaultCenter] postNotification:noti];
     }
 }
-
 
 #pragma mark - UICollectionView Delegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -192,16 +184,20 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
-    MSHomeDataModel *model = [self.viewModel.dataSource objectAtIndex:indexPath.row];
+    MSMusicModel *model = [self.viewModel.dataSource objectAtIndex:indexPath.row];
     if (collectionView.tag == 100) {
-        MSHomeCenterItemView *cell= [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
-        cell.homeModel = model;
+        
+        MSHomeCenterItemView *cell  = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
+        cell.homeModel              = model;
         
         return cell;
+        
     } else {
+        
         MSHomeBottomitemView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeBottomItemViewID" forIndexPath:indexPath];
-        cell.y = 50;
-        cell.iconUrl = model.icon_image;
+        cell.y          = 50;
+        cell.iconUrl    = model.icon_image;
+        
         return cell;
     }
 }
@@ -239,7 +235,7 @@
     // 如果当前不够8个item就不让他滚动
     [self bottomHorizontalAnimation:cell forIndexPath:indexPath];
     // 发送通知改变侧滑菜单的颜色
-    MSHomeDataModel *model = [self.viewModel.dataSource objectAtIndex:_index];
+    MSMusicModel *model = [self.viewModel.dataSource objectAtIndex:_index];
     NSNotification *noti = [NSNotification notificationWithName:NOTIFY_SETUPBG object:model.recommanded_background_color];
     [[NSNotificationCenter defaultCenter] postNotification:noti];
     
