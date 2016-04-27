@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MSDetialHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="411" height="65"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LJM-4K-UGM">
+                    <rect key="frame" x="0.0" y="0.0" width="411" height="65"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzd-vR-x2X">
+                            <rect key="frame" x="332" y="11" width="71" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="71" id="qix-WI-am3"/>
+                                <constraint firstAttribute="width" constant="71" id="s3s-lW-SF3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <inset key="titleEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="1000跟帖" backgroundImage="contentview_commentbacky"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="qix-WI-am3"/>
+                                </mask>
+                            </variation>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h82-Nw-Rcv">
+                            <rect key="frame" x="0.0" y="0.0" width="54" height="64"/>
+                            <state key="normal" image="icon_back"/>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="h82-Nw-Rcv" firstAttribute="leading" secondItem="LJM-4K-UGM" secondAttribute="leading" id="02I-Go-bql"/>
+                        <constraint firstAttribute="trailing" secondItem="Bzd-vR-x2X" secondAttribute="trailing" id="QKI-gZ-VeC"/>
+                        <constraint firstItem="h82-Nw-Rcv" firstAttribute="centerY" secondItem="LJM-4K-UGM" secondAttribute="centerY" id="ffe-ga-ibK"/>
+                        <constraint firstItem="Bzd-vR-x2X" firstAttribute="trailing" secondItem="LJM-4K-UGM" secondAttribute="trailingMargin" id="oZd-X2-TX8"/>
+                        <constraint firstItem="Bzd-vR-x2X" firstAttribute="centerY" secondItem="LJM-4K-UGM" secondAttribute="centerY" id="tjN-0L-nNf"/>
+                        <constraint firstItem="h82-Nw-Rcv" firstAttribute="top" secondItem="LJM-4K-UGM" secondAttribute="top" id="vdb-iH-iqf"/>
+                        <constraint firstItem="Bzd-vR-x2X" firstAttribute="top" secondItem="LJM-4K-UGM" secondAttribute="top" id="wCQ-iL-1FA"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="QKI-gZ-VeC"/>
+                            <exclude reference="wCQ-iL-1FA"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="LJM-4K-UGM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="4Y1-Jy-5QB"/>
+                <constraint firstItem="LJM-4K-UGM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GO1-Kt-kmZ"/>
+                <constraint firstAttribute="trailing" secondItem="LJM-4K-UGM" secondAttribute="trailing" id="KLs-nl-pg9"/>
+                <constraint firstAttribute="bottom" secondItem="LJM-4K-UGM" secondAttribute="bottom" id="Rdp-r3-JIP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="backButton" destination="h82-Nw-Rcv" id="dij-MV-Pb9"/>
+                <outlet property="commentButton" destination="Bzd-vR-x2X" id="u1B-dJ-Xeb"/>
+            </connections>
+            <point key="canvasLocation" x="466.5" y="267.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="contentview_commentbacky" width="31" height="44"/>
+        <image name="icon_back" width="54" height="44"/>
+    </resources>
+</document>

@@ -2,8 +2,12 @@
     <HEAD>
     </HEAD>
     <BODY>
-        <h1>{{ name }}</h1>
-        <img onload="this.onclick = function() {window.location.href = 'sx:imgsrc=' +this.src;};" src={{music_img}} width="304.000000" height="182.400000">
+        <h2><center>{{ name }}</center></h2>
+        
+        <center><img onload="this.onclick = function() {window.location.href = 'sx:imgsrc=' +this.src;};"
+                     src={{music_img}}
+                     width="304.000000"
+                    height="182.400000"></center>
         {{{ content }}}
     </BODY>
 </HTML>

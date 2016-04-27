@@ -8,35 +8,31 @@
 
 #import "MSHomeDetailViewController.h"
 
-#import "AppConfig.h"
+#import "Masonry.h"
 #import "GRMustache.h"
+
+#import "AppConfig.h"
+#import "MSPlayMusicView.h"
 #import "MSDetailContentView.h"
+#import "MSDetialHeaderView.h"
 
-@interface MSHomeDetailViewController ()<UIWebViewDelegate>
+@interface MSHomeDetailViewController ()<UIWebViewDelegate, MSDetailHeaderViewDelegate>
 
+@property (nonatomic, strong) MSDetialHeaderView *headerView;
 @property (nonatomic, strong) MSDetailContentView *contentView;
+@property (nonatomic, strong) MSPlayMusicView *playMusicView;
 
 @end
 
 @implementation MSHomeDetailViewController
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initComponent];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    [self.navigationController setTitle:_model.music_name];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    [self setupLayout];
 }
 
 #pragma mark - init
@@ -47,8 +43,18 @@
     self.contentView.delegate   = self;
     [self.view addSubview:self.contentView];
     
-    NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    self.headerView = [[MSDetialHeaderView alloc] init];
+    self.headerView.delegate = self;
+    [self.view addSubview:self.headerView];
     
+    self.playMusicView = [[MSPlayMusicView alloc] init];
+    [self.view addSubview:self.playMusicView];
+    self.playMusicView.model = _model;
+    self.playMusicView.layer.borderWidth = 1;
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     [self.contentView loadHTMLString:[self demoFormatWithName:_model.music_name
                                                         value:_model.music_story
                                                      musicImg:_model.music_imgs
@@ -65,6 +71,39 @@
     NSString *content           = [GRMustacheTemplate renderObject:renderObject fromString:template error:nil];
     
     return content;
+}
+
+#pragma mark - Custom Function
+
+- (void)setupLayout {
+    
+    [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).offset(20);
+        make.height.equalTo(@(SCREEN_HEIGHT * 50 / IPHONE5_HEIGHT));
+        make.left.right.equalTo(self.view);
+    }];
+    
+    [_playMusicView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.headerView.mas_bottom);
+        make.width.equalTo(@(self.view.frame.size.width - 40));
+        make.left.offset(20);
+    }];
+    
+    [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.playMusicView.mas_bottom).offset(-20);
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(@(self.view.frame.size.height - self.headerView.frame.size.height));
+    }];
+}
+
+#pragma mark - Custom Delegate
+
+-(void)backButtonDidClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)commentDidClick {
+    debugMethod();
 }
 
 #pragma mark - UIWebViewDelegate
