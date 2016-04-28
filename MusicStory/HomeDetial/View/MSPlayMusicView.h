@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DOUAudioFile.h"
+
+#import "Track.h"
+#import "AppConfig.h"
 #import "MSMusicModel.h"
+#import "DOUAudioStreamer.h"
+#import "DOUAudioVisualizer.h"
 
 @interface MSPlayMusicView : UIView
 
@@ -20,6 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *play_music;
 
 @property (nonatomic, strong) MSMusicModel *model;
-
+@property (nonatomic, strong) Track *track;
 
 @end
