@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GRMustache.h"
+#import "MSMusicModel.h"
 
-@interface MSDetailContentView : UIWebView
+@interface MSDetailContentView : UIScrollView
+
+@property (nonatomic, strong) MSMusicModel *model;
 
 @end

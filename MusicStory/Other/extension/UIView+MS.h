@@ -18,6 +18,4 @@
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) CGPoint origin;
 
--(void) viewAddTarget: (NSObject *)target :(SEL)action;
-
 @end

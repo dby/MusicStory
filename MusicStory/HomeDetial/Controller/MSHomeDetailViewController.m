@@ -13,32 +13,52 @@
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 #import "UIView+MS.h"
-
 #import "AppConfig.h"
-#import "MSPlayMusicView.h"
+#import "MSPlayView.h"
+
 #import "MSDetailContentView.h"
 #import "MSDetialHeaderView.h"
 
-@interface MSHomeDetailViewController ()<UIWebViewDelegate, MSDetailHeaderViewDelegate>
+@interface MSHomeDetailViewController ()< MSDetailHeaderViewDelegate, UIScrollViewDelegate, PlayViewDelegate>
 
 @property (nonatomic, strong) MSDetialHeaderView    *headerView;
 @property (nonatomic, strong) MSDetailContentView   *contentView;
-@property (nonatomic, strong) MSPlayMusicView       *playMusicView;
-@property (nonatomic, strong) UIImageView           *backMusicImageView;
+@property (nonatomic, strong) MSPlayView *playView;
 
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, assign) NSInteger lastPosition;
 
 @end
 
 @implementation MSHomeDetailViewController
 
+@synthesize model = _model;
+
+#pragma mark - Setter Getter
+
+-(MSMusicModel *)model {
+    return _model;
+}
+
+-(void)setModel:(MSMusicModel *)model {
+    _model = model;
+    _contentView.model = model;
+}
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+-(instancetype)initWithModel:(MSMusicModel *)model {
     
-    [self initComponent];
-    [self setupLayout];
+    self = [super init];
+    if (self) {
+        [self initComponent];
+        [self setupLayout];
+        self.model = model;
+    }
+    return self;
 }
 
 #pragma mark - init
@@ -49,51 +69,19 @@
     self.headerView.delegate    = self;
     [self.view addSubview:self.headerView];
     
-    self.backMusicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height * 0.5)];
-    [self.backMusicImageView setImageWithURL:[NSURL URLWithString:_model.music_imgs]
-             usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    
-    self.playMusicView          = [[MSPlayMusicView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 40, 100)];
-    self.playMusicView.model    = _model;
-    self.playMusicView.layer.borderWidth = 1;
-    
-    self.contentView            = [[MSDetailContentView alloc] initWithFrame:CGRectMake(0,
-                                                                                        _playMusicView.frame.size.height + _playMusicView.y,
-                                                                                        SCREEN_WIDTH,
-                                                                                        500)];
-    self.contentView.delegate           = self;
-    self.contentView.scrollView.bounces = NO;
-    self.contentView.scrollView.userInteractionEnabled          = false;
-    self.contentView.scrollView.showsVerticalScrollIndicator    = false;
-    self.contentView.scrollView.showsHorizontalScrollIndicator  = false;
+    self.contentView = [[MSDetailContentView alloc] initWithFrame:CGRectMake(0,
+                                                                             0,
+                                                                             SCREEN_WIDTH,
+                                                                             SCREEN_HEIGHT)];
+    [self.view addSubview:_contentView];
   
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    self.scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 1000);
-    
-    [self.scrollView addSubview:_backMusicImageView];
-    [self.scrollView addSubview:_playMusicView];
-    [self.scrollView addSubview:_contentView];
-    [self.view addSubview:self.scrollView];
-    
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-    [self.contentView loadHTMLString:[self demoFormatWithName:_model.music_name
-                                                        value:_model.music_story
-                                                     musicImg:_model.music_imgs
-                                      ] baseURL:baseURL];
-}
-
-- (NSString *)demoFormatWithName:(NSString *)name value:(NSString *)value musicImg:(NSString *)imgurl {
+    _playView = [[MSPlayView alloc] init];
+    _playView.delegate = self;
+    [self.view addSubview:_playView];
     
-    NSString *filename  = @"template.html";
-    NSString *path      = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:filename];
-    NSString *template  = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-    
-    NSDictionary *renderObject  = @{ @"name": name, @"content":value, @"music_img":imgurl};
-    NSString *content           = [GRMustacheTemplate renderObject:renderObject fromString:template error:nil];
-    
-    return content;
+    _lastPosition = 0;
 }
 
 #pragma mark - Custom Function
@@ -106,24 +94,16 @@
         make.left.right.equalTo(self.view);
     }];
     
-    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_headerView.mas_bottom);
-        make.left.right.equalTo(self.view);
-    }];
-    
-    /*
-    [_playMusicView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headerView.mas_bottom);
-        make.width.equalTo(@(self.view.frame.size.width - 40));
-        make.left.offset(20);
-    }];
-    
     [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.playMusicView.mas_bottom).offset(-20);
+        make.top.equalTo(self.headerView.mas_bottom);
         make.left.right.equalTo(self.view);
         make.height.equalTo(@(self.view.frame.size.height - self.headerView.frame.size.height));
     }];
-     */
+    
+    [_playView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.leading.equalTo(@(self.view.width / 2 - 30));
+    }];
 }
 
 #pragma mark - Custom Delegate
@@ -136,19 +116,32 @@
     debugMethod();
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - UIScrollviewDelegate
 
--(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    NSString *urlStr = request.URL.absoluteString;
-    
-    if ([urlStr containsString:@"imgsrc"]) {
-        NSRange range = [urlStr rangeOfString:@"imgsrc="];
-        NSString *url = [urlStr substringWithRange:NSMakeRange(range.location + range.length, urlStr.length - range.location - range.length)];
-        debugLog(@"URL: %@", url);
+    NSInteger currentPostion = scrollView.contentOffset.y;
+    if (currentPostion - _lastPosition > 20) {
+        _lastPosition = currentPostion;
+        debugLog(@"Up...");
+        [UIView animateWithDuration:0.2 animations:^{
+            _playView.hidden = true;
+        }];
     }
-    
-    return YES;
+    else if (_lastPosition - currentPostion > 20)
+    {
+        _lastPosition = currentPostion;
+        debugLog(@"Down...");
+        [UIView animateWithDuration:0.2 animations:^{
+            _playView.hidden = false;
+        }];
+    }
+}
+
+#pragma mark - PlayViewDelegate
+
+-(void)playButtonDidClick:(BOOL)selected {
+    debugMethod();
 }
 
 @end

@@ -10,12 +10,6 @@
 
 @implementation UIView (MS)
 
--(void)viewAddTarget:(NSObject *)target :(SEL)action {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
-    self.userInteractionEnabled = true;
-    //[self addGestureRecognizer:tap];
-}
-
 #pragma mark - Setter Getter
 -(CGFloat)x {
     return self.frame.origin.x;

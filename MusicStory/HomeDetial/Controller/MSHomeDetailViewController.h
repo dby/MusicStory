@@ -13,4 +13,6 @@
 
 @property(nonatomic, strong) MSMusicModel *model;
 
+-(instancetype)initWithModel:(MSMusicModel *)model;
+
 @end

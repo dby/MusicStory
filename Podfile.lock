@@ -27,6 +27,21 @@ PODS:
     - AVOSCloud
   - AVOSCloudIM (3.2.8):
     - AVOSCloud
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
@@ -45,6 +60,7 @@ DEPENDENCIES:
   - AVOSCloud
   - AVOSCloudCrashReporting
   - AVOSCloudIM
+  - BlocksKit
   - GRMustache (~> 7.3.2)
   - Masonry
   - RESideMenu
@@ -58,6 +74,7 @@ SPEC CHECKSUMS:
   AVOSCloud: b789619942a4275e615f8f0782e7475675951b95
   AVOSCloudCrashReporting: 2dddc7dfc8ef423492a01c0076b3e97716854701
   AVOSCloudIM: d2f6a13d64f9676a43e4d68b822bd1be3f96fb76
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2

@@ -1,0 +1,24 @@
+//
+//  MSPlayView.h
+//  MusicStory
+//
+//  Created by sys on 16/5/4.
+//  Copyright © 2016年 sys. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@protocol PlayViewDelegate <NSObject>
+
+- (void)playButtonDidClick:(BOOL)selected;
+
+@end
+
+@interface MSPlayView : UIView
+
+@property (nonatomic,strong) UIImageView *circleIV;
+@property (nonatomic,strong) UIImageView *contentIV;
+@property (nonatomic,strong) UIButton *playButton;
+@property (nonatomic,weak) id<PlayViewDelegate> delegate;
+
+@end
