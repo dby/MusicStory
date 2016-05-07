@@ -48,7 +48,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    debugMethod();
 }
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    debugMethod();
+    if (_playView) {
+        [_playView stop];
+    }
+}
+
+#pragma mark - init
 
 -(instancetype)initWithModel:(MSMusicModel *)model {
     
@@ -60,8 +72,6 @@
     }
     return self;
 }
-
-#pragma mark - init
 
 - (void)initComponent {
     
@@ -85,7 +95,9 @@
 }
 
 #pragma mark - Custom Function
-
+/*!
+ *  @brief 布局
+ */
 - (void)setupLayout {
     
     [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -96,8 +108,7 @@
     
     [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.headerView.mas_bottom);
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@(self.view.frame.size.height - self.headerView.frame.size.height));
+        make.left.right.bottom.equalTo(self.view);
     }];
     
     [_playView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -123,7 +134,7 @@
     NSInteger currentPostion = scrollView.contentOffset.y;
     if (currentPostion - _lastPosition > 20) {
         _lastPosition = currentPostion;
-        debugLog(@"Up...");
+        
         [UIView animateWithDuration:0.2 animations:^{
             _playView.hidden = true;
         }];
@@ -131,7 +142,7 @@
     else if (_lastPosition - currentPostion > 20)
     {
         _lastPosition = currentPostion;
-        debugLog(@"Down...");
+        
         [UIView animateWithDuration:0.2 animations:^{
             _playView.hidden = false;
         }];
@@ -141,7 +152,12 @@
 #pragma mark - PlayViewDelegate
 
 -(void)playButtonDidClick:(BOOL)selected {
-    debugMethod();
+    if (selected) {
+        [self.playView.contentIV sd_setImageWithURL:[NSURL URLWithString:@"http://fdfs.xmcdn.com/group10/M01/DB/9E/wKgDZ1aPRP_CFsKVAAKNJI_kfBk690_web_meduim.jpg"]];
+        [_playView play];
+    } else {
+        [_playView pause];
+    }
 }
 
 @end

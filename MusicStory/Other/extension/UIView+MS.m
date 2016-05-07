@@ -39,7 +39,7 @@
 }
 
 -(CGFloat)height {
-    return self.frame.size.width;
+    return self.frame.size.height;
 }
 -(void)setHeight:(CGFloat)height {
     CGRect frame = self.frame;

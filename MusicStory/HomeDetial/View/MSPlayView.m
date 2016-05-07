@@ -12,9 +12,21 @@
 #import <BlocksKit/BlocksKit.h>
 #import "UIControl+BlocksKit.h"
 
+#import "DOUAudioFile.h"
+#import "DOUAudioStreamer.h"
+#import "DOUAudioVisualizer.h"
+
+#import "Track.h"
+#import "UIView+MS.h"
+#import "AppConfig.h"
+
 @interface MSPlayView ()
+{
+    DOUAudioStreamer *_streamer;
+}
 // 设置一个私有的定时器
 @property (nonatomic,strong) CADisplayLink *link;
+@property (nonatomic, strong) Track *track;
 @end
 
 //宏定义   角度转弧度
@@ -22,25 +34,38 @@
 @implementation MSPlayView
 
 - (instancetype)init {
+    
     if (self = [super init]) {
         // 布局
-        UIImageView *backgoundIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tabbar_np_normal"]];
-        [self addSubview:backgoundIV];
-        [backgoundIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        _backgoundIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tabbar_np_normal"]];
+        _backgoundIV.width  = 50;
+        _backgoundIV.height = 50;
+        [self addSubview:_backgoundIV];
+        [_backgoundIV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(0);
         }];
+        
         _circleIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tabbar_np_loop"]];
-        [backgoundIV addSubview:_circleIV];
+        [_backgoundIV addSubview:_circleIV];
         [_circleIV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.top.mas_equalTo(2);
             make.right.mas_equalTo(-2);
             make.bottom.mas_equalTo(-8);
         }];
         // 设置circle的用户交互
-        backgoundIV.userInteractionEnabled  = YES;
+        _backgoundIV.userInteractionEnabled = YES;
         _circleIV.userInteractionEnabled    = YES;
+        _contentIV.userInteractionEnabled   = YES;
+        self.userInteractionEnabled         = YES;
+        
+        _backgoundIV.contentMode    = UIViewContentModeScaleAspectFit;
+        _circleIV.contentMode       = UIViewContentModeScaleAspectFit;
+        _contentIV.contentMode      = UIViewContentModeScaleAspectFit;
+        
         // 按钮被点击前
         [self.playButton setImage:[UIImage imageNamed:@"tabbar_np_play"] forState:UIControlStateNormal];
+        
+        _track = [[Track alloc] init];
     }
     return self;
 }
@@ -50,7 +75,7 @@
     self.circleIV.layer.transform = CATransform3DRotate(self.circleIV.layer.transform, angleToRadian(72/60.0), 0, 0, 1);
 }
 
-#pragma mark - PlayButton,ContentIV,CADisplayLink定时器懒加载
+#pragma mark - PlayButton, ContentIV, CADisplayLink定时器懒加载
 - (UIButton *)playButton {
     if (!_playButton) {
         _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -71,8 +96,8 @@
         [_playButton bk_addEventHandler:^(UIButton* sender) {
             // 点击图和不点击图交换
             if ([self.delegate respondsToSelector:@selector(playButtonDidClick:)]) {
-                sender.selected = !sender.selected;
-                self.link.paused = !sender.selected;
+                sender.selected     = !sender.selected;
+                self.link.paused    = !sender.selected;
                 [self.delegate playButtonDidClick:sender.selected];
             }
         } forControlEvents:UIControlEventTouchUpInside];
@@ -89,16 +114,14 @@
             make.edges.mas_equalTo(UIEdgeInsetsMake(8, 8, 8, 8));
         }];
         // KVO观察image变化, 变化了就初始化定时器, 值变化则执行task, BlockKit框架对通知的一个拓展
-        
         [_contentIV bk_addObserverForKeyPath:@"image" options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
             // 启动定时器
             self.link.paused = NO;
             self.playButton.selected = YES;
         }];
         
-        
         // 作圆内容视图背景
-        _contentIV.layer.cornerRadius = 22;
+        _contentIV.layer.cornerRadius = 25;
         _contentIV.clipsToBounds = YES;
     }
     return _contentIV;
@@ -113,6 +136,30 @@
         [_link addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     }
     return _link;
+}
+
+#pragma mark - Custom Delegate
+- (void)play {
+    
+    if ([_streamer status] == DOUAudioStreamerPaused || [_streamer status] == DOUAudioStreamerIdle) {
+        [_streamer play];
+    } else {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [_track setAudioFileURL:[NSURL URLWithString:@"http://ac-xjvf4uf6.clouddn.com/a45a76b04cd7ef09.mp3"]];
+            _streamer = [DOUAudioStreamer streamerWithAudioFile:_track];
+        
+            [_streamer play];
+        });
+    }
+}
+
+- (void)pause {
+    [_streamer pause];
+}
+
+- (void)stop {
+    [_streamer stop];
+    _streamer = nil;
 }
 
 @end

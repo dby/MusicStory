@@ -26,6 +26,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *play_music;
 
 @property (nonatomic, strong) MSMusicModel *model;
-@property (nonatomic, strong) Track *track;
 
 @end
