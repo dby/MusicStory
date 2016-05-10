@@ -12,23 +12,28 @@
 
 @protocol MSSlideCenterViewDelegate
 // 点击登陆
-- (void)slideCenterViewLoginViewDidClick :(MSSlideCenterView *)centerView loginView:(UIView *) loginView;
-// 推荐
-- (void)slideCenterViewRecommendViewDidClick :(MSSlideCenterView *)centerViews recommendView:(UIView *)recommendView;
-// 收藏
-- (void)slideCenterViewCollectViewDidClick :(MSSlideCenterView *)centerView collectView:(UIView *)collectView;
+-(void)slideCenterViewLoginViewDidClick         :(MSSlideCenterView *)centerView loginView:(UIView *) loginView;
+// 音乐故事
+-(void)slideCenterViewMusicStoryViewDidClick    :(MSSlideCenterView *)centerView musicStoryView:(UIView *)musicStoryView;
+// 我的收藏
+-(void)slideCenterViewCollectViewDidClick       :(MSSlideCenterView *)centerView collectView:(UIView *)collectView;
 // 搜索
-- (void)slideCenterViewSearchViewDidClick :(MSSlideCenterView *)centerView searchView:(UIView *)searchView;
-// 设置
-- (void)slideCenterViewSettingViewDidClick :(MSSlideCenterView *)centerView settingView:(UIView *)settingView;
+-(void)slideCenterViewSearchViewDidClick        :(MSSlideCenterView *)centerView searchView:(UIView *)searchView;
+// 关于我们
+-(void)slideCenterViewAboutUsViewDidClick       :(MSSlideCenterView *)centerView aboutUsView:(UIView *)aboutUsView;
+// 意见反馈
+-(void)slideCenterViewFeedbackViewDidClick      :(MSSlideCenterView *)centerView feedbackView:(UIView *)feedbackView;
 @end
 
 @interface MSSlideCenterView : UIView
 
 @property (weak, nonatomic) IBOutlet UIView *loginview;
-@property (weak, nonatomic) IBOutlet UIView *recommandView;
+@property (weak, nonatomic) IBOutlet UIView *musicStoryView;
 @property (weak, nonatomic) IBOutlet UIView *collectView;
 @property (weak, nonatomic) IBOutlet UIButton *searchBtnDidClick;
+@property (weak, nonatomic) IBOutlet UIView *aboutUsView;
+@property (weak, nonatomic) IBOutlet UIView *feedBackView;
+@property (weak, nonatomic) IBOutlet UIImageView *indexView;
 @property (assign, nonatomic) id<MSSlideCenterViewDelegate> delegate;
 
 @property (weak, nonatomic) UIView* curView;

@@ -60,51 +60,28 @@
                     </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016.04.19" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0eI-im-Xz0">
-                    <rect key="frame" x="256" y="84" width="62" height="33"/>
+                    <rect key="frame" x="256" y="102.5" width="62" height="14.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vua-4F-z0g">
-                    <rect key="frame" x="268" y="34" width="50" height="50"/>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="L2t-Fa-BNh"/>
-                        <constraint firstAttribute="width" constant="50" id="RCs-Gf-Czi"/>
-                    </constraints>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="owB-OR-REn" firstAttribute="leading" secondItem="6XM-va-Paj" secondAttribute="trailing" constant="10" id="0Vv-5A-Qhl"/>
-                <constraint firstItem="0eI-im-Xz0" firstAttribute="top" secondItem="Vua-4F-z0g" secondAttribute="bottom" id="2ob-fN-uK6"/>
-                <constraint firstAttribute="trailing" secondItem="Vua-4F-z0g" secondAttribute="trailing" constant="20" id="63K-1I-3xf"/>
-                <constraint firstItem="0eI-im-Xz0" firstAttribute="top" secondItem="Vua-4F-z0g" secondAttribute="bottom" constant="35" id="7wj-yc-6yj"/>
                 <constraint firstItem="N9e-FR-Wah" firstAttribute="top" secondItem="6XM-va-Paj" secondAttribute="top" id="8Xd-2p-Tl6"/>
-                <constraint firstItem="0eI-im-Xz0" firstAttribute="top" secondItem="Vua-4F-z0g" secondAttribute="bottom" constant="35" id="CD7-Bv-1sa"/>
                 <constraint firstAttribute="bottom" secondItem="qgr-Of-dYd" secondAttribute="bottom" id="CR7-dd-jzu"/>
-                <constraint firstItem="0eI-im-Xz0" firstAttribute="top" secondItem="Vua-4F-z0g" secondAttribute="bottom" id="Csa-dq-bdv"/>
-                <constraint firstItem="6XM-va-Paj" firstAttribute="top" secondItem="Vua-4F-z0g" secondAttribute="top" id="GeV-4x-t9T"/>
                 <constraint firstItem="N9e-FR-Wah" firstAttribute="top" secondItem="6XM-va-Paj" secondAttribute="top" id="IQL-Yz-PRt"/>
-                <constraint firstItem="Vua-4F-z0g" firstAttribute="leading" secondItem="N9e-FR-Wah" secondAttribute="trailing" constant="57" id="TN6-o6-pxO"/>
-                <constraint firstItem="Vua-4F-z0g" firstAttribute="leading" secondItem="owB-OR-REn" secondAttribute="trailing" constant="75" id="TPJ-mb-Nr1"/>
-                <constraint firstItem="Vua-4F-z0g" firstAttribute="centerY" secondItem="owB-OR-REn" secondAttribute="centerY" id="USX-xc-1Jc"/>
-                <constraint firstItem="Vua-4F-z0g" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="34" id="bAN-62-xD9"/>
                 <constraint firstItem="qgr-Of-dYd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="bzd-Yl-B6I"/>
                 <constraint firstItem="qgr-Of-dYd" firstAttribute="baseline" secondItem="6XM-va-Paj" secondAttribute="baseline" id="dNU-2d-28f"/>
                 <constraint firstItem="owB-OR-REn" firstAttribute="top" secondItem="N9e-FR-Wah" secondAttribute="bottom" constant="8" id="e6E-gs-WOH"/>
-                <constraint firstItem="Vua-4F-z0g" firstAttribute="leading" secondItem="owB-OR-REn" secondAttribute="trailing" constant="71" id="eOb-IO-vqt"/>
                 <constraint firstItem="qgr-Of-dYd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="26" id="eVU-PB-nKE"/>
                 <constraint firstItem="N9e-FR-Wah" firstAttribute="leading" secondItem="6XM-va-Paj" secondAttribute="trailing" constant="10" id="eqg-6L-3hg"/>
-                <constraint firstAttribute="trailing" secondItem="Vua-4F-z0g" secondAttribute="trailing" id="hXU-sQ-KUD"/>
                 <constraint firstItem="qgr-Of-dYd" firstAttribute="top" secondItem="6XM-va-Paj" secondAttribute="bottom" constant="4" id="iW1-Rb-PtC"/>
-                <constraint firstItem="Vua-4F-z0g" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="iua-DP-lnm"/>
                 <constraint firstItem="6XM-va-Paj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="mjg-ed-hhx"/>
-                <constraint firstItem="Vua-4F-z0g" firstAttribute="leading" secondItem="owB-OR-REn" secondAttribute="trailing" id="neJ-or-Qws"/>
                 <constraint firstItem="N9e-FR-Wah" firstAttribute="leading" secondItem="6XM-va-Paj" secondAttribute="trailing" constant="10" id="och-AQ-FX8"/>
                 <constraint firstAttribute="bottom" secondItem="0eI-im-Xz0" secondAttribute="bottom" constant="9" id="pQ2-zm-vu2"/>
                 <constraint firstItem="owB-OR-REn" firstAttribute="leading" secondItem="6XM-va-Paj" secondAttribute="trailing" constant="10" id="psl-ak-7RJ"/>
-                <constraint firstItem="Vua-4F-z0g" firstAttribute="leading" secondItem="owB-OR-REn" secondAttribute="trailing" constant="57" id="tCh-ee-w6d"/>
                 <constraint firstItem="qgr-Of-dYd" firstAttribute="top" secondItem="6XM-va-Paj" secondAttribute="bottom" constant="4" id="wIb-y7-Ti1"/>
                 <constraint firstItem="6XM-va-Paj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="xFD-A1-Cgw"/>
                 <constraint firstAttribute="trailing" secondItem="0eI-im-Xz0" secondAttribute="trailing" constant="20" id="xLG-uH-DdL"/>
@@ -113,7 +90,6 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="GeV-4x-t9T"/>
                     <exclude reference="dNU-2d-28f"/>
                     <exclude reference="eVU-PB-nKE"/>
                     <exclude reference="iW1-Rb-PtC"/>
@@ -121,22 +97,10 @@
                     <exclude reference="IQL-Yz-PRt"/>
                     <exclude reference="och-AQ-FX8"/>
                     <exclude reference="0Vv-5A-Qhl"/>
-                    <exclude reference="2ob-fN-uK6"/>
-                    <exclude reference="7wj-yc-6yj"/>
-                    <exclude reference="CD7-Bv-1sa"/>
-                    <exclude reference="TN6-o6-pxO"/>
-                    <exclude reference="TPJ-mb-Nr1"/>
-                    <exclude reference="USX-xc-1Jc"/>
-                    <exclude reference="eOb-IO-vqt"/>
-                    <exclude reference="hXU-sQ-KUD"/>
-                    <exclude reference="iua-DP-lnm"/>
-                    <exclude reference="neJ-or-Qws"/>
-                    <exclude reference="tCh-ee-w6d"/>
                 </mask>
             </variation>
             <connections>
                 <outlet property="music_name" destination="qgr-Of-dYd" id="eVV-5H-UC7"/>
-                <outlet property="play_music" destination="Vua-4F-z0g" id="pJa-VQ-yzm"/>
                 <outlet property="singer_brief" destination="owB-OR-REn" id="xB3-ma-5z0"/>
                 <outlet property="singer_name" destination="N9e-FR-Wah" id="Qah-dT-DiM"/>
                 <outlet property="singer_portrait" destination="6XM-va-Paj" id="M0Y-Oy-pfS"/>

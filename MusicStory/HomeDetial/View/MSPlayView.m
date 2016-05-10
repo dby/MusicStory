@@ -20,6 +20,10 @@
 #import "UIView+MS.h"
 #import "AppConfig.h"
 
+static void *kStatusKVOKey = &kStatusKVOKey;
+static void *kDurationKVOKey = &kDurationKVOKey;
+static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
+
 @interface MSPlayView ()
 {
     DOUAudioStreamer *_streamer;
@@ -33,6 +37,7 @@
 #define angleToRadian(x) (x/180.0*M_PI)
 @implementation MSPlayView
 
+#pragma mark - life cycle
 - (instancetype)init {
     
     if (self = [super init]) {
@@ -70,12 +75,17 @@
     return self;
 }
 
-/**  背景图rotation滚动 */
-- (void)rotation {
-    self.circleIV.layer.transform = CATransform3DRotate(self.circleIV.layer.transform, angleToRadian(72/60.0), 0, 0, 1);
+-(void)dealloc {
+    
+    debugLog(@"dealloc");
+    [_streamer removeObserver:self forKeyPath:@"status" context:kStatusKVOKey];
+    [_streamer removeObserver:self forKeyPath:@"duration" context:kDurationKVOKey];
+    [_streamer removeObserver:self forKeyPath:@"bufferingRatio" context:kBufferingRatioKVOKey];
+    
 }
 
 #pragma mark - PlayButton, ContentIV, CADisplayLink定时器懒加载
+
 - (UIButton *)playButton {
     if (!_playButton) {
         _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -139,17 +149,86 @@
 }
 
 #pragma mark - Custom Delegate
+
 - (void)play {
-    
     if ([_streamer status] == DOUAudioStreamerPaused || [_streamer status] == DOUAudioStreamerIdle) {
         [_streamer play];
     } else {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [_track setAudioFileURL:[NSURL URLWithString:@"http://ac-xjvf4uf6.clouddn.com/a45a76b04cd7ef09.mp3"]];
             _streamer = [DOUAudioStreamer streamerWithAudioFile:_track];
+            [_streamer addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:kStatusKVOKey];
+            [_streamer addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:kDurationKVOKey];
+            [_streamer addObserver:self forKeyPath:@"bufferingRatio" options:NSKeyValueObservingOptionNew context:kBufferingRatioKVOKey];
         
             [_streamer play];
         });
+    }
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    
+    if (context == kStatusKVOKey) {
+        
+        [self performSelector:@selector(updateStatus) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
+        
+    } else if (context == kDurationKVOKey) {
+        
+        
+    } else if (context == kBufferingRatioKVOKey) {
+        
+    } else {
+        
+    }
+    
+}
+
+#pragma mark - Custom Function
+
+/**  背景图rotation滚动 */
+- (void)rotation {
+    self.circleIV.layer.transform = CATransform3DRotate(self.circleIV.layer.transform, angleToRadian(72/60.0), 0, 0, 1);
+}
+
+- (void)updateStatus
+{
+    switch ([_streamer status]) {
+        case DOUAudioStreamerPlaying:
+        {
+            debugLog(@"playing");
+            break;
+        }
+        case DOUAudioStreamerPaused:
+        {
+            debugLog(@"paused");
+            break;
+        }
+        case DOUAudioStreamerIdle:
+        {
+            debugLog(@"idle");
+            break;
+        }
+        case DOUAudioStreamerFinished:
+        {
+            debugLog(@"Finished");
+            [_streamer stop];
+            if ([self.delegate respondsToSelector:@selector(playButtonDidClick:)]) {
+                _playButton.selected    = !_playButton.selected;
+                self.link.paused        = !_playButton.selected;
+                [self.delegate playButtonDidClick:_playButton.selected];
+            }
+            break;
+        }
+        case DOUAudioStreamerBuffering:
+        {
+            debugLog(@"buffering");
+            break;
+        }
+        case DOUAudioStreamerError:
+        {
+            debugLog(@"error");
+            break;
+        }
     }
 }
 
@@ -159,7 +238,6 @@
 
 - (void)stop {
     [_streamer stop];
-    _streamer = nil;
 }
 
 @end

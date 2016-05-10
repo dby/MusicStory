@@ -7,6 +7,7 @@
 //
 
 #import "AppConfig.h"
+#import "UIView+MS.h"
 #import "MSSlideCenterView.h"
 
 @implementation MSSlideCenterView
@@ -15,13 +16,28 @@
     
     [super awakeFromNib];
     
-    _curView = self.recommandView;
+    [self.loginview addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(loginViewDidClick)]];
+    [self.musicStoryView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(musicStoryDidClick)]];
+    [self.collectView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
+                                                                                  action:@selector(collectViewDidClick)]];
+    [self.searchBtnDidClick addTarget:self action:@selector(searchBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.aboutUsView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
+                                                                                  action:@selector(aboutUsDidClick)]];
+    [self.feedBackView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
+                                                                                   action:@selector(feedbackDidClick)]];
+    
+    // 默认选择音乐故事
+    self.curView = self.musicStoryView;
+    self.indexView.y = self.musicStoryView.center.y;
     debugMethod();
     
 }
 
 +(MSSlideCenterView *)centerView {
     
+    debugMethod();
     return [[[NSBundle mainBundle] loadNibNamed:@"MSSlideCenterView" owner:nil options:nil] firstObject];
 }
 
@@ -29,23 +45,48 @@
 
 - (void)loginViewDidClick {
     debugMethod();
-    if (_curView == self.loginview)
-        return;
-    [self.delegate slideCenterViewLoginViewDidClick:self loginView:self.loginview];
+    //[self.delegate slideCenterViewLoginViewDidClick:self loginView:self.loginview];
 }
 
-- (void)recommandDidClick {
+- (void)musicStoryDidClick {
     debugMethod();
-    if (_curView == self.recommandView)
+    if (_curView == self.musicStoryView)
         return;
-    [self.delegate slideCenterViewRecommendViewDidClick:self recommendView:self.recommandView];
+    self.curView        = self.musicStoryView;
+    self.indexView.y    = self.musicStoryView.center.y;
+    [self.delegate slideCenterViewLoginViewDidClick:self loginView:self.musicStoryView];
 }
 
 - (void)collectViewDidClick {
     debugMethod();
     if (_curView == self.collectView)
         return;
+    self.curView        = self.collectView;
+    self.indexView.y    = self.collectView.center.y;
     [self.delegate slideCenterViewCollectViewDidClick:self collectView:self.collectView];
+}
+
+- (void)searchDidClick {
+    debugMethod();
+    [self.delegate slideCenterViewSearchViewDidClick:self searchView:self.searchBtnDidClick];
+}
+
+- (void)aboutUsDidClick {
+    debugMethod();
+    if (_curView == self.aboutUsView)
+        return;
+    self.curView        = self.aboutUsView;
+    self.indexView.y    = self.aboutUsView.center.y;
+    //[self.delegate slideCenterViewAboutUsViewDidClick:self aboutUsView:self.aboutUsView];
+}
+
+- (void)feedbackDidClick {
+    debugMethod();
+    if (_curView == self.feedBackView)
+        return;
+    self.curView        = self.feedBackView;
+    self.indexView.y    = self.feedBackView.center.y;
+    //[self.delegate slideCenterViewFeedbackViewDidClick:self feedbackView:self.feedBackView];
 }
 
 @end

@@ -80,6 +80,7 @@
     [self addSubview:_webView];
     
     self.backMusicImageView = [[UIImageView alloc] init];
+    self.backMusicImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:_backMusicImageView];
     
     self.playMusicView          = [[MSPlayMusicView alloc] init];
