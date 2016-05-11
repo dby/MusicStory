@@ -45,7 +45,7 @@
 
 - (void)loginViewDidClick {
     debugMethod();
-    //[self.delegate slideCenterViewLoginViewDidClick:self loginView:self.loginview];
+    [self.delegate slideCenterViewLoginViewDidClick];
 }
 
 - (void)musicStoryDidClick {
@@ -54,7 +54,7 @@
         return;
     self.curView        = self.musicStoryView;
     self.indexView.y    = self.musicStoryView.center.y;
-    [self.delegate slideCenterViewLoginViewDidClick:self loginView:self.musicStoryView];
+    [self.delegate slideCenterViewLoginViewDidClick];
 }
 
 - (void)collectViewDidClick {
@@ -63,12 +63,12 @@
         return;
     self.curView        = self.collectView;
     self.indexView.y    = self.collectView.center.y;
-    [self.delegate slideCenterViewCollectViewDidClick:self collectView:self.collectView];
+    [self.delegate slideCenterViewCollectViewDidClick];
 }
 
 - (void)searchDidClick {
     debugMethod();
-    [self.delegate slideCenterViewSearchViewDidClick:self searchView:self.searchBtnDidClick];
+    [self.delegate slideCenterViewSearchViewDidClick];
 }
 
 - (void)aboutUsDidClick {
@@ -77,7 +77,7 @@
         return;
     self.curView        = self.aboutUsView;
     self.indexView.y    = self.aboutUsView.center.y;
-    //[self.delegate slideCenterViewAboutUsViewDidClick:self aboutUsView:self.aboutUsView];
+    [self.delegate slideCenterViewAboutUsViewDidClick];
 }
 
 - (void)feedbackDidClick {

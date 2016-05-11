@@ -54,29 +54,26 @@
 
 #pragma mark - MSSlideCenterViewDelegate
 
--(void)slideCenterViewCollectViewDidClick:(MSSlideCenterView *)centerView collectView:(UIView *)collectView
-{
+-(void)slideCenterViewLoginViewDidClick {
     debugMethod();
 }
 
--(void)slideCenterViewRecommendViewDidClick:(MSSlideCenterView *)centerViews recommendView:(UIView *)recommendView
-{
+-(void)slideCenterViewSearchViewDidClick {
     debugMethod();
 }
 
--(void)slideCenterViewLoginViewDidClick:(MSSlideCenterView *)centerView loginView:(UIView *)loginView
-{
-    
+-(void)slideCenterViewAboutUsViewDidClick {
     debugMethod();
 }
 
--(void)slideCenterViewSearchViewDidClick:(MSSlideCenterView *)centerView searchView:(UIView *)searchView
-{
+-(void)slideCenterViewCollectViewDidClick {
     debugMethod();
 }
 
--(void)slideCenterViewSettingViewDidClick:(MSSlideCenterView *)centerView settingView:(UIView *)settingView
-{
+-(void)slideCenterViewFeedbackViewDidClick {
+    debugMethod();
+}
+-(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
 }
 

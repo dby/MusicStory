@@ -60,7 +60,7 @@
                     </subviews>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCk-Uw-9z4" userLabel="搜索">
-                    <rect key="frame" x="20" y="535" width="25" height="25"/>
+                    <rect key="frame" x="0.0" y="535" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="E39-hy-nB3"/>
                         <constraint firstAttribute="width" constant="25" id="NR3-MR-nL2"/>
@@ -104,7 +104,7 @@
             <constraints>
                 <constraint firstItem="BJv-1x-Rpu" firstAttribute="top" secondItem="pYd-t5-udU" secondAttribute="bottom" constant="8" id="1LV-Jg-ins"/>
                 <constraint firstItem="3RP-Rb-8T6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="174" id="1bE-Yx-2Xl"/>
-                <constraint firstItem="aCk-Uw-9z4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="2Vg-iZ-clr"/>
+                <constraint firstItem="aCk-Uw-9z4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="2Vg-iZ-clr"/>
                 <constraint firstItem="3RP-Rb-8T6" firstAttribute="leading" secondItem="DUG-FX-2gZ" secondAttribute="leading" id="4YX-te-Lqt"/>
                 <constraint firstItem="3RP-Rb-8T6" firstAttribute="leading" secondItem="BJv-1x-Rpu" secondAttribute="leading" id="4c2-3H-AUq"/>
                 <constraint firstItem="DUG-FX-2gZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="42" id="AJV-Q6-Cyl"/>
@@ -127,7 +127,7 @@
                 <constraint firstItem="pYd-t5-udU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="270" id="tMw-p1-cVt"/>
                 <constraint firstItem="3RP-Rb-8T6" firstAttribute="top" secondItem="DUG-FX-2gZ" secondAttribute="bottom" constant="82" id="vc6-eU-ngA"/>
             </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <connections>
                 <outlet property="aboutUsView" destination="pYd-t5-udU" id="85P-p1-9Nn"/>
                 <outlet property="collectView" destination="J4U-5Z-39T" id="d1S-xP-ZEq"/>

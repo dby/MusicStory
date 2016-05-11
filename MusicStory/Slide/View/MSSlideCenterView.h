@@ -12,17 +12,17 @@
 
 @protocol MSSlideCenterViewDelegate
 // 点击登陆
--(void)slideCenterViewLoginViewDidClick         :(MSSlideCenterView *)centerView loginView:(UIView *) loginView;
+-(void)slideCenterViewLoginViewDidClick;
 // 音乐故事
--(void)slideCenterViewMusicStoryViewDidClick    :(MSSlideCenterView *)centerView musicStoryView:(UIView *)musicStoryView;
+-(void)slideCenterViewMusicStoryViewDidClick;
 // 我的收藏
--(void)slideCenterViewCollectViewDidClick       :(MSSlideCenterView *)centerView collectView:(UIView *)collectView;
+-(void)slideCenterViewCollectViewDidClick;
 // 搜索
--(void)slideCenterViewSearchViewDidClick        :(MSSlideCenterView *)centerView searchView:(UIView *)searchView;
+-(void)slideCenterViewSearchViewDidClick;
 // 关于我们
--(void)slideCenterViewAboutUsViewDidClick       :(MSSlideCenterView *)centerView aboutUsView:(UIView *)aboutUsView;
+-(void)slideCenterViewAboutUsViewDidClick;
 // 意见反馈
--(void)slideCenterViewFeedbackViewDidClick      :(MSSlideCenterView *)centerView feedbackView:(UIView *)feedbackView;
+-(void)slideCenterViewFeedbackViewDidClick;
 @end
 
 @interface MSSlideCenterView : UIView
