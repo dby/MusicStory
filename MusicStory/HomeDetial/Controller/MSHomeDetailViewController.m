@@ -16,10 +16,11 @@
 #import "AppConfig.h"
 #import "MSPlayView.h"
 
+#import "MSDivisionView.h"
 #import "MSDetailContentView.h"
 #import "MSDetialHeaderView.h"
 
-@interface MSHomeDetailViewController ()< MSDetailHeaderViewDelegate, UIScrollViewDelegate, PlayViewDelegate>
+@interface MSHomeDetailViewController ()< MSDetailHeaderViewDelegate, UIScrollViewDelegate, PlayViewDelegate, DivisionDelegate>
 
 @property (nonatomic, strong) MSDetialHeaderView    *headerView;
 @property (nonatomic, strong) MSDetailContentView   *contentView;
@@ -83,6 +84,7 @@
                                                                              0,
                                                                              SCREEN_WIDTH,
                                                                              SCREEN_HEIGHT)];
+    self.contentView.divisionView.delegate = self;
     [self.view addSubview:_contentView];
   
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -158,6 +160,19 @@
     } else {
         [_playView pause];
     }
+}
+
+#pragma mark - Division Delegate
+
+-(void)lyricsBtnDidClick {
+    debugMethod();
+    
+    [self.contentView updateWebView:_model.music_lyrics];
+}
+
+-(void)storyBtnDidClick {
+    debugMethod();
+    [self.contentView updateWebView:_model.music_story];
 }
 
 @end

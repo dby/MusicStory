@@ -15,7 +15,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LJM-4K-UGM">
                     <rect key="frame" x="0.0" y="0.0" width="411" height="65"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzd-vR-x2X">
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzd-vR-x2X">
                             <rect key="frame" x="332" y="11" width="71" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="71" id="qix-WI-am3"/>

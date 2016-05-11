@@ -49,7 +49,18 @@
              usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     self.playMusicView.model    = _model;
-    
+    self.contentSize = CGSizeMake(SCREEN_WIDTH, 2000);
+}
+
+- (void)updateWebView :(NSString *)msg
+{
+    debugMethod();
+    NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    [self.webView loadHTMLString:[self demoFormatWithName:_model.music_name
+                                                    value:msg
+                                                 musicImg:_model.music_imgs
+                                  ] baseURL:baseURL];
+    debugLog(@"self.webview height: %lf", self.webView.height);
 }
 
 #pragma mark - Init
@@ -72,7 +83,7 @@
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     self.webView.delegate               = self;
     self.webView.scrollView.bounces     = NO;
-    self.webView.scrollView.delegate    = self;
+    //self.webView.scrollView.delegate    = self;
     self.webView.scrollView.userInteractionEnabled = false;
     self.webView.scrollView.showsVerticalScrollIndicator    = false;
     self.webView.scrollView.showsHorizontalScrollIndicator  = false;
@@ -83,11 +94,18 @@
     self.backMusicImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:_backMusicImageView];
     
-    self.playMusicView          = [[MSPlayMusicView alloc] init];
-    self.playMusicView.layer.borderWidth = 1;
+    self.playMusicView = [[MSPlayMusicView alloc] init];
+    self.playMusicView.layer.cornerRadius   = 3;
+    self.playMusicView.layer.shadowColor    = [UIColor grayColor].CGColor;
+    self.playMusicView.layer.shadowOffset   = CGSizeMake(4, 4);
+    self.playMusicView.layer.shadowOpacity  = 0.80;
     [self addSubview:_playMusicView];
     
+    self.divisionView = [[MSDivisionView alloc] init];
+    [self addSubview:self.divisionView];
+    
     //[self.webView.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+    
 }
 
 -(void)dealloc {
@@ -127,18 +145,26 @@
     [_backMusicImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(-20);
         make.width.equalTo(@(SCREEN_WIDTH));
-        make.height.equalTo(@(SCREEN_WIDTH * 0.5));
+        make.height.equalTo(@(SCREEN_WIDTH * 0.7));
     }];
     
     [_playMusicView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_backMusicImageView.mas_bottom).offset(-1 * _playMusicView.height * 0.5);
         make.left.equalTo(@20);
         make.width.equalTo(@(SCREEN_WIDTH - 40));
+        make.height.equalTo(@(_playMusicView.width * 0.35));
+        make.top.equalTo(_backMusicImageView.mas_bottom).offset(-1 * _playMusicView.height * 0.5);
+    }];
+    
+    [_divisionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_playMusicView.mas_bottom).offset(10);
+        make.width.equalTo(@(SCREEN_WIDTH));
+        make.left.equalTo(self.mas_left);
     }];
     
     [_webView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_playMusicView.mas_bottom);
+        make.top.equalTo(_divisionView.mas_bottom);
         make.width.equalTo(@(SCREEN_WIDTH));
+        make.height.equalTo(@(1000));
     }];
 }
 
@@ -161,14 +187,14 @@
     debugMethod();
     
     //获取页面高度（像素）
-    NSString * clientheight_str = [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"];
-    float clientheight = [clientheight_str floatValue];
+    //NSString * clientheight_str = [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"];
+    //float clientheight = [clientheight_str floatValue];
     
     //获取WebView最佳尺寸（点）
     //CGSize frame = [webView sizeThatFits:CGSizeZero];
     
     //self.contentSize = CGSizeMake(SCREEN_WIDTH, clientheight);
-    webView.height = clientheight;
+    //webView.height = clientheight;
     
     [UIView animateWithDuration:0.2 animations:^{
         [self layoutIfNeeded];

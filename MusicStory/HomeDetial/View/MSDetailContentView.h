@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "MSMusicModel.h"
+#import "MSDivisionView.h"
 
 @interface MSDetailContentView : UIScrollView
 
 @property (nonatomic, strong) MSMusicModel *model;
+@property (nonatomic, strong) MSDivisionView *divisionView;
+
+- (void)updateWebView :(NSString *)msg;
 
 @end
