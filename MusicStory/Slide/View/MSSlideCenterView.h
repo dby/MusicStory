@@ -26,6 +26,7 @@
 @end
 
 @interface MSSlideCenterView : UIView
+@property (weak, nonatomic) IBOutlet UIImageView *portrait;
 
 @property (weak, nonatomic) IBOutlet UIView *loginview;
 @property (weak, nonatomic) IBOutlet UIView *musicStoryView;

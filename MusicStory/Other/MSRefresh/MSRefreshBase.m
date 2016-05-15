@@ -7,46 +7,35 @@
 //
 
 #import "MSRefreshBase.h"
+
+#import "AppConfig.h"
 #import "MSRefreshConst.h"
 
-/// 刷新回调的Block
-typedef void (^beginRefreshingBlock)();
-
-
 @interface MSRefreshBase()
-// 父控件
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, assign) UIEdgeInsets scrollViewOriginalInset;
-// 箭头图片
-@property (nonatomic, strong) UIImageView *arrowImage;
-// 刷新后回调
-@property (nonatomic, copy) beginRefreshingBlock beginRefreshingCallback;
-// 交给子类去实现和调用
-@property (nonatomic, assign) MSRefreshState oldState;
-// 默认水平方向
-@property (nonatomic, assign) MSRefreashDirection viewDirection;
-@property (nonatomic, assign) MSRefreshState state;
 
 @end
 
 @implementation MSRefreshBase
 
-@synthesize state = _state;
+@synthesize State = _State;
 
 #pragma mark Setter / Getter
 
--(MSRefreshState)state
+-(MSRefreshState)State
 {
-    return _state;
+    return _State;
 }
 
 // 当状态改变时设置状态(State)就会调用这个方法
--(void)setState:(MSRefreshState)state
+-(void)setState:(MSRefreshState)State
 {
-    if (self.state == self.oldState) {
+    _State = State;
+    
+    if (_State == _oldState) {
         return;
     }
-    switch (self.state) {
+    
+    switch (_State) {
         // 普通状态 隐藏那个菊花
         case RefreshStateNormal:
             [self.arrowImage stopAnimating];
@@ -56,29 +45,24 @@ typedef void (^beginRefreshingBlock)();
             break;
         // 正在刷新，1隐藏箭头，2显示菊花，3回调
         case RefreshStateRefreshing:
-            [self.arrowImage stopAnimating];
+            [self.arrowImage startAnimating];
             if (self.beginRefreshingCallback) {
-                [self beginRefreshingCallback];
+                self.beginRefreshingCallback();
             }
             break;
-            
         default:
             break;
     }
 }
-
-
 /**
     初始化控件
  */
--(instancetype)init{
-    self = [super init];
+-(instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
     if (self) {
-        
         self.viewDirection = MSRefreshDirectionHorizontal;
         
         [self setBackgroundColor:[UIColor clearColor]];
-        
         self.arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         self.arrowImage.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         self.arrowImage.image = [UIImage imageNamed:@"loading_1"];
@@ -90,8 +74,8 @@ typedef void (^beginRefreshingBlock)();
             [imgArray addObject:image];
         }
         
-        self.arrowImage.animationImages = imgArray;
-        self.arrowImage.animationDuration = 0.5;
+        self.arrowImage.animationImages     = imgArray;
+        self.arrowImage.animationDuration   = 0.5;
         self.arrowImage.animationRepeatCount = 999;
         [self addSubview:self.arrowImage];
         
@@ -115,15 +99,16 @@ typedef void (^beginRefreshingBlock)();
 
 //显示到屏幕上
 -(void)drawRect:(CGRect)rect {
-    [self drawRect:rect];
-    if (self.state == WillRefreshing) {
-        self.state = RefreshStateRefreshing;
+    [super drawRect:rect];
+    if (self.State == WillRefreshing) {
+        self.State = RefreshStateRefreshing;
     }
 }
 
 // MARK: ==============================让子类去重写=======================
 -(void)willMoveToSuperview:(UIView *)newSuperview {
-    [self willMoveToSuperview:newSuperview];
+    
+    [super willMoveToSuperview:newSuperview];
     
     // 移走旧的父控件
     if (self.superview != nil) {
@@ -134,12 +119,12 @@ typedef void (^beginRefreshingBlock)();
         CGRect rect = self.frame;
         // 设置宽度 位置
         if (_viewDirection == MSRefreshDirectionHorizontal) {
-            rect.size.height = newSuperview.frame.size.height;
-            rect.origin.y = 0;
+            rect.size.height    = newSuperview.frame.size.height;
+            rect.origin.y       = 0;
             //self.frame = frame;
         } else {
             rect.size.width = newSuperview.frame.size.width;
-            rect.origin.x = 0;
+            rect.origin.x   = 0;
             //self.frame = frame;
         }
 
@@ -151,24 +136,24 @@ typedef void (^beginRefreshingBlock)();
 
 // 判断是否正在刷新
 - (BOOL) isRefreshing {
-    return RefreshStateRefreshing == self.state;
+    return RefreshStateRefreshing == self.State;
 }
 
 // 开始刷新
 - (void) beginRefreshing {
     // self.State = RefreshState.Refreshing;
     if (self.window != nil) {
-        self.state = RefreshStateRefreshing;
+        self.State = RefreshStateRefreshing;
     } else {
         //不能调用set方法
-        _state = WillRefreshing;
-        [self setNeedsDisplay];
+        _State = WillRefreshing;
+        [super setNeedsDisplay];
     }
 }
 
 //结束刷新
 -(void) endRefreshing {
-    if (self.state == RefreshStateNormal) {
+    if (self.State == RefreshStateNormal) {
         return;
     }
     
@@ -176,7 +161,7 @@ typedef void (^beginRefreshingBlock)();
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds);
     
     dispatch_after(popTime, dispatch_get_main_queue(), ^{
-        self.state = RefreshStateNormal;
+        self.State = RefreshStateNormal;
     });
 }
 

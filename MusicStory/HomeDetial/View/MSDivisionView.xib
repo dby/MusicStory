@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="音乐故事" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LbM-dN-cA7">
-                    <rect key="frame" x="5" y="10" width="56" height="30"/>
+                    <rect key="frame" x="5" y="9" width="56" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="128" id="BxJ-j4-FEG"/>
                     </constraints>
@@ -37,9 +37,9 @@
                     <state key="normal" image="music_story_default"/>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" highlightedImage="movie_shadows" translatesAutoresizingMaskIntoConstraints="NO" id="SFs-lc-FK6">
-                    <rect key="frame" x="-94" y="48" width="414" height="2"/>
+                    <rect key="frame" x="-94" y="49" width="414" height="1"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="2" id="AFI-BU-LSS"/>
+                        <constraint firstAttribute="height" constant="1" id="AFI-BU-LSS"/>
                     </constraints>
                 </imageView>
             </subviews>

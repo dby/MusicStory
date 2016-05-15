@@ -16,11 +16,12 @@
 #define MSRefreshViewHeight  30
 #define MSRefreshSlowAnimationDuration  0.3
 
-#define MSRefreshHeaderTimeKey   @"RefreshHeaderView"
-#define MSRefreshContentOffset   @"contentOffset"
-#define MSRefreshContentSize @"contentSize"
+#define MSRefreshHeaderTimeKey  @"RefreshHeaderView"
+#define MSRefreshContentOffset  @"contentOffset"
+#define MSRefreshContentSize    @"contentSize"
 
-#define MSRefreshLabelTextColor  UIColor.lightGrayColor()
-#define MSRefreshLabelTextSize  UIFont.systemFontOfSize(12)
+#define MSRefreshLabelTextColor [UIColor lightGrayColor]
+#define MSRefreshLabelTextSize  [UIFont systemFontOfSize:12]
+
 
 #endif /* MSRefreshConst_h */

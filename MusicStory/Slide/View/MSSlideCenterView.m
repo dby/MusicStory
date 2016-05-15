@@ -16,6 +16,9 @@
     
     [super awakeFromNib];
     
+    self.portrait.layer.cornerRadius    = 25;
+    self.portrait.layer.masksToBounds   = YES;
+    
     [self.loginview addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(loginViewDidClick)]];
     [self.musicStoryView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self

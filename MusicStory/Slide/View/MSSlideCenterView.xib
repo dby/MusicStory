@@ -135,6 +135,7 @@
                 <outlet property="indexView" destination="sMW-Pg-3dZ" id="syV-FB-dDp"/>
                 <outlet property="loginview" destination="DUG-FX-2gZ" id="M7P-LX-caR"/>
                 <outlet property="musicStoryView" destination="3RP-Rb-8T6" id="trk-tA-pYN"/>
+                <outlet property="portrait" destination="f3Q-zg-TjX" id="5eB-HR-sJL"/>
                 <outlet property="searchBtnDidClick" destination="aCk-Uw-9z4" id="MMW-eI-bcX"/>
             </connections>
             <point key="canvasLocation" x="173" y="395"/>

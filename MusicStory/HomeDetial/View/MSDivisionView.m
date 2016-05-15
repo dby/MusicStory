@@ -23,17 +23,24 @@
         
         [self.storyBtn addTarget:self action:@selector(showStory) forControlEvents:UIControlEventTouchUpInside];
         [self.lyricsBtn addTarget:self action:@selector(showLyrics) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.storyBtn.selected  = true;
+        self.lyricsBtn.selected = false;
     }
     return self;
 }
 
 -(void)showStory {
-    _infoLabel.text = @"音乐故事";
+    self.infoLabel.text     = @"音乐故事";
+    self.storyBtn.selected  = true;
+    self.lyricsBtn.selected = false;
     [self.delegate storyBtnDidClick];
 }
 
 -(void)showLyrics {
-    _infoLabel.text = @"歌词";
+    self.infoLabel.text     = @"歌词";
+    self.lyricsBtn.selected = true;
+    self.storyBtn.selected  = false;
     [self.delegate lyricsBtnDidClick];
 }
 

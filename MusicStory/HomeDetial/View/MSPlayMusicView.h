@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *singer_brief;
 @property (weak, nonatomic) IBOutlet UILabel *music_name;
 @property (weak, nonatomic) IBOutlet UILabel *update_time;
-@property (weak, nonatomic) IBOutlet UIButton *play_music;
 
 @property (nonatomic, strong) MSMusicModel *model;
 

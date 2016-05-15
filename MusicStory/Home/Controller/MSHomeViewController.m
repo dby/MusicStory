@@ -19,9 +19,11 @@
 
 #import "MSHomeViewModel.h"
 #import "MSMusicModel.h"
+#import "MSRefreshBase.h"
 
 #import "UIColor+MS.h"
 #import "UIView+MS.h"
+#import "UIScrollView+MS.h"
 #import "UIViewController+MS.h"
 
 #import "Masonry.h"
@@ -58,7 +60,7 @@
 -(void)setIndex:(NSInteger)index {
     
     _index = index;
-    if ([self.viewModel.dataSource count] == 0) {
+    if ([_viewModel.dataSource count] == 0) {
         return;
     }
     // 获取模型
@@ -92,9 +94,15 @@
     // 获取ViewModel
     _viewModel = [[MSHomeViewModel alloc] initWithHeaderView:_headerView withCenterView:_centerCollectView withBottomView:_bottomCollectView];
     
-    // 加载更多
-//TODO:  加载更多未完成
-    // 首次加载时， 中间显示加载框
+    [self.centerCollectView headerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
+        debugLog(@"执行 headerViewPullToRefresh 回调函数...");
+        [self.centerCollectView headerViewStopPullToRefresh];
+    }];
+    
+    [self.centerCollectView footerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
+        debugLog(@"执行 footViewPullToRefresh 回调函数...");
+        [self.centerCollectView footerViewStopPullToRefresh];
+    }];
     
     [self showProgress];
     [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
@@ -150,10 +158,34 @@
     self.sideMenuViewController.scaleContentView    = false;
 }
 
+#pragma mark - 下拉 上拉刷新
+
+- (void)initRefreshHeaderAndFooter {
+   
+    /*
+    debugMethod();
+    MJRefreshNormalHeader *header       = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshMusic)];
+    MJRefreshAutoNormalFooter *footer   = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreMusic)];
+    header.automaticallyChangeAlpha     = YES;
+    footer.automaticallyRefresh         = NO;
+    
+    self.centerCollectView.mj_header = header;
+    self.centerCollectView.mj_footer = footer;
+     */
+}
+
+#pragma mark - Refresh And LoadMore
+- (void)refreshMusic {
+    debugMethod();
+}
+
+- (void)loadMoreMusic {
+    debugMethod();
+}
+
 #pragma mark - scrollerDelegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    debugMethod();
     if (scrollView.tag == 100) {
         int index = (int)((scrollView.contentOffset.x + 0.5*scrollView.width) / scrollView.width);
         if (index > [self.viewModel.dataSource count] - 1) {
@@ -165,7 +197,6 @@
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    debugMethod();
     if (scrollView.tag == 100) {
         // 设置底部动画
         [self bottomAnimation: [NSIndexPath indexPathForRow:_index inSection:0]];
