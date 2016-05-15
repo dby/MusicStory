@@ -96,12 +96,28 @@
     
     [self.centerCollectView headerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
         debugLog(@"执行 headerViewPullToRefresh 回调函数...");
-        [self.centerCollectView headerViewStopPullToRefresh];
+        [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
+            
+            [self.centerCollectView headerViewStopPullToRefresh];
+            self.index      = 0;
+            self.lastIndex  = nil;
+            
+        } withErrorCallBack:^(NSError *error) {
+            
+            [self.centerCollectView headerViewStopPullToRefresh];
+            
+        }];
     }];
     
     [self.centerCollectView footerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
         debugLog(@"执行 footViewPullToRefresh 回调函数...");
-        [self.centerCollectView footerViewStopPullToRefresh];
+        [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
+            
+            [self.centerCollectView footerViewStopPullToRefresh];
+            
+        } withErrorCallBack:^(NSError *error) {
+            [self.centerCollectView footerViewStopPullToRefresh];
+        }];
     }];
     
     [self showProgress];
@@ -156,22 +172,6 @@
 - (void)initRESlideMenu {
     self.sideMenuViewController.scaleMenuView       = false;
     self.sideMenuViewController.scaleContentView    = false;
-}
-
-#pragma mark - 下拉 上拉刷新
-
-- (void)initRefreshHeaderAndFooter {
-   
-    /*
-    debugMethod();
-    MJRefreshNormalHeader *header       = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshMusic)];
-    MJRefreshAutoNormalFooter *footer   = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreMusic)];
-    header.automaticallyChangeAlpha     = YES;
-    footer.automaticallyRefresh         = NO;
-    
-    self.centerCollectView.mj_header = header;
-    self.centerCollectView.mj_footer = footer;
-     */
 }
 
 #pragma mark - Refresh And LoadMore

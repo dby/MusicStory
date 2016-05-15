@@ -16,19 +16,20 @@
 @end
 
 @implementation MSRefreshBase
-
 @synthesize State = _State;
 
 #pragma mark Setter / Getter
 
 -(MSRefreshState)State
 {
+    debugMethod();
     return _State;
 }
 
 // 当状态改变时设置状态(State)就会调用这个方法
 -(void)setState:(MSRefreshState)State
 {
+    debugMethod();
     _State = State;
     
     if (_State == _oldState) {
@@ -54,10 +55,10 @@
             break;
     }
 }
-/**
-    初始化控件
- */
+
+#pragma mark - 定义方法
 -(instancetype)initWithFrame:(CGRect)frame{
+    debugMethod();
     self = [super initWithFrame:frame];
     if (self) {
         self.viewDirection = MSRefreshDirectionHorizontal;
@@ -89,6 +90,7 @@
 }
 
 -(void)layoutSubviews {
+    debugMethod();
     [super layoutSubviews];
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
         self.arrowImage.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height * 0.4);
@@ -99,15 +101,17 @@
 
 //显示到屏幕上
 -(void)drawRect:(CGRect)rect {
+    debugMethod();
     [super drawRect:rect];
     if (self.State == WillRefreshing) {
         self.State = RefreshStateRefreshing;
     }
 }
 
-// MARK: ==============================让子类去重写=======================
+#pragma mark - 子类需要重写的方法
 -(void)willMoveToSuperview:(UIView *)newSuperview {
     
+    debugMethod();
     [super willMoveToSuperview:newSuperview];
     
     // 移走旧的父控件
@@ -121,11 +125,11 @@
         if (_viewDirection == MSRefreshDirectionHorizontal) {
             rect.size.height    = newSuperview.frame.size.height;
             rect.origin.y       = 0;
-            //self.frame = frame;
+            //self.frame = rect;
         } else {
             rect.size.width = newSuperview.frame.size.width;
             rect.origin.x   = 0;
-            //self.frame = frame;
+            //self.frame = rect;
         }
 
         //UIScrollView
@@ -136,11 +140,13 @@
 
 // 判断是否正在刷新
 - (BOOL) isRefreshing {
+    debugMethod();
     return RefreshStateRefreshing == self.State;
 }
 
 // 开始刷新
 - (void) beginRefreshing {
+    debugMethod();
     // self.State = RefreshState.Refreshing;
     if (self.window != nil) {
         self.State = RefreshStateRefreshing;
@@ -153,6 +159,7 @@
 
 //结束刷新
 -(void) endRefreshing {
+    debugMethod();
     if (self.State == RefreshStateNormal) {
         return;
     }

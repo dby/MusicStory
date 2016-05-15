@@ -23,6 +23,7 @@
 
 -(void)setState:(MSRefreshState)State {
     
+    debugMethod();
     self.oldState = self.State;
     [super setState:State];
     
@@ -65,6 +66,7 @@
 }
 
 -(void)layoutSubviews {
+    debugMethod();
     [super layoutSubviews];
     
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
@@ -76,12 +78,14 @@
 
 // 创建headerView的静态方法
 +(MSRefreshHeaderView *)headerView {
+    debugMethod();
     return [[MSRefreshHeaderView alloc] initWithFrame:CGRectMake(-MSRefreshViewHeight, 0, MSRefreshViewHeight, SCREEN_HEIGHT)];
 }
 
 // 设置headerView的frame
 -(void)willMoveToSuperview:(UIView *)newSuperview
 {
+    debugMethod();
     [super willMoveToSuperview:newSuperview];
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
         self.x = -MSRefreshViewHeight;
@@ -92,12 +96,15 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-    if (self.hidden || self.State == RefreshStateRefreshing || ![MSRefreshContentOffset isEqual: keyPath])
+    debugMethod();
+    if (self.hidden || self.State == RefreshStateRefreshing || ![MSRefreshContentOffset isEqualToString: keyPath])
         return;
     
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
         CGFloat currentOffsetY = self.scrollView.contentOffset.x;
         CGFloat happenOffsetY  = -1 * self.scrollViewOriginalInset.left;
+        
+        debugLog(@"currentOffsetY: %f, happenOffsetY: %f", currentOffsetY, happenOffsetY);
         
         if (currentOffsetY >= happenOffsetY)
             return;
@@ -139,6 +146,7 @@
 
 -(void)deinit
 {
+    debugMethod();
     [self endRefreshing];
 }
 

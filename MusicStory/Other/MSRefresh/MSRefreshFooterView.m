@@ -36,10 +36,9 @@
             if (self.oldState == RefreshStateRefreshing) {
                 self.arrowImage.transform = CGAffineTransformMakeRotation((CGFloat)M_PI);
                 [UIView animateWithDuration:MSRefreshSlowAnimationDuration animations:^{
-                    self.scrollView.contentInset = UIEdgeInsetsMake(self.scrollView.contentInset.top,
-                                                                    self.scrollView.contentInset.left,
-                                                                    self.scrollViewOriginalInset.bottom,
-                                                                    self.scrollView.contentInset.right);
+                    UIEdgeInsets inset  = self.scrollView.contentInset;
+                    inset.bottom        = self.scrollViewOriginalInset.bottom;
+                    self.scrollView.contentInset = inset;
                 }];
             } else {
                 [UIView animateWithDuration:MSRefreshSlowAnimationDuration  animations: ^{
@@ -50,17 +49,19 @@
             CGFloat deltaH  = [self heightForContentBreakView];
             NSInteger currentCount = [self totalDataCountInScrollView];
             
+            /*
             if (RefreshStateRefreshing == self.oldState && deltaH > 0  && currentCount != self.lastRefreshCount) {
                 if (self.viewDirection == MSRefreshDirectionHorizontal) {
-                    CGPoint offset = self.scrollView.contentOffset;
-                    offset.x = self.scrollView.contentOffset.x - self.width + SCREEN_WIDTH;
+                    CGPoint offset  = self.scrollView.contentOffset;
+                    offset.x        = self.scrollView.contentOffset.x - self.width + SCREEN_WIDTH;
                     [self.scrollView setContentOffset:offset animated:true];
                 } else {
-                    CGPoint offset = self.scrollView.contentOffset;
-                    offset.y = self.scrollView.contentOffset.y;
+                    CGPoint offset  = self.scrollView.contentOffset;
+                    offset.y        = self.scrollView.contentOffset.y;
                     self.scrollView.contentOffset = offset;
                 }
             }
+             */
             break;
         }
         case RefreshStatePulling: {
@@ -80,14 +81,11 @@
                     if (deltaH < 0) {
                         bottom = bottom - deltaH;
                     }
-                    UIEdgeInsets inset = self.scrollView.contentInset;
-                    inset.bottom = bottom;
+                    UIEdgeInsets inset  = self.scrollView.contentInset;
+                    inset.bottom        = bottom;
                     self.scrollView.contentInset = inset;
                 }];
             }
-            break;
-        }
-        case WillRefreshing: {
             break;
         }
         default:{
@@ -202,15 +200,13 @@
     
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
         CGFloat deltaH = [self heightForContentBreakView];
-        
         if (deltaH > 0) {
             return  deltaH - self.scrollViewOriginalInset.left;
         } else {
-            return  -self.scrollViewOriginalInset.left;
+            return  -1 * self.scrollViewOriginalInset.left;
         }
     } else {
         CGFloat deltaH = [self heightForContentBreakView];
-        
         if (deltaH > 0) {
             return deltaH - self.scrollViewOriginalInset.top;
         } else {
@@ -229,13 +225,11 @@
         
         for (int i = 0 ; i <  tableView.numberOfSections ; i++){
             totalCount = totalCount + [tableView numberOfRowsInSection:i];
-            
         }
     } else if ([self.scrollView isKindOfClass: [UICollectionView class]]){
         UICollectionView *collectionView = (UICollectionView *)self.scrollView;
         for (int i = 0 ; i <  [collectionView numberOfSections] ; i++){
             totalCount = totalCount + [collectionView numberOfItemsInSection:i];
-            
         }
     }
     return totalCount;

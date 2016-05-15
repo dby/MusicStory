@@ -70,7 +70,9 @@
             }
             [self.centerView reloadData];
             [self.bottomView reloadData];
-                
+            
+            sleep(2);
+            
             if (successCallBack) {
                 self.successCallBack(self.dataSource);
             }

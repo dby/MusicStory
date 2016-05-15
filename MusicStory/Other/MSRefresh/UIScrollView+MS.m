@@ -14,6 +14,7 @@
  下拉刷新 第一个参数是方向
  */
 -(void)headerViewPullToRefresh: (MSRefreashDirection) direction callback:(CallBack)callback {
+    debugMethod();
     // 创建headerview
     MSRefreshHeaderView *headerView = [MSRefreshHeaderView headerView];
     headerView.viewDirection = direction;
@@ -27,6 +28,7 @@
  */
 -(void)headerViewBeginRefreshing {
     
+    debugMethod();
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshHeaderView class]]) {
             [(MSRefreshHeaderView *)object beginRefreshing];
@@ -39,6 +41,7 @@
  */
 -(void)headerViewStopPullToRefresh {
     
+    debugMethod();
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshHeaderView class]]) {
             [(MSRefreshHeaderView *)object endRefreshing];
@@ -51,6 +54,7 @@
  */
 -(void)removeHeaderView {
     
+    debugMethod();
     for (NSObject *object in self.subviews)
     {
         if ([object isKindOfClass:[MSRefreshHeaderView class]]) {
@@ -61,6 +65,7 @@
 
 -(void)setHeaderHidden :(BOOL)hidden
 {
+    debugMethod();
     for (NSObject *object in self.subviews)
     {
         if ([object isKindOfClass:[MSRefreshHeaderView class]]) {
@@ -71,6 +76,7 @@
 
 -(void)isHeaderHidden
 {
+    debugMethod();
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshHeaderView class]]) {
             //[(UIView *)object setHidden:hidden];
