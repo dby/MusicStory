@@ -29,8 +29,6 @@
 #import "Masonry.h"
 #import <RESideMenu/RESideMenu.h>
 
-
-
 @interface MSHomeViewController () <MSHomeHeaderViewDelegate, MSHomeHeaderViewDelegate,MSHomeBottomCollectViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 // 页数
@@ -98,9 +96,11 @@
         debugLog(@"执行 headerViewPullToRefresh 回调函数...");
         [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
             
-            [self.centerCollectView headerViewStopPullToRefresh];
             self.index      = 0;
             self.lastIndex  = nil;
+            [self.bottomCollectView setContentOffset:CGPointZero animated:true];
+            [self scrollViewDidEndDecelerating:self.centerCollectView];
+            [self.centerCollectView headerViewStopPullToRefresh];
             
         } withErrorCallBack:^(NSError *error) {
             
@@ -123,9 +123,9 @@
     [self showProgress];
     [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
         // 默认选中0
-        self.lastIndex  = nil;
         self.index      = 0;
-        [self.bottomCollectView setContentOffset:CGPointZero animated:false];
+        self.lastIndex  = nil;
+        [self.bottomCollectView setContentOffset:CGPointZero animated:true];
         [self scrollViewDidEndDecelerating:self.centerCollectView];
         
         [self hiddenProgress];
@@ -201,8 +201,9 @@
         // 设置底部动画
         [self bottomAnimation: [NSIndexPath indexPathForRow:_index inSection:0]];
         // 发送通知改变侧边栏的颜色
-        MSMusicModel *model = self.viewModel.dataSource[_index];
-        NSNotification *noti = [NSNotification notificationWithName:NOTIFY_SETUPBG object:model.recommanded_background_color];
+        MSMusicModel *model     = self.viewModel.dataSource[_index];
+        NSNotification *noti    = [NSNotification notificationWithName:NOTIFY_SETUPBG
+                                                                object:model.recommanded_background_color];
         [[NSNotificationCenter defaultCenter] postNotification:noti];
     }
 }
@@ -259,7 +260,8 @@
 -(void)homeBottomCollectView:(UICollectionView *)bottomView touchIndexDidChangeWithIndexPath:(NSIndexPath *)indexPath cellArrayCount:(NSUInteger)cellArrayCount {
     
     debugMethod();
-    [_centerCollectView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
+    [_centerCollectView scrollToItemAtIndexPath:indexPath
+                               atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
     self.index = indexPath.row;
     // 执行底部横向动画
     UICollectionViewCell *cell = [self.bottomCollectView cellForItemAtIndexPath:indexPath];

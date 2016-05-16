@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSMusicModel.h"
 
 @protocol PlayViewDelegate <NSObject>
 
@@ -16,11 +17,12 @@
 
 @interface MSPlayView : UIView
 
-@property (nonatomic,strong) UIImageView *circleIV;
-@property (nonatomic,strong) UIImageView *contentIV;
-@property (nonatomic,strong) UIImageView *backgoundIV;
-@property (nonatomic,strong) UIButton *playButton;
-@property (nonatomic,weak) id<PlayViewDelegate> delegate;
+@property (nonatomic, strong) UIImageView *circleIV;
+@property (nonatomic, strong) UIImageView *contentIV;
+@property (nonatomic, strong) UIImageView *backgoundIV;
+@property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, strong) MSMusicModel *model;
+@property (nonatomic, weak) id<PlayViewDelegate> delegate;
 
 - (void)play;
 - (void)pause;

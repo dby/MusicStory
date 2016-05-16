@@ -19,6 +19,7 @@
 #import "Track.h"
 #import "UIView+MS.h"
 #import "AppConfig.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 static void *kStatusKVOKey = &kStatusKVOKey;
 static void *kDurationKVOKey = &kDurationKVOKey;
@@ -36,6 +37,18 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 //宏定义   角度转弧度
 #define angleToRadian(x) (x/180.0*M_PI)
 @implementation MSPlayView
+
+@synthesize model = _model;
+
+#pragma mark - Setter Getter
+
+-(MSMusicModel *)model {
+    return _model;
+}
+
+-(void)setModel:(MSMusicModel *)model {
+    _model = model;
+}
 
 #pragma mark - life cycle
 - (instancetype)init {
@@ -57,6 +70,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
             make.right.mas_equalTo(-2);
             make.bottom.mas_equalTo(-8);
         }];
+        
         // 设置circle的用户交互
         _backgoundIV.userInteractionEnabled = YES;
         _circleIV.userInteractionEnabled    = YES;
@@ -122,6 +136,8 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [_circleIV addSubview:_contentIV];
         [_contentIV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(8, 8, 8, 8));
+            make.width.equalTo(@50);
+            make.height.equalTo(@50);
         }];
         // KVO观察image变化, 变化了就初始化定时器, 值变化则执行task, BlockKit框架对通知的一个拓展
         [_contentIV bk_addObserverForKeyPath:@"image" options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
@@ -155,7 +171,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [_streamer play];
     } else {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [_track setAudioFileURL:[NSURL URLWithString:@"http://ac-xjvf4uf6.clouddn.com/a45a76b04cd7ef09.mp3"]];
+            [_track setAudioFileURL:[NSURL URLWithString:_model.music_url]];
             _streamer = [DOUAudioStreamer streamerWithAudioFile:_track];
             [_streamer addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:kStatusKVOKey];
             [_streamer addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:kDurationKVOKey];

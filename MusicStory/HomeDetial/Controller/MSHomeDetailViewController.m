@@ -43,6 +43,7 @@
 -(void)setModel:(MSMusicModel *)model {
     _model = model;
     _contentView.model = model;
+    _playView.model = model;
 }
 
 #pragma mark - Life Cycle
@@ -155,7 +156,8 @@
 
 -(void)playButtonDidClick:(BOOL)selected {
     if (selected) {
-        [self.playView.contentIV sd_setImageWithURL:[NSURL URLWithString:@"http://fdfs.xmcdn.com/group10/M01/DB/9E/wKgDZ1aPRP_CFsKVAAKNJI_kfBk690_web_meduim.jpg"]];
+        //[self.playView.contentIV sd_setImageWithURL:[NSURL URLWithString:@"http://fdfs.xmcdn.com/group10/M01/DB/9E/wKgDZ1aPRP_CFsKVAAKNJI_kfBk690_web_meduim.jpg"]];
+        [_playView.contentIV sd_setImageWithURL:[NSURL URLWithString:_model.music_imgs]];
         [_playView play];
     } else {
         [_playView pause];

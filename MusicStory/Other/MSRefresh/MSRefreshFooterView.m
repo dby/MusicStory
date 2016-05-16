@@ -49,7 +49,6 @@
             CGFloat deltaH  = [self heightForContentBreakView];
             NSInteger currentCount = [self totalDataCountInScrollView];
             
-            /*
             if (RefreshStateRefreshing == self.oldState && deltaH > 0  && currentCount != self.lastRefreshCount) {
                 if (self.viewDirection == MSRefreshDirectionHorizontal) {
                     CGPoint offset  = self.scrollView.contentOffset;
@@ -61,7 +60,6 @@
                     self.scrollView.contentOffset = offset;
                 }
             }
-             */
             break;
         }
         case RefreshStatePulling: {
