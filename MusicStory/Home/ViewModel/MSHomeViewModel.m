@@ -58,6 +58,7 @@
     }
     
     AVQuery *query = [AVQuery queryWithClassName:@"Musics"];
+    [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
         if (!error) {

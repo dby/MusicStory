@@ -20,7 +20,7 @@
 #import "MSDetailContentView.h"
 #import "MSDetialHeaderView.h"
 
-@interface MSHomeDetailViewController ()< MSDetailHeaderViewDelegate, UIScrollViewDelegate, PlayViewDelegate, DivisionDelegate>
+@interface MSHomeDetailViewController ()<MSDetailHeaderViewDelegate, UIScrollViewDelegate, PlayViewDelegate, DivisionDelegate>
 
 @property (nonatomic, strong) MSDetialHeaderView    *headerView;
 @property (nonatomic, strong) MSDetailContentView   *contentView;
@@ -85,6 +85,7 @@
                                                                              0,
                                                                              SCREEN_WIDTH,
                                                                              SCREEN_HEIGHT)];
+    self.contentView.delegate = self;
     self.contentView.divisionView.delegate = self;
     [self.view addSubview:_contentView];
   
@@ -98,9 +99,7 @@
 }
 
 #pragma mark - Custom Function
-/*!
- *  @brief 布局
- */
+
 - (void)setupLayout {
     
     [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -138,7 +137,7 @@
     if (currentPostion - _lastPosition > 20) {
         _lastPosition = currentPostion;
         
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:1.0 animations:^{
             _playView.hidden = true;
         }];
     }
@@ -146,17 +145,15 @@
     {
         _lastPosition = currentPostion;
         
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:1.0 animations:^{
             _playView.hidden = false;
         }];
     }
 }
 
 #pragma mark - PlayViewDelegate
-
 -(void)playButtonDidClick:(BOOL)selected {
     if (selected) {
-        //[self.playView.contentIV sd_setImageWithURL:[NSURL URLWithString:@"http://fdfs.xmcdn.com/group10/M01/DB/9E/wKgDZ1aPRP_CFsKVAAKNJI_kfBk690_web_meduim.jpg"]];
         [_playView.contentIV sd_setImageWithURL:[NSURL URLWithString:_model.music_imgs]];
         [_playView play];
     } else {
@@ -165,10 +162,8 @@
 }
 
 #pragma mark - Division Delegate
-
 -(void)lyricsBtnDidClick {
     debugMethod();
-    
     [self.contentView updateWebView:_model.music_lyrics];
 }
 
@@ -176,5 +171,4 @@
     debugMethod();
     [self.contentView updateWebView:_model.music_story];
 }
-
 @end

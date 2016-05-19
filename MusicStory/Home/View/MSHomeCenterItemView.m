@@ -11,6 +11,8 @@
 
 #import "MSHomeCenterItemView.h"
 
+#import "UIView+MS.h"
+
 @interface MSHomeCenterItemView()
 
 @end
@@ -25,6 +27,7 @@
     self.backgroundColor        = [UIColor whiteColor];
     self.layer.cornerRadius     = 5;
     self.layer.masksToBounds    = YES;
+    self.contentView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 #pragma mark - Setter Getter
@@ -35,12 +38,13 @@
     // 设置数据
     _titleLabel.text        = homeModel.music_name;
     _subTitleLabel.text     = homeModel.singer_name;
-    debugLog(@"url: %@" ,homeModel.music_imgs);
+    
     [_centerImgView setImageWithURL:[NSURL URLWithString:homeModel.music_imgs]
                    placeholderImage:[UIImage imageNamed:@"home_logo_pressed"] usingActivityIndicatorStyle:YES];
     
-    _detailLabel.text = homeModel.music_story;
-    _authorLabel.text = homeModel.author_name;
+    _detailLabel.text   = homeModel.music_story;
+    _authorLabel.text   = homeModel.author_name;
+    _fovCountLabel.text = homeModel.like_count;
 }
 
 // 加载cell

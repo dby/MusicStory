@@ -48,6 +48,8 @@
 
 - (void)loginViewDidClick {
     debugMethod();
+    self.curView = self.loginview;
+    self.indexView.hidden = true;
     [self.delegate slideCenterViewLoginViewDidClick];
 }
 
@@ -55,22 +57,25 @@
     debugMethod();
     if (_curView == self.musicStoryView)
         return;
-    self.curView        = self.musicStoryView;
-    self.indexView.y    = self.musicStoryView.center.y;
-    [self.delegate slideCenterViewLoginViewDidClick];
+    self.curView            = self.musicStoryView;
+    self.indexView.hidden   = false;
+    self.indexView.y        = self.musicStoryView.center.y;
+    [self.delegate slideCenterViewMusicStoryViewDidClick];
 }
 
 - (void)collectViewDidClick {
     debugMethod();
     if (_curView == self.collectView)
         return;
-    self.curView        = self.collectView;
-    self.indexView.y    = self.collectView.center.y;
+    self.curView            = self.collectView;
+    self.indexView.hidden   = false;
+    self.indexView.y        = self.collectView.center.y;
     [self.delegate slideCenterViewCollectViewDidClick];
 }
 
 - (void)searchDidClick {
     debugMethod();
+    self.indexView.hidden = false;
     [self.delegate slideCenterViewSearchViewDidClick];
 }
 
@@ -78,8 +83,9 @@
     debugMethod();
     if (_curView == self.aboutUsView)
         return;
-    self.curView        = self.aboutUsView;
-    self.indexView.y    = self.aboutUsView.center.y;
+    self.curView            = self.aboutUsView;
+    self.indexView.hidden   = false;
+    self.indexView.y        = self.aboutUsView.center.y;
     [self.delegate slideCenterViewAboutUsViewDidClick];
 }
 
@@ -89,7 +95,6 @@
         return;
     self.curView        = self.feedBackView;
     self.indexView.y    = self.feedBackView.center.y;
-    //[self.delegate slideCenterViewFeedbackViewDidClick:self feedbackView:self.feedBackView];
 }
 
 @end

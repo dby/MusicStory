@@ -9,8 +9,15 @@
 #import "MSSlideViewController.h"
 
 #import "UIColor+MS.h"
+
+#import <RESideMenu/RESideMenu.h>
+
 #import "AppConfig.h"
 #import "MSSlideCenterView.h"
+
+#import "MSHomeViewController.h"
+#import "MSLoginViewController.h"
+#import "MSHomeDetailViewController.h"
 
 @interface MSSlideViewController () < MSSlideCenterViewDelegate>
 
@@ -56,6 +63,9 @@
 
 -(void)slideCenterViewLoginViewDidClick {
     debugMethod();
+    MSLoginViewController *loginViewController = [[MSLoginViewController alloc] init];
+    [self.sideMenuViewController setContentViewController: [[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES];
+    [self.sideMenuViewController hideMenuViewController];
 }
 
 -(void)slideCenterViewSearchViewDidClick {
@@ -75,6 +85,9 @@
 }
 -(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
+    MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
+    [self.sideMenuViewController setContentViewController:hvc animated:YES];
+    [self.sideMenuViewController hideMenuViewController];
 }
 
 @end

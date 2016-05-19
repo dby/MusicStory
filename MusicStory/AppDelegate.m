@@ -45,9 +45,9 @@
     
     // Create side menu controller
     //
-    RESideMenu *sideMenuViewController = [[RESideMenu alloc]
-                                          initWithContentViewController: [[MSBaseNavController alloc] initWithRootViewController: contentViewController]
-                                          leftMenuViewController:leftMenuViewController
+    RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:
+                                          [[MSBaseNavController alloc] initWithRootViewController: contentViewController]
+                                                                    leftMenuViewController:leftMenuViewController
                                                                    rightMenuViewController:nil];
     
     //sideMenuViewController.backgroundImage = [UIImage imageNamed:@"Stars"];
