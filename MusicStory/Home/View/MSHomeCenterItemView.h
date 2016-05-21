@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *fovView;
 @property (weak, nonatomic) IBOutlet UILabel *fovCountLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *iconFlowerButton;
 // 作者
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 

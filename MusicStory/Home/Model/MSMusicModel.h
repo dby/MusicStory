@@ -27,7 +27,7 @@
 // 公开时间
 @property (nonatomic, strong) NSString *publish_date;
 // 点赞数
-@property (nonatomic, strong) NSString *like_count;
+@property (nonatomic, assign) NSString *like_count;
 // 音乐链接
 @property (nonatomic, strong) NSString *music_url;
 

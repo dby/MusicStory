@@ -14,14 +14,13 @@
 
 @interface MSLoginViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *phoneNumTextField;
 @end
 
 @implementation MSLoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.view setBackgroundColor:[UIColor brownColor]];
     
     [self buildComponent];
 }
@@ -35,5 +34,7 @@
 }
 
 #pragma mark - Custom Function
+- (IBAction)login:(id)sender {
+}
 
 @end

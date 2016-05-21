@@ -15,6 +15,7 @@
 #import "AppConfig.h"
 #import "MSSlideCenterView.h"
 
+#import "MSBaseNavController.h"
 #import "MSHomeViewController.h"
 #import "MSLoginViewController.h"
 #import "MSHomeDetailViewController.h"
@@ -63,7 +64,11 @@
 
 -(void)slideCenterViewLoginViewDidClick {
     debugMethod();
-    MSLoginViewController *loginViewController = [[MSLoginViewController alloc] init];
+    
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
+    UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
+    
+    //MSLoginViewController *loginViewController = [[MSLoginViewController alloc] init];
     [self.sideMenuViewController setContentViewController: [[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES];
     [self.sideMenuViewController hideMenuViewController];
 }
@@ -86,7 +91,7 @@
 -(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
     MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
-    [self.sideMenuViewController setContentViewController:hvc animated:YES];
+    [self.sideMenuViewController setContentViewController: [[MSBaseNavController alloc] initWithRootViewController:hvc] animated:YES];
     [self.sideMenuViewController hideMenuViewController];
 }
 

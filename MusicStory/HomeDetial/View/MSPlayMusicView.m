@@ -30,6 +30,7 @@
         _singer_portrait.frame = CGRectMake(0, 0, 50, 50);
         _singer_portrait.layer.cornerRadius     = 25;
         _singer_portrait.layer.masksToBounds    = YES;
+        _singer_portrait.contentMode = UIViewContentModeScaleAspectFill;
     }
     return self;
 }
@@ -42,6 +43,7 @@
         _singer_portrait.frame = CGRectMake(0, 0, 50, 50);
         _singer_portrait.layer.cornerRadius     = 25;
         _singer_portrait.layer.masksToBounds    = YES;
+        _singer_portrait.contentMode = UIViewContentModeScaleAspectFill;
     }
     return self;
 }

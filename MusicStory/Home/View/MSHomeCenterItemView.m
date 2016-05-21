@@ -27,7 +27,10 @@
     self.backgroundColor        = [UIColor whiteColor];
     self.layer.cornerRadius     = 5;
     self.layer.masksToBounds    = YES;
+    self.userInteractionEnabled = YES;
     self.contentView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    self.iconFlowerButton.userInteractionEnabled = YES;
 }
 
 #pragma mark - Setter Getter

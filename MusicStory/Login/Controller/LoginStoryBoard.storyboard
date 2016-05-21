@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="R1o-3g-LwR">
+            <objects>
+                <viewController storyboardIdentifier="loginView" id="D7V-V9-6be" customClass="MSLoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4QJ-qJ-8FT"/>
+                        <viewControllerLayoutGuide type="bottom" id="fnj-TQ-bYB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ctw-FZ-pWI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bq6-ff-euZ">
+                                <rect key="frame" x="0.0" y="176" width="375" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ehz-rB-BRD">
+                                <rect key="frame" x="0.0" y="340" width="375" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.47833792790000002" blue="0.5224610771" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="登      陆">
+                                    <color key="titleColor" red="0.97920911379999998" green="0.97920911379999998" blue="0.97920911379999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="login:" destination="D7V-V9-6be" eventType="touchUpInside" id="CYG-Z3-OCE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="phoneNumTextField" destination="bq6-ff-euZ" id="uSQ-Ve-YvW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jPM-HA-cOU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="404.5" y="377.5"/>
+        </scene>
+    </scenes>
+</document>

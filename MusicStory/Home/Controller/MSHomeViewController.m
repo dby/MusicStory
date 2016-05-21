@@ -45,11 +45,14 @@
 @property (nonatomic, strong) MSHomeBottomCollectView *bottomCollectView;
 @property (nonatomic, strong) MSHomeDetailViewController *detailViewController;
 
+@property (nonatomic, strong) MSHomeCenterItemView *currentCenterItemView;
+@property (nonatomic, strong) MSMusicModel *currentModel;
+
 @end
 
 @implementation MSHomeViewController
 
-@synthesize index               = _index;
+@synthesize index = _index;
 
 #pragma mark - Setter Getter
 -(NSInteger)index {
@@ -79,14 +82,16 @@
     [self initComponents];
     
     self.automaticallyAdjustsScrollViewInsets = false;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorBtnDidClick) name:NOTIFY_ERRORBTNCLICK object:nil];
-    // 初始化界面
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(errorBtnDidClick)
+                                                 name:NOTIFY_ERRORBTNCLICK
+                                               object:nil];
+    
     self.view.backgroundColor = UI_COLOR_APPNORMAL;
-    // 添加头部view
+    self.view.userInteractionEnabled = YES;
+    
     [self.view addSubview:_headerView];
-    // 添加中间的Collection
     [self.view addSubview:_centerCollectView];
-    // 添加底部的Collection
     [self.view addSubview:_bottomCollectView];
     
     // 获取ViewModel
@@ -149,7 +154,8 @@
     _headerView.delegate    = self;
     
     MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
-    self.centerCollectView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420) collectionViewLayout:collectLayout];
+    self.centerCollectView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420)
+                                                collectionViewLayout:collectLayout];
     
     self.centerCollectView.delegate                         = self;
     self.centerCollectView.dataSource                       = self;
@@ -222,6 +228,14 @@
         MSHomeCenterItemView *cell  = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
         cell.homeModel              = model;
         
+        _currentCenterItemView = cell;
+        _currentModel = [self.viewModel.dataSource objectAtIndex:indexPath.row];
+        
+        cell.userInteractionEnabled = YES;
+        UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                            action:@selector(addLike:)];
+        [cell.iconFlowerButton addGestureRecognizer:gestureRecognizer];
+        
         return cell;
         
     } else {
@@ -236,7 +250,6 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
-    
     MSHomeDetailViewController *mshdc = [[MSHomeDetailViewController alloc] initWithModel:[self.viewModel.dataSource objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:mshdc animated:YES];
 }
@@ -275,12 +288,50 @@
     self.lastIndex = indexPath;
 }
 
-#pragma mark - Event or Action
+#pragma mark - Action
 - (void) errorBtnDidClick {
-    //self.centerCollectView.headerViewBeginRefreshing()
+    [self.centerCollectView headerViewBeginRefreshing];
 }
 
-#pragma mark - Private Method
+- (void) addLike:(UITapGestureRecognizer *)gestureRecognizer {
+    debugMethod();
+    if (_currentCenterItemView) {
+        
+        UIImageView *imageView = (UIImageView *)[gestureRecognizer view];
+        debugLog(@"%d", [imageView isHighlighted]);
+        
+        if (![imageView isHighlighted]) {
+            
+            _currentCenterItemView.fovCountLabel.text = [NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] + 1];
+            AVObject *music = [AVObject objectWithClassName:@"Musics" objectId:_currentModel.objectId];
+            [music setObject:[NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] + 1] forKey:@"like_count"];
+            [music saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    _currentModel.like_count = [NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] + 1];
+                } else {
+                }
+            }];
+            
+            [imageView setHighlighted:YES];
+        }
+        else {
+            _currentCenterItemView.fovCountLabel.text = [NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] - 1];
+            AVObject *music = [AVObject objectWithClassName:@"Musics" objectId:_currentModel.objectId];
+            [music setObject:[NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] - 1] forKey:@"like_count"];
+            [music saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    _currentModel.like_count = [NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] - 1];
+                } else {
+                }
+            }];
+            
+            [imageView setHighlighted:NO];
+        }
+        
+    }
+}
+
+#pragma mark - Animation Method
 // 底部标签动画
 - (void)bottomAnimation:(NSIndexPath *)indexpath {
     debugMethod();
