@@ -50,6 +50,7 @@ PODS:
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
+  - SVProgressHUD (2.0.3)
   - UIActivityIndicator-for-SDWebImage (1.2):
     - SDWebImage (~> 3.7)
   - YTKNetwork (0.6.0):
@@ -65,6 +66,7 @@ DEPENDENCIES:
   - Masonry
   - RESideMenu
   - SDWebImage
+  - SVProgressHUD
   - UIActivityIndicator-for-SDWebImage
   - YTKNetwork
 
@@ -80,6 +82,7 @@ SPEC CHECKSUMS:
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
   YTKNetwork: 988660d5fab310a55895239751ecfa74c3224a77
 

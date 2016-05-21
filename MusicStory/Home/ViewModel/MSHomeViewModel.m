@@ -22,7 +22,10 @@
         _type = @"homeViewTodayType";
         _dataSource = [[NSMutableArray alloc] init];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendNotify_success:) name:NOTIFY_SETUPHOMEVIEWTYPE object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(sendNotify_success:)
+                                                     name:NOTIFY_SETUPHOMEVIEWTYPE
+                                                   object:nil];
     }
     
     return self;

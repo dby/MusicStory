@@ -7,7 +7,12 @@
 //
 
 #import "AppConfig.h"
+
 #import "UIView+MS.h"
+
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
+#import <AVOSCloud/AVOSCloud.h>
+
 #import "MSSlideCenterView.h"
 
 @implementation MSSlideCenterView
@@ -15,6 +20,7 @@
 -(void)awakeFromNib {
     
     [super awakeFromNib];
+    debugMethod();
     
     self.portrait.layer.cornerRadius    = 25;
     self.portrait.layer.masksToBounds   = YES;
@@ -34,8 +40,19 @@
     // 默认选择音乐故事
     self.curView = self.musicStoryView;
     self.indexView.y = self.musicStoryView.center.y;
-    debugMethod();
     
+    [self updateUserMsg];
+    
+}
+
+#pragma mark - updateUserInfo
+-(void)updateUserMsg {
+    AVUser *user = [AVUser currentUser];
+    if (user) {
+        debugLog(@"user portrait: %@", [user objectForKey:@"portrait"]);
+        [self.portrait setImageWithURL:[NSURL URLWithString:[user objectForKey:@"portrait"]]
+           usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    }
 }
 
 +(MSSlideCenterView *)centerView {
