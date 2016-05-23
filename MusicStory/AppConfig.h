@@ -40,10 +40,8 @@
 #define NOTIFY_ERRORBTNCLICK    @"NOTIFY_ERRORBTNCLICK"
 // 设置homeview类型 - 用于请求api
 #define NOTIFY_SETUPHOMEVIEWTYPE    @"NOTIFY_SETUPHOMEVIEWTYPE"
-#define NOTIFY_OBJ_TODAY            @"homeViewTodayType"
-#define NOTIFY_OBJ_FINDAPP          @"homeViewFindAppType"
-#define NOTIFY_OBJ_RECOMMEND        @"homeViewRecommendType"
-#define NOTIFY_OBJ_ARTICLE          @"homeViewArticleViewType"
+#define NOTIFY_OBJ_HOME             @"homeViewHomeType"
+#define NOTIFY_OBJ_COLLECTION       @"homeViewCollectionType"
 // 设置menu centreview 类型 - 用于切换centerView
 #define NOTIFY_SETUPCENTERVIEW      @"NOTIFY_SETUPCENTERVIEW"
 

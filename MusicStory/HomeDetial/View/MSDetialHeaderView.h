@@ -13,6 +13,7 @@
 
 - (void)backButtonDidClick;
 - (void)commentDidClick;
+- (void)collectDidClick;
 
 @end
 
@@ -20,6 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
+@property (weak, nonatomic) IBOutlet UIButton *collectButton;
 @property (assign, nonatomic) id<MSDetailHeaderViewDelegate> delegate;
 
 @end

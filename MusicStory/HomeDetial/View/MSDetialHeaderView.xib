@@ -15,15 +15,15 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LJM-4K-UGM">
                     <rect key="frame" x="0.0" y="0.0" width="411" height="65"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzd-vR-x2X">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzd-vR-x2X">
                             <rect key="frame" x="332" y="11" width="71" height="44"/>
                             <constraints>
+                                <constraint firstAttribute="width" constant="71" id="76x-yF-8lj"/>
                                 <constraint firstAttribute="width" constant="71" id="qix-WI-am3"/>
-                                <constraint firstAttribute="width" constant="71" id="s3s-lW-SF3"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                             <inset key="titleEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="1000跟帖" backgroundImage="contentview_commentbacky"/>
+                            <state key="normal" title="5评论" backgroundImage="contentview_commentbacky"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="qix-WI-am3"/>
@@ -34,15 +34,25 @@
                             <rect key="frame" x="0.0" y="0.0" width="54" height="64"/>
                             <state key="normal" image="icon_back"/>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQW-BC-O6W">
+                            <rect key="frame" x="292" y="20.5" width="25" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="Otw-a9-pyx"/>
+                                <constraint firstAttribute="width" constant="25" id="jbR-fl-yWN"/>
+                            </constraints>
+                            <state key="normal" image="detail_icon_fav_normal"/>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="h82-Nw-Rcv" firstAttribute="leading" secondItem="LJM-4K-UGM" secondAttribute="leading" id="02I-Go-bql"/>
                         <constraint firstAttribute="trailing" secondItem="Bzd-vR-x2X" secondAttribute="trailing" id="QKI-gZ-VeC"/>
                         <constraint firstItem="h82-Nw-Rcv" firstAttribute="centerY" secondItem="LJM-4K-UGM" secondAttribute="centerY" id="ffe-ga-ibK"/>
-                        <constraint firstItem="Bzd-vR-x2X" firstAttribute="trailing" secondItem="LJM-4K-UGM" secondAttribute="trailingMargin" id="oZd-X2-TX8"/>
-                        <constraint firstItem="Bzd-vR-x2X" firstAttribute="centerY" secondItem="LJM-4K-UGM" secondAttribute="centerY" id="tjN-0L-nNf"/>
+                        <constraint firstItem="Bzd-vR-x2X" firstAttribute="centerY" secondItem="LJM-4K-UGM" secondAttribute="centerY" id="gCA-5L-gzO"/>
+                        <constraint firstItem="Bzd-vR-x2X" firstAttribute="leading" secondItem="PQW-BC-O6W" secondAttribute="trailing" constant="15" id="mrg-SR-wWR"/>
                         <constraint firstItem="h82-Nw-Rcv" firstAttribute="top" secondItem="LJM-4K-UGM" secondAttribute="top" id="vdb-iH-iqf"/>
                         <constraint firstItem="Bzd-vR-x2X" firstAttribute="top" secondItem="LJM-4K-UGM" secondAttribute="top" id="wCQ-iL-1FA"/>
+                        <constraint firstItem="Bzd-vR-x2X" firstAttribute="trailing" secondItem="LJM-4K-UGM" secondAttribute="trailingMargin" id="wQE-Z8-bF5"/>
+                        <constraint firstItem="PQW-BC-O6W" firstAttribute="centerY" secondItem="LJM-4K-UGM" secondAttribute="centerY" id="xw8-wP-9kb"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
@@ -62,13 +72,15 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="backButton" destination="h82-Nw-Rcv" id="dij-MV-Pb9"/>
+                <outlet property="collectButton" destination="PQW-BC-O6W" id="p99-Cb-IRe"/>
                 <outlet property="commentButton" destination="Bzd-vR-x2X" id="u1B-dJ-Xeb"/>
             </connections>
-            <point key="canvasLocation" x="466.5" y="267.5"/>
+            <point key="canvasLocation" x="472.5" y="289.5"/>
         </view>
     </objects>
     <resources>
         <image name="contentview_commentbacky" width="31" height="44"/>
+        <image name="detail_icon_fav_normal" width="80" height="80"/>
         <image name="icon_back" width="54" height="44"/>
     </resources>
 </document>

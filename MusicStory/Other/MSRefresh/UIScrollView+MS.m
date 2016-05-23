@@ -89,6 +89,7 @@
  上拉加载更多
  */
 -(void)footerViewPullToRefresh:(MSRefreashDirection)direction callback:(CallBack)callback {
+    debugMethod();
     MSRefreshFooterView *footView;
     if (direction == MSRefreshDirectionHorizontal){
         footView = [[MSRefreshFooterView alloc] initWithFrame:CGRectMake(0, 0, MSRefreshViewHeight, SCREEN_HEIGHT)];
@@ -106,6 +107,7 @@
  */
 -(void)footerViewBeginRefreshing {
     
+    debugMethod();
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshFooterView class]]) {
             [(MSRefreshFooterView *)object beginRefreshing];
@@ -118,6 +120,7 @@
  */
 -(void)footerViewStopPullToRefresh
 {
+    debugMethod();
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshFooterView class]]) {
             [(MSRefreshFooterView *)object endRefreshing];
@@ -131,6 +134,7 @@
              
 -(void)removeFooterView
 {
+    debugMethod();
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshFooterView class]]) {
             [(MSRefreshFooterView *)object removeFromSuperview];
@@ -140,6 +144,7 @@
 
 -(void)setFooterHidden :(BOOL)hidden
 {
+    debugMethod();
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshFooterView class]]) {
             [(UIView *)object setHidden:hidden];
@@ -149,6 +154,7 @@
 
 -(void)isFooterHidden
 {
+    debugMethod();
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshFooterView class]]) {
             //let view:UIView  = object as! UIView

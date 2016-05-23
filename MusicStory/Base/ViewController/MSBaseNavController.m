@@ -8,6 +8,8 @@
 
 #import "MSBaseNavController.h"
 
+#import "AppConfig.h"
+
 @interface MSBaseNavController ()
 
 @end
@@ -15,12 +17,14 @@
 @implementation MSBaseNavController
 
 - (void)viewDidLoad {
+    debugMethod();
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationBarHidden = YES;
 }
 
 -(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    debugMethod();
     if ([self.viewControllers count] > 0)
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     
@@ -28,6 +32,7 @@
 }
 
 -(UIViewController *)popViewControllerAnimated:(BOOL)animated {
+    debugMethod();
     if ([self.viewControllers count] == 2) {
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     }

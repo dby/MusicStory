@@ -1,5 +1,5 @@
 //
-//  XMHomeViewModel.h
+//  MSHomeViewModel.h
 //  MusicStory
 //
 //  Created by sys on 16/3/20.
@@ -11,8 +11,10 @@
 #import "AppConfig.h"
 #import "APIConfig.h"
 
-#import "AppConfig.h"
 #import "MSMusicModel.h"
+
+#import "UIScrollView+MS.h"
+
 #import <AVOSCloud/AVOSCloud.h>
 
 #import "MSHomeHeaderView.h"
@@ -20,10 +22,8 @@
 #import "MSHomeBottomCollectView.h"
 #import "MSHomeCenterItemView.h"
 
-#import "MusicStoryRequest.h"
-
 typedef void (^MSHomeViewModelSuccessBack)(NSArray *datasource);
-typedef void (^MSHomeVieModelErrorCallBack)(NSError *error);
+typedef void (^MSHomeViewModelErrorCallBack)(NSError *error);
 
 @interface MSHomeViewModel : NSObject
 
@@ -34,10 +34,12 @@ typedef void (^MSHomeVieModelErrorCallBack)(NSError *error);
 @property (nonatomic, weak) UICollectionView *centerView;
 @property (nonatomic, weak) UICollectionView *bottomView;
 @property (nonatomic, copy) MSHomeViewModelSuccessBack successCallBack ;
-@property (nonatomic, copy) MSHomeVieModelErrorCallBack errorCallBack   ;
+@property (nonatomic, copy) MSHomeViewModelErrorCallBack errorCallBack   ;
 
-- (instancetype)initWithHeaderView:(MSHomeHeaderView *)regiHeaderView withCenterView:(UICollectionView *)centerView withBottomView:(UICollectionView*) bottomView;
+- (instancetype)initWithHeaderView:(MSHomeHeaderView *)regiHeaderView
+                    withCenterView:(UICollectionView *)centerView
+                    withBottomView:(UICollectionView*) bottomView;
 
-- (void)getData:(NSInteger)page withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeVieModelErrorCallBack )errorCallBack;
+- (void)getData:(NSInteger)page withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack )errorCallBack;
 
 @end

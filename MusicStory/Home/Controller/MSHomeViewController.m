@@ -56,10 +56,12 @@
 
 #pragma mark - Setter Getter
 -(NSInteger)index {
+    debugMethod();
     return _index;
 }
 -(void)setIndex:(NSInteger)index {
     
+    debugMethod();
     _index = index;
     if ([_viewModel.dataSource count] == 0) {
         return;
@@ -77,6 +79,7 @@
 #pragma mark life circle
 - (void)viewDidLoad {
     
+    debugMethod();
     [super viewDidLoad];
     
     [self initComponents];
@@ -95,7 +98,9 @@
     [self.view addSubview:_bottomCollectView];
     
     // 获取ViewModel
-    _viewModel = [[MSHomeViewModel alloc] initWithHeaderView:_headerView withCenterView:_centerCollectView withBottomView:_bottomCollectView];
+    _viewModel = [[MSHomeViewModel alloc] initWithHeaderView:_headerView
+                                              withCenterView:_centerCollectView
+                                              withBottomView:_bottomCollectView];
     
     [self.centerCollectView headerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
         debugLog(@"执行 headerViewPullToRefresh 回调函数...");
@@ -126,19 +131,16 @@
     }];
     
     [self showProgress];
+    self.viewModel.type = NOTIFY_OBJ_HOME;
     [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
-        // 默认选中0
         self.index      = 0;
         self.lastIndex  = nil;
         [self.bottomCollectView setContentOffset:CGPointZero animated:true];
         [self scrollViewDidEndDecelerating:self.centerCollectView];
-        
         [self hiddenProgress];
     } withErrorCallBack:^(NSError *error) {
-        // 显示网络错误按钮
         [self showNetWorkErrorView];
         [self hiddenProgress];
-        
     }];
     // 适配屏幕
     [self setupLayout];
@@ -176,22 +178,15 @@
 }
 
 - (void)initRESlideMenu {
+    debugMethod();
     self.sideMenuViewController.scaleMenuView       = false;
     self.sideMenuViewController.scaleContentView    = false;
-}
-
-#pragma mark - Refresh And LoadMore
-- (void)refreshMusic {
-    debugMethod();
-}
-
-- (void)loadMoreMusic {
-    debugMethod();
 }
 
 #pragma mark - scrollerDelegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    debugMethod();
     if (scrollView.tag == 100) {
         int index = (int)((scrollView.contentOffset.x + 0.5*scrollView.width) / scrollView.width);
         if (index > [self.viewModel.dataSource count] - 1) {
@@ -203,6 +198,7 @@
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    debugMethod();
     if (scrollView.tag == 100) {
         // 设置底部动画
         [self bottomAnimation: [NSIndexPath indexPathForRow:_index inSection:0]];
@@ -290,6 +286,7 @@
 
 #pragma mark - Action
 - (void) errorBtnDidClick {
+    debugMethod();
     [self.centerCollectView headerViewBeginRefreshing];
 }
 
@@ -308,6 +305,24 @@
             [music saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
                     _currentModel.like_count = [NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] + 1];
+                    AVUser *user = [AVUser currentUser];
+                    NSMutableArray *hasLikedMusicArr = [user objectForKey:@"hasLikedMusic"];
+                    debugLog(@"%@", hasLikedMusicArr);
+                    if (!hasLikedMusicArr) {
+                        hasLikedMusicArr = [[NSMutableArray alloc] init];
+                    } else if (![hasLikedMusicArr containsObject:_currentModel.objectId]) {
+                        // 原先没有赞过
+                        [hasLikedMusicArr addObject:_currentModel.objectId];
+                        [user setObject:hasLikedMusicArr forKey:@"hasLikedMusic"];
+                        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if (succeeded) {
+                                debugLog(@"save success");
+                            } else {
+                                debugLog(@"save failed");
+                            }
+                        }];
+                    }
+                    
                 } else {
                 }
             }];

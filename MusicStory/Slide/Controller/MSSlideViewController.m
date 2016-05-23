@@ -60,6 +60,17 @@
     self.view.backgroundColor = [UIColor colorWithHexString:bg];
 }
 
+- (void)setContentViewController:(UIViewController *)viewController
+{
+    MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.contentViewController;
+    
+    debugLog(@"sideMenuViewController: %@", self.sideMenuViewController);
+    debugLog(@"contentViewController : %@", self.sideMenuViewController.contentViewController);
+    
+    [nav pushViewController:viewController animated:NO];
+    [self.sideMenuViewController hideMenuViewController];
+}
+
 #pragma mark - MSSlideCenterViewDelegate
 
 -(void)slideCenterViewLoginViewDidClick {
@@ -67,10 +78,9 @@
     
     UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
     UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
-    
-    //MSLoginViewController *loginViewController = [[MSLoginViewController alloc] init];
-    [self.sideMenuViewController setContentViewController: [[UINavigationController alloc] initWithRootViewController:loginViewController] animated:YES];
+    [self.sideMenuViewController setContentViewController:loginViewController];
     [self.sideMenuViewController hideMenuViewController];
+    //[self setContentViewController:loginViewController];
 }
 
 -(void)slideCenterViewSearchViewDidClick {
@@ -83,6 +93,8 @@
 
 -(void)slideCenterViewCollectViewDidClick {
     debugMethod();
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_COLLECTION];
+    [self.sideMenuViewController hideMenuViewController];
 }
 
 -(void)slideCenterViewFeedbackViewDidClick {
@@ -90,8 +102,9 @@
 }
 -(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
-    MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
-    [self.sideMenuViewController setContentViewController: [[MSBaseNavController alloc] initWithRootViewController:hvc] animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_HOME];
+    //MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
+    //[self.sideMenuViewController setContentViewController: [[MSBaseNavController alloc] initWithRootViewController:hvc] animated:YES];
     [self.sideMenuViewController hideMenuViewController];
 }
 

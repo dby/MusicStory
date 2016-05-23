@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "AppConfig.h"
 #import <AVOSCloud/AVOSCloud.h>
 
 @interface MSMusicModel : NSObject
@@ -48,6 +49,11 @@
 // 背景色
 @property (nonatomic, strong) NSString *recommanded_background_color;
 
+@property (nonatomic, strong) NSDate *createdAt;
+@property (nonatomic, strong) NSDate *updatedAt;
+@property (nonatomic, strong) AVACL *ACL;
+
 -(instancetype)initWithAVO :(AVObject *)avo;
++ (AVObject *)MusicModelToAVObject :(MSMusicModel *)model;
 
 @end

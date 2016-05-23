@@ -10,6 +10,8 @@
 
 #import "Masonry.h"
 #import "GRMustache.h"
+#import "SVProgressHUD.h"
+#import <AVOSCloud/AVOSCloud.h>
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 #import "UIView+MS.h"
@@ -119,14 +121,43 @@
     }];
 }
 
-#pragma mark - Custom Delegate
+#pragma mark - MSDetailHeaderViewDelegate
 
 -(void)backButtonDidClick {
+    debugMethod();
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)commentDidClick {
     debugMethod();
+}
+
+-(void)collectDidClick {
+    debugMethod();
+    AVUser *user    = [AVUser currentUser];
+    AVObject *obj   = [MSMusicModel MusicModelToAVObject:_model];
+    
+    [AVObject saveAllInBackground:@[obj] block:^(BOOL succeeded, NSError *error) {
+        if (error) {
+        } else {
+            // 保存成功
+            AVRelation *relation = [user relationForKey:@"musics_collections"];
+            [relation addObject:obj];
+            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    
+                    [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                    [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
+                    
+                } else {
+                    [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                    [SVProgressHUD showSuccessWithStatus:error.debugDescription];
+                }
+            }];
+            
+            debugLog(@"success success...");
+        }
+    }];
 }
 
 #pragma mark - UIScrollviewDelegate

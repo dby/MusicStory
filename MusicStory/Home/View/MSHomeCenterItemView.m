@@ -6,12 +6,14 @@
 //  Copyright © 2016年 sys. All rights reserved.
 //
 
-#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import "AppConfig.h"
+#import <AVOSCloud/AVOSCloud.h>
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 #import "MSHomeCenterItemView.h"
 
 #import "UIView+MS.h"
+
 
 @interface MSHomeCenterItemView()
 
@@ -48,6 +50,14 @@
     _detailLabel.text   = homeModel.music_story;
     _authorLabel.text   = homeModel.author_name;
     _fovCountLabel.text = homeModel.like_count;
+    
+    AVUser *user = [AVUser currentUser];
+    NSArray *likedMusicsArr = [user objectForKey:@"hasLikedMusic"];
+    if ([likedMusicsArr containsObject:_homeModel.objectId]) {
+        [_iconFlowerButton setHighlighted:YES];
+    } else {
+        [_iconFlowerButton setHighlighted:NO];
+    }
 }
 
 // 加载cell

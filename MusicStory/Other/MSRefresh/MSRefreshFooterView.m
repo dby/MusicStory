@@ -18,6 +18,7 @@
 #pragma mark - Life Cycle
 
 - (instancetype)initWithFrame:(CGRect)frame {
+    debugMethod();
     self = [super initWithFrame:frame];
     if (self) {
         _lastRefreshCount = 0;
@@ -28,6 +29,7 @@
 #pragma mark - Setter Getter
 
 -(void)setState:(MSRefreshState)State {
+    debugMethod();
     self.oldState = self.State;
     [super setState:State];
     switch (self.State)
@@ -93,6 +95,7 @@
 }
 
 -(void)willMoveToSuperview:(UIView *)newSuperview {
+    debugMethod();
     [super willMoveToSuperview:newSuperview];
     
     if (self.superview != nil){
@@ -109,6 +112,7 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
+    debugMethod();
     if (self.hidden)
         return;
     
@@ -167,6 +171,7 @@
  重新设置frame
  */
 - (void)resetFrameWithContentSize {
+    debugMethod();
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
         CGFloat contentHeight = self.scrollView.contentSize.width;
         CGFloat scrollHeight = self.scrollView.width  - self.scrollViewOriginalInset.left - self.scrollViewOriginalInset.right;
@@ -185,6 +190,7 @@
 }
 
 - (CGFloat) heightForContentBreakView {
+    debugMethod();
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
         CGFloat h = self.scrollView.width - self.scrollViewOriginalInset.right - self.scrollViewOriginalInset.left;
         return self.scrollView.contentSize.width - h;
@@ -195,7 +201,7 @@
 }
 
 - (CGFloat) happenOffsetX {
-    
+    debugMethod();
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
         CGFloat deltaH = [self heightForContentBreakView];
         if (deltaH > 0) {
@@ -217,6 +223,7 @@
  获取cell的总个数
  */
 -(NSInteger) totalDataCountInScrollView {
+    debugMethod();
     NSInteger totalCount = 0;
     if ([self.scrollView isKindOfClass: [UITableView class]]){
         UITableView *tableView = (UITableView *)self.scrollView;
@@ -234,6 +241,7 @@
 }
 
 -(void)deinit {
+    debugMethod();
     [self endRefreshing];
 }
 

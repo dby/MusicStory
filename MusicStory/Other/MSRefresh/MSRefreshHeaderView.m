@@ -24,6 +24,7 @@
 -(void)setState:(MSRefreshState)State {
     
     debugMethod();
+    debugLog(@"oldState: %ld, State: %ld", (long)self.oldState, (long)self.State);
     self.oldState = self.State;
     [super setState:State];
     
@@ -103,8 +104,6 @@
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
         CGFloat currentOffsetY = self.scrollView.contentOffset.x;
         CGFloat happenOffsetY  = -1 * self.scrollViewOriginalInset.left;
-        
-        debugLog(@"currentOffsetY: %f, happenOffsetY: %f", currentOffsetY, happenOffsetY);
         
         if (currentOffsetY >= happenOffsetY)
             return;
