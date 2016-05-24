@@ -27,6 +27,7 @@
 @implementation MSVerifyPwdViewController
 
 - (void)viewDidLoad {
+    debugMethod();
     [super viewDidLoad];
     
     _phoneNumberLabel.text = _phoneNumber;

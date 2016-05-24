@@ -77,6 +77,12 @@
 }
 
 #pragma mark life circle
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = true;
+}
+
 - (void)viewDidLoad {
     
     debugMethod();

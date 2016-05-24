@@ -27,22 +27,30 @@
 
 @implementation MSLoginViewController
 
+#pragma mark - Life Cycle
+
+-(void)viewWillDisappear:(BOOL)animated {
+    debugMethod();
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = true;
+}
+
 - (void)viewDidLoad {
+    debugMethod();
     [super viewDidLoad];
     
-    [self isHaveLogined];
-    [self buildComponent];
+    //[self isHaveLogined];
+    //[self buildComponent];
 }
 
 - (void)buildComponent {
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_back"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(presentLeftMenuViewController:)];
 }
 
+#pragma mark - Custom Function
+
 - (void)isHaveLogined {
+    debugMethod();
     AVUser *user = [AVUser currentUser];
     if (user) {
         MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
@@ -51,7 +59,6 @@
     }
 }
 
-#pragma mark - Custom Function
 - (IBAction)login:(id)sender {
     debugMethod();
     [_indicatorView startAnimating];

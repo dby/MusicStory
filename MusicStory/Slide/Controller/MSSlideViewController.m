@@ -19,6 +19,7 @@
 #import "MSHomeViewController.h"
 #import "MSLoginViewController.h"
 #import "MSHomeDetailViewController.h"
+#import "MSMeController.h"
 
 @interface MSSlideViewController () < MSSlideCenterViewDelegate>
 
@@ -64,10 +65,8 @@
 {
     MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.contentViewController;
     
-    debugLog(@"sideMenuViewController: %@", self.sideMenuViewController);
-    debugLog(@"contentViewController : %@", self.sideMenuViewController.contentViewController);
-    
-    [nav pushViewController:viewController animated:NO];
+    [nav pushViewController:viewController animated:YES];
+    nav.navigationBarHidden = false;
     [self.sideMenuViewController hideMenuViewController];
 }
 
@@ -76,11 +75,16 @@
 -(void)slideCenterViewLoginViewDidClick {
     debugMethod();
     
-    UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
-    UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
-    [self.sideMenuViewController setContentViewController:loginViewController];
-    [self.sideMenuViewController hideMenuViewController];
-    //[self setContentViewController:loginViewController];
+    AVUser *user = [AVUser currentUser];
+    
+    if (user) {
+        MSMeController *meController = [[MSMeController alloc] init];
+        [self setContentViewController:meController];
+    } else {
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
+        UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
+        [self setContentViewController:loginViewController];
+    }
 }
 
 -(void)slideCenterViewSearchViewDidClick {
@@ -103,8 +107,6 @@
 -(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_HOME];
-    //MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
-    //[self.sideMenuViewController setContentViewController: [[MSBaseNavController alloc] initWithRootViewController:hvc] animated:YES];
     [self.sideMenuViewController hideMenuViewController];
 }
 

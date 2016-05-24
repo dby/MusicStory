@@ -22,6 +22,7 @@
 @implementation MSRegisterViewController
 
 - (void)viewDidLoad {
+    debugMethod();
     [super viewDidLoad];
     
     self.phoneNumLabel.text = self.phoneNumber;
