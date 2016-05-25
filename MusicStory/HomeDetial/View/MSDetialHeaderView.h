@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MSMusicModel.h"
 
 @protocol MSDetailHeaderViewDelegate
 
@@ -22,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UIButton *collectButton;
+@property (nonatomic, strong) MSMusicModel *model;
 @property (assign, nonatomic) id<MSDetailHeaderViewDelegate> delegate;
 
 @end

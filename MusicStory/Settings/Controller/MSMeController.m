@@ -38,7 +38,6 @@
 
 - (void)setupSections
 {
-    
     //************************************section1
     MSSettingItemModel *item1   = [[MSSettingItemModel alloc]init];
     item1.funcName              = @"我的任务1";

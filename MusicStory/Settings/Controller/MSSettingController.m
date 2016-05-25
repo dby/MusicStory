@@ -47,8 +47,8 @@
     item2.accessoryType = MSSettingAccessoryTypeDisclosureIndicator;
     
     MSSettingSectionModel *section1 = [[MSSettingSectionModel alloc]init];
-    section1.sectionHeaderHeight = 18;
-    section1.itemArray = @[item1,item2];
+    section1.sectionHeaderHeight    = 18;
+    section1.itemArray              = @[item1,item2];
     
     //************************************section2
     MSSettingItemModel *item3 = [[MSSettingItemModel alloc]init];

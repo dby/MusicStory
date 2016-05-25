@@ -37,19 +37,20 @@
 @synthesize model = _model;
 
 #pragma mark - Setter Getter
-
 -(MSMusicModel *)model {
+    debugMethod();
     return _model;
 }
 
 -(void)setModel:(MSMusicModel *)model {
+    debugMethod();
     _model = model;
-    _contentView.model = model;
-    _playView.model = model;
+    _contentView.model  = model;
+    _playView.model     = model;
+    _headerView.model   = model;
 }
 
 #pragma mark - Life Cycle
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     debugMethod();
@@ -65,7 +66,6 @@
 }
 
 #pragma mark - init
-
 -(instancetype)initWithModel:(MSMusicModel *)model {
     
     self = [super init];
@@ -87,14 +87,14 @@
                                                                              0,
                                                                              SCREEN_WIDTH,
                                                                              SCREEN_HEIGHT)];
-    self.contentView.delegate = self;
-    self.contentView.divisionView.delegate = self;
+    self.contentView.delegate               = self;
+    self.contentView.divisionView.delegate  = self;
     [self.view addSubview:_contentView];
   
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    _playView = [[MSPlayView alloc] init];
-    _playView.delegate = self;
+    _playView           = [[MSPlayView alloc] init];
+    _playView.delegate  = self;
     [self.view addSubview:_playView];
     
     _lastPosition = 0;
@@ -137,27 +137,45 @@
     AVUser *user    = [AVUser currentUser];
     AVObject *obj   = [MSMusicModel MusicModelToAVObject:_model];
     
-    [AVObject saveAllInBackground:@[obj] block:^(BOOL succeeded, NSError *error) {
-        if (error) {
-        } else {
-            // 保存成功
-            AVRelation *relation = [user relationForKey:@"musics_collections"];
-            [relation addObject:obj];
-            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                    
-                    [SVProgressHUD setMinimumDismissTimeInterval:0.5];
-                    [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
-                    
-                } else {
-                    [SVProgressHUD setMinimumDismissTimeInterval:0.5];
-                    [SVProgressHUD showSuccessWithStatus:error.debugDescription];
-                }
-            }];
-            
-            debugLog(@"success success...");
-        }
-    }];
+    if (!_headerView.collectButton.isSelected) {
+        [AVObject saveAllInBackground:@[obj] block:^(BOOL succeeded, NSError *error) {
+            if (error) {
+            } else {
+                AVRelation *relation = [user relationForKey:@"musics_collections"];
+                [relation addObject:obj];
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                        [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
+                    } else {
+                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                        [SVProgressHUD showSuccessWithStatus:error.debugDescription];
+                    }
+                }];
+                [_headerView.collectButton setSelected:YES];
+                debugLog(@"add success...");
+            }
+        }];
+    } else {
+        [AVObject saveAllInBackground:@[obj] block:^(BOOL succeeded, NSError *error) {
+            if (error) {
+            } else {
+                AVRelation *relation = [user relationForKey:@"musics_collections"];
+                [relation removeObject:obj];
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                        [SVProgressHUD showSuccessWithStatus:@"取消收藏"];
+                    } else {
+                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                        [SVProgressHUD showSuccessWithStatus:error.debugDescription];
+                    }
+                }];
+                [_headerView.collectButton setSelected:NO];
+                debugLog(@"delete success...");
+            }
+        }];
+    }
 }
 
 #pragma mark - UIScrollviewDelegate

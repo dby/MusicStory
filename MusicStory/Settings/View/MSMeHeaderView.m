@@ -7,6 +7,8 @@
 //
 
 #import "MSMeHeaderView.h"
+
+#import "UIView+MS.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @interface MSMeHeaderView()
@@ -26,6 +28,7 @@
 {
     [self.backgroundImageView setImageWithURL:[NSURL URLWithString:@"http://ac-xjvf4uf6.clouddn.com/223b5c12f6efb871.jpg"]
                   usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
 }
 
 @end
