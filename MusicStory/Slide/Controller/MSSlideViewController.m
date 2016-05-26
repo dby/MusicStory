@@ -15,11 +15,11 @@
 #import "AppConfig.h"
 #import "MSSlideCenterView.h"
 
+#import "MSMeController.h"
 #import "MSBaseNavController.h"
 #import "MSHomeViewController.h"
 #import "MSLoginViewController.h"
 #import "MSHomeDetailViewController.h"
-#import "MSMeController.h"
 
 @interface MSSlideViewController () < MSSlideCenterViewDelegate>
 

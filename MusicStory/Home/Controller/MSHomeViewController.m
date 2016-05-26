@@ -224,6 +224,8 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
+    debugLog(@"viewModel: %@", self.viewModel);
+    debugLog(@"viewModel len: %lu", (unsigned long)[self.viewModel.dataSource count]);
     MSMusicModel *model = [self.viewModel.dataSource objectAtIndex:indexPath.row];
     if (collectionView.tag == 100) {
         

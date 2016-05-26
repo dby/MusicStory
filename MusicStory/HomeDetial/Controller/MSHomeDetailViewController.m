@@ -19,8 +19,9 @@
 #import "MSPlayView.h"
 
 #import "MSDivisionView.h"
-#import "MSDetailContentView.h"
 #import "MSDetialHeaderView.h"
+#import "MSDetailContentView.h"
+#import "CommentsViewController.h"
 
 @interface MSHomeDetailViewController ()<MSDetailHeaderViewDelegate, UIScrollViewDelegate, PlayViewDelegate, DivisionDelegate>
 
@@ -130,6 +131,8 @@
 
 -(void)commentDidClick {
     debugMethod();
+    CommentsViewController *commentsViewController = [[CommentsViewController alloc] init];
+    [self.navigationController pushViewController:commentsViewController animated:YES];
 }
 
 -(void)collectDidClick {
