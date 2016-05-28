@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "MSCommentViewModel.h"
-
+#import "MSMusicModel.h"
 
 @interface CommentsViewController : UIViewController
 
 @property (nonatomic, strong) UITableView *commentTableView;
 @property (nonatomic, strong) MSCommentViewModel *commentViewModel;
+@property (nonatomic, strong) MSMusicModel *model;
 
 @end

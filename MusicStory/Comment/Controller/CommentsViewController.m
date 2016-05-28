@@ -11,13 +11,21 @@
 #import "UIView+MS.h"
 #import "AppConfig.h"
 #import "APIConfig.h"
+
+#import "MSCommentView.h"
 #import "MSCommentCell.h"
 
-@interface CommentsViewController () <UITableViewDelegate, UITableViewDataSource>
+#import "MSMakeCommentsController.h"
+
+@interface CommentsViewController () <UITableViewDelegate, UITableViewDataSource, MSCommentViewDelegate>
+
+@property (nonatomic, strong) MSCommentView *commentView;
 
 @end
 
 @implementation CommentsViewController
+
+static NSString *CellIdentifier = @"commentIdentifier";
 
 #pragma mark - life cycle
 
@@ -27,6 +35,7 @@
     
     [self buildComponent];
     [self loadData];
+    self.view.userInteractionEnabled = true;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -45,19 +54,29 @@
 
 - (void)buildComponent {
     debugMethod();
-    [self.view setBackgroundColor:[UIColor whiteColor]];
     self.commentTableView = [[UITableView alloc] initWithFrame:self.view.frame];
     self.commentTableView.delegate      = self;
     self.commentTableView.dataSource    = self;
+    self.commentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.commentViewModel = [[MSCommentViewModel alloc] initWithCommentTableView:self.commentTableView];
+    [self.commentTableView registerClass:[MSCommentCell class] forCellReuseIdentifier:CellIdentifier];
     [self.view addSubview:_commentTableView];
+    
+    self.commentView        = [[MSCommentView alloc] init];
+    self.commentView.frame  = CGRectMake(0,
+                                         SCREEN_HEIGHT - CGRectGetHeight(self.commentView.frame),
+                                         SCREEN_WIDTH,
+                                         CGRectGetHeight(self.commentView.frame));
+    self.commentView.delegate = self;
+    [self.view addSubview:_commentView];
+    
+    self.commentViewModel = [[MSCommentViewModel alloc] initWithCommentTableView:_commentTableView];
 }
 
 - (void)loadData {
     debugMethod();
     [self.commentViewModel getCommentData:0 withSuccessBack:^(NSArray *datasource) {
-        
+        debugLog(@"comment count: %lu", (unsigned long)[datasource count]);
     } withErrorCallBack:^(NSError *error) {
         
     }];
@@ -67,13 +86,14 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
-    static NSString *CellIdentifier = @"commentIdentifier";
-    MSCommentCell *cell = (MSCommentCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[MSCommentCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
-    }
+    MSCommentCell *cell = (MSCommentCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell setCellData:[self.commentViewModel.dataSource objectAtIndex:indexPath.row]];
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 100;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -84,6 +104,17 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     debugMethod();
     return [self.commentViewModel.dataSource count];
+}
+
+#pragma mark - MSCommentViewDelegate
+
+-(void)commentLabelDidClick {
+    
+    debugMethod();
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"MSComment" bundle:[NSBundle mainBundle]];
+    MSMakeCommentsController *vc = [story instantiateViewControllerWithIdentifier:@"msmakecommentscontroller"];
+    vc.model = _model;
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
 }
 
 @end

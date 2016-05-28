@@ -132,6 +132,7 @@
 -(void)commentDidClick {
     debugMethod();
     CommentsViewController *commentsViewController = [[CommentsViewController alloc] init];
+    commentsViewController.model = _model;
     [self.navigationController pushViewController:commentsViewController animated:YES];
 }
 
