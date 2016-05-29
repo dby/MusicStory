@@ -26,8 +26,6 @@
 
 - (IBAction)completeCommentDidClick:(id)sender {
     debugMethod();
-    debugLog(@"content: %@", _contentTextView.text);
-    
     AVUser *user = [AVUser currentUser];
     if (user && ![_contentTextView.text isEqualToString:@""] && _model) {
         AVObject *commentAvobject = [[AVObject alloc] initWithClassName:@"Comments"];

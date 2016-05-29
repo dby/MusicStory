@@ -31,7 +31,7 @@
                                                                                       action:@selector(musicStoryDidClick)]];
     [self.collectView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
                                                                                   action:@selector(collectViewDidClick)]];
-    [self.searchBtnDidClick addTarget:self action:@selector(searchBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.searchBtn addTarget:self action:@selector(searchBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
     [self.aboutUsView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
                                                                                   action:@selector(aboutUsDidClick)]];
     [self.feedBackView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
@@ -90,7 +90,7 @@
     [self.delegate slideCenterViewCollectViewDidClick];
 }
 
-- (void)searchDidClick {
+- (void)searchBtnDidClick {
     debugMethod();
     self.indexView.hidden = false;
     [self.delegate slideCenterViewSearchViewDidClick];

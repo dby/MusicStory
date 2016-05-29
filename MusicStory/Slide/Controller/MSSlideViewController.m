@@ -20,6 +20,7 @@
 #import "MSHomeViewController.h"
 #import "MSLoginViewController.h"
 #import "MSHomeDetailViewController.h"
+#import "MSSearchViewController.h"
 
 @interface MSSlideViewController () < MSSlideCenterViewDelegate>
 
@@ -76,7 +77,6 @@
     debugMethod();
     
     AVUser *user = [AVUser currentUser];
-    
     if (user) {
         MSMeController *meController = [[MSMeController alloc] init];
         [self setContentViewController:meController];
@@ -89,6 +89,12 @@
 
 -(void)slideCenterViewSearchViewDidClick {
     debugMethod();
+    
+    MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.leftMenuViewController;
+    MSSearchViewController *vc = [[MSSearchViewController alloc] init];
+    [nav presentViewController:vc animated:YES completion:^{
+        
+    }];
 }
 
 -(void)slideCenterViewAboutUsViewDidClick {
