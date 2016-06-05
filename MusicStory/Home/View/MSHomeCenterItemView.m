@@ -24,13 +24,18 @@
 
 -(void)awakeFromNib
 {
+    debugMethod();
     [super awakeFromNib];
     
     self.backgroundColor        = [UIColor whiteColor];
     self.layer.cornerRadius     = 5;
     self.layer.masksToBounds    = YES;
     self.userInteractionEnabled = YES;
-    self.contentView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [self.centerImgView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    self.centerImgView.contentMode = UIViewContentModeScaleAspectFill;
+    self.centerImgView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    self.centerImgView.clipsToBounds = YES;
     
     self.iconFlowerButton.userInteractionEnabled = YES;
 }
@@ -38,6 +43,7 @@
 #pragma mark - Setter Getter
 -(void)setHomeModel:(MSMusicModel *)homeModel
 {
+    debugMethod();
     _homeModel = homeModel;
     
     // 设置数据
@@ -63,6 +69,7 @@
 // 加载cell
 +(MSHomeCenterItemView *)itemWithCollectionView:(UICollectionView *)collection :(NSIndexPath *)indexPath
 {
+    debugMethod();
     MSHomeCenterItemView *cell = [collection dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
     
     if (cell == nil) {

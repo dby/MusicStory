@@ -14,15 +14,16 @@
 #import "MSHomeBottomItemView.h"
 #import "MSHomeBottomFlowLayout.h"
 #import "MSHomeBottomCollectView.h"
+#import "MSHomeCenterCollectionView.h"
 
 #import "MSHomeDetailViewController.h"
 
-#import "MSHomeViewModel.h"
 #import "MSMusicModel.h"
 #import "MSRefreshBase.h"
+#import "MSHomeViewModel.h"
 
-#import "UIColor+MS.h"
 #import "UIView+MS.h"
+#import "UIColor+MS.h"
 #import "UIScrollView+MS.h"
 #import "UIViewController+MS.h"
 
@@ -41,7 +42,7 @@
 @property (nonatomic, assign) NSInteger index;
 
 @property (nonatomic, strong) MSHomeHeaderView *headerView;
-@property (nonatomic, strong) UICollectionView *centerCollectView;
+@property (nonatomic, strong) MSHomeCenterCollectionView *centerCollectView;
 @property (nonatomic, strong) MSHomeBottomCollectView *bottomCollectView;
 @property (nonatomic, strong) MSHomeDetailViewController *detailViewController;
 
@@ -63,6 +64,7 @@
     
     debugMethod();
     _index = index;
+    debugLog(@"setindex: %lu", (unsigned long)[_viewModel.dataSource count]);
     if ([_viewModel.dataSource count] == 0) {
         return;
     }
@@ -79,6 +81,7 @@
 #pragma mark life circle
 
 -(void)viewWillAppear:(BOOL)animated {
+    debugMethod();
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = true;
 }
@@ -96,12 +99,12 @@
                                                  name:NOTIFY_ERRORBTNCLICK
                                                object:nil];
     
-    self.view.backgroundColor = UI_COLOR_APPNORMAL;
     self.view.userInteractionEnabled = YES;
     
     [self.view addSubview:_headerView];
     [self.view addSubview:_centerCollectView];
     [self.view addSubview:_bottomCollectView];
+    self.view.backgroundColor = UI_COLOR_APPNORMAL;
     
     // 获取ViewModel
     _viewModel = [[MSHomeViewModel alloc] initWithHeaderView:_headerView
@@ -119,18 +122,14 @@
             [self.centerCollectView headerViewStopPullToRefresh];
             
         } withErrorCallBack:^(NSError *error) {
-            
             [self.centerCollectView headerViewStopPullToRefresh];
-            
         }];
     }];
     
     [self.centerCollectView footerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
         debugLog(@"执行 footViewPullToRefresh 回调函数...");
         [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
-            
             [self.centerCollectView footerViewStopPullToRefresh];
-            
         } withErrorCallBack:^(NSError *error) {
             [self.centerCollectView footerViewStopPullToRefresh];
         }];
@@ -155,21 +154,18 @@
 #pragma mark Init
 
 - (void)initComponents {
-    
     debugMethod();
-    
     _headerView             = [[MSHomeHeaderView alloc] init];
     _headerView.delegate    = self;
     
     MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
-    self.centerCollectView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420)
+    self.centerCollectView = [[MSHomeCenterCollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420)
                                                 collectionViewLayout:collectLayout];
     
     self.centerCollectView.delegate                         = self;
     self.centerCollectView.dataSource                       = self;
     self.centerCollectView.showsHorizontalScrollIndicator   = false;
     self.centerCollectView.pagingEnabled                    = true;
-    
     [self.centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
     self.centerCollectView.backgroundColor  = [UIColor clearColor];
     self.centerCollectView.tag              = 100;
@@ -187,6 +183,7 @@
     debugMethod();
     self.sideMenuViewController.scaleMenuView       = false;
     self.sideMenuViewController.scaleContentView    = false;
+    [self.sideMenuViewController presentLeftMenuViewController];
 }
 
 #pragma mark - scrollerDelegate
@@ -226,6 +223,7 @@
     debugMethod();
     debugLog(@"viewModel: %@", self.viewModel);
     debugLog(@"viewModel len: %lu", (unsigned long)[self.viewModel.dataSource count]);
+    
     MSMusicModel *model = [self.viewModel.dataSource objectAtIndex:indexPath.row];
     if (collectionView.tag == 100) {
         
@@ -245,7 +243,7 @@
     } else {
         
         MSHomeBottomitemView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeBottomItemViewID" forIndexPath:indexPath];
-        cell.y          = 50;
+        cell.y          = BOTTOM_VIEW_NOR_Y;
         cell.iconUrl    = model.icon_image;
         
         return cell;
@@ -282,7 +280,7 @@
     self.index = indexPath.row;
     // 执行底部横向动画
     UICollectionViewCell *cell = [self.bottomCollectView cellForItemAtIndexPath:indexPath];
-    // 如果当前不够8个item就不让他滚动
+    // 如果当前不够7个item就不让他滚动
     [self bottomHorizontalAnimation:cell forIndexPath:indexPath];
     // 发送通知改变侧滑菜单的颜色
     MSMusicModel *model = [self.viewModel.dataSource objectAtIndex:_index];
@@ -369,12 +367,6 @@
         cell = (MSHomeBottomitemView *)[self.bottomCollectView cellForItemAtIndexPath:indexpath];
     }
     
-    if (cell == nil) {
-        [self.bottomCollectView reloadData];
-        [self.bottomCollectView layoutIfNeeded];
-        cell = (MSHomeBottomitemView *)[self.bottomCollectView cellForItemAtIndexPath:indexpath];
-    }
-    
     if (cell != nil) {
         // 底部横向动画
         [self bottomHorizontalAnimation:cell forIndexPath:indexpath];
@@ -389,7 +381,7 @@
 - (void)bottomHorizontalAnimation:(UICollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
     
     debugMethod();
-    if ([self.viewModel.dataSource count] < 8) {
+    if ([self.viewModel.dataSource count] < 7) {
         return;
     }
     
@@ -413,28 +405,29 @@
     
     debugMethod();
     [UIView animateWithDuration:0.2 animations:^{
-        cell.y = 10;
+        cell.y = 15;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.05 animations:^{
-            cell.y = 15;
+            cell.y = 20;
+            debugLog(@"bottom vertical222 %lf", cell.y);
         }];
     }];
     
+    debugLog(@"bottom vertical %lf", cell.y);
     UICollectionViewCell *lastBottomView = [self.bottomCollectView cellForItemAtIndexPath:self.lastIndex];
     
     if (lastBottomView != nil) {
         [UIView animateWithDuration:0.2 animations:^{
-            lastBottomView.y = 60;
+            lastBottomView.y = BOTTOM_VIEW_MAX_Y;
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.05 animations:^{
-                lastBottomView.y = 50;
+                lastBottomView.y = BOTTOM_VIEW_NOR_Y;
             }];
         }];
     }
 }
 
 - (void)setupLayout {
-    
     debugMethod();
     [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(20);
@@ -444,14 +437,12 @@
     
     [_bottomCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
-        make.height.equalTo(@(SCREEN_HEIGHT*60/IPHONE5_HEIGHT));
+        make.height.equalTo(@(SCREEN_HEIGHT*70/IPHONE5_HEIGHT));
     }];
-    
     
     [_centerCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        //TODO: 这里需要查找为什么 headerView Height 为 320
-        make.top.equalTo(_headerView).offset(50);
+        make.center.equalTo(self.view);
         make.height.equalTo(@(SCREEN_HEIGHT*420/IPHONE5_HEIGHT));
     }];
 }

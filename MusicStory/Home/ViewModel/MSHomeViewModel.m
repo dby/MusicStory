@@ -112,7 +112,7 @@
 - (void)sendNotify_success:(NSNotification *)notify {
     debugMethod();
     _type = notify.object;
-    _dataSource = [[NSMutableArray alloc] init];
+    //_dataSource = [[NSMutableArray alloc] init];
     [self.centerView headerViewBeginRefreshing];
 }
 

@@ -36,7 +36,7 @@
     [super viewDidLoad];
     
     [self initComponents];
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = UI_COLOR_APPNORMAL;
 }
 
 -(void)viewWillAppear:(BOOL)animated {

@@ -21,25 +21,27 @@
 @synthesize homeModel   = _homeModel;
 
 #pragma mark - Setter Getter
--(void)setRightTitle:(NSString *)rightTitle
-{
+-(void)setRightTitle:(NSString *)rightTitle {
+    debugMethod();
     _rightTitle = rightTitle;
     self.rightTitleLabel.text = _rightTitle;
 }
 
--(NSString *)rightTitle
-{
+-(NSString *)rightTitle {
+    debugMethod();
     return _rightTitle;
 }
 
 -(MSMusicModel *)homeModel {
+    debugMethod();
     return _homeModel;
 }
 
 -(void)setHomeModel:(MSMusicModel *)homeModel
 {
-    _homeModel = homeModel;
+    debugMethod();
     
+    _homeModel = homeModel;
     if ([NSDate isToDay:homeModel.publish_date]) {
         self.dateLabel.text = @"今天";
         [self hiddenMoveToFirstAnimation];
@@ -54,6 +56,7 @@
 }
 
 -(instancetype)init {
+    debugMethod();
     self = [super init];
     if (self) {
         self = [[NSBundle mainBundle] loadNibNamed:@"MSHomeHeaderView" owner:nil options:nil].firstObject;
@@ -63,21 +66,24 @@
 
 //MARK: --- ACTION EVENT
 - (IBAction)menuImgDidClick:(id)sender {
+    debugMethod();
     [self.delegate homeHeaderViewMenuDidClick:self :sender];
 }
 - (IBAction)moveToFirstImgDidClick:(id)sender {
+    debugMethod();
     [self.delegate homeHeaderViewMoveToFirstDidClick:self :sender];
     [self hiddenMoveToFirstAnimation];
 }
 
 //MARK: --- PRIVATE
-- (void) hiddenMoveToFirstAnimation
-{
+- (void) hiddenMoveToFirstAnimation {
+    debugMethod();
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.moveToFirstBtn.alpha = 0;
     } completion:nil];
 }
 - (void) showMoveToFirstAnimation {
+    debugMethod();
     [UIView animateWithDuration:0.2 delay: 0.0 options: UIViewAnimationOptionCurveEaseOut animations: ^{
         self.moveToFirstBtn.alpha = 1;
     } completion: nil];
@@ -85,7 +91,7 @@
 
 //MARK : -- Public
 - (void) setRightTitleHidden:(BOOL)flag {
-    
+    debugMethod();
     self.rightTitleLabel.hidden = flag;
     self.dateLabel.hidden = !flag;
     self.weakLabel.hidden = !flag;

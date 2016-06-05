@@ -187,18 +187,18 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     NSInteger currentPostion = scrollView.contentOffset.y;
-    if (currentPostion - _lastPosition > 20) {
+    if (currentPostion - _lastPosition > 50) {
         _lastPosition = currentPostion;
         
-        [UIView animateWithDuration:1.0 animations:^{
+        [UIView animateWithDuration:2.0 animations:^{
             _playView.hidden = true;
         }];
     }
-    else if (_lastPosition - currentPostion > 20)
+    else if (_lastPosition - currentPostion > 50)
     {
         _lastPosition = currentPostion;
         
-        [UIView animateWithDuration:1.0 animations:^{
+        [UIView animateWithDuration:2.0 animations:^{
             _playView.hidden = false;
         }];
     }

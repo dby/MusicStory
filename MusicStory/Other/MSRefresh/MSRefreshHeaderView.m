@@ -58,7 +58,7 @@
             } else {
                 [self.scrollView setContentOffset:CGPointMake(0, -self.width) animated:false];
             }
-            self.scrollView.scrollEnabled = false;
+            self.scrollView.scrollEnabled = true;
             break;
         }
         default:

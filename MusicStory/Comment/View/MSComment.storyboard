@@ -40,7 +40,7 @@
                                         <color key="textColor" red="0.97647058819999999" green="0.96470588239999999" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wj3-au-430">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wj3-au-430">
                                         <rect key="frame" x="0.0" y="22" width="54" height="44"/>
                                         <state key="normal" image="icon_back"/>
                                         <connections>
@@ -70,35 +70,28 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="输入评论" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6t1-Xx-YS7">
-                                <rect key="frame" x="16" y="64" width="343" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="您的评论可能会出现在首页" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Qzp-2q-03I">
+                                <rect key="frame" x="16" y="64" width="343" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="6bX-Vh-yjM"/>
+                                    <constraint firstAttribute="height" constant="100" id="4fn-ON-X52"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="g7D-AZ-HsF" firstAttribute="leading" secondItem="Vj5-YC-OMT" secondAttribute="leadingMargin" constant="-20" id="1FY-yn-VUm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="g7D-AZ-HsF" secondAttribute="trailing" constant="-20" id="DCh-ny-9Id"/>
                             <constraint firstItem="g7D-AZ-HsF" firstAttribute="top" secondItem="cHp-hw-q64" secondAttribute="bottom" constant="-20" id="Nbv-8y-vp9"/>
-                            <constraint firstItem="6t1-Xx-YS7" firstAttribute="leading" secondItem="Vj5-YC-OMT" secondAttribute="leadingMargin" id="Sch-fP-bkT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6t1-Xx-YS7" secondAttribute="trailing" id="ZII-Ra-V5J"/>
-                            <constraint firstItem="6t1-Xx-YS7" firstAttribute="top" secondItem="g7D-AZ-HsF" secondAttribute="bottom" id="b0l-XN-yn1"/>
-                            <constraint firstItem="H3L-9q-FsO" firstAttribute="top" secondItem="6t1-Xx-YS7" secondAttribute="bottom" constant="424" id="t5L-vo-GtG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Qzp-2q-03I" secondAttribute="trailing" id="ReG-Ro-upW"/>
+                            <constraint firstItem="Qzp-2q-03I" firstAttribute="leading" secondItem="Vj5-YC-OMT" secondAttribute="leadingMargin" id="dlz-i7-C8v"/>
+                            <constraint firstItem="Qzp-2q-03I" firstAttribute="top" secondItem="g7D-AZ-HsF" secondAttribute="bottom" id="yu7-IX-Oin"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="t5L-vo-GtG"/>
-                            </mask>
-                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="contentTextView" destination="6t1-Xx-YS7" id="WXz-Jv-MhD"/>
+                        <outlet property="contentTextField" destination="Qzp-2q-03I" id="It8-rG-Jt0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a5F-f9-WJk" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -9,6 +9,7 @@
 #import "MSHomeBottomCollectView.h"
 
 #import "UIView+MS.h"
+#import "AppConfig.h"
 
 @interface MSHomeBottomCollectView()
 
@@ -17,6 +18,7 @@
 @implementation MSHomeBottomCollectView
 
 -(instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
+    debugMethod();
     self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
         [self registerNib:[UINib nibWithNibName:@"MSHomeBottomItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeBottomItemViewID"];
@@ -30,13 +32,14 @@
 }
 
 - (void)initComponent {
+    debugMethod();
     self.maxItemY = 10;
 }
 
 #pragma mark - Touch
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    
+    debugMethod();
     // 获取显示的cell,保存cell的rect数组, 排序按cell的x从小到大
     NSMutableArray *cellArray = [[NSMutableArray alloc] init];
     UICollectionViewCell *cell;
@@ -53,19 +56,20 @@
 }
 
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    debugMethod();
     // 重新设置frame
     [self resetCellFrame:touches];
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    
+    debugMethod();
     [UIView animateWithDuration:0.2 delay:0.5 options:UIViewAnimationOptionOverrideInheritedDuration animations:^{
         for (int i = 0; i < [self.cellArray count]; i++) {
             UICollectionViewCell *cell = [self.cellArray objectAtIndex:i];
             if (cell != self.indexCell) {
-                cell.y = 50;
+                cell.y = BOTTOM_VIEW_NOR_Y;
             } else {
-                cell.y = 15;
+                cell.y = BOTTOM_VIEW_MIN_Y;
             }
         }
     } completion:nil];
@@ -80,7 +84,7 @@
 }
 
 - (void)resetCellFrame :(NSSet<UITouch *> *) touches {
-    
+    debugMethod();
     // 获取点击的位置
     UITouch *touch = (UITouch *)touches.anyObject;
     CGPoint clickPoint = [touch locationInView:self];
@@ -104,7 +108,6 @@
                 }];
                 
                 [UIView addKeyframeWithRelativeStartTime:0.2 relativeDuration:0.4 animations:^{
-                    
                     for (int i = 0; i < [self.cellArray count]; i++) {
                         UICollectionViewCell *cell = [self.cellArray objectAtIndex:i];
                         cell.y += 5;
@@ -115,5 +118,4 @@
         }
     }
 }
-
 @end

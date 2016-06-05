@@ -24,15 +24,17 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_logo_pressed" translatesAutoresizingMaskIntoConstraints="NO" id="QJy-Q6-Nd2">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="755" image="home_logo_pressed" translatesAutoresizingMaskIntoConstraints="NO" id="QJy-Q6-Nd2">
                         <rect key="frame" x="0.0" y="70" width="310" height="180"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="QJy-Q6-Nd2" secondAttribute="height" multiplier="31:18" id="eOv-2e-Oci"/>
+                            <constraint firstAttribute="height" constant="180" id="gMj-1r-kJq"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="eOv-2e-Oci"/>
+                                <exclude reference="gMj-1r-kJq"/>
                             </mask>
                         </variation>
                     </imageView>

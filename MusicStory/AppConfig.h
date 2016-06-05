@@ -45,6 +45,11 @@
 // 设置menu centreview 类型 - 用于切换centerView
 #define NOTIFY_SETUPCENTERVIEW      @"NOTIFY_SETUPCENTERVIEW"
 
+// HomeBottomView的item的Y坐标大小
+#define BOTTOM_VIEW_MAX_Y 70
+#define BOTTOM_VIEW_NOR_Y 60
+#define BOTTOM_VIEW_MIN_Y 15
+
 #define debugdebug
 #ifdef debugdebug
 
