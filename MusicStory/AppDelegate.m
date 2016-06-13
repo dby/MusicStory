@@ -17,8 +17,7 @@
 #import <YTKNetworkConfig.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
-#import "APIConfig.h"
-#import <AVOSCloud/AVOSCloud.h>
+#import "musicStory-Common-Header.h"
 
 @interface AppDelegate ()
 
@@ -47,7 +46,8 @@
     //
     RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:
                                           [[MSBaseNavController alloc] initWithRootViewController: contentViewController]
-                                                                    leftMenuViewController:leftMenuViewController
+                                                                    leftMenuViewController:
+                                          [[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]
                                                                    rightMenuViewController:nil];
     
     // Make it a root controller

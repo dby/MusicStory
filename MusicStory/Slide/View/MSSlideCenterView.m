@@ -8,10 +8,7 @@
 
 #import "AppConfig.h"
 
-#import "UIView+MS.h"
-
-#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
-#import <AVOSCloud/AVOSCloud.h>
+#import "MusicStory-Common-Header.h"
 
 #import "MSSlideCenterView.h"
 

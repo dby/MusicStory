@@ -16,19 +16,14 @@
 #import "MSHomeBottomCollectView.h"
 #import "MSHomeCenterCollectionView.h"
 
-#import "MSHomeDetailViewController.h"
+#import "MSHomeDetailController.h"
 
 #import "MSMusicModel.h"
 #import "MSRefreshBase.h"
 #import "MSHomeViewModel.h"
 
-#import "UIView+MS.h"
-#import "UIColor+MS.h"
-#import "UIScrollView+MS.h"
-#import "UIViewController+MS.h"
+#import "musicStory-Common-Header.h"
 
-#import "Masonry.h"
-#import <RESideMenu/RESideMenu.h>
 
 @interface MSHomeViewController () <MSHomeHeaderViewDelegate, MSHomeHeaderViewDelegate,MSHomeBottomCollectViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -44,7 +39,7 @@
 @property (nonatomic, strong) MSHomeHeaderView *headerView;
 @property (nonatomic, strong) MSHomeCenterCollectionView *centerCollectView;
 @property (nonatomic, strong) MSHomeBottomCollectView *bottomCollectView;
-@property (nonatomic, strong) MSHomeDetailViewController *detailViewController;
+//@property (nonatomic, strong) MSHomeDetailViewController *detailViewController;
 
 @property (nonatomic, strong) MSHomeCenterItemView *currentCenterItemView;
 @property (nonatomic, strong) MSMusicModel *currentModel;
@@ -73,7 +68,7 @@
     // 设置header的模型
     self.headerView.homeModel = model;
     // 设置背景动画
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:1.0 animations:^{
         self.view.backgroundColor = [UIColor colorWithHexString: model.recommanded_background_color];
     }];
 }
@@ -181,7 +176,7 @@
 
 - (void)initRESlideMenu {
     debugMethod();
-    self.sideMenuViewController.scaleMenuView       = false;
+    self.sideMenuViewController.scaleMenuView       = true;
     self.sideMenuViewController.scaleContentView    = false;
     [self.sideMenuViewController presentLeftMenuViewController];
 }
@@ -252,7 +247,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
-    MSHomeDetailViewController *mshdc = [[MSHomeDetailViewController alloc] initWithModel:[self.viewModel.dataSource objectAtIndex:indexPath.row]];
+    MSHomeDetailController *mshdc = [[MSHomeDetailController alloc] initWithModel:[self.viewModel.dataSource objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:mshdc animated:YES];
 }
 
@@ -443,7 +438,7 @@
     [_centerCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.center.equalTo(self.view);
-        make.height.equalTo(@(SCREEN_HEIGHT*420/IPHONE5_HEIGHT));
+        make.height.equalTo(@(SCREEN_HEIGHT*430/IPHONE5_HEIGHT));
     }];
 }
 @end

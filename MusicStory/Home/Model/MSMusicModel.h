@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AppConfig.h"
-#import <AVOSCloud/AVOSCloud.h>
+#import "MusicStory-Common-Header.h"
 
 @interface MSMusicModel : NSObject
 

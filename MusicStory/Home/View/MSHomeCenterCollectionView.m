@@ -33,6 +33,7 @@
 
 #pragma mark - Touch
 
+/*
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
     debugMethod();
@@ -60,5 +61,6 @@
     NSLog(@"touchesEnded");
     self.y = _originY;
 }
+ */
 
 @end

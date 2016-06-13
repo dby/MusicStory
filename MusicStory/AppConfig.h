@@ -21,12 +21,12 @@
 #define UI_COLOR_APPNORMAL  [UIColor colorWithRed:54/255.0 green:142/255.0 blue:198/155.0 alpha:1]
 #define UI_COLOR_BORDER     [UIColor colorWithRed: 240/255.0  green: 240/255.0 blue: 240/255.0 alpha: 1]
 // MARK: - 字体
-#define UI_FONT_20 UIFont.systemFontOfSize(20)
-#define UI_FONT_18 UIFont.systemFontOfSize(18)
-#define UI_FONT_16 UIFont.systemFontOfSize(16)
-#define UI_FONT_14 UIFont.systemFontOfSize(14)
-#define UI_FONT_12 UIFont.systemFontOfSize(12)
-#define UI_FONT_10 UIFont.systemFontOfSize(10)
+#define UI_FONT_20 [UIFont systemFontOfSize:20]
+#define UI_FONT_18 [UIFont systemFontOfSize:18]
+#define UI_FONT_16 [UIFont systemFontOfSize:16]
+#define UI_FONT_14 [UIFont systemFontOfSize:14]
+#define UI_FONT_12 [UIFont systemFontOfSize:12]
+#define UI_FONT_10 [UIFont systemFontOfSize:10]
 
 // MARK: - MARGIN
 #define UI_MARGIN_5 5

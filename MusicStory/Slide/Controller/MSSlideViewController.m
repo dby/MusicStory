@@ -12,14 +12,15 @@
 
 #import <RESideMenu/RESideMenu.h>
 
-#import "AppConfig.h"
 #import "MSSlideCenterView.h"
+
+#import "MusicStory-Common-Header.h"
 
 #import "MSMeController.h"
 #import "MSBaseNavController.h"
 #import "MSHomeViewController.h"
 #import "MSLoginViewController.h"
-#import "MSHomeDetailViewController.h"
+//#import "MSHomeDetailViewController.h"
 #import "MSSearchViewController.h"
 
 @interface MSSlideViewController () < MSSlideCenterViewDelegate>
@@ -66,7 +67,7 @@
 {
     MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.contentViewController;
     
-    [nav pushViewController:viewController animated:YES];
+    [nav pushViewController:viewController animated:NO];
     nav.navigationBarHidden = false;
     [self.sideMenuViewController hideMenuViewController];
 }
@@ -80,6 +81,7 @@
     if (user) {
         MSMeController *meController = [[MSMeController alloc] init];
         [self setContentViewController:meController];
+        //[nav presentViewController:meController animated:YES completion:nil];
     } else {
         UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
         UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
@@ -92,9 +94,7 @@
     
     MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.leftMenuViewController;
     MSSearchViewController *vc = [[MSSearchViewController alloc] init];
-    [nav presentViewController:vc animated:YES completion:^{
-        
-    }];
+    [nav presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)slideCenterViewAboutUsViewDidClick {
