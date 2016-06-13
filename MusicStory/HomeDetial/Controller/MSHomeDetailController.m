@@ -10,6 +10,10 @@
 
 #import "MSMusicModel.h"
 
+#import "MSCommentCell.h"
+
+#import "MSCommentViewModel.h"
+
 #import "MSHomeDetailToolView.h"
 #import "MSHomeDetailAnimationUtil.h"
 
@@ -27,11 +31,13 @@
 @property (nonatomic, strong) UILabel *appDetailLabel;
 @property (nonatomic, strong) UIWebView *webview;
 
+@property (nonatomic, strong) MSCommentViewModel *commentViewModel;
 @property (nonatomic, strong) MSHomeDetailToolView *toolBar;
 
 @end
 
 static NSString *homeDetailCellID = @"HomeDetailCell";
+static NSString *commentIdentifier = @"commentIdentifier";
 
 @implementation MSHomeDetailController
 
@@ -52,6 +58,7 @@ static NSString *homeDetailCellID = @"HomeDetailCell";
     [self buildWebView];
     // tableview
     [self buildTableView];
+    self.commentViewModel = [[MSCommentViewModel alloc] initWithCommentTableView:self.tableview];
     // toolview
     [self buildToolView];
     // return button
@@ -62,7 +69,11 @@ static NSString *homeDetailCellID = @"HomeDetailCell";
     // tableviewcell中的webview加载数据
     [self setWebViewData];
     
-    // layout 布局
+    [self.tableview footerViewPullToRefresh:MSRefreshDirectionVertical callback: ^{
+        [self loadData];
+    }];
+    
+    // 屏幕适配
     [self setupLayout];
 }
 
@@ -128,7 +139,10 @@ static NSString *homeDetailCellID = @"HomeDetailCell";
     self.tableview = [[UITableView alloc] initWithFrame:self.view.frame];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
+    self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     [self.tableview registerClass:[UITableViewCell class] forCellReuseIdentifier:homeDetailCellID];
+    [self.tableview registerClass:[MSCommentCell class] forCellReuseIdentifier:commentIdentifier];
 
     [self.view addSubview:self.tableview];
     self.tableview.tableHeaderView = self.headerView;
@@ -218,10 +232,21 @@ static NSString *homeDetailCellID = @"HomeDetailCell";
     }];
 }
 
+- (void)loadData {
+    debugMethod();
+    [self.commentViewModel getCommentData:0 withSuccessBack:^(NSArray *datasource) {
+        debugLog(@"comment count: %lu", (unsigned long)[datasource count]);
+        [self.tableview footerViewStopPullToRefresh];
+    } withErrorCallBack:^(NSError *error) {
+        
+    }];
+}
+
 #pragma mark - MSHomeDetailToolViewDelegate
 
 -(void)homeDetailToolViewShareBtnClick {
     debugMethod();
+    [SVProgressHUD showInfoWithStatus:@"正在加班加点的实现中...."];
 }
 
 -(void)homeDetailToolViewCollectBtnClick {
@@ -230,12 +255,12 @@ static NSString *homeDetailCellID = @"HomeDetailCell";
 
 -(void)homeDetailToolViewDownloadBtnClick {
     debugMethod();
+    [SVProgressHUD showInfoWithStatus:@"正在加班加点的实现中...."];
 }
 
 #pragma mark - uiscrollview delegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    debugLog(@"contentOffset.y %lf", self.tableview.contentOffset.y);
     [self updateHeaderView];
     if (self.tableview.contentOffset.y >= 315){
         self.toolBar.y = self.returnBtn.y;
@@ -269,23 +294,36 @@ static NSString *homeDetailCellID = @"HomeDetailCell";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     debugMethod();
-    return 1;
+    return 1 + [self.commentViewModel.dataSource count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
-    UITableViewCell *cell           = [self.tableview dequeueReusableCellWithIdentifier:homeDetailCellID forIndexPath:indexPath];
-    cell.selectionStyle             = UITableViewCellSeparatorStyleNone;
+    if (indexPath.row == 0) {
+        
+        UITableViewCell *cell           = [self.tableview dequeueReusableCellWithIdentifier:homeDetailCellID forIndexPath:indexPath];
+        cell.selectionStyle             = UITableViewCellSeparatorStyleNone;
     
-    _webview.frame = CGRectMake(0, 0, cell.width, cell.height);
-    [cell.contentView addSubview:_webview];
-    
-    return cell;
+        _webview.frame = CGRectMake(0, 0, cell.width, cell.height);
+        [cell.contentView addSubview:_webview];
+        return cell;
+        
+    }
+    else {
+        MSCommentCell *cell = (MSCommentCell *)[tableView dequeueReusableCellWithIdentifier:commentIdentifier forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell setCellData:[self.commentViewModel.dataSource objectAtIndex:(indexPath.row - 1)]];
+        return cell;
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
-    return _webview.height + 20;
+    if (indexPath.row == 0) {
+        return _webview.height;
+    } else {
+        return 100;
+    }
 }
 
 @end

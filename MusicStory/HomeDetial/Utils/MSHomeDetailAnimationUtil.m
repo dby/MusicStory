@@ -32,7 +32,7 @@
         toolView.shareLabel.alpha       = 1;
         
         toolView.collectButton.transform    = CGAffineTransformIdentity;
-        toolView.shareLabel.transform       = CGAffineTransformIdentity;
+        toolView.shareButton.transform      = CGAffineTransformIdentity;
         toolView.downloadButton.transform   = CGAffineTransformIdentity;
         
     } completion:^(BOOL finished) {

@@ -40,8 +40,8 @@
             }
             
             if (successCallBack) {
-                self.successCallBack(self.dataSource);
                 [self.commentTableView reloadData];
+                self.successCallBack(self.dataSource);
             }
         }
         else {

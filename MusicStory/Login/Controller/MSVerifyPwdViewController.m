@@ -11,11 +11,10 @@
 #import "MSBaseNavController.h"
 #import "MSHomeViewController.h"
 
-#import "AppConfig.h"
 #import "MSUserModel.h"
 
-#import "SVProgressHUD.h"
-#import <RESideMenu/RESideMenu.h>
+#import "MusicStory-Common-Header.h"
+
 
 @interface MSVerifyPwdViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumberLabel;

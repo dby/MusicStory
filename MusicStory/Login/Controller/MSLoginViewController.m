@@ -8,15 +8,13 @@
 
 #import "MSLoginViewController.h"
 
-#import "AppConfig.h"
 #import "MSUserModel.h"
 
 #import "MSBaseNavController.h"
 #import "MSHomeViewController.h"
 #import "MSVerifyPwdViewController.h"
 
-#import <AVOSCloud/AVOSCloud.h>
-#import <RESideMenu/RESideMenu.h>
+#import "MusicStory-Common-Header.h"
 
 @interface MSLoginViewController ()
 
