@@ -8,14 +8,9 @@
 
 #import "AppDelegate.h"
 
-#import <RESideMenu/RESideMenu.h>
-
 #import "MSSlideViewController.h"
 #import "MSHomeViewController.h"
 #import "MSBaseNavController.h"
-
-#import <YTKNetworkConfig.h>
-#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 #import "musicStory-Common-Header.h"
 
@@ -24,7 +19,6 @@
 @end
 
 @implementation AppDelegate
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.

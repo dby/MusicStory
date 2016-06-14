@@ -56,14 +56,14 @@
     _userImageView.layer.borderColor   = [UIColor lightGrayColor].CGColor;
     _userImageView.layer.borderWidth   = 1;
     
-    _userNameLabel.font      = [UIFont systemFontOfSize:12];
+    _userNameLabel.font      = UI_FONT_14;
     _userNameLabel.textColor = [UIColor blackColor];
     
-    _userDetailLabel.font      = [UIFont systemFontOfSize:10];
+    _userDetailLabel.font      = UI_FONT_10;
     _userDetailLabel.textColor = [UIColor lightGrayColor];
     
     _timeLabel.textColor = [UIColor lightGrayColor];
-    _timeLabel.font      = [UIFont systemFontOfSize:10];
+    _timeLabel.font      = UI_FONT_10;
     _timeLabel.textAlignment = NSTextAlignmentRight;
     
     UIImage *bgImg  = [UIImage imageNamed:@"detail_comment_bg"];
@@ -79,8 +79,8 @@
 - (void)setCellData :(MSCommentModel *)model {
     debugMethod();
     self.userNameLabel.text     = model.author_name;
-    self.userDetailLabel.text   = @"";
-    self.timeLabel.text         = [NSString stringWithFormat:@"%@", model.createdAt];
+    self.userDetailLabel.text   = @"微博美友";
+    self.timeLabel.text         = [NSString stringWithFormat:@"%@", [model.createdAt.description substringToIndex:10]];
     self.commentLabel.text      = model.content;
 }
 
@@ -104,6 +104,7 @@
     [_userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@150);
         make.height.equalTo(@15);
+        make.bottom.equalTo(_userImageView.mas_centerY);
         make.left.equalTo(_userImageView.mas_right).offset(UI_MARGIN_10);
     }];
   
@@ -117,6 +118,7 @@
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@120);
         make.height.equalTo(@15);
+        make.bottom.equalTo(_userImageView.mas_centerY);
         make.left.equalTo(@(SCREEN_WIDTH-120-UI_MARGIN_10));
     }];
  

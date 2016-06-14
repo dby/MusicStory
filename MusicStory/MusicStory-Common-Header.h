@@ -21,6 +21,8 @@
 #import <AVOSCloud/AVOSCloud.h>
 #import <RESideMenu/RESideMenu.h>
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
+#import <YTKNetworkConfig.h>
+#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 /* category */
 #import "UIView+MS.h"

@@ -50,7 +50,7 @@
 #define BOTTOM_VIEW_NOR_Y 60
 #define BOTTOM_VIEW_MIN_Y 15
 
-#define debugdebug
+//#define debugdebug
 #ifdef debugdebug
 
 #define debugLog(...) NSLog(__VA_ARGS__)

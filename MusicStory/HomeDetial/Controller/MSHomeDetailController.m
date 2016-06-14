@@ -9,33 +9,40 @@
 #import "MSHomeDetailController.h"
 
 #import "MSMusicModel.h"
-
 #import "MSCommentCell.h"
-
 #import "MSCommentViewModel.h"
 
 #import "MSPlayView.h"
+#import "MSCommentView.h"
 #import "MSHomeDetailToolView.h"
 #import "MSHomeDetailAnimationUtil.h"
 
+#import "MSMakeCommentsController.h"
+
 #import "MusicStory-Common-Header.h"
 
-@interface MSHomeDetailController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, MSHomeDetailToolViewDelegate, UIWebViewDelegate, PlayViewDelegate>
+@interface MSHomeDetailController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, MSHomeDetailToolViewDelegate, UIWebViewDelegate, PlayViewDelegate, MSCommentViewDelegate>
 
-@property (nonatomic, strong) UIButton *returnBtn;
 @property (nonatomic, strong) UITableView *tableview;
+@property (nonatomic, strong) MSCommentViewModel *commentViewModel;
 
+// 返回按钮
+@property (nonatomic, strong) UIButton *returnBtn;
+// 工具栏
+@property (nonatomic, strong) MSHomeDetailToolView *toolBar;
+// 播放音乐的按钮
+@property (nonatomic, strong) MSPlayView *playMusicBtn;
+@property (nonatomic, assign) NSInteger lastPosition;
+// FooterView
+@property (nonatomic, strong) MSCommentView *commentView;
+
+// HeaderView
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIImageView *headerImgView;
 @property (nonatomic, strong) UIImageView *appIconView;
 @property (nonatomic, strong) UILabel *appTitleLabel;
 @property (nonatomic, strong) UILabel *appDetailLabel;
 @property (nonatomic, strong) UIWebView *webview;
-
-@property (nonatomic, strong) MSCommentViewModel *commentViewModel;
-
-@property (nonatomic, strong) MSPlayView *playMusicBtn;
-@property (nonatomic, strong) MSHomeDetailToolView *toolBar;
 
 @end
 
@@ -55,20 +62,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.automaticallyAdjustsScrollViewInsets = false;
     
-    // headerview
-    [self buildHeaderView];
-    // webview
-    [self buildWebView];
-    // tableview
-    [self buildTableView];
-    self.commentViewModel = [[MSCommentViewModel alloc] initWithCommentTableView:self.tableview];
-    // toolview
-    [self buildToolView];
-    
-    // return button
-    [self buildReturnBtn];
-    // play music btn
-    [self buildPlayMusicBtn];
+    [self buildComponents];
     
     // tableview的headerview加载数据
     [self setHeaderData];
@@ -108,6 +102,27 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 #pragma mark - build View
+
+-(void)buildComponents {
+    // headerview
+    [self buildHeaderView];
+    // footerview
+    [self buildFooterView];
+    // webview
+    [self buildWebView];
+    // tableview
+    [self buildTableView];
+    self.commentViewModel = [[MSCommentViewModel alloc] initWithCommentTableView:self.tableview];
+    // toolview
+    [self buildToolView];
+    
+    // return button
+    [self buildReturnBtn];
+    // play music btn
+    [self buildPlayMusicBtn];
+    
+    _lastPosition = 0;
+}
 
 -(void)buildReturnBtn {
     _returnBtn = [[UIButton alloc] init];
@@ -155,6 +170,15 @@ static NSString *commentIdentifier = @"commentIdentifier";
     debugLog(@"headerview.height: %lf", self.headerView.height);
 }
 
+-(void)buildFooterView {
+    self.commentView        = [[MSCommentView alloc] init];
+    self.commentView.frame  = CGRectMake(0,
+                                         0,
+                                         SCREEN_WIDTH,
+                                         CGRectGetHeight(self.commentView.frame));
+    self.commentView.delegate = self;
+}
+
 - (void)buildTableView {
     debugMethod();
     self.tableview = [[UITableView alloc] initWithFrame:self.view.frame];
@@ -167,6 +191,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
     [self.view addSubview:self.tableview];
     self.tableview.tableHeaderView = self.headerView;
+    self.tableview.tableFooterView = self.commentView;
     
     [self.tableview reloadData];
 }
@@ -175,6 +200,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     _toolBar = [MSHomeDetailToolView toolView];
     _toolBar.frame = CGRectMake(0, 345, SCREEN_WIDTH, 30);
     _toolBar.delegate = self;
+    _toolBar.model = _model;
     [self.view addSubview:_toolBar];
 }
 
@@ -267,6 +293,16 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }];
 }
 
+#pragma mark - CommentView delegate
+
+-(void)commentLabelDidClick {
+    debugMethod();
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"MSComment" bundle:[NSBundle mainBundle]];
+    MSMakeCommentsController *vc = [story instantiateViewControllerWithIdentifier:@"msmakecommentscontroller"];
+    vc.model = _model;
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
+}
+
 #pragma mark - playview delegate
 
 -(void)playButtonDidClick:(BOOL)selected {
@@ -287,6 +323,49 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 -(void)homeDetailToolViewCollectBtnClick {
     debugMethod();
+    debugMethod();
+    AVUser *user    = [AVUser currentUser];
+    AVObject *obj   = [MSMusicModel MusicModelToAVObject:_model];
+    
+    if (!_toolBar.collectButton.isSelected) {
+        [AVObject saveAllInBackground:@[obj] block:^(BOOL succeeded, NSError *error) {
+            if (error) {
+            } else {
+                AVRelation *relation = [user relationForKey:@"musics_collections"];
+                [relation addObject:obj];
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                        [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
+                    } else {
+                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                        [SVProgressHUD showSuccessWithStatus:error.debugDescription];
+                    }
+                }];
+                [_toolBar.collectButton setSelected:YES];
+                debugLog(@"add success...");
+            }
+        }];
+    } else {
+        [AVObject saveAllInBackground:@[obj] block:^(BOOL succeeded, NSError *error) {
+            if (error) {
+            } else {
+                AVRelation *relation = [user relationForKey:@"musics_collections"];
+                [relation removeObject:obj];
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                        [SVProgressHUD showSuccessWithStatus:@"取消收藏"];
+                    } else {
+                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                        [SVProgressHUD showSuccessWithStatus:error.debugDescription];
+                    }
+                }];
+                [_toolBar.collectButton setSelected:NO];
+                debugLog(@"delete success...");
+            }
+        }];
+    }
 }
 
 -(void)homeDetailToolViewDownloadBtnClick {
@@ -307,6 +386,28 @@ static NSString *commentIdentifier = @"commentIdentifier";
         self.toolBar.y = 345 - self.tableview.contentOffset.y;
         [MSHomeDetailAnimationUtil homeDetailToolBarToScrollAnimation:self.toolBar];
     }
+    
+    // 下拉--playMusicBtn隐藏  上拉--playMusicBtn取消隐藏
+    NSInteger currentPosition = self.tableview.contentOffset.y;
+    if (currentPosition - _lastPosition > 150) {
+        _lastPosition = currentPosition;
+        [_playMusicBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_bottom);
+        }];
+        [UIView animateWithDuration:0.5 animations:^{
+            [_playMusicBtn layoutIfNeeded];
+        }];
+    }
+    else if (currentPosition - _lastPosition < -50){
+        _lastPosition = currentPosition;
+        [_playMusicBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view.mas_bottom);
+            make.leading.equalTo(@(self.view.width / 2 - 30));
+        }];
+        [UIView animateWithDuration:0.5 animations:^{
+            [_playMusicBtn layoutIfNeeded];
+        }];
+    }
 }
 
 #pragma mark - webview delegate
@@ -315,7 +416,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     debugMethod();
     CGFloat webViewHeight = [webView.scrollView contentSize].height;
     CGRect newFrame = webView.frame;
-    newFrame.size.height = webViewHeight + 20;
+    newFrame.size.height = webViewHeight;
     webView.frame = newFrame;
     
     [self.tableview reloadData];
@@ -325,37 +426,48 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     debugMethod();
-    return 1;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     debugMethod();
-    return 1 + [self.commentViewModel.dataSource count];
+    if (section == 0) {
+        return 1;
+    }
+    else {
+        return [self.commentViewModel.dataSource count];
+    }
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return @"评论";
+    } else {
+        return @"";
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
-    if (indexPath.row == 0) {
-        
+    if ([indexPath section] == 0) {
         UITableViewCell *cell           = [self.tableview dequeueReusableCellWithIdentifier:homeDetailCellID forIndexPath:indexPath];
         cell.selectionStyle             = UITableViewCellSeparatorStyleNone;
     
         _webview.frame = CGRectMake(0, 0, cell.width, cell.height);
         [cell.contentView addSubview:_webview];
         return cell;
-        
     }
     else {
         MSCommentCell *cell = (MSCommentCell *)[tableView dequeueReusableCellWithIdentifier:commentIdentifier forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell setCellData:[self.commentViewModel.dataSource objectAtIndex:(indexPath.row - 1)]];
+        [cell setCellData:[self.commentViewModel.dataSource objectAtIndex:indexPath.row]];
         return cell;
     }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
-    if (indexPath.row == 0) {
+    if ([indexPath section] == 0) {
         return _webview.height;
     } else {
         return 100;

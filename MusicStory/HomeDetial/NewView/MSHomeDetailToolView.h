@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSMusicModel.h"
 
 @protocol MSHomeDetailToolViewDelegate
 
@@ -24,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *shareLabel;
 @property (weak, nonatomic) IBOutlet UIButton *downloadButton;
 @property (weak, nonatomic) IBOutlet UILabel *downloadLabel;
+
+@property (nonatomic, strong) MSMusicModel *model;
 
 @property (nonatomic, assign) id <MSHomeDetailToolViewDelegate> delegate;
 + (MSHomeDetailToolView *)toolView;
