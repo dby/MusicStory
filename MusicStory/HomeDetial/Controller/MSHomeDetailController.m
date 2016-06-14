@@ -14,12 +14,13 @@
 
 #import "MSCommentViewModel.h"
 
+#import "MSPlayView.h"
 #import "MSHomeDetailToolView.h"
 #import "MSHomeDetailAnimationUtil.h"
 
 #import "MusicStory-Common-Header.h"
 
-@interface MSHomeDetailController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, MSHomeDetailToolViewDelegate, UIWebViewDelegate>
+@interface MSHomeDetailController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, MSHomeDetailToolViewDelegate, UIWebViewDelegate, PlayViewDelegate>
 
 @property (nonatomic, strong) UIButton *returnBtn;
 @property (nonatomic, strong) UITableView *tableview;
@@ -32,6 +33,8 @@
 @property (nonatomic, strong) UIWebView *webview;
 
 @property (nonatomic, strong) MSCommentViewModel *commentViewModel;
+
+@property (nonatomic, strong) MSPlayView *playMusicBtn;
 @property (nonatomic, strong) MSHomeDetailToolView *toolBar;
 
 @end
@@ -61,8 +64,11 @@ static NSString *commentIdentifier = @"commentIdentifier";
     self.commentViewModel = [[MSCommentViewModel alloc] initWithCommentTableView:self.tableview];
     // toolview
     [self buildToolView];
+    
     // return button
     [self buildReturnBtn];
+    // play music btn
+    [self buildPlayMusicBtn];
     
     // tableview的headerview加载数据
     [self setHeaderData];
@@ -75,6 +81,14 @@ static NSString *commentIdentifier = @"commentIdentifier";
     
     // 屏幕适配
     [self setupLayout];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    debugMethod();
+    if (_playMusicBtn) {
+        [_playMusicBtn stop];
+    }
 }
 
 -(instancetype)initWithModel :(MSMusicModel *)model {
@@ -102,6 +116,13 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [_returnBtn setImage:[UIImage imageNamed:@"detail_icon_back_pressed"] forState:UIControlStateHighlighted];
     
     [self.view addSubview:_returnBtn];
+}
+
+-(void)buildPlayMusicBtn {
+    _playMusicBtn = [[MSPlayView alloc] init];
+    _playMusicBtn.delegate = self;
+    _playMusicBtn.model = _model;
+    [self.view addSubview:_playMusicBtn];
 }
 
 -(void)buildHeaderView {
@@ -230,6 +251,10 @@ static NSString *commentIdentifier = @"commentIdentifier";
         make.width.equalTo(@30);
         make.height.equalTo(@30);
     }];
+    [_playMusicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.leading.equalTo(@(self.view.width / 2 - 30));
+    }];
 }
 
 - (void)loadData {
@@ -240,6 +265,17 @@ static NSString *commentIdentifier = @"commentIdentifier";
     } withErrorCallBack:^(NSError *error) {
         
     }];
+}
+
+#pragma mark - playview delegate
+
+-(void)playButtonDidClick:(BOOL)selected {
+    if (selected) {
+        [_playMusicBtn.contentIV sd_setImageWithURL:[NSURL URLWithString:_model.music_imgs]];
+        [_playMusicBtn play];
+    } else {
+        [_playMusicBtn pause];
+    }
 }
 
 #pragma mark - MSHomeDetailToolViewDelegate
