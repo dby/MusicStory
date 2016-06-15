@@ -18,7 +18,7 @@
                         <constraint firstAttribute="height" constant="20" id="s3B-5N-mSC"/>
                     </constraints>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RpI-z3-sVT" customClass="XMView" customModule="MusicStory" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RpI-z3-sVT" customClass="MSView">
                     <rect key="frame" x="38" y="5" width="252" height="30"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="写下您的意见吧" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGU-Oc-gMI">

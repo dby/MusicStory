@@ -46,7 +46,6 @@ PODS:
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
   - Masonry (0.6.4)
-  - RESideMenu (4.0.7)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -64,7 +63,6 @@ DEPENDENCIES:
   - BlocksKit
   - GRMustache (~> 7.3.2)
   - Masonry
-  - RESideMenu
   - SDWebImage
   - SVProgressHUD
   - UIActivityIndicator-for-SDWebImage
@@ -80,7 +78,6 @@ SPEC CHECKSUMS:
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
-  RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c

@@ -8,11 +8,13 @@
 
 #import "MSSearchViewController.h"
 
-#import "AppConfig.h"
-
 #import "MSSearchHeaderView.h"
 #import "MSSearchViewCell.h"
 #import "MSSearchViewModel.h"
+
+#import "MSHomeDetailController.h"
+
+#import "MusicStory-Common-Header.h"
 
 @interface MSSearchViewController ()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
@@ -56,7 +58,7 @@
     
     self.viewModel = [[MSSearchViewModel alloc] initWithTableView:self.contentTableView];
     
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    self.view.userInteractionEnabled = YES;
     [self.view addSubview:self.headerView];
     [self.view addSubview:self.contentTableView];
 }
@@ -75,6 +77,13 @@
     MSSearchViewCell *cell = [MSSearchViewCell cellWithTableView:tableView];
     [cell loadData:[self.viewModel.dataSource objectAtIndex:indexPath.row]];
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    debugMethod();
+    MSHomeDetailController *mshdc = [[MSHomeDetailController alloc] initWithModel:[self.viewModel.dataSource objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:mshdc animated:YES];
+    NSLog(@"navigationcontroller %@", self.navigationController);
 }
 
 @end

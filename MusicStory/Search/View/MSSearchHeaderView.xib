@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zzV-3t-FBM" customClass="XMView" customModule="MusicStory" customModuleProvider="target">
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zzV-3t-FBM" customClass="MSView">
                     <rect key="frame" x="10" y="25" width="240" height="30"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="seach_icon_seach" translatesAutoresizingMaskIntoConstraints="NO" id="aoF-gC-eln" customClass="sear">

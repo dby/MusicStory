@@ -43,6 +43,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
         if (!error) {
             NSArray<AVObject *> *nearbyTodos = results;
+            self.dataSource = [[NSMutableArray alloc] init];
             for (AVObject *obj in nearbyTodos) {
                 MSMusicModel *model = [[MSMusicModel alloc] initWithAVO:obj];
                 [self.dataSource addObject:model];

@@ -19,7 +19,6 @@
 #import "GRMustache.h"
 #import "SVProgressHUD.h"
 #import <AVOSCloud/AVOSCloud.h>
-#import <RESideMenu/RESideMenu.h>
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import <YTKNetworkConfig.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>

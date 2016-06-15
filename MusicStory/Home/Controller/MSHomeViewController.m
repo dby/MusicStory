@@ -39,7 +39,6 @@
 @property (nonatomic, strong) MSHomeHeaderView *headerView;
 @property (nonatomic, strong) MSHomeCenterCollectionView *centerCollectView;
 @property (nonatomic, strong) MSHomeBottomCollectView *bottomCollectView;
-//@property (nonatomic, strong) MSHomeDetailViewController *detailViewController;
 
 @property (nonatomic, strong) MSHomeCenterItemView *currentCenterItemView;
 @property (nonatomic, strong) MSMusicModel *currentModel;
@@ -59,7 +58,6 @@
     
     debugMethod();
     _index = index;
-    debugLog(@"setindex: %lu", (unsigned long)[_viewModel.dataSource count]);
     if ([_viewModel.dataSource count] == 0) {
         return;
     }
@@ -170,15 +168,6 @@
     self.bottomCollectView.bottomViewDelegate   = self;
     self.bottomCollectView.delegate             = self;
     self.bottomCollectView.dataSource           = self;
-    
-    [self initRESlideMenu];
-}
-
-- (void)initRESlideMenu {
-    debugMethod();
-    self.sideMenuViewController.scaleMenuView       = true;
-    self.sideMenuViewController.scaleContentView    = false;
-    [self.sideMenuViewController presentLeftMenuViewController];
 }
 
 #pragma mark - scrollerDelegate
@@ -263,8 +252,6 @@
 -(void)homeHeaderViewMenuDidClick:(MSHomeHeaderView *)header :(UIButton *)menuBtn {
     debugMethod();
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SHOWMENU object:nil];
-    
-    [self.sideMenuViewController presentLeftMenuViewController];
 }
 
 -(void)homeBottomCollectView:(UICollectionView *)bottomView touchIndexDidChangeWithIndexPath:(NSIndexPath *)indexPath cellArrayCount:(NSUInteger)cellArrayCount {

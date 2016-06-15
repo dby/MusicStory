@@ -8,9 +8,10 @@
 
 #import "AppDelegate.h"
 
-#import "MSSlideViewController.h"
-#import "MSHomeViewController.h"
 #import "MSBaseNavController.h"
+#import "MSHomeViewController.h"
+#import "MSMenuViewController.h"
+#import "MSSlideViewController.h"
 
 #import "musicStory-Common-Header.h"
 
@@ -36,20 +37,12 @@
     MSHomeViewController   *contentViewController = [[MSHomeViewController alloc] init];
     MSSlideViewController *leftMenuViewController = [[MSSlideViewController alloc] init];
     
-    // Create side menu controller
-    //
-    RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:
-                                          [[MSBaseNavController alloc] initWithRootViewController: contentViewController]
-                                                                    leftMenuViewController:
-                                          [[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]
-                                                                   rightMenuViewController:nil];
-    
-    // Make it a root controller
-    self.window.rootViewController = sideMenuViewController;
-    
     [AVOSCloud setApplicationId:@"xJVf4uf6o6dV0zJAX9d8JOK1-gzGzoHsz"
                       clientKey:@"p1aMdhAX9b3AnJSOxXOrcodl"];
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    // Make it a root controller
+    self.window.rootViewController = [[MSMenuViewController alloc] initWithCenterController:[[MSBaseNavController alloc] initWithRootViewController:contentViewController] leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
     return YES;
 }

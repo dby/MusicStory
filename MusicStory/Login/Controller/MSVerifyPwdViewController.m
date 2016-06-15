@@ -41,9 +41,9 @@
             debugLog(@"SUCCESS");
             [_indicatorView stopAnimating];
             [AVUser changeCurrentUser:user save:YES];
-            MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
-            [self.sideMenuViewController setContentViewController: [[MSBaseNavController alloc] initWithRootViewController:hvc] animated:YES];
-            [self.sideMenuViewController hideMenuViewController];
+            //MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
+            //[self.sideMenuViewController setContentViewController: [[MSBaseNavController alloc] initWithRootViewController:hvc] animated:YES];
+            //[self.sideMenuViewController hideMenuViewController];
             
         } else {
             [_indicatorView stopAnimating];

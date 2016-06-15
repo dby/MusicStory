@@ -8,10 +8,6 @@
 
 #import "MSSlideViewController.h"
 
-#import "UIColor+MS.h"
-
-#import <RESideMenu/RESideMenu.h>
-
 #import "MSSlideCenterView.h"
 
 #import "MusicStory-Common-Header.h"
@@ -20,7 +16,6 @@
 #import "MSBaseNavController.h"
 #import "MSHomeViewController.h"
 #import "MSLoginViewController.h"
-//#import "MSHomeDetailViewController.h"
 #import "MSSearchViewController.h"
 
 @interface MSSlideViewController () < MSSlideCenterViewDelegate>
@@ -65,23 +60,21 @@
 
 - (void)setContentViewController:(UIViewController *)viewController
 {
-    MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.contentViewController;
+    //MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.contentViewController;
     
-    [nav pushViewController:viewController animated:NO];
-    nav.navigationBarHidden = false;
-    [self.sideMenuViewController hideMenuViewController];
+    //[nav pushViewController:viewController animated:NO];
+    //nav.navigationBarHidden = false;
+    //[self.sideMenuViewController hideMenuViewController];
 }
 
 #pragma mark - MSSlideCenterViewDelegate
 
 -(void)slideCenterViewLoginViewDidClick {
     debugMethod();
-    
     AVUser *user = [AVUser currentUser];
     if (user) {
         MSMeController *meController = [[MSMeController alloc] init];
         [self setContentViewController:meController];
-        //[nav presentViewController:meController animated:YES completion:nil];
     } else {
         UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
         UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
@@ -91,10 +84,7 @@
 
 -(void)slideCenterViewSearchViewDidClick {
     debugMethod();
-    
-    MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.leftMenuViewController;
-    MSSearchViewController *vc = [[MSSearchViewController alloc] init];
-    [nav presentViewController:vc animated:YES completion:nil];
+    [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:[[MSSearchViewController alloc] init]] animated:YES completion:nil];
 }
 
 -(void)slideCenterViewAboutUsViewDidClick {
@@ -104,7 +94,6 @@
 -(void)slideCenterViewCollectViewDidClick {
     debugMethod();
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_COLLECTION];
-    [self.sideMenuViewController hideMenuViewController];
 }
 
 -(void)slideCenterViewFeedbackViewDidClick {
@@ -113,7 +102,6 @@
 -(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_HOME];
-    [self.sideMenuViewController hideMenuViewController];
 }
 
 @end
