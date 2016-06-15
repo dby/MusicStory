@@ -28,5 +28,6 @@
 #import "UIColor+MS.h"
 #import "UIScrollView+MS.h"
 #import "UIViewController+MS.h"
+#import "UIViewController+Menu.h"
 
 #endif /* musicStory_Common_Header_h */

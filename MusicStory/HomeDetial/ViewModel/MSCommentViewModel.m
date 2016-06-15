@@ -21,6 +21,32 @@
     return self;
 }
 
+- (void)animationTable: (UITableView *)tableView {
+    
+    [tableView reloadData];
+    
+    NSArray *cells = tableView.visibleCells;
+    CGFloat tableHeight = tableView.bounds.size.height;
+    
+    for (UITableViewCell *cell in cells) {
+        cell.transform = CGAffineTransformMakeTranslation(0, tableHeight);
+    }
+    
+    double index = 0;
+    
+    for (UITableViewCell *cell in cells) {
+        [UIView animateWithDuration:1.0
+                              delay:0.05 * index
+             usingSpringWithDamping:0.8
+              initialSpringVelocity:0
+                            options:UIViewAnimationOptionTransitionNone
+                         animations:^{
+                             cell.transform = CGAffineTransformMakeTranslation(0, 0);
+                         } completion:nil];
+        index += 1;
+    }
+}
+
 -(void)getCommentData:(NSInteger)page withSuccessBack:(MSHomeViewModelSuccessBack)successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack)errorCallBack
 {
     self.successCallBack    = successCallBack;
@@ -41,6 +67,7 @@
             
             if (successCallBack) {
                 [self.commentTableView reloadData];
+                //[self animationTable:self.commentTableView];
                 self.successCallBack(self.dataSource);
             }
         }

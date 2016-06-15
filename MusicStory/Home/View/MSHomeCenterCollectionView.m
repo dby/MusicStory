@@ -21,46 +21,47 @@
 
 @implementation MSHomeCenterCollectionView
 
--(instancetype)initWithFrame:(CGRect)frame {
+-(instancetype)initWithSpecifiedFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
     debugMethod();
-    NSLog(@"initWithFrame");
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
-        self.userInteractionEnabled = true;
+        //self.userInteractionEnabled = true;
+        //UIPanGestureRecognizer *panGes = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(colletcionViewDidDrag:)];
+        //panGes.cancelsTouchesInView = NO;
+        //[self addGestureRecognizer:panGes];
     }
     return self;
 }
 
-#pragma mark - Touch
-
-/*
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
+- (void)colletcionViewDidDrag:(UIPanGestureRecognizer *)pan {
     debugMethod();
-    NSLog(@"touchesBegan");
-    UITouch *touch = (UITouch *)touches.anyObject;
-    _touchedPoint = [touch locationInView:self];
-    _originY = self.y;
+    // 拿到手指在屏幕中的位置
+    //CGPoint point = [pan translationInView:pan.view];
+    //NSLog(@"point.x: %f, point.y: %f", point.x, point.y);
     
+    // 如果手指取消了或者结束
+    if (pan.state == UIGestureRecognizerStateCancelled || pan.state == UIGestureRecognizerStateEnded) {
+        
+    } else {
+        // 正在拖拽的状态
+        // 让左边控制器的x值跟手拖动
+        //self.y += point.y;
+        //[pan setTranslation:CGPointZero inView:self];
+
+        // 如果拖动x的值小于0 就不让他拖了
+        //if (self.centerController.view.x > _menuWith) {
+        //    self.centerController.view.x = _menuWith;
+        //    self.cover.hidden = false;
+        //} else if (self.centerController.view.x <= 0) {
+        //    self.centerController.view.x = 0;
+        //    self.cover.hidden = true;
+        //}
+    }
 }
 
--(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [super touchesMoved:touches withEvent:event];
-    debugMethod();
-    NSLog(@"touchesMoved");
-    UITouch *touch = (UITouch *)touches.anyObject;
-    
-    NSLog(@"x: %f, y:%f", [touch locationInView:self].x, [touch locationInView:self].y);
-    
-    //self.y += 5;//(_originY - [touch locationInView:self].y);
-}
-
--(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [super touchesEnded:touches withEvent:event];
-    debugMethod();
-    NSLog(@"touchesEnded");
-    self.y = _originY;
-}
- */
+// 允许多个手写识别器同时识别
+//-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    //return YES;
+//}
 
 @end

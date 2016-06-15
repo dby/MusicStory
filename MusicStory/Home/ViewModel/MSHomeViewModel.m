@@ -104,7 +104,8 @@
                     }
                 }
             }];
-
+        } else {
+            self.errorCallBack(nil);
         }
     }
 }

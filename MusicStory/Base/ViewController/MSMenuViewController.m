@@ -12,17 +12,6 @@
 
 @property (nonatomic, assign) CGFloat menuWith;
 @property (nonatomic, assign) CGFloat animationDuration;
-// 中间的控制器
-@property (nonatomic, strong) MSBaseNavController *centerController;
-@property (nonatomic, strong) MSHomeViewController *homeController;
-// 左边的Menu的控制器
-@property (nonatomic, strong) UIViewController *leftController;
-
-@property (nonatomic, weak) UIWindow *cover;
-// 当前的控制器
-@property (nonatomic, strong) UIViewController *currentController;
-
-@property (nonatomic, assign) MenuViewControllerType type;
 
 @end
 
@@ -69,7 +58,7 @@
  - parameter leftController:   侧滑菜单的控制器
  
  */
-- (instancetype)initWithCenterController:(MSBaseNavController *)centerController leftController:(UIViewController *)leftController {
+- (instancetype)initWithCenterController:(MSBaseNavController *)centerController leftController:(MSBaseNavController *)leftController {
     debugMethod();
     self = [super init];
     if (self) {
@@ -83,8 +72,6 @@
         [self addCenterController];
         // 添加覆盖层
         [self addCover];
-        //
-        [self leftMenuShowAnimate];
         // 添加手势
         UIPanGestureRecognizer *leftPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(leftMenuDidDrag:)];
         [self.leftController.view addGestureRecognizer:leftPan];
@@ -116,7 +103,7 @@
         [self.centerController addChildViewController:self.homeController];
         self.homeController.view.frame  = self.view.bounds;
         self.centerController.view.x    = self.menuWith;
-        self.currentController  = _homeController;
+        self.currentController  = self.homeController;
         
     } else if (MenuViewControllerTypeFindApp) {
         

@@ -22,6 +22,32 @@
     return self;
 }
 
+- (void)animationTable: (UITableView *)tableView {
+    
+    [tableView reloadData];
+    
+    NSArray *cells = tableView.visibleCells;
+    CGFloat tableHeight = tableView.bounds.size.height;
+    
+    for (UITableViewCell *cell in cells) {
+        cell.transform = CGAffineTransformMakeTranslation(0, tableHeight);
+    }
+    
+    double index = 0;
+    
+    for (UITableViewCell *cell in cells) {
+        [UIView animateWithDuration:1.0
+                              delay:0.05 * index
+             usingSpringWithDamping:0.8
+              initialSpringVelocity:0
+                            options:UIViewAnimationOptionTransitionNone
+                         animations:^{
+                             cell.transform = CGAffineTransformMakeTranslation(0, 0);
+        } completion:nil];
+        index += 1;
+    }
+}
+
 -(void)getData:(NSString *)condition withSuccessBack:(MSHomeViewModelSuccessBack)successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack)errorCallBack {
     debugMethod();
     self.successCallBack = successCallBack;
@@ -48,7 +74,7 @@
                 MSMusicModel *model = [[MSMusicModel alloc] initWithAVO:obj];
                 [self.dataSource addObject:model];
             }
-            [self.tableView reloadData];
+            [self animationTable:self.tableView];
             if (successCallBack) {
                 self.successCallBack(self.dataSource);
             }

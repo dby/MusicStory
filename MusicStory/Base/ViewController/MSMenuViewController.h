@@ -20,6 +20,18 @@ typedef enum : NSUInteger {
 
 @interface MSMenuViewController : UIViewController
 
-- (instancetype)initWithCenterController:(MSBaseNavController *)centerController leftController:(UIViewController *)leftController;
+// 中间的控制器
+@property (nonatomic, strong) MSBaseNavController *centerController;
+@property (nonatomic, strong) MSHomeViewController *homeController;
+// 左边的Menu的控制器
+@property (nonatomic, strong) MSBaseNavController *leftController;
+
+@property (nonatomic, weak) UIWindow *cover;
+// 当前的控制器
+@property (nonatomic, strong) UIViewController *currentController;
+
+@property (nonatomic, assign) MenuViewControllerType type;
+
+- (instancetype)initWithCenterController:(MSBaseNavController *)centerController leftController:(MSBaseNavController *)leftController;
 
 @end

@@ -84,7 +84,14 @@
 
 -(void)slideCenterViewSearchViewDidClick {
     debugMethod();
-    [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:[[MSSearchViewController alloc] init]] animated:YES completion:nil];
+    
+    MSBaseNavController *leftNav = self.sideMenuViewController.leftController;
+    MSBaseNavController *rightNav = self.sideMenuViewController.centerController;
+    
+    NSLog(@"leftNav: %@", leftNav);
+    NSLog(@"righNav: %@", rightNav);
+    
+    [rightNav presentViewController:[[MSBaseNavController alloc] initWithRootViewController:[[MSSearchViewController alloc] init]] animated:YES completion:nil];
 }
 
 -(void)slideCenterViewAboutUsViewDidClick {

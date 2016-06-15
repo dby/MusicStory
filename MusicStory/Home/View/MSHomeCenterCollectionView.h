@@ -10,4 +10,6 @@
 
 @interface MSHomeCenterCollectionView : UICollectionView
 
+-(instancetype)initWithSpecifiedFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout;
+
 @end

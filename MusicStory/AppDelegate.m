@@ -32,17 +32,21 @@
     NSDictionary *userAgent = @{@"UserAgent": @"Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H143 Safari/600.1.4"};
     [[NSUserDefaults standardUserDefaults] registerDefaults:userAgent];
     
+    [AVOSCloud setApplicationId:@"xJVf4uf6o6dV0zJAX9d8JOK1-gzGzoHsz"
+                      clientKey:@"p1aMdhAX9b3AnJSOxXOrcodl"];
+    [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
     // Create content and menu controllers
     //
     MSHomeViewController   *contentViewController = [[MSHomeViewController alloc] init];
     MSSlideViewController *leftMenuViewController = [[MSSlideViewController alloc] init];
     
-    [AVOSCloud setApplicationId:@"xJVf4uf6o6dV0zJAX9d8JOK1-gzGzoHsz"
-                      clientKey:@"p1aMdhAX9b3AnJSOxXOrcodl"];
-    [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [self.window makeKeyAndVisible];
     // Make it a root controller
-    self.window.rootViewController = [[MSMenuViewController alloc] initWithCenterController:[[MSBaseNavController alloc] initWithRootViewController:contentViewController] leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
+    self.window.rootViewController = [[MSMenuViewController alloc]
+                                      initWithCenterController:[[MSBaseNavController alloc] initWithRootViewController:contentViewController]
+                                      leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
     return YES;
 }

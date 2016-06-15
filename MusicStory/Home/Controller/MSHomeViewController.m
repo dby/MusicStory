@@ -330,7 +330,6 @@
             
             [imageView setHighlighted:NO];
         }
-        
     }
 }
 
