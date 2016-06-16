@@ -83,6 +83,7 @@
     
     debugMethod();
     [super viewDidLoad];
+    [NSThread sleepForTimeInterval:0.5]; // 启动界面延长0.5秒
     
     [self initComponents];
     

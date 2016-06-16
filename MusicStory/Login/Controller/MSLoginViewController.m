@@ -51,7 +51,7 @@
     debugMethod();
     AVUser *user = [AVUser currentUser];
     if (user) {
-        MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
+        //MSHomeViewController *hvc = [[MSHomeViewController alloc] init];
         //[self.sideMenuViewController setContentViewController: [[MSBaseNavController alloc] initWithRootViewController:hvc] animated:YES];
         //[self.sideMenuViewController hideMenuViewController];
     }
