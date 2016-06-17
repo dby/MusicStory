@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MSMusicModel.h"
+#import "MusicStory-Common-Header.h"
 
 @class MSHomeHeaderView;
 @protocol MSHomeHeaderViewDelegate
@@ -18,9 +19,10 @@
 @interface MSHomeHeaderView : UIView
 
 @property (weak, nonatomic) IBOutlet UIButton *moveToFirstBtn;          // 返回第一
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;                // 日期
-@property (weak, nonatomic) IBOutlet UILabel *weakLabel;                // 星期
+@property (weak, nonatomic) IBOutlet MSLabel *dateLabel;                // 日期
+@property (weak, nonatomic) IBOutlet MSLabel *weakLabel;                // 星期
 @property (weak, nonatomic) IBOutlet UILabel *rightTitleLabel;          // 右边标题
+@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
 @property (assign, nonatomic) id<MSHomeHeaderViewDelegate> delegate;
 @property (nonatomic, strong) MSMusicModel *homeModel;
 @property (strong, nonatomic) NSString *rightTitle;

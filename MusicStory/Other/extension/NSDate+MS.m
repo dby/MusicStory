@@ -33,7 +33,7 @@
     return lastdayTimestamp == todayTimestamp-(24*60*60);
 }
 
-// yyyy-MM-dd格式 转 MM月dd日
+// yyyy-MM-dd格式 转 MM月
 +(NSString *)formattDay:(NSString *)dataString
 {
     if ([dataString length] <= 0) {
@@ -46,7 +46,8 @@
     
     // 转换成xx月xx日格式
     NSDateFormatter *newDateFormatter = [[NSDateFormatter alloc] init];
-    newDateFormatter.dateFormat = @"MM月dd日";
+    //newDateFormatter.dateFormat = @"MM月dd日";
+    newDateFormatter.dateFormat = @"MM月";
     return [newDateFormatter stringFromDate:date];
 }
 

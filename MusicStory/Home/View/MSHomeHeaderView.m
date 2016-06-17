@@ -8,9 +8,6 @@
 
 #import "MSHomeHeaderView.h"
 
-#import "NSDate+MS.h"
-#import "UiView+MS.h"
-
 @interface MSHomeHeaderView()
 
 @end
@@ -50,6 +47,7 @@
         [self hiddenMoveToFirstAnimation];
     } else {
         self.dateLabel.text = [NSDate formattDay: homeModel.publish_date];
+        self.dayLabel.text = [homeModel.publish_date substringFromIndex:8];
         [self showMoveToFirstAnimation];
     }
     self.weakLabel.text = [NSDate weekWithDateString:homeModel.publish_date];
@@ -60,6 +58,9 @@
     self = [super init];
     if (self) {
         self = [[NSBundle mainBundle] loadNibNamed:@"MSHomeHeaderView" owner:nil options:nil].firstObject;
+        self.userInteractionEnabled = true;
+        self.weakLabel.verticalAlignment = VerticalAlignmentTop;
+        self.dateLabel.verticalAlignment = VerticalAlignmentBottom;
     }
     return self;
 }

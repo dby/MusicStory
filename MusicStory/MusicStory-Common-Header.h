@@ -24,10 +24,14 @@
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 /* category */
+#import "NSDate+MS.h"
 #import "UIView+MS.h"
 #import "UIColor+MS.h"
 #import "UIScrollView+MS.h"
 #import "UIViewController+MS.h"
 #import "UIViewController+Menu.h"
+
+/* custom defined view */
+#import "MSLabel.h"
 
 #endif /* musicStory_Common_Header_h */
