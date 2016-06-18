@@ -12,11 +12,11 @@
 
 #import "MusicStory-Common-Header.h"
 
-#import "MSMeController.h"
 #import "MSBaseNavController.h"
 #import "MSHomeViewController.h"
 #import "MSLoginViewController.h"
 #import "MSSearchViewController.h"
+#import "MSSettingViewController.h"
 
 @interface MSSlideViewController () < MSSlideCenterViewDelegate>
 
@@ -31,7 +31,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initComponents];
+    [self buildComponents];
+    [self setLayout];
     self.view.backgroundColor = UI_COLOR_APPNORMAL;
 }
 
@@ -41,74 +42,97 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(leftMenuSetupBackColor:) name:NOTIFY_SETUPBG object:nil];
 }
 
-#pragma mark - Init
+#pragma mark - build components
 
--(void)initComponents {
+-(void)buildComponents {
     self.centerView = [MSSlideCenterView centerView];
     self.centerView.delegate = self;
+    
+    // 默认选择音乐故事
+    self.centerView.curView = [[UIView alloc] init];
+    self.centerView.curView = self.centerView.musicStoryView;
+    self.centerView.indexView.y = self.centerView.musicStoryView.center.y;
     
     [self.view addSubview:self.centerView];
 }
 
 #pragma mark - Private Function
 
+- (void)setLayout {
+    [self.centerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.equalTo(self.view);
+    }];
+}
+
 - (void)leftMenuSetupBackColor:(NSNotification *)notify {
 
     NSString *bg = notify.object;
-    self.view.backgroundColor = [UIColor colorWithHexString:bg];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.view.backgroundColor = [UIColor colorWithHexString:bg];
+    }];
 }
 
 - (void)setContentViewController:(UIViewController *)viewController
 {
-    //MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.contentViewController;
-    
-    //[nav pushViewController:viewController animated:NO];
-    //nav.navigationBarHidden = false;
-    //[self.sideMenuViewController hideMenuViewController];
+    MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.centerController;
+    [nav pushViewController:viewController animated:NO];
 }
 
 #pragma mark - MSSlideCenterViewDelegate
 
+// 登陆
 -(void)slideCenterViewLoginViewDidClick {
     debugMethod();
     AVUser *user = [AVUser currentUser];
     if (user) {
-        MSMeController *meController = [[MSMeController alloc] init];
-        [self setContentViewController:meController];
+        //[self setContentViewController:meController];
+        //[self.navigationController presentViewController:meController animated:YES completion:nil];
     } else {
         UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
         UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
-        [self setContentViewController:loginViewController];
+        //[self setContentViewController:loginViewController];
+     //   [self.navigationController pushViewController:loginViewController animated:YES];
+        MSBaseNavController *leftNav = self.sideMenuViewController.leftController;
+        [leftNav presentViewController:[[MSBaseNavController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
     }
 }
 
--(void)slideCenterViewSearchViewDidClick {
-    debugMethod();
-    
-    MSBaseNavController *leftNav = self.sideMenuViewController.leftController;
-    MSBaseNavController *rightNav = self.sideMenuViewController.centerController;
-    
-    NSLog(@"leftNav: %@", leftNav);
-    NSLog(@"righNav: %@", rightNav);
-    
-    [rightNav presentViewController:[[MSBaseNavController alloc] initWithRootViewController:[[MSSearchViewController alloc] init]] animated:YES completion:nil];
-}
-
--(void)slideCenterViewAboutUsViewDidClick {
-    debugMethod();
-}
-
--(void)slideCenterViewCollectViewDidClick {
-    debugMethod();
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_COLLECTION];
-}
-
--(void)slideCenterViewFeedbackViewDidClick {
-    debugMethod();
-}
+// 音乐故事
 -(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_HOME];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
+}
+
+// 音乐专栏
+-(void)slideCenterViewMusicColumnViewDidClick {
+    debugMethod();
+}
+
+// 我的收藏
+-(void)slideCenterViewCollectViewDidClick {
+    debugMethod();
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_COLLECTION];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
+}
+
+// 赞我们一下
+-(void)slideCenterViewPraiseUsViewDidClick {
+    debugMethod();
+}
+
+// 搜索
+-(void)slideCenterViewSearchViewDidClick {
+    debugMethod();
+    
+    [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:[[MSSearchViewController alloc] init]] animated:YES completion:nil];
+}
+
+// setting
+-(void)slideCenterViewSettingsViewDidClick {
+    debugMethod();
+    MSSettingViewController *settingController = [[MSSettingViewController alloc] init];
+    [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:settingController] animated:YES completion:nil];
 }
 
 @end

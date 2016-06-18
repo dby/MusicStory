@@ -15,14 +15,16 @@
 -(void)slideCenterViewLoginViewDidClick;
 // 音乐故事
 -(void)slideCenterViewMusicStoryViewDidClick;
+// 音乐专栏
+- (void)slideCenterViewMusicColumnViewDidClick;
 // 我的收藏
 -(void)slideCenterViewCollectViewDidClick;
+// 赞我一下
+-(void)slideCenterViewPraiseUsViewDidClick;
+// Settings
+-(void)slideCenterViewSettingsViewDidClick;
 // 搜索
 -(void)slideCenterViewSearchViewDidClick;
-// 关于我们
--(void)slideCenterViewAboutUsViewDidClick;
-// 意见反馈
--(void)slideCenterViewFeedbackViewDidClick;
 @end
 
 @interface MSSlideCenterView : UIView
@@ -31,12 +33,13 @@
 @property (weak, nonatomic) IBOutlet UIView *musicStoryView;
 @property (weak, nonatomic) IBOutlet UIView *collectView;
 @property (weak, nonatomic) IBOutlet UIButton *searchBtn;
-@property (weak, nonatomic) IBOutlet UIView *aboutUsView;
-@property (weak, nonatomic) IBOutlet UIView *feedBackView;
+@property (weak, nonatomic) IBOutlet UIView *praiseUsView;
+@property (weak, nonatomic) IBOutlet UIView *musicColumnView;
 @property (weak, nonatomic) IBOutlet UIImageView *indexView;
+@property (weak, nonatomic) IBOutlet UIButton *settingsBtn;
 @property (assign, nonatomic) id<MSSlideCenterViewDelegate> delegate;
 
-@property (weak, nonatomic) UIView* curView;
+@property (strong, nonatomic) UIView* curView;
 
 +(MSSlideCenterView *)centerView;
 

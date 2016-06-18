@@ -31,6 +31,7 @@
     [super viewDidLoad];
     
     [self buildComponents];
+    [self setLayout];
 }
 
 -(void)buildComponents {
@@ -61,6 +62,17 @@
     self.view.userInteractionEnabled = YES;
     [self.view addSubview:self.headerView];
     [self.view addSubview:self.contentTableView];
+}
+
+-(void)setLayout {
+    [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.equalTo(self.view);
+        make.height.equalTo(@60);
+    }];
+    [self.contentTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.top.equalTo(self.headerView.mas_bottom);
+    }];
 }
 
 #pragma mark - UITableViewDelegate UITableViewDataSource

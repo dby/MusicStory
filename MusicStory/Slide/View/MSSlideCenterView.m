@@ -22,21 +22,27 @@
     self.portrait.layer.cornerRadius    = 25;
     self.portrait.layer.masksToBounds   = YES;
     
+    // 登陆
     [self.loginview addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(loginViewDidClick)]];
+    // 音乐故事
     [self.musicStoryView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                       action:@selector(musicStoryDidClick)]];
+    // 我的收藏
     [self.collectView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
                                                                                   action:@selector(collectViewDidClick)]];
-    [self.searchBtn addTarget:self action:@selector(searchBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.aboutUsView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
-                                                                                  action:@selector(aboutUsDidClick)]];
-    [self.feedBackView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
-                                                                                   action:@selector(feedbackDidClick)]];
+    // 赞一下
+    [self.praiseUsView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
+                                                                                  action:@selector(praiseUsDidClick)]];
+    // 音乐专栏
+    [self.musicColumnView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
+                                                                                   action:@selector(musicColumnDidClick)]];
     
-    // 默认选择音乐故事
-    self.curView = self.musicStoryView;
-    self.indexView.y = self.musicStoryView.center.y;
+    // 搜索
+    [self.searchBtn addTarget:self action:@selector(searchBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 设置
+    [self.settingsBtn addTarget:self action:@selector(settingBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
     
     [self updateUserMsg];
     
@@ -93,22 +99,30 @@
     [self.delegate slideCenterViewSearchViewDidClick];
 }
 
-- (void)aboutUsDidClick {
+- (void)praiseUsDidClick {
     debugMethod();
-    if (_curView == self.aboutUsView)
+    if (_curView == self.praiseUsView)
         return;
-    self.curView            = self.aboutUsView;
+    self.curView            = self.praiseUsView;
     self.indexView.hidden   = false;
-    self.indexView.y        = self.aboutUsView.center.y;
-    [self.delegate slideCenterViewAboutUsViewDidClick];
+    self.indexView.y        = self.praiseUsView.center.y;
+    [self.delegate slideCenterViewPraiseUsViewDidClick];
 }
 
-- (void)feedbackDidClick {
+- (void)musicColumnDidClick {
     debugMethod();
-    if (_curView == self.feedBackView)
+    if (_curView == self.musicColumnView)
         return;
-    self.curView        = self.feedBackView;
-    self.indexView.y    = self.feedBackView.center.y;
+    self.curView            = self.musicColumnView;
+    self.indexView.hidden   = false;
+    self.indexView.y        = self.musicColumnView.center.y;
+    [self.delegate slideCenterViewMusicColumnViewDidClick];
+}
+
+- (void)settingBtnDidClick {
+    debugMethod();
+    self.indexView.hidden = false;
+    [self.delegate slideCenterViewSettingsViewDidClick];
 }
 
 @end

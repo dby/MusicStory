@@ -25,6 +25,7 @@
     self = [super init];
     if (self) {
         self = [[NSBundle mainBundle] loadNibNamed:@"MSSearchHeaderView" owner:nil options:nil].firstObject;
+        self.userInteractionEnabled = YES;
     }
     return self;
 }
