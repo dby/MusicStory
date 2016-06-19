@@ -35,6 +35,8 @@
 @property (nonatomic, strong) NSString *author_id;
 // 故事 作者名字
 @property (nonatomic, strong) NSString *author_name;
+// 头像
+@property (nonatomic, strong) NSString *author_portrait;
 
 // 歌手id
 @property (nonatomic, strong) NSString *singer_id;

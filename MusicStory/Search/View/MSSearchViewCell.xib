@@ -49,6 +49,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_launcher" width="96" height="96"/>
+        <image name="ic_launcher" width="850" height="850"/>
     </resources>
 </document>

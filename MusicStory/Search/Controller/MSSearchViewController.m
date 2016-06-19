@@ -67,7 +67,7 @@
 -(void)setLayout {
     [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(self.view);
-        make.height.equalTo(@60);
+        make.height.equalTo(@70);
     }];
     [self.contentTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);

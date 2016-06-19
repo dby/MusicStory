@@ -15,6 +15,7 @@
 #import "MSHomeBottomFlowLayout.h"
 #import "MSHomeBottomCollectView.h"
 #import "MSHomeCenterCollectionView.h"
+#import "MSSlideViewController.h"
 
 #import "MSHomeDetailController.h"
 
@@ -252,6 +253,9 @@
 
 -(void)homeHeaderViewMenuDidClick:(MSHomeHeaderView *)header :(UIButton *)menuBtn {
     debugMethod();
+    MSSlideViewController *slideController = self.sideMenuViewController.leftController.childViewControllers.firstObject;
+    slideController.model = _currentModel;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SHOWMENU object:nil];
 }
 

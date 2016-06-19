@@ -27,6 +27,7 @@
         
         self.author_id      = [avo objectForKey:@"author_id"];
         self.author_name    = [avo objectForKey:@"author_name"];
+        self.author_portrait= [avo objectForKey:@"author_portrait"];
         
         self.singer_id      = [avo objectForKey:@"singer_id"];
         self.singer_name    = [avo objectForKey:@"singer_name"];

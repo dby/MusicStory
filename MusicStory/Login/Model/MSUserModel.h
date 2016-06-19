@@ -17,6 +17,7 @@
 @property (nonatomic, strong) AVRelation *music_collections;
 @property (nonatomic, strong) NSString *portrait;
 @property (nonatomic, strong) NSString *mobilePhoneNumber;
+@property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSArray *hasLikedMusic;
 
 -(instancetype)initWithAVO :(AVObject *)avo;

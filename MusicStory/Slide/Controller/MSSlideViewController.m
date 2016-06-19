@@ -8,8 +8,6 @@
 
 #import "MSSlideViewController.h"
 
-#import "MSSlideCenterView.h"
-
 #import "MusicStory-Common-Header.h"
 
 #import "MSBaseNavController.h"
@@ -17,10 +15,10 @@
 #import "MSLoginViewController.h"
 #import "MSSearchViewController.h"
 #import "MSSettingViewController.h"
+#import "MSUserInfoViewController.h"
 
 @interface MSSlideViewController () < MSSlideCenterViewDelegate>
 
-@property (nonatomic, strong) MSSlideCenterView *centerView;
 
 @end
 
@@ -85,23 +83,23 @@
     debugMethod();
     AVUser *user = [AVUser currentUser];
     if (user) {
-        //[self setContentViewController:meController];
-        //[self.navigationController presentViewController:meController animated:YES completion:nil];
+        MSUserInfoViewController *infoController = [[MSUserInfoViewController alloc] init];
+        [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:infoController] animated:YES completion:nil];
     } else {
         UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
         UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
-        //[self setContentViewController:loginViewController];
-     //   [self.navigationController pushViewController:loginViewController animated:YES];
-        MSBaseNavController *leftNav = self.sideMenuViewController.leftController;
-        [leftNav presentViewController:[[MSBaseNavController alloc] initWithRootViewController:loginViewController] animated:YES completion:nil];
+        [self.navigationController presentViewController:
+         [[MSBaseNavController alloc] initWithRootViewController:loginViewController]
+                                                animated:YES
+                                              completion:nil];
     }
 }
 
 // 音乐故事
 -(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_HOME];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_HOME];
 }
 
 // 音乐专栏
@@ -112,8 +110,8 @@
 // 我的收藏
 -(void)slideCenterViewCollectViewDidClick {
     debugMethod();
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_COLLECTION];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_COLLECTION];
 }
 
 // 赞我们一下
@@ -124,7 +122,6 @@
 // 搜索
 -(void)slideCenterViewSearchViewDidClick {
     debugMethod();
-    
     [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:[[MSSearchViewController alloc] init]] animated:YES completion:nil];
 }
 

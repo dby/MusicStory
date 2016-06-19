@@ -19,13 +19,13 @@ static NSString *SettingViewCellID = @"SettingViewCellID";
     [super awakeFromNib];
 }
 
--(void)setData:(NSDictionary *)data {
+- (void)setData:(NSDictionary *)data {
     _data = data;
     self.iconView.image = [UIImage imageNamed:[data objectForKey:@"icon"]];
     self.itemLabel.text = [data objectForKey:@"text"];
 }
 
-+(SettingViewCell *) cellWithTableView:(UITableView*)tableView {
++ (SettingViewCell *) cellWithTableView:(UITableView*)tableView {
     SettingViewCell *cell = (SettingViewCell *)[tableView dequeueReusableCellWithIdentifier:SettingViewCellID];
     if (cell == nil) {
         cell = (SettingViewCell *)[[NSBundle mainBundle] loadNibNamed:@"SettingViewCell" owner:nil options:nil].firstObject;

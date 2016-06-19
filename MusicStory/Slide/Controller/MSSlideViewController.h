@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSMusicModel.h"
+#import "MSSlideCenterView.h"
 
 @interface MSSlideViewController : UIViewController
+
+@property(nonatomic, strong) MSMusicModel *model;
+@property (nonatomic, strong) MSSlideCenterView *centerView;
 
 @end
