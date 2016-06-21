@@ -20,7 +20,7 @@
         self.hasLikedMusic      = [avo objectForKey:@"hasLikedMusic"];
         self.music_collections  = [avo objectForKey:@"music_collections"];
         self.mobilePhoneNumber  = [avo objectForKey:@"mobilePhoneNumber"];
-        self.email              = [avo objectForKey:@"username"];
+        self.email              = [avo objectForKey:@"email"];
     }
     return self;
 }

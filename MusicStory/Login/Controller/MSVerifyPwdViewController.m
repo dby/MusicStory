@@ -35,6 +35,7 @@
     [self setupLayout];
     
     _phoneNumberLabel.text = _phoneNumber;
+    //[self.pwdTextField becomeFirstResponder];
     [_loginButton addTarget:self action:@selector(loginWithPwd) forControlEvents:UIControlEventTouchUpInside];
 }
 

@@ -53,8 +53,8 @@
 - (void)initData {
     self.user = [[MSUserModel alloc] initWithAVO:[AVUser currentUser]];
     self.data = [NSArray arrayWithObjects:
-                 [NSDictionary dictionaryWithObjectsAndKeys:@"more_icon_aboutus_pressed", @"icon", _user.mobilePhoneNumber, @"text", nil],
-                 [NSDictionary dictionaryWithObjectsAndKeys:@"more_icon_aboutus_pressed", @"icon", _user.email, @"text", nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:@"icon_phone", @"icon", _user.mobilePhoneNumber, @"text", nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:@"unReadMessageRed", @"icon", _user.email, @"text", nil],
                  nil];
 }
 
@@ -87,7 +87,7 @@
     self.headerImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 270)];
     self.headerImgView.contentMode = UIViewContentModeScaleAspectFill;
     self.headerImgView.clipsToBounds = YES;
-    [self.headerImgView setImageWithURL:[NSURL URLWithString:_user.portrait] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.headerImgView setImage:[UIImage imageNamed:@"setting_bg"]];
     [self.headerView addSubview:_headerImgView];
     
     // author portrait
@@ -95,7 +95,12 @@
     self.userImgView.contentMode = UIViewContentModeScaleAspectFill;
     self.userImgView.layer.cornerRadius     = 35;
     self.userImgView.layer.masksToBounds    = YES;
-    [self.userImgView setImageWithURL:[NSURL URLWithString:_user.portrait] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    NSLog(@"portrait: %@", _user.portrait);
+    if (![_user.portrait isEqualToString:@""]) {
+        [self.userImgView setImageWithURL:[NSURL URLWithString:_user.portrait] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    } else {
+        [self.userImgView setImage:[UIImage imageNamed:@"encourage_image"]];
+    }
     [self.headerView addSubview:_userImgView];
     
     // user name

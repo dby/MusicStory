@@ -31,6 +31,7 @@
     [self setupLayout];
     
     self.phoneNumLabel.text = self.phoneNumber;
+    //[self.smsVeriTextField becomeFirstResponder];
     [self.loginButton addTarget:self action:@selector(registerDidClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -62,8 +63,12 @@
     NSString *smsC = _smsVeriTextField.text;
     [AVUser signUpOrLoginWithMobilePhoneNumberInBackground:_phoneNumber smsCode:smsC block:^(AVUser *user, NSError *error) {
         if (!error) {
-            debugLog(@"register success");
+            [SVProgressHUD showSuccessWithStatus:@"注册成功"];
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+            }];
         } else {
+            [SVProgressHUD showErrorWithStatus:@"注册失败"];
             debugLog(@"SmsCode: %@", [error description]);
         }
     }];

@@ -38,7 +38,15 @@
     self.centerImgView.clipsToBounds = YES;
     
     self.iconFlowerButton.userInteractionEnabled = YES;
+    
+    [self.titleLabel    setBackgroundColor:[UIColor whiteColor]];
+    [self.subTitleLabel setBackgroundColor:[UIColor whiteColor]];
+    [self.detailLabel   setBackgroundColor:[UIColor whiteColor]];
+    [self.authorLabel   setBackgroundColor:[UIColor whiteColor]];
+    
+    //[self.centerImgView setOpaque:YES];
 }
+
 
 #pragma mark - Setter Getter
 -(void)setHomeModel:(MSMusicModel *)homeModel

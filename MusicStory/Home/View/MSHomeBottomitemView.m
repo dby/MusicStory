@@ -32,7 +32,7 @@
     
     self.layer.cornerRadius             = 8;
     self.iconView.layer.cornerRadius    = 8;
-    self.layer.masksToBounds            = true;
+    //self.layer.masksToBounds            = true;
     self.iconView.layer.masksToBounds   = true;
 }
 

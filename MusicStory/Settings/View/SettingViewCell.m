@@ -17,6 +17,7 @@ static NSString *SettingViewCellID = @"SettingViewCellID";
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.iconView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 - (void)setData:(NSDictionary *)data {

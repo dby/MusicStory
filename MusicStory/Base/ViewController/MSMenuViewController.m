@@ -103,7 +103,7 @@
         [self.centerController addChildViewController:self.homeController];
         self.homeController.view.frame  = self.view.bounds;
         self.centerController.view.x    = self.menuWith;
-        self.currentController  = self.homeController;
+        self.currentController          = self.homeController;
         
     } else if (MenuViewControllerTypeFindApp) {
         
@@ -117,8 +117,8 @@
 - (void)buildComponents {
     
     debugMethod();
-    _menuWith = 0.855 * SCREEN_WIDTH;
-    _animationDuration = 0.3;
+    self.menuWith           = 0.855 * SCREEN_WIDTH;
+    self.animationDuration  = 0.3;
     
     self.type = MenuViewControllerTypeHome;
 }
@@ -145,8 +145,8 @@
  */
 - (void) addLeftController {
     debugMethod();
-    self.leftController.view.frame = CGRectMake(0, 0, _menuWith, SCREEN_HEIGHT);
-    self.leftController.view.transform = CGAffineTransformMakeScale(0.5, 0.5);
+    self.leftController.view.frame      = CGRectMake(0, 0, _menuWith, SCREEN_HEIGHT);
+    self.leftController.view.transform  = CGAffineTransformMakeScale(0.5, 0.5);
     [self.view addSubview:self.leftController.view];
     [self addChildViewController:self.leftController];
 }

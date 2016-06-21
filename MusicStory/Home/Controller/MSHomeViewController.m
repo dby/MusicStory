@@ -59,7 +59,7 @@
     
     debugMethod();
     _index = index;
-    if ([_viewModel.dataSource count] == 0) {
+    if ([self.viewModel.dataSource count] == 0) {
         return;
     }
     // 获取模型
@@ -70,6 +70,57 @@
     [UIView animateWithDuration:1.0 animations:^{
         self.view.backgroundColor = [UIColor colorWithHexString: model.recommanded_background_color];
     }];
+}
+
+-(MSHomeHeaderView *)headerView {
+    if (!_headerView) {
+        _headerView             = [[MSHomeHeaderView alloc] init];
+        _headerView.delegate    = self;
+        [self.view addSubview:_headerView];
+    }
+    return _headerView;
+}
+
+-(MSHomeCenterCollectionView *)centerCollectView {
+    if (!_centerCollectView) {
+        MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
+        _centerCollectView = [[MSHomeCenterCollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420)
+                                                              collectionViewLayout:collectLayout];
+        
+        _centerCollectView.delegate                         = self;
+        _centerCollectView.dataSource                       = self;
+        _centerCollectView.showsHorizontalScrollIndicator   = false;
+        _centerCollectView.pagingEnabled                    = true;
+        [_centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil]
+             forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
+        _centerCollectView.backgroundColor  = [UIColor clearColor];
+        _centerCollectView.tag              = 100;
+        [self.view addSubview:_centerCollectView];
+    }
+    return _centerCollectView;
+}
+
+-(MSHomeBottomCollectView *)bottomCollectView {
+    if (!_bottomCollectView) {
+        MSHomeBottomFlowLayout *collectionLayout = [[MSHomeBottomFlowLayout alloc] init];
+        _bottomCollectView = [[MSHomeBottomCollectView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH-60, SCREEN_WIDTH, 60) collectionViewLayout:collectionLayout];
+        _bottomCollectView.bottomViewDelegate   = self;
+        _bottomCollectView.delegate             = self;
+        _bottomCollectView.dataSource           = self;
+
+        [self.view addSubview:_bottomCollectView];
+    }
+    return _bottomCollectView;
+}
+
+-(MSHomeViewModel *)viewModel {
+    if (!_viewModel) {
+        // 获取ViewModel
+        _viewModel = [[MSHomeViewModel alloc] initWithHeaderView:self.headerView
+                                                  withCenterView:self.centerCollectView
+                                                  withBottomView:self.bottomCollectView];
+    }
+    return _viewModel;
 }
 
 #pragma mark life circle
@@ -86,25 +137,41 @@
     [super viewDidLoad];
     [NSThread sleepForTimeInterval:0.5]; // 启动界面延长0.5秒
     
-    [self initComponents];
-    
     self.automaticallyAdjustsScrollViewInsets = false;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(errorBtnDidClick)
                                                  name:NOTIFY_ERRORBTNCLICK
                                                object:nil];
     
-    self.view.userInteractionEnabled = YES;
+    [self initComponents];
+    [self showProgress];
     
-    [self.view addSubview:_headerView];
-    [self.view addSubview:_centerCollectView];
-    [self.view addSubview:_bottomCollectView];
+    self.viewModel.type = NOTIFY_OBJ_HOME;
+    [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
+        self.index      = 0;
+        self.lastIndex  = nil;
+        [self.bottomCollectView setContentOffset:CGPointZero animated:true];
+        [self scrollViewDidEndDecelerating:self.centerCollectView];
+        [self hiddenProgress];
+    } withErrorCallBack:^(NSError *error) {
+        [self showNetWorkErrorView];
+        [self hiddenProgress];
+    }];
+    // 适配屏幕
+    [self setupLayout];
+}
+
+#pragma mark - init
+
+- (void)initComponents {
+    
+    self.view.userInteractionEnabled = YES;
     self.view.backgroundColor = UI_COLOR_APPNORMAL;
     
-    // 获取ViewModel
-    _viewModel = [[MSHomeViewModel alloc] initWithHeaderView:_headerView
-                                              withCenterView:_centerCollectView
-                                              withBottomView:_bottomCollectView];
+    [self buildRefreshView];
+}
+
+- (void)buildRefreshView {
     
     [self.centerCollectView headerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
         debugLog(@"执行 headerViewPullToRefresh 回调函数...");
@@ -129,47 +196,6 @@
             [self.centerCollectView footerViewStopPullToRefresh];
         }];
     }];
-    
-    [self showProgress];
-    self.viewModel.type = NOTIFY_OBJ_HOME;
-    [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
-        self.index      = 0;
-        self.lastIndex  = nil;
-        [self.bottomCollectView setContentOffset:CGPointZero animated:true];
-        [self scrollViewDidEndDecelerating:self.centerCollectView];
-        [self hiddenProgress];
-    } withErrorCallBack:^(NSError *error) {
-        [self showNetWorkErrorView];
-        [self hiddenProgress];
-    }];
-    // 适配屏幕
-    [self setupLayout];
-}
-
-#pragma mark Init
-
-- (void)initComponents {
-    debugMethod();
-    _headerView             = [[MSHomeHeaderView alloc] init];
-    _headerView.delegate    = self;
-    
-    MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
-    self.centerCollectView = [[MSHomeCenterCollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420)
-                                                collectionViewLayout:collectLayout];
-    
-    self.centerCollectView.delegate                         = self;
-    self.centerCollectView.dataSource                       = self;
-    self.centerCollectView.showsHorizontalScrollIndicator   = false;
-    self.centerCollectView.pagingEnabled                    = true;
-    [self.centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
-    self.centerCollectView.backgroundColor  = [UIColor clearColor];
-    self.centerCollectView.tag              = 100;
-    
-    MSHomeBottomFlowLayout *collectionLayout = [[MSHomeBottomFlowLayout alloc] init];
-    self.bottomCollectView = [[MSHomeBottomCollectView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH-60, SCREEN_WIDTH, 60) collectionViewLayout:collectionLayout];
-    self.bottomCollectView.bottomViewDelegate   = self;
-    self.bottomCollectView.delegate             = self;
-    self.bottomCollectView.dataSource           = self;
 }
 
 #pragma mark - scrollerDelegate
@@ -216,8 +242,8 @@
         MSHomeCenterItemView *cell  = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
         cell.homeModel              = model;
         
-        _currentCenterItemView = cell;
-        _currentModel = [self.viewModel.dataSource objectAtIndex:indexPath.row];
+        self.currentCenterItemView = cell;
+        self.currentModel = [self.viewModel.dataSource objectAtIndex:indexPath.row];
         
         cell.userInteractionEnabled = YES;
         UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -245,8 +271,8 @@
 #pragma mark - Custom Delegate
 -(void)homeHeaderViewMoveToFirstDidClick:(MSHomeHeaderView *)headerView :(UIButton *)moveToFirstBtn {
     debugMethod();
-    [_centerCollectView setContentOffset:CGPointZero animated:false];
-    [_bottomCollectView setContentOffset:CGPointZero animated:false];
+    [self.centerCollectView setContentOffset:CGPointZero animated:false];
+    [self.bottomCollectView setContentOffset:CGPointZero animated:false];
     self.index = 0;
     [self scrollViewDidEndDecelerating:self.centerCollectView];
 }
@@ -254,7 +280,7 @@
 -(void)homeHeaderViewMenuDidClick:(MSHomeHeaderView *)header :(UIButton *)menuBtn {
     debugMethod();
     MSSlideViewController *slideController = self.sideMenuViewController.leftController.childViewControllers.firstObject;
-    slideController.model = _currentModel;
+    slideController.model = self.currentModel;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SHOWMENU object:nil];
 }
@@ -262,16 +288,18 @@
 -(void)homeBottomCollectView:(UICollectionView *)bottomView touchIndexDidChangeWithIndexPath:(NSIndexPath *)indexPath cellArrayCount:(NSUInteger)cellArrayCount {
     
     debugMethod();
-    [_centerCollectView scrollToItemAtIndexPath:indexPath
-                               atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
+    [self.centerCollectView scrollToItemAtIndexPath:indexPath
+                                   atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                           animated:false];
     self.index = indexPath.row;
     // 执行底部横向动画
     UICollectionViewCell *cell = [self.bottomCollectView cellForItemAtIndexPath:indexPath];
     // 如果当前不够7个item就不让他滚动
     [self bottomHorizontalAnimation:cell forIndexPath:indexPath];
     // 发送通知改变侧滑菜单的颜色
-    MSMusicModel *model = [self.viewModel.dataSource objectAtIndex:_index];
-    NSNotification *noti = [NSNotification notificationWithName:NOTIFY_SETUPBG object:model.recommanded_background_color];
+    MSMusicModel *model     = [self.viewModel.dataSource objectAtIndex:_index];
+    NSNotification *noti    = [NSNotification notificationWithName:NOTIFY_SETUPBG
+                                                            object:model.recommanded_background_color];
     [[NSNotificationCenter defaultCenter] postNotification:noti];
     
     self.lastIndex = indexPath;
@@ -285,27 +313,27 @@
 
 - (void) addLike:(UITapGestureRecognizer *)gestureRecognizer {
     debugMethod();
-    if (_currentCenterItemView) {
+    if (self.currentCenterItemView) {
         
         UIImageView *imageView = (UIImageView *)[gestureRecognizer view];
         debugLog(@"%d", [imageView isHighlighted]);
         
         if (![imageView isHighlighted]) {
             
-            _currentCenterItemView.fovCountLabel.text = [NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] + 1];
-            AVObject *music = [AVObject objectWithClassName:@"Musics" objectId:_currentModel.objectId];
-            [music setObject:[NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] + 1] forKey:@"like_count"];
+            self.currentCenterItemView.fovCountLabel.text = [NSString stringWithFormat:@"%d", [self.currentModel.like_count intValue] + 1];
+            AVObject *music = [AVObject objectWithClassName:@"Musics" objectId:self.currentModel.objectId];
+            [music setObject:[NSString stringWithFormat:@"%d", [self.currentModel.like_count intValue] + 1] forKey:@"like_count"];
             [music saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
-                    _currentModel.like_count = [NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] + 1];
+                    self.currentModel.like_count = [NSString stringWithFormat:@"%d", [self.currentModel.like_count intValue] + 1];
                     AVUser *user = [AVUser currentUser];
                     NSMutableArray *hasLikedMusicArr = [user objectForKey:@"hasLikedMusic"];
                     debugLog(@"%@", hasLikedMusicArr);
                     if (!hasLikedMusicArr) {
                         hasLikedMusicArr = [[NSMutableArray alloc] init];
-                    } else if (![hasLikedMusicArr containsObject:_currentModel.objectId]) {
+                    } else if (![hasLikedMusicArr containsObject:self.currentModel.objectId]) {
                         // 原先没有赞过
-                        [hasLikedMusicArr addObject:_currentModel.objectId];
+                        [hasLikedMusicArr addObject:self.currentModel.objectId];
                         [user setObject:hasLikedMusicArr forKey:@"hasLikedMusic"];
                         [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             if (succeeded) {
@@ -315,7 +343,6 @@
                             }
                         }];
                     }
-                    
                 } else {
                 }
             }];
@@ -323,12 +350,12 @@
             [imageView setHighlighted:YES];
         }
         else {
-            _currentCenterItemView.fovCountLabel.text = [NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] - 1];
+            self.currentCenterItemView.fovCountLabel.text = [NSString stringWithFormat:@"%d", [self.currentModel.like_count intValue] - 1];
             AVObject *music = [AVObject objectWithClassName:@"Musics" objectId:_currentModel.objectId];
-            [music setObject:[NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] - 1] forKey:@"like_count"];
+            [music setObject:[NSString stringWithFormat:@"%d", [self.currentModel.like_count intValue] - 1] forKey:@"like_count"];
             [music saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
-                    _currentModel.like_count = [NSString stringWithFormat:@"%d", [_currentModel.like_count intValue] - 1];
+                    self.currentModel.like_count = [NSString stringWithFormat:@"%d", [self.currentModel.like_count intValue] - 1];
                 } else {
                 }
             }];
@@ -415,18 +442,18 @@
 
 - (void)setupLayout {
     debugMethod();
-    [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(20);
         make.height.equalTo(@(SCREEN_HEIGHT*50/IPHONE5_HEIGHT));
         make.left.right.equalTo(self.view);
     }];
     
-    [_bottomCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.bottomCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
         make.height.equalTo(@(SCREEN_HEIGHT*70/IPHONE5_HEIGHT));
     }];
     
-    [_centerCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.centerCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.center.equalTo(self.view);
         make.height.equalTo(@(SCREEN_HEIGHT*430/IPHONE5_HEIGHT));

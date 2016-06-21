@@ -40,6 +40,8 @@
     [self isHaveLogined];
     [self buildComponent];
     [self setupLayout];
+    
+    //[self.phoneNumTextField becomeFirstResponder];
 }
 
 #pragma mark - build

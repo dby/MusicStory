@@ -37,7 +37,6 @@
 -(void)setHomeModel:(MSMusicModel *)homeModel
 {
     debugMethod();
-    
     _homeModel = homeModel;
     if ([NSDate isToDay:homeModel.publish_date]) {
         self.dateLabel.text = @"今天";
@@ -51,6 +50,12 @@
         [self showMoveToFirstAnimation];
     }
     self.weakLabel.text = [NSDate weekWithDateString:homeModel.publish_date];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.weakLabel.backgroundColor  = [UIColor colorWithHexString:homeModel.recommanded_background_color];
+        self.dayLabel.backgroundColor   = [UIColor colorWithHexString:homeModel.recommanded_background_color];
+        self.rightTitleLabel.backgroundColor    = [UIColor colorWithHexString:homeModel.recommanded_background_color];
+        self.moveToFirstBtn.backgroundColor     = [UIColor colorWithHexString:homeModel.recommanded_background_color];
+    }];
 }
 
 -(instancetype)init {
@@ -79,13 +84,13 @@
 //MARK: --- PRIVATE
 - (void) hiddenMoveToFirstAnimation {
     debugMethod();
-    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.moveToFirstBtn.alpha = 0;
     } completion:nil];
 }
 - (void) showMoveToFirstAnimation {
     debugMethod();
-    [UIView animateWithDuration:0.2 delay: 0.0 options: UIViewAnimationOptionCurveEaseOut animations: ^{
+    [UIView animateWithDuration:0.5 delay: 0.0 options: UIViewAnimationOptionCurveEaseOut animations: ^{
         self.moveToFirstBtn.alpha = 1;
     } completion: nil];
 }

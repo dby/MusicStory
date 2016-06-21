@@ -52,9 +52,9 @@
 -(void)updateUserMsg {
     AVUser *user = [AVUser currentUser];
     if (user) {
-        debugLog(@"user portrait: %@", [user objectForKey:@"portrait"]);
         [self.portrait setImageWithURL:[NSURL URLWithString:[user objectForKey:@"portrait"]]
            usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [self.username setText:[user objectForKey:@"username"]];
     }
 }
 

@@ -15,7 +15,7 @@
                     <rect key="frame" x="0.0" y="42" width="600" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="登录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ha2-OL-RbW">
-                            <rect key="frame" x="90" y="15" width="40" height="20"/>
+                            <rect key="frame" x="90" y="15" width="313" height="20"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -191,6 +191,7 @@
                 <outlet property="praiseUsView" destination="pYd-t5-udU" id="aev-z7-9Ze"/>
                 <outlet property="searchBtn" destination="aCk-Uw-9z4" id="K7r-65-EPA"/>
                 <outlet property="settingsBtn" destination="0vY-SB-mbh" id="lXR-HQ-XnQ"/>
+                <outlet property="username" destination="Ha2-OL-RbW" id="Fgd-KO-e0Z"/>
             </connections>
             <point key="canvasLocation" x="173" y="395"/>
         </view>
