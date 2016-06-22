@@ -28,6 +28,8 @@
 #import "UIView+MS.h"
 #import "UIColor+MS.h"
 #import "UIScrollView+MS.h"
+#import "UIImage+MS.h"
+#import "UIImageView+MS.h"
 #import "UIViewController+MS.h"
 #import "UIViewController+Menu.h"
 

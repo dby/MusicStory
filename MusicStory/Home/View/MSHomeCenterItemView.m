@@ -6,14 +6,9 @@
 //  Copyright © 2016年 sys. All rights reserved.
 //
 
-#import "AppConfig.h"
-#import <AVOSCloud/AVOSCloud.h>
-#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
-
 #import "MSHomeCenterItemView.h"
 
-#import "UIView+MS.h"
-
+#import "MusicStory-Common-Header.h"
 
 @interface MSHomeCenterItemView()
 
@@ -29,24 +24,24 @@
     
     self.backgroundColor        = [UIColor whiteColor];
     self.layer.cornerRadius     = 5;
-    self.layer.masksToBounds    = YES;
     self.userInteractionEnabled = YES;
     
     [self.centerImgView setContentScaleFactor:[[UIScreen mainScreen] scale]];
-    self.centerImgView.contentMode = UIViewContentModeScaleAspectFill;
-    self.centerImgView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    self.centerImgView.alpha            = 1;
+    self.centerImgView.opaque           = true;
+    self.centerImgView.layer.opaque     = true;
+    self.centerImgView.backgroundColor  = [UIColor whiteColor];
     self.centerImgView.clipsToBounds = YES;
     
     self.iconFlowerButton.userInteractionEnabled = YES;
+    self.fovView.layer.cornerRadius = 5;
     
     [self.titleLabel    setBackgroundColor:[UIColor whiteColor]];
     [self.subTitleLabel setBackgroundColor:[UIColor whiteColor]];
     [self.detailLabel   setBackgroundColor:[UIColor whiteColor]];
     [self.authorLabel   setBackgroundColor:[UIColor whiteColor]];
     
-    //[self.centerImgView setOpaque:YES];
 }
-
 
 #pragma mark - Setter Getter
 -(void)setHomeModel:(MSMusicModel *)homeModel
@@ -55,22 +50,22 @@
     _homeModel = homeModel;
     
     // 设置数据
-    _titleLabel.text        = homeModel.music_name;
-    _subTitleLabel.text     = homeModel.singer_name;
+    self.titleLabel.text        = homeModel.music_name;
+    self.subTitleLabel.text     = homeModel.singer_name;
     
     [_centerImgView setImageWithURL:[NSURL URLWithString:homeModel.music_imgs]
                    placeholderImage:[UIImage imageNamed:@"home_logo_pressed"] usingActivityIndicatorStyle:YES];
     
-    _detailLabel.text   = homeModel.music_story;
-    _authorLabel.text   = homeModel.author_name;
-    _fovCountLabel.text = homeModel.like_count;
+    self.detailLabel.text   = homeModel.music_story;
+    self.authorLabel.text   = homeModel.author_name;
+    self.fovCountLabel.text = homeModel.like_count;
     
     AVUser *user = [AVUser currentUser];
     NSArray *likedMusicsArr = [user objectForKey:@"hasLikedMusic"];
     if ([likedMusicsArr containsObject:_homeModel.objectId]) {
-        [_iconFlowerButton setHighlighted:YES];
+        [self.iconFlowerButton setHighlighted:YES];
     } else {
-        [_iconFlowerButton setHighlighted:NO];
+        [self.iconFlowerButton setHighlighted:NO];
     }
 }
 

@@ -13,7 +13,6 @@
 + (NSString *)today;
 + (BOOL)isToDay: (NSString *)dateString;
 + (BOOL)isLastDay: (NSString *)dateString;
-+ (NSString *)formattDay: (NSString *)dataString;
 + (NSTimeInterval)getTimestamp: (NSString *)dateString;
 + (NSString *)weekWithDateString: (NSString *)dateString;
 

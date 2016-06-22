@@ -24,16 +24,16 @@ IB_DESIGNABLE
 @synthesize borderColor = _borderColor;
 
 -(void)setCornerRadius:(CGFloat)cornerRadius {
-    self.layer.cornerRadius     = cornerRadius;
-    self.layer.masksToBounds    = (cornerRadius > 0);
+    //self.layer.cornerRadius     = cornerRadius;
+    //self.layer.masksToBounds    = (cornerRadius > 0);
 }
 
 -(void)setBorderWidth:(CGFloat)borderWidth {
-    self.layer.borderWidth = borderWidth;
+    //self.layer.borderWidth = borderWidth;
 }
 
 -(void)setBorderColor:(UIColor *)borderColor {
-    self.layer.borderColor = borderColor.CGColor;
+    //self.layer.borderColor = borderColor.CGColor;
 }
 
 @end

@@ -45,17 +45,19 @@
         self.dateLabel.text = @"昨天";
         [self hiddenMoveToFirstAnimation];
     } else {
-        self.dateLabel.text = [NSDate formattDay: homeModel.publish_date];
+        self.dateLabel.text = [NSString stringWithFormat:@"%@月",[homeModel.publish_date substringWithRange:NSMakeRange(5, 2)]];
         self.dayLabel.text = [homeModel.publish_date substringFromIndex:8];
         [self showMoveToFirstAnimation];
     }
     self.weakLabel.text = [NSDate weekWithDateString:homeModel.publish_date];
+    /*
     [UIView animateWithDuration:0.5 animations:^{
         self.weakLabel.backgroundColor  = [UIColor colorWithHexString:homeModel.recommanded_background_color];
         self.dayLabel.backgroundColor   = [UIColor colorWithHexString:homeModel.recommanded_background_color];
         self.rightTitleLabel.backgroundColor    = [UIColor colorWithHexString:homeModel.recommanded_background_color];
         self.moveToFirstBtn.backgroundColor     = [UIColor colorWithHexString:homeModel.recommanded_background_color];
     }];
+    */
 }
 
 -(instancetype)init {

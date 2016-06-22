@@ -67,8 +67,14 @@
     // 设置header的模型
     self.headerView.homeModel = model;
     // 设置背景动画
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
         self.view.backgroundColor = [UIColor colorWithHexString: model.recommanded_background_color];
+        if (self.centerCollectView) {
+            self.centerCollectView.backgroundColor = [UIColor colorWithHexString:model.recommanded_background_color];
+        }
+        if (self.bottomCollectView) {
+            self.bottomCollectView.backgroundColor = [UIColor colorWithHexString:model.recommanded_background_color];
+        }
     }];
 }
 
@@ -93,7 +99,7 @@
         _centerCollectView.pagingEnabled                    = true;
         [_centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil]
              forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
-        _centerCollectView.backgroundColor  = [UIColor clearColor];
+        _centerCollectView.backgroundColor  = UI_COLOR_APPNORMAL;
         _centerCollectView.tag              = 100;
         [self.view addSubview:_centerCollectView];
     }
@@ -107,7 +113,7 @@
         _bottomCollectView.bottomViewDelegate   = self;
         _bottomCollectView.delegate             = self;
         _bottomCollectView.dataSource           = self;
-
+        _bottomCollectView.backgroundColor = UI_COLOR_APPNORMAL;
         [self.view addSubview:_bottomCollectView];
     }
     return _bottomCollectView;
@@ -203,10 +209,10 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     debugMethod();
     if (scrollView.tag == 100) {
-        int index = (int)((scrollView.contentOffset.x + 0.5*scrollView.width) / scrollView.width);
+        int index = (int)((scrollView.contentOffset.x + 0.5 * scrollView.width) / scrollView.width);
         if (index > [self.viewModel.dataSource count] - 1) {
             self.index = [self.viewModel.dataSource count] - 1;
-        } else {
+        } else if (self.index != index){
             self.index = index;
         }
     }
@@ -242,7 +248,7 @@
         MSHomeCenterItemView *cell  = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
         cell.homeModel              = model;
         
-        self.currentCenterItemView = cell;
+        self.currentCenterItemView  = cell;
         self.currentModel = [self.viewModel.dataSource objectAtIndex:indexPath.row];
         
         cell.userInteractionEnabled = YES;

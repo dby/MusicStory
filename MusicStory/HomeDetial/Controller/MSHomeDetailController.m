@@ -146,7 +146,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     // 顶部图片
     self.headerImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 270)];
     self.headerImgView.contentMode = UIViewContentModeScaleAspectFill;
-    self.headerImgView.clipsToBounds = YES;
+    //self.headerImgView.clipsToBounds = YES;
     
     [self.headerView addSubview:_headerImgView];
     // appIcon

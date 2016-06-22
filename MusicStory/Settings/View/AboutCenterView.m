@@ -12,8 +12,8 @@
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    self.appIcon.layer.cornerRadius = 8;
-    self.appIcon.clipsToBounds = true;
+    //self.appIcon.layer.cornerRadius = 8;
+    //self.appIcon.clipsToBounds = true;
 }
 
 +(AboutCenterView *) centerView {

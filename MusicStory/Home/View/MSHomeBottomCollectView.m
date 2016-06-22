@@ -24,7 +24,6 @@
         [self registerNib:[UINib nibWithNibName:@"MSHomeBottomItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeBottomItemViewID"];
         [self initComponent];
         self.scrollEnabled      = false;
-        self.backgroundColor    = [UIColor clearColor];
         self.showsHorizontalScrollIndicator = false;
         self.tag = 101;
     }
