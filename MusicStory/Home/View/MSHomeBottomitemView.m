@@ -26,7 +26,7 @@
     
     // 使用贝塞尔曲线和Core Graphics框架画出一个圆角
     // 开始对imageView进行画图
-    UIGraphicsBeginImageContextWithOptions(self.iconView.bounds.size, NO, 1.0);
+    UIGraphicsBeginImageContextWithOptions(self.iconView.bounds.size, false, [[UIScreen mainScreen] scale]);
     // 使用贝塞尔曲线画出一个圆形图
     [[UIBezierPath bezierPathWithRoundedRect:self.iconView.bounds cornerRadius:self.iconView.frame.size.width] addClip];
     [self.iconView drawRect:self.iconView.bounds];
