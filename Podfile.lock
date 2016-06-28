@@ -22,10 +22,10 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AVOSCloud (3.2.8)
-  - AVOSCloudCrashReporting (3.2.8):
+  - AVOSCloud (3.3.4)
+  - AVOSCloudCrashReporting (3.3.4):
     - AVOSCloud
-  - AVOSCloudIM (3.2.8):
+  - AVOSCloudIM (3.3.4):
     - AVOSCloud
   - BlocksKit (2.2.5):
     - BlocksKit/All (= 2.2.5)
@@ -45,14 +45,14 @@ PODS:
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
-  - Masonry (0.6.4)
-  - SDWebImage (3.7.5):
-    - SDWebImage/Core (= 3.7.5)
-  - SDWebImage/Core (3.7.5)
+  - Masonry (1.0.1)
+  - SDWebImage (3.8.1):
+    - SDWebImage/Core (= 3.8.1)
+  - SDWebImage/Core (3.8.1)
   - SVProgressHUD (2.0.3)
   - UIActivityIndicator-for-SDWebImage (1.2):
     - SDWebImage (~> 3.7)
-  - YTKNetwork (0.6.0):
+  - YTKNetwork (1.1.0):
     - AFDownloadRequestOperation (~> 2.0)
     - AFNetworking (~> 2.0)
 
@@ -71,16 +71,18 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFDownloadRequestOperation: 748a1643423e1ddb23f2178f778087d4f0ae8ac7
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  AVOSCloud: b789619942a4275e615f8f0782e7475675951b95
-  AVOSCloudCrashReporting: 2dddc7dfc8ef423492a01c0076b3e97716854701
-  AVOSCloudIM: d2f6a13d64f9676a43e4d68b822bd1be3f96fb76
+  AVOSCloud: d501e7f43719884b748214d3cb5a3da18a20fb46
+  AVOSCloudCrashReporting: d554b9505a772bce33dac69030bc9b3ae160b566
+  AVOSCloudIM: 6bcb080d9238e1de32a0ac1d6fe855225620feaa
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
-  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
-  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
-  YTKNetwork: 988660d5fab310a55895239751ecfa74c3224a77
+  YTKNetwork: a41c1df80d4f3b9d05c19c514a2c604e7a6ac341
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: bbceeb0710e72531d13e81851c91c9957e83f094
+
+COCOAPODS: 1.0.1
