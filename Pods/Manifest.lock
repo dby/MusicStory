@@ -1,0 +1,88 @@
+PODS:
+  - AFDownloadRequestOperation (2.0.1):
+    - AFNetworking (~> 2.0)
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - AVOSCloud (3.3.4)
+  - AVOSCloudCrashReporting (3.3.4):
+    - AVOSCloud
+  - AVOSCloudIM (3.3.4):
+    - AVOSCloud
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - GRMustache (7.3.2):
+    - JRSwizzle (~> 1.0)
+  - JRSwizzle (1.0)
+  - Masonry (1.0.1)
+  - SDWebImage (3.8.1):
+    - SDWebImage/Core (= 3.8.1)
+  - SDWebImage/Core (3.8.1)
+  - SVProgressHUD (2.0.3)
+  - UIActivityIndicator-for-SDWebImage (1.2):
+    - SDWebImage (~> 3.7)
+  - YTKNetwork (1.1.0):
+    - AFDownloadRequestOperation (~> 2.0)
+    - AFNetworking (~> 2.0)
+
+DEPENDENCIES:
+  - AVOSCloud
+  - AVOSCloudCrashReporting
+  - AVOSCloudIM
+  - BlocksKit
+  - GRMustache (~> 7.3.2)
+  - Masonry
+  - SDWebImage
+  - SVProgressHUD
+  - UIActivityIndicator-for-SDWebImage
+  - YTKNetwork
+
+SPEC CHECKSUMS:
+  AFDownloadRequestOperation: 748a1643423e1ddb23f2178f778087d4f0ae8ac7
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  AVOSCloud: d501e7f43719884b748214d3cb5a3da18a20fb46
+  AVOSCloudCrashReporting: d554b9505a772bce33dac69030bc9b3ae160b566
+  AVOSCloudIM: 6bcb080d9238e1de32a0ac1d6fe855225620feaa
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
+  YTKNetwork: a41c1df80d4f3b9d05c19c514a2c604e7a6ac341
+
+PODFILE CHECKSUM: bbceeb0710e72531d13e81851c91c9957e83f094
+
+COCOAPODS: 1.0.1
