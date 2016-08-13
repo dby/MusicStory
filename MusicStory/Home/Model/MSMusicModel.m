@@ -34,7 +34,8 @@
         self.singer_brief   = [avo objectForKey:@"singer_brief"];
         
         self.singer_portrait                = [avo objectForKey:@"singer_portrait"];
-        self.recommanded_background_color   = [avo objectForKey:@"recommanded_background_color"];
+//        self.recommanded_background_color   = [avo objectForKey:@"recommanded_background_color"];
+        self.recommanded_background_color = [MSInterf shareInstance].backGroundColors[rand()%16];
         
         self.createdAt = avo.createdAt;
         self.updatedAt = avo.updatedAt;

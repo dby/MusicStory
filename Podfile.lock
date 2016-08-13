@@ -46,9 +46,17 @@ PODS:
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
   - Masonry (1.0.1)
+  - MOBFoundation (2.0.1)
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
+  - ShareSDK3 (3.3.2):
+    - ShareSDK3/ShareSDK (= 3.3.2)
+  - ShareSDK3/ShareSDK (3.3.2)
+  - ShareSDK3/ShareSDKPlatforms/QQ (3.3.2)
+  - ShareSDK3/ShareSDKPlatforms/SinaWeibo (3.3.2)
+  - ShareSDK3/ShareSDKPlatforms/WeChat (3.3.2)
+  - ShareSDK3/ShareSDKUI (3.3.2)
   - SVProgressHUD (2.0.3)
   - UIActivityIndicator-for-SDWebImage (1.2):
     - SDWebImage (~> 3.7)
@@ -63,7 +71,13 @@ DEPENDENCIES:
   - BlocksKit
   - GRMustache (~> 7.3.2)
   - Masonry
+  - MOBFoundation
   - SDWebImage
+  - ShareSDK3
+  - ShareSDK3/ShareSDKPlatforms/QQ
+  - ShareSDK3/ShareSDKPlatforms/SinaWeibo
+  - ShareSDK3/ShareSDKPlatforms/WeChat
+  - ShareSDK3/ShareSDKUI
   - SVProgressHUD
   - UIActivityIndicator-for-SDWebImage
   - YTKNetwork
@@ -78,11 +92,13 @@ SPEC CHECKSUMS:
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  MOBFoundation: a42168392e216fc56cbcbdfc3d5dcb3bbce5ef87
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  ShareSDK3: c76cb96eb38e079952b8157071486d945faa2df2
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
   YTKNetwork: a41c1df80d4f3b9d05c19c514a2c604e7a6ac341
 
-PODFILE CHECKSUM: bbceeb0710e72531d13e81851c91c9957e83f094
+PODFILE CHECKSUM: 779f1c194d07215f2372e9dac0d5506dd43b2d62
 
 COCOAPODS: 1.0.1

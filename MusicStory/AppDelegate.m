@@ -15,6 +15,20 @@
 
 #import "musicStory-Common-Header.h"
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+
+//腾讯开放平台（对应QQ和QQ空间）SDK头文件
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+
+//微信SDK头文件
+#import "WXApi.h"
+
+//新浪微博SDK头文件
+#import "WeiboSDK.h"
+
+
 @interface AppDelegate ()
 
 @end
@@ -48,12 +62,55 @@
                                       initWithCenterController:[[MSBaseNavController alloc] initWithRootViewController:contentViewController]
                                       leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
-    //dispatch_async(dispatch_get_main_queue(), ^{
-    //    NSLog(@"Lauched in %f seconds.",  (CFAbsoluteTimeGetCurrent() - StartTime));
-    //});
-    //可能你会觉得为什么这样可拿到系统启动的时间，因为这个dispatch_async中提交的工作会在app主线程启动后的下一个run lopp中运行，此时app已经完成了载入并且将要显示第一帧画面，
-    //也就是系统会运行到`-[UIApplication _reportAppLaunchFinished]`之前。下图是用Instruments工具Time Profiler跑的调用栈，
-    //Instruments的使用方法建议看WWDC中与performance相关的[session录像](https://developer.apple.com/videos/wwdc)，文字写起来太单薄不够直观哈。
+    
+    [ShareSDK registerApp:@"iosv1101"
+     
+          activePlatforms:@[
+                            @(SSDKPlatformTypeSinaWeibo),
+                            @(SSDKPlatformTypeWechat),
+                            @(SSDKPlatformTypeQQ)]
+                 onImport:^(SSDKPlatformType platformType)
+     {
+         switch (platformType)
+         {
+             case SSDKPlatformTypeWechat:
+                 [ShareSDKConnector connectWeChat:[WXApi class]];
+                 break;
+             case SSDKPlatformTypeQQ:
+                 [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+                 break;
+             case SSDKPlatformTypeSinaWeibo:
+                 [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                 break;
+             default:
+                 break;
+         }
+     }
+          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo)
+     {
+         
+         switch (platformType)
+         {
+             case SSDKPlatformTypeSinaWeibo:
+                 //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
+                 [appInfo SSDKSetupSinaWeiboByAppKey:@"3976740434"
+                                           appSecret:@"454d1fad0ddba01e61e7e0ace2ec49f0"
+                                         redirectUri:@"http://www.sharesdk.cn"
+                                            authType:SSDKAuthTypeBoth];
+                 break;
+             case SSDKPlatformTypeWechat:
+                 [appInfo SSDKSetupWeChatByAppId:@"wx4868b35061f87885"
+                                       appSecret:@"64020361b8ec4c99936c0e3999a9f249"];
+                 break;
+             case SSDKPlatformTypeQQ:
+                 [appInfo SSDKSetupQQByAppId:@"100371282"
+                                      appKey:@"aed9b0303e3ed1e27bae87c33761161d"
+                                    authType:SSDKAuthTypeBoth];
+                 break;
+             default:
+                 break;
+         }
+     }];
     
     return YES;
 }

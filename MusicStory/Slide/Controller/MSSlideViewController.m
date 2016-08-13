@@ -64,9 +64,9 @@
 
 - (void)leftMenuSetupBackColor:(NSNotification *)notify {
 
-    NSString *bg = notify.object;
+    UIColor *bg = notify.object;
     [UIView animateWithDuration:0.5 animations:^{
-        self.view.backgroundColor = [UIColor colorWithHexString:bg];
+        self.view.backgroundColor = bg;
     }];
 }
 

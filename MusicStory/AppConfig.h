@@ -50,6 +50,9 @@
 #define BOTTOM_VIEW_NOR_Y 60
 #define BOTTOM_VIEW_MIN_Y 15
 
+//每次从数据中读取20条数据
+#define EVERY_DATA_NUM 20
+
 //#define debugdebug
 #ifdef debugdebug
 

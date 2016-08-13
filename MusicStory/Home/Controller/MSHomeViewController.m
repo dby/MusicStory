@@ -28,8 +28,9 @@
 
 @interface MSHomeViewController () <MSHomeHeaderViewDelegate, MSHomeHeaderViewDelegate,MSHomeBottomCollectViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
-// 页数
-@property (nonatomic, assign) NSInteger page;
+// 当前评论的偏移
+@property (nonatomic, assign) NSInteger pos;
+@property (nonatomic, strong) NSMutableArray *homeDataArray;
 // ViewModel对象
 @property (nonatomic, strong) MSHomeViewModel *viewModel;
 // 上一个index
@@ -49,85 +50,6 @@
 @implementation MSHomeViewController
 
 @synthesize index = _index;
-
-#pragma mark - Setter Getter
--(NSInteger)index {
-    debugMethod();
-    return _index;
-}
--(void)setIndex:(NSInteger)index {
-    
-    debugMethod();
-    _index = index;
-    if ([self.viewModel.dataSource count] == 0) {
-        return;
-    }
-    // 获取模型
-    MSMusicModel *model = self.viewModel.dataSource[index];
-    // 设置header的模型
-    self.headerView.homeModel = model;
-    // 设置背景动画
-    [UIView animateWithDuration:0.5 animations:^{
-        self.view.backgroundColor = [UIColor colorWithHexString: model.recommanded_background_color];
-        if (self.centerCollectView) {
-            self.centerCollectView.backgroundColor = [UIColor colorWithHexString:model.recommanded_background_color];
-        }
-        if (self.bottomCollectView) {
-            self.bottomCollectView.backgroundColor = [UIColor colorWithHexString:model.recommanded_background_color];
-        }
-    }];
-}
-
--(MSHomeHeaderView *)headerView {
-    if (!_headerView) {
-        _headerView             = [[MSHomeHeaderView alloc] init];
-        _headerView.delegate    = self;
-        [self.view addSubview:_headerView];
-    }
-    return _headerView;
-}
-
--(MSHomeCenterCollectionView *)centerCollectView {
-    if (!_centerCollectView) {
-        MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
-        _centerCollectView = [[MSHomeCenterCollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420)
-                                                              collectionViewLayout:collectLayout];
-        
-        _centerCollectView.delegate                         = self;
-        _centerCollectView.dataSource                       = self;
-        _centerCollectView.showsHorizontalScrollIndicator   = false;
-        _centerCollectView.pagingEnabled                    = true;
-        [_centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil]
-             forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
-        _centerCollectView.backgroundColor  = UI_COLOR_APPNORMAL;
-        _centerCollectView.tag              = 100;
-        [self.view addSubview:_centerCollectView];
-    }
-    return _centerCollectView;
-}
-
--(MSHomeBottomCollectView *)bottomCollectView {
-    if (!_bottomCollectView) {
-        MSHomeBottomFlowLayout *collectionLayout = [[MSHomeBottomFlowLayout alloc] init];
-        _bottomCollectView = [[MSHomeBottomCollectView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH-60, SCREEN_WIDTH, 60) collectionViewLayout:collectionLayout];
-        _bottomCollectView.bottomViewDelegate   = self;
-        _bottomCollectView.delegate             = self;
-        _bottomCollectView.dataSource           = self;
-        _bottomCollectView.backgroundColor = UI_COLOR_APPNORMAL;
-        [self.view addSubview:_bottomCollectView];
-    }
-    return _bottomCollectView;
-}
-
--(MSHomeViewModel *)viewModel {
-    if (!_viewModel) {
-        // 获取ViewModel
-        _viewModel = [[MSHomeViewModel alloc] initWithHeaderView:self.headerView
-                                                  withCenterView:self.centerCollectView
-                                                  withBottomView:self.bottomCollectView];
-    }
-    return _viewModel;
-}
 
 #pragma mark life circle
 
@@ -153,7 +75,12 @@
     [self showProgress];
     
     self.viewModel.type = NOTIFY_OBJ_HOME;
-    [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
+    [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
+        
+        [self.homeDataArray addObjectsFromArray:datasource];
+        [self.centerCollectView reloadData];
+        [self.bottomCollectView reloadData];
+        
         self.index      = 0;
         self.lastIndex  = nil;
         [self.bottomCollectView setContentOffset:CGPointZero animated:true];
@@ -181,7 +108,11 @@
     
     [self.centerCollectView headerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
         debugLog(@"执行 headerViewPullToRefresh 回调函数...");
-        [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
+        [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
+            
+            [self.homeDataArray addObjectsFromArray:datasource];
+            [self.centerCollectView reloadData];
+            [self.bottomCollectView reloadData];
             
             self.index      = 0;
             self.lastIndex  = nil;
@@ -196,7 +127,16 @@
     
     [self.centerCollectView footerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
         debugLog(@"执行 footViewPullToRefresh 回调函数...");
-        [self.viewModel getData:self.page withSuccessBack:^(NSArray *datasource) {
+        [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
+            
+            self.lastIndex = nil;
+            if (datasource.count == 0) {
+                [SVProgressHUD showInfoWithStatus:@"当前没有数据了..."];
+            } else {
+                [self.homeDataArray addObjectsFromArray:datasource];
+                [self.centerCollectView reloadData];
+                [self.bottomCollectView reloadData];
+            }
             [self.centerCollectView footerViewStopPullToRefresh];
         } withErrorCallBack:^(NSError *error) {
             [self.centerCollectView footerViewStopPullToRefresh];
@@ -210,9 +150,10 @@
     debugMethod();
     if (scrollView.tag == 100) {
         int index = (int)((scrollView.contentOffset.x + 0.5 * scrollView.width) / scrollView.width);
-        if (index > [self.viewModel.dataSource count] - 1) {
-            self.index = [self.viewModel.dataSource count] - 1;
-        } else if (self.index != index){
+        if (index > [self.homeDataArray count] - 1) {
+            self.index = [self.homeDataArray count] - 1;
+        }
+        else if (self.index != index){
             self.index = index;
         }
     }
@@ -222,9 +163,9 @@
     debugMethod();
     if (scrollView.tag == 100) {
         // 设置底部动画
-        [self bottomAnimation: [NSIndexPath indexPathForRow:_index inSection:0]];
+        [self bottomAnimation: [NSIndexPath indexPathForRow:self.index inSection:0]];
         // 发送通知改变侧边栏的颜色
-        MSMusicModel *model     = self.viewModel.dataSource[_index];
+        MSMusicModel *model     = self.homeDataArray[_index];
         NSNotification *noti    = [NSNotification notificationWithName:NOTIFY_SETUPBG
                                                                 object:model.recommanded_background_color];
         [[NSNotificationCenter defaultCenter] postNotification:noti];
@@ -234,22 +175,22 @@
 #pragma mark - UICollectionView Delegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     debugMethod();
-    return [self.viewModel.dataSource count];
+    return [self.homeDataArray count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
     debugLog(@"viewModel: %@", self.viewModel);
-    debugLog(@"viewModel len: %lu", (unsigned long)[self.viewModel.dataSource count]);
+    debugLog(@"viewModel len: %lu", (unsigned long)[self.homeDataArray count]);
     
-    MSMusicModel *model = [self.viewModel.dataSource objectAtIndex:indexPath.row];
+    MSMusicModel *model = [self.homeDataArray objectAtIndex:indexPath.row];
     if (collectionView.tag == 100) {
         
         MSHomeCenterItemView *cell  = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
         cell.homeModel              = model;
         
         self.currentCenterItemView  = cell;
-        self.currentModel = [self.viewModel.dataSource objectAtIndex:indexPath.row];
+        self.currentModel = [self.homeDataArray objectAtIndex:indexPath.row];
         
         cell.userInteractionEnabled = YES;
         UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -270,7 +211,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
-    MSHomeDetailController *mshdc = [[MSHomeDetailController alloc] initWithModel:[self.viewModel.dataSource objectAtIndex:indexPath.row]];
+    MSHomeDetailController *mshdc = [[MSHomeDetailController alloc] initWithModel:[self.homeDataArray objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:mshdc animated:YES];
 }
 
@@ -303,7 +244,7 @@
     // 如果当前不够7个item就不让他滚动
     [self bottomHorizontalAnimation:cell forIndexPath:indexPath];
     // 发送通知改变侧滑菜单的颜色
-    MSMusicModel *model     = [self.viewModel.dataSource objectAtIndex:_index];
+    MSMusicModel *model     = [self.homeDataArray objectAtIndex:_index];
     NSNotification *noti    = [NSNotification notificationWithName:NOTIFY_SETUPBG
                                                             object:model.recommanded_background_color];
     [[NSNotificationCenter defaultCenter] postNotification:noti];
@@ -400,7 +341,7 @@
 - (void)bottomHorizontalAnimation:(UICollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
     
     debugMethod();
-    if ([self.viewModel.dataSource count] < 7) {
+    if ([self.homeDataArray count] < 7) {
         return;
     }
     
@@ -464,5 +405,90 @@
         make.center.equalTo(self.view);
         make.height.equalTo(@(SCREEN_HEIGHT*430/IPHONE5_HEIGHT));
     }];
+}
+
+#pragma mark - Setter Getter
+-(NSInteger)index {
+    debugMethod();
+    return _index;
+}
+-(void)setIndex:(NSInteger)index {
+    
+    debugMethod();
+    _index = index;
+    if ([self.homeDataArray count] == 0) {
+        return;
+    }
+    // 获取模型
+    MSMusicModel *model = self.homeDataArray[index];
+    // 设置header的模型
+    self.headerView.homeModel = model;
+    // 设置背景动画
+    [UIView animateWithDuration:0.5 animations:^{
+        self.view.backgroundColor = model.recommanded_background_color;
+        if (self.centerCollectView) {
+            self.centerCollectView.backgroundColor = model.recommanded_background_color;
+        }
+        if (self.bottomCollectView) {
+            self.bottomCollectView.backgroundColor = model.recommanded_background_color;
+        }
+    }];
+}
+
+-(NSMutableArray *)homeDataArray {
+    if (!_homeDataArray) {
+        _homeDataArray = [[NSMutableArray alloc] init];
+    }
+    return _homeDataArray;
+}
+
+-(MSHomeHeaderView *)headerView {
+    if (!_headerView) {
+        _headerView             = [[MSHomeHeaderView alloc] init];
+        _headerView.delegate    = self;
+        [self.view addSubview:_headerView];
+    }
+    return _headerView;
+}
+
+-(MSHomeCenterCollectionView *)centerCollectView {
+    if (!_centerCollectView) {
+        MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
+        _centerCollectView = [[MSHomeCenterCollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420)
+                                                          collectionViewLayout:collectLayout];
+        
+        _centerCollectView.delegate                         = self;
+        _centerCollectView.dataSource                       = self;
+        _centerCollectView.showsHorizontalScrollIndicator   = false;
+        _centerCollectView.pagingEnabled                    = true;
+        [_centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
+        _centerCollectView.backgroundColor  = UI_COLOR_APPNORMAL;
+        _centerCollectView.tag              = 100;
+        [self.view addSubview:_centerCollectView];
+    }
+    return _centerCollectView;
+}
+
+-(MSHomeBottomCollectView *)bottomCollectView {
+    if (!_bottomCollectView) {
+        MSHomeBottomFlowLayout *collectionLayout = [[MSHomeBottomFlowLayout alloc] init];
+        _bottomCollectView = [[MSHomeBottomCollectView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH-60, SCREEN_WIDTH, 60) collectionViewLayout:collectionLayout];
+        _bottomCollectView.bottomViewDelegate   = self;
+        _bottomCollectView.delegate             = self;
+        _bottomCollectView.dataSource           = self;
+        _bottomCollectView.backgroundColor = UI_COLOR_APPNORMAL;
+        [self.view addSubview:_bottomCollectView];
+    }
+    return _bottomCollectView;
+}
+
+-(MSHomeViewModel *)viewModel {
+    if (!_viewModel) {
+        // 获取ViewModel
+        _viewModel = [[MSHomeViewModel alloc] initWithHeaderView:self.headerView
+                                                  withCenterView:self.centerCollectView
+                                                  withBottomView:self.bottomCollectView];
+    }
+    return _viewModel;
 }
 @end

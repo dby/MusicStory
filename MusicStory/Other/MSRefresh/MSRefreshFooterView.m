@@ -52,9 +52,22 @@
             NSInteger currentCount = [self totalDataCountInScrollView];
             
             if (RefreshStateRefreshing == self.oldState && deltaH > 0  && currentCount != self.lastRefreshCount) {
+                // 此时下拉有数据
                 if (self.viewDirection == MSRefreshDirectionHorizontal) {
                     CGPoint offset  = self.scrollView.contentOffset;
                     offset.x        = self.scrollView.contentOffset.x - self.width + SCREEN_WIDTH;
+                    [self.scrollView setContentOffset:offset animated:true];
+                } else {
+                    CGPoint offset  = self.scrollView.contentOffset;
+                    offset.y        = self.scrollView.contentOffset.y;
+                    self.scrollView.contentOffset = offset;
+                }
+            }
+            else if (RefreshStateRefreshing == self.oldState && deltaH > 0 && currentCount == self.lastRefreshCount) {
+                // 此时下拉没有有数据
+                if (self.viewDirection == MSRefreshDirectionHorizontal) {
+                    CGPoint offset  = self.scrollView.contentOffset;
+                    offset.x        = deltaH;
                     [self.scrollView setContentOffset:offset animated:true];
                 } else {
                     CGPoint offset  = self.scrollView.contentOffset;
@@ -72,6 +85,7 @@
         }
         case RefreshStateRefreshing: {
             if (self.viewDirection == MSRefreshDirectionHorizontal) {
+                self.lastRefreshCount = [self totalDataCountInScrollView];
                 [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentSize.width-SCREEN_WIDTH+self.width, 0) animated:true];
             } else {
                 self.lastRefreshCount = [self totalDataCountInScrollView];

@@ -58,7 +58,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 @synthesize model = _model;
 
-#pragma mark - life cycle
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     debugMethod();
@@ -102,153 +102,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     return self;
 }
 
-#pragma mark - setter or getter
-
--(void)setModel:(MSMusicModel *)model {
-    debugMethod();
-    _model = model;
-}
-
--(void)buildComponents {
-    
-    self.lastPosition       = 0;
-    self.commentViewModel   = [[MSCommentViewModel alloc] initWithCommentTableView:self.tableview];
-}
-
--(UIButton *)returnBtn {
-    if (!_returnBtn) {
-        _returnBtn = [[UIButton alloc] init];
-        [_returnBtn addTarget:self action:@selector(returnBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
-        [_returnBtn setImage:[UIImage imageNamed:@"detail_icon_back_normal"] forState:UIControlStateNormal];
-        [_returnBtn setImage:[UIImage imageNamed:@"detail_icon_back_pressed"] forState:UIControlStateHighlighted];
-        [self.view addSubview:_returnBtn];
-    }
-    return _returnBtn;
-}
-
--(MSPlayView *)playMusicBtn {
-    if (!_playMusicBtn) {
-        _playMusicBtn = [[MSPlayView alloc] init];
-        _playMusicBtn.delegate  = self;
-        _playMusicBtn.model     = self.model;
-        [self.view addSubview:_playMusicBtn];
-    }
-    return _playMusicBtn;
-}
-
--(UIView *)headerView {
-    if (!_headerView) {
-        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
-        // 顶部图片
-        self.headerImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 270)];
-        self.headerImgView.contentMode = UIViewContentModeScaleAspectFill;
-    
-        [_headerView addSubview:self.headerImgView];
-        // appIcon
-        self.appIconView = [[UIImageView alloc] initWithFrame:CGRectMake(UI_MARGIN_20, CGRectGetMaxY(_headerImgView.frame) + UI_MARGIN_20, 50, 50)];
-        self.appIconView.contentMode = UIViewContentModeScaleAspectFill;
-        self.appIconView.layer.cornerRadius     = UI_MARGIN_10;
-        self.appIconView.layer.masksToBounds    = YES;
-        [_headerView addSubview:self.appIconView];
-        // app大标题
-        CGFloat appTitleLabelX  = CGRectGetMaxX(_appIconView.frame) + UI_MARGIN_20;
-        CGFloat appTitleLabelW  = SCREEN_WIDTH - UI_MARGIN_20 - appTitleLabelX;
-        self.appTitleLabel      = [[UILabel alloc] initWithFrame:CGRectMake(appTitleLabelX, CGRectGetMaxY(_headerImgView.frame)+25, appTitleLabelW, 20)];
-        self.appTitleLabel.font = UI_FONT_18;
-        [_headerView addSubview:self.appTitleLabel];
-        // app详情
-        self.appDetailLabel         = [[UILabel alloc] initWithFrame:CGRectMake(appTitleLabelX, CGRectGetMaxY(_appTitleLabel.frame), appTitleLabelW, 20)];
-        self.appDetailLabel.font    = UI_FONT_14;
-        [_headerView addSubview:self.appDetailLabel];
-        
-        
-        // Division View
-        self.storyBtn  = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, 380, 50, 50)];
-        self.lyricsBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 110, 380, 50, 50)];
-        self.infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 380, 100, 50)];
-        UILabel *seperateLine = [[UILabel alloc] initWithFrame:CGRectMake(0, 420, SCREEN_WIDTH, 1)];
-        
-        self.infoLabel.text = @"音乐故事";
-        self.storyBtn.contentMode    = UIViewContentModeScaleAspectFill;
-        self.lyricsBtn.contentMode   = UIViewContentModeScaleAspectFill;
-        [seperateLine setBackgroundColor:[UIColor lightGrayColor]];
-        [self.storyBtn   setBackgroundImage:[UIImage imageNamed:@"music_story_default"] forState:UIControlStateNormal];
-        [self.storyBtn   setBackgroundImage:[UIImage imageNamed:@"music_story_selected"] forState:UIControlStateSelected];
-        [self.lyricsBtn  setBackgroundImage:[UIImage imageNamed:@"music_lyric_default"] forState:UIControlStateNormal];
-        [self.lyricsBtn  setBackgroundImage:[UIImage imageNamed:@"music_lyric_selected"] forState:UIControlStateSelected];
-        
-        [self.storyBtn addTarget:self action:@selector(showStory) forControlEvents:UIControlEventTouchUpInside];
-        [self.lyricsBtn addTarget:self action:@selector(showLyrics) forControlEvents:UIControlEventTouchUpInside];
-        self.storyBtn.selected  = true;
-        self.lyricsBtn.selected = false;
-        
-        [_headerView addSubview:self.storyBtn];
-        [_headerView addSubview:self.lyricsBtn];
-        [_headerView addSubview:self.infoLabel];
-        [_headerView addSubview:seperateLine];
-        
-        // appicon + toolbar高度
-        _headerView.height = self.headerImgView.height + UI_MARGIN_20 + 150;
-    }
-    return _headerView;
-}
-
--(MSCommentView *)commentView {
-    if (!_commentView) {
-        _commentView        = [[MSCommentView alloc] init];
-        _commentView.frame  = CGRectMake(0,
-                                         0,
-                                         SCREEN_WIDTH,
-                                         CGRectGetHeight(_commentView.frame));
-        _commentView.delegate = self;
-    }
-    return _commentView;
-}
-
--(UITableView *)tableview {
-    debugMethod();
-    if (!_tableview) {
-        _tableview = [[UITableView alloc] initWithFrame:self.view.frame];
-        _tableview.delegate     = self;
-        _tableview.dataSource   = self;
-        _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-        [_tableview registerClass:[UITableViewCell class] forCellReuseIdentifier:homeDetailCellID];
-        [_tableview registerClass:[MSCommentCell class] forCellReuseIdentifier:commentIdentifier];
-
-        _tableview.tableHeaderView = self.headerView;
-        _tableview.tableFooterView = self.commentView;
-    
-        [self.view addSubview:_tableview];
-    }
-    return _tableview;
-}
-
--(MSHomeDetailToolView *)toolBar {
-    if (!_toolBar) {
-        _toolBar = [MSHomeDetailToolView toolView];
-        _toolBar.frame      = CGRectMake(0, 345, SCREEN_WIDTH, 30);
-        _toolBar.delegate   = self;
-        _toolBar.model      = _model;
-        [self.view addSubview:_toolBar];
-    }
-    return _toolBar;
-}
-
--(UIWebView *)webview {
-    if (!_webview) {
-        _webview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
-        _webview.scrollView.showsVerticalScrollIndicator    = false;
-        _webview.scrollView.showsHorizontalScrollIndicator  = false;
-        _webview.scrollView.bounces     = false;
-        _webview.userInteractionEnabled = false;
-        _webview.delegate = self;
-    }
-    return _webview;
-}
-
 #pragma mark - 加载数据
-
 - (void)setHeaderData {
     debugMethod();
     [self.headerImgView setImageWithURL:[NSURL URLWithString:self.model.music_imgs] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -270,7 +124,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 #pragma mark - private function
-
 - (void)showStory {
     if (!self.storyBtn.selected) {
         [self.storyBtn setSelected:true];
@@ -343,6 +196,10 @@ static NSString *commentIdentifier = @"commentIdentifier";
     } withErrorCallBack:^(NSError *error) {
         
     }];
+}
+
+-(BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 #pragma mark - CommentView delegate
@@ -529,6 +386,150 @@ static NSString *commentIdentifier = @"commentIdentifier";
     } else {
         return 100;
     }
+}
+
+#pragma mark - Setter Getter
+-(void)setModel:(MSMusicModel *)model {
+    debugMethod();
+    _model = model;
+}
+
+-(void)buildComponents {
+    
+    self.lastPosition       = 0;
+    self.commentViewModel   = [[MSCommentViewModel alloc] initWithCommentTableView:self.tableview];
+}
+
+-(UIButton *)returnBtn {
+    if (!_returnBtn) {
+        _returnBtn = [[UIButton alloc] init];
+        [_returnBtn addTarget:self action:@selector(returnBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
+        [_returnBtn setImage:[UIImage imageNamed:@"detail_icon_back_normal"] forState:UIControlStateNormal];
+        [_returnBtn setImage:[UIImage imageNamed:@"detail_icon_back_pressed"] forState:UIControlStateHighlighted];
+        [self.view addSubview:_returnBtn];
+    }
+    return _returnBtn;
+}
+
+-(MSPlayView *)playMusicBtn {
+    if (!_playMusicBtn) {
+        _playMusicBtn = [[MSPlayView alloc] init];
+        _playMusicBtn.delegate  = self;
+        _playMusicBtn.model     = self.model;
+        [self.view addSubview:_playMusicBtn];
+    }
+    return _playMusicBtn;
+}
+
+-(UIView *)headerView {
+    if (!_headerView) {
+        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
+        // 顶部图片
+        self.headerImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 270)];
+        self.headerImgView.contentMode = UIViewContentModeScaleAspectFill;
+        
+        [_headerView addSubview:self.headerImgView];
+        // appIcon
+        self.appIconView = [[UIImageView alloc] initWithFrame:CGRectMake(UI_MARGIN_20, CGRectGetMaxY(_headerImgView.frame) + UI_MARGIN_20, 50, 50)];
+        self.appIconView.contentMode = UIViewContentModeScaleAspectFill;
+        self.appIconView.layer.cornerRadius     = UI_MARGIN_10;
+        self.appIconView.layer.masksToBounds    = YES;
+        [_headerView addSubview:self.appIconView];
+        // app大标题
+        CGFloat appTitleLabelX  = CGRectGetMaxX(_appIconView.frame) + UI_MARGIN_20;
+        CGFloat appTitleLabelW  = SCREEN_WIDTH - UI_MARGIN_20 - appTitleLabelX;
+        self.appTitleLabel      = [[UILabel alloc] initWithFrame:CGRectMake(appTitleLabelX, CGRectGetMaxY(_headerImgView.frame)+25, appTitleLabelW, 20)];
+        self.appTitleLabel.font = UI_FONT_18;
+        [_headerView addSubview:self.appTitleLabel];
+        // app详情
+        self.appDetailLabel         = [[UILabel alloc] initWithFrame:CGRectMake(appTitleLabelX, CGRectGetMaxY(_appTitleLabel.frame), appTitleLabelW, 20)];
+        self.appDetailLabel.font    = UI_FONT_14;
+        [_headerView addSubview:self.appDetailLabel];
+        
+        
+        // Division View
+        self.storyBtn  = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, 380, 50, 50)];
+        self.lyricsBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 110, 380, 50, 50)];
+        self.infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 380, 100, 50)];
+        UILabel *seperateLine = [[UILabel alloc] initWithFrame:CGRectMake(0, 420, SCREEN_WIDTH, 1)];
+        
+        self.infoLabel.text = @"音乐故事";
+        self.storyBtn.contentMode    = UIViewContentModeScaleAspectFill;
+        self.lyricsBtn.contentMode   = UIViewContentModeScaleAspectFill;
+        [seperateLine setBackgroundColor:[UIColor lightGrayColor]];
+        [self.storyBtn   setBackgroundImage:[UIImage imageNamed:@"music_story_default"] forState:UIControlStateNormal];
+        [self.storyBtn   setBackgroundImage:[UIImage imageNamed:@"music_story_selected"] forState:UIControlStateSelected];
+        [self.lyricsBtn  setBackgroundImage:[UIImage imageNamed:@"music_lyric_default"] forState:UIControlStateNormal];
+        [self.lyricsBtn  setBackgroundImage:[UIImage imageNamed:@"music_lyric_selected"] forState:UIControlStateSelected];
+        
+        [self.storyBtn addTarget:self action:@selector(showStory) forControlEvents:UIControlEventTouchUpInside];
+        [self.lyricsBtn addTarget:self action:@selector(showLyrics) forControlEvents:UIControlEventTouchUpInside];
+        self.storyBtn.selected  = true;
+        self.lyricsBtn.selected = false;
+        
+        [_headerView addSubview:self.storyBtn];
+        [_headerView addSubview:self.lyricsBtn];
+        [_headerView addSubview:self.infoLabel];
+        [_headerView addSubview:seperateLine];
+        
+        // appicon + toolbar高度
+        _headerView.height = self.headerImgView.height + UI_MARGIN_20 + 150;
+    }
+    return _headerView;
+}
+
+-(MSCommentView *)commentView {
+    if (!_commentView) {
+        _commentView        = [[MSCommentView alloc] init];
+        _commentView.frame  = CGRectMake(0,
+                                         0,
+                                         SCREEN_WIDTH,
+                                         CGRectGetHeight(_commentView.frame));
+        _commentView.delegate = self;
+    }
+    return _commentView;
+}
+
+-(UITableView *)tableview {
+    debugMethod();
+    if (!_tableview) {
+        _tableview = [[UITableView alloc] initWithFrame:self.view.frame];
+        _tableview.delegate     = self;
+        _tableview.dataSource   = self;
+        _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        [_tableview registerClass:[UITableViewCell class] forCellReuseIdentifier:homeDetailCellID];
+        [_tableview registerClass:[MSCommentCell class] forCellReuseIdentifier:commentIdentifier];
+        
+        _tableview.tableHeaderView = self.headerView;
+        _tableview.tableFooterView = self.commentView;
+        
+        [self.view addSubview:_tableview];
+    }
+    return _tableview;
+}
+
+-(MSHomeDetailToolView *)toolBar {
+    if (!_toolBar) {
+        _toolBar = [MSHomeDetailToolView toolView];
+        _toolBar.frame      = CGRectMake(0, 345, SCREEN_WIDTH, 30);
+        _toolBar.delegate   = self;
+        _toolBar.model      = _model;
+        [self.view addSubview:_toolBar];
+    }
+    return _toolBar;
+}
+
+-(UIWebView *)webview {
+    if (!_webview) {
+        _webview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
+        _webview.scrollView.showsVerticalScrollIndicator    = false;
+        _webview.scrollView.showsHorizontalScrollIndicator  = false;
+        _webview.scrollView.bounces     = false;
+        _webview.userInteractionEnabled = false;
+        _webview.delegate = self;
+    }
+    return _webview;
 }
 
 @end

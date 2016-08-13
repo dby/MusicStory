@@ -48,7 +48,7 @@
 @property (nonatomic, strong) NSString *singer_portrait;
 
 // 背景色
-@property (nonatomic, strong) NSString *recommanded_background_color;
+@property (nonatomic, strong) UIColor *recommanded_background_color;
 
 @property (nonatomic, strong) NSDate *createdAt;
 @property (nonatomic, strong) NSDate *updatedAt;

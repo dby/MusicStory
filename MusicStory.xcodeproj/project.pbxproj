@@ -76,6 +76,7 @@
 		439F22811CBD59A20045287B /* MSSlideCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 439F227F1CBD59A20045287B /* MSSlideCenterView.m */; };
 		439F22821CBD59A20045287B /* MSSlideCenterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 439F22801CBD59A20045287B /* MSSlideCenterView.xib */; };
 		439F22851CBD59B50045287B /* MSSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 439F22841CBD59B50045287B /* MSSlideViewController.m */; };
+		43AB96DA1D58DA5800E56221 /* MSInterf.m in Sources */ = {isa = PBXBuildFile; fileRef = 43AB96D91D58DA5800E56221 /* MSInterf.m */; };
 		43BD00D11CA04BFE006CEABC /* UIScrollView+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD00D01CA04BFE006CEABC /* UIScrollView+MS.m */; };
 		43BD00D41CA04C90006CEABC /* MSRefreshBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD00D31CA04C90006CEABC /* MSRefreshBase.m */; };
 		43CA22E21D139806009B34E3 /* MSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 43CA22E11D139806009B34E3 /* MSLabel.m */; };
@@ -256,6 +257,8 @@
 		439F22801CBD59A20045287B /* MSSlideCenterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSSlideCenterView.xib; path = Slide/View/MSSlideCenterView.xib; sourceTree = "<group>"; };
 		439F22831CBD59B50045287B /* MSSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSlideViewController.h; path = Slide/Controller/MSSlideViewController.h; sourceTree = "<group>"; };
 		439F22841CBD59B50045287B /* MSSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSlideViewController.m; path = Slide/Controller/MSSlideViewController.m; sourceTree = "<group>"; };
+		43AB96D81D58DA5800E56221 /* MSInterf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSInterf.h; path = Other/MSInterf.h; sourceTree = "<group>"; };
+		43AB96D91D58DA5800E56221 /* MSInterf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSInterf.m; path = Other/MSInterf.m; sourceTree = "<group>"; };
 		43BD00C91CA043BB006CEABC /* APIConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = APIConfig.h; path = Other/APIConfig.h; sourceTree = "<group>"; };
 		43BD00CF1CA04BFE006CEABC /* UIScrollView+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+MS.h"; path = "Other/MSRefresh/UIScrollView+MS.h"; sourceTree = "<group>"; };
 		43BD00D01CA04BFE006CEABC /* UIScrollView+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+MS.m"; path = "Other/MSRefresh/UIScrollView+MS.m"; sourceTree = "<group>"; };
@@ -593,6 +596,8 @@
 				43BD00CA1CA0487B006CEABC /* lib */,
 				43515A391C9F088900EC1422 /* AppConfig.h */,
 				43BD00C91CA043BB006CEABC /* APIConfig.h */,
+				43AB96D81D58DA5800E56221 /* MSInterf.h */,
+				43AB96D91D58DA5800E56221 /* MSInterf.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -949,7 +954,7 @@
 				TargetAttributes = {
 					435159D41C9EE24000EC1422 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3G3JV73KM2;
+						DevelopmentTeam = 48E3LB8PD7;
 					};
 					435159ED1C9EE24100EC1422 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1091,6 +1096,7 @@
 				43F693F51CF0A3F5002A85C0 /* MSRegisterViewController.m in Sources */,
 				4306F9141D0F070F000C23CA /* MSPlayView.m in Sources */,
 				4306F91D1D115445000C23CA /* UIViewController+Menu.m in Sources */,
+				43AB96DA1D58DA5800E56221 /* MSInterf.m in Sources */,
 				4306F9111D0EEA36000C23CA /* MSCommentViewModel.m in Sources */,
 				434BCEFD1CD2803F007A4BB3 /* DOUAudioEventLoop.m in Sources */,
 				4306F8FD1D0E4B59000C23CA /* MSHomeDetailToolView.m in Sources */,

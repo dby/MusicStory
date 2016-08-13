@@ -12,6 +12,7 @@
 /*  */
 #import "AppConfig.h"
 #import "APIConfig.h"
+#import "MSInterf.h"
 
 /* libraries */
 #import "MSRefreshBase.h"

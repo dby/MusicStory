@@ -42,14 +42,28 @@
 
 #pragma mark - Function
 
-- (void)getData:(NSInteger)page withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack )errorCallBack {
+/*!
+ *  @author dby
+ *
+ *  @brief 查询
+ *
+ *  @param page            每页默认为20条数据
+ *  @param successCallBack 获取数据成功之后，进行的回调函数
+ *  @param errorCallBack   获取数据失败之后，进行的回调函数
+ *
+ */
+- (void)getData:(NSInteger)num withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack )errorCallBack {
     debugMethod();
     self.successCallBack = successCallBack;
-    self.errorCallBack = errorCallBack;
+    self.errorCallBack   = errorCallBack;
+    
+    self.dataSource = [[NSMutableArray alloc] init];
     
     if ([_type isEqualToString:NOTIFY_OBJ_HOME]) {
         // 音乐故事
         AVQuery *query = [AVQuery queryWithClassName:@"Musics"];
+        query.limit = EVERY_DATA_NUM;
+        query.skip  = num;
         [query orderByDescending:@"createdAt"];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
@@ -61,8 +75,6 @@
                     MSMusicModel *model = [[MSMusicModel alloc] initWithAVO:obj];
                     [self.dataSource addObject:model];
                 }
-                [self.centerView reloadData];
-                [self.bottomView reloadData];
             
                 if (successCallBack) {
                     self.successCallBack(self.dataSource);
@@ -74,8 +86,7 @@
                 }
             }
         }];
-    }
-    else if ([_type isEqualToString:NOTIFY_OBJ_COLLECTION]) {
+    } else if ([_type isEqualToString:NOTIFY_OBJ_COLLECTION]) {
         // 我的收藏
         AVUser *user = [AVUser currentUser];
         if (user) {
@@ -91,8 +102,6 @@
                         MSMusicModel *model = [[MSMusicModel alloc] initWithAVO:obj];
                         [self.dataSource addObject:model];
                     }
-                    [self.centerView reloadData];
-                    [self.bottomView reloadData];
                     
                     if (successCallBack) {
                         self.successCallBack(self.dataSource);
@@ -113,7 +122,6 @@
 - (void)sendNotify_success:(NSNotification *)notify {
     debugMethod();
     _type = notify.object;
-    //_dataSource = [[NSMutableArray alloc] init];
     [self.centerView headerViewBeginRefreshing];
 }
 

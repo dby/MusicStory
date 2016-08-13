@@ -93,9 +93,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     MSHomeDetailController *mshdc = [[MSHomeDetailController alloc] initWithModel:[self.viewModel.dataSource objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:mshdc animated:YES];
-    NSLog(@"navigationcontroller %@", self.navigationController);
 }
 
 @end

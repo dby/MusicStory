@@ -233,8 +233,8 @@
 
 - (void)leftMenuSetupBackColor:(NSNotification *)notify {
     debugMethod();
-    NSString *bg = (NSString *)notify.object;
-    self.view.backgroundColor = [UIColor colorWithHexString:bg];
+    UIColor *bg = (UIColor *)notify.object;
+    self.view.backgroundColor = bg;
 }
 
 - (void)leftMenuSetupCenterView:(NSNotification *)notify {
