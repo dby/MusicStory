@@ -37,6 +37,7 @@
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(leftMenuSetupBackColor:) name:NOTIFY_SETUPBG object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUserAvatar) name:NOTIFY_UPDATE_USER_AVATAR object:nil];
 }
 
 #pragma mark - Private Function
@@ -52,6 +53,18 @@
     [UIView animateWithDuration:0.5 animations:^{
         self.view.backgroundColor = bg;
     }];
+}
+
+- (void)updateUserAvatar {
+    
+    if ([AVUser currentUser]) {
+        [self.centerView.portrait setImageWithURL:[NSURL URLWithString:[[AVUser currentUser] objectForKey:@"portrait"]]
+                      usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [self.centerView.username setText:[AVUser currentUser].username];
+    } else {
+        [self.centerView.portrait setImage:[UIImage imageNamed:@"encourage_image"]];
+        [self.centerView.username setText:@"未登陆"];
+    }
 }
 
 - (void)setContentViewController:(UIViewController *)viewController

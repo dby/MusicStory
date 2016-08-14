@@ -85,11 +85,7 @@
             debugLog(@"SUCCESS");
             [self hiddenProgress];
             [AVUser changeCurrentUser:user save:YES];
-            NSLog(@"sideViewController: %@", self.sideMenuViewController);
-            if (self.sideMenuViewController.leftController) {
-                MSSlideViewController *sliderController = self.sideMenuViewController.leftController.childViewControllers.firstObject;
-                [sliderController.centerView.portrait setImageWithURL:[NSURL URLWithString:[user objectForKey:@"portrait"]] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_UPDATE_USER_AVATAR object:nil];
             [self dismissViewControllerAnimated:YES completion:nil];
             
         } else {

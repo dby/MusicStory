@@ -154,7 +154,7 @@
 /**
  添加覆盖层按钮
  */
-- (void) addCover {
+- (void)addCover {
     debugMethod();
     UIWindow *cover = [[UIWindow alloc] initWithFrame:self.centerController.view.frame];
     // 拖拽覆盖层事件

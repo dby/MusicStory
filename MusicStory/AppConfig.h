@@ -45,6 +45,9 @@
 // 设置menu centreview 类型 - 用于切换centerView
 #define NOTIFY_SETUPCENTERVIEW      @"NOTIFY_SETUPCENTERVIEW"
 
+// 登陆成功之后，更新个人头像和用户名
+#define NOTIFY_UPDATE_USER_AVATAR   @"NOTIFY_UPDATE_USER_AVATAR"
+
 // HomeBottomView的item的Y坐标大小
 #define BOTTOM_VIEW_MAX_Y 70
 #define BOTTOM_VIEW_NOR_Y 60

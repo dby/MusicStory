@@ -64,9 +64,9 @@
     [AVUser signUpOrLoginWithMobilePhoneNumberInBackground:_phoneNumber smsCode:smsC block:^(AVUser *user, NSError *error) {
         if (!error) {
             [SVProgressHUD showSuccessWithStatus:@"注册成功"];
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-            }];
+            [AVUser changeCurrentUser:user save:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_UPDATE_USER_AVATAR object:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
         } else {
             [SVProgressHUD showErrorWithStatus:@"注册失败"];
             debugLog(@"SmsCode: %@", [error description]);

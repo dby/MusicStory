@@ -145,6 +145,7 @@
 
 - (void)logoutBtnDidClick {
     [AVUser logOut];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_UPDATE_USER_AVATAR object:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

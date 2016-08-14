@@ -55,6 +55,9 @@
         [self.portrait setImageWithURL:[NSURL URLWithString:[user objectForKey:@"portrait"]]
            usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [self.username setText:[user objectForKey:@"username"]];
+    } else {
+        [self.portrait setImage:[UIImage imageNamed:@"encourage_image"]];
+        [self.username setText:@"未登陆"];
     }
 }
 
