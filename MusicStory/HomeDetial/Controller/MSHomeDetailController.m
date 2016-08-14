@@ -35,6 +35,7 @@
 @property (nonatomic, assign) NSInteger lastPosition;
 // FooterView
 @property (nonatomic, strong) MSCommentView *commentView;
+@property (nonatomic, strong) NSMutableArray *commentSource;
 
 // HeaderView
 @property (nonatomic, strong) UIView *headerView;
@@ -56,10 +57,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 @implementation MSHomeDetailController
 
-@synthesize model = _model;
-
 #pragma mark - Life Cycle
-
 - (void)viewDidLoad {
     debugMethod();
     [super viewDidLoad];
@@ -69,23 +67,32 @@ static NSString *commentIdentifier = @"commentIdentifier";
     
     [self buildComponents];
     
-    // tableview的headerview加载数据
+    [self.view addSubview:self.tableview];
+    [self.view addSubview:self.toolBar];
+    [self.view addSubview:self.returnBtn];
+    [self.view addSubview:self.playMusicBtn];
+    
     [self setHeaderData];
-    // tableviewcell中的webview加载数据
     [self setWebViewData:self.model.music_story];
     
     [self.tableview footerViewPullToRefresh:MSRefreshDirectionVertical callback: ^{
         [self loadData];
     }];
     
-    if (self.toolBar) {
-        // 这里仅仅是为了加载之后显示 toolBar
-    }
-    // 屏幕适配
     [self setupLayout];
+    
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
--(void)viewDidDisappear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+-(BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     debugMethod();
     if (self.playMusicBtn) {
@@ -93,7 +100,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }
 }
 
--(instancetype)initWithModel :(MSMusicModel *)model {
+- (instancetype)initWithModel :(MSMusicModel *)model {
     debugMethod();
     self = [super init];
     if (self) {
@@ -103,11 +110,17 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 #pragma mark - 加载数据
+-(void)buildComponents {
+    self.lastPosition       = 0;
+}
+
 - (void)setHeaderData {
     debugMethod();
-    [self.headerImgView setImageWithURL:[NSURL URLWithString:self.model.music_imgs] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.headerImgView setImageWithURL:[NSURL URLWithString:self.model.music_imgs]
+            usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
-    [self.appIconView setImageWithURL:[NSURL URLWithString:self.model.singer_portrait] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.appIconView setImageWithURL:[NSURL URLWithString:self.model.singer_portrait]
+          usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     self.appTitleLabel.text     = self.model.singer_name;
     self.appDetailLabel.text    = self.model.singer_brief;
@@ -123,7 +136,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     
 }
 
-#pragma mark - private function
+#pragma mark - Action
 - (void)showStory {
     if (!self.storyBtn.selected) {
         [self.storyBtn setSelected:true];
@@ -142,6 +155,11 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }
 }
 
+- (void)returnBtnDidClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Private Function
 - (NSString *)demoFormatWithName:(NSString *)name value:(NSString *)value musicImg:(NSString *)imgurl {
     
     debugMethod();
@@ -169,13 +187,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }
 }
 
-- (void)returnBtnDidClick {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-// 适配屏幕
 - (void)setupLayout {
-    
     [self.returnBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leftMargin.equalTo(self.view.mas_leftMargin).offset(10);
         make.topMargin.equalTo(self.view.mas_topMargin).offset(40);
@@ -190,20 +202,23 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 - (void)loadData {
     debugMethod();
-    [self.commentViewModel getCommentData:0 withSuccessBack:^(NSArray *datasource) {
-        debugLog(@"comment count: %lu", (unsigned long)[datasource count]);
+    [self.commentViewModel getCommentData:self.commentSource.count withSuccessBack:^(NSArray *datasource) {
+        
+        if (datasource.count == 0) {
+            [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+            [SVProgressHUD showInfoWithStatus:@"已经没有评论了..."];
+        } else {
+            [self.commentSource addObjectsFromArray:datasource];
+            [self.tableview reloadData];
+        }
+        
         [self.tableview footerViewStopPullToRefresh];
     } withErrorCallBack:^(NSError *error) {
-        
+        [SVProgressHUD showErrorWithStatus:error.description];
     }];
 }
 
--(BOOL)prefersStatusBarHidden {
-    return YES;
-}
-
 #pragma mark - CommentView delegate
-
 -(void)commentLabelDidClick {
     debugMethod();
     UIStoryboard *story = [UIStoryboard storyboardWithName:@"MSComment" bundle:[NSBundle mainBundle]];
@@ -233,11 +248,12 @@ static NSString *commentIdentifier = @"commentIdentifier";
 -(void)homeDetailToolViewCollectBtnClick {
     debugMethod();
     AVUser *user    = [AVUser currentUser];
-    AVObject *obj   = [MSMusicModel MusicModelToAVObject:_model];
+    AVObject *obj   = [MSMusicModel MusicModelToAVObject:self.model];
     
     if (!self.toolBar.collectButton.isSelected) {
-        [AVObject saveAllInBackground:@[obj] block:^(BOOL succeeded, NSError *error) {
+        [AVObject saveAllInBackground:@[] block:^(BOOL succeeded, NSError *error) {
             if (error) {
+                [SVProgressHUD showErrorWithStatus:error.description];
             } else {
                 AVRelation *relation = [user relationForKey:@"musics_collections"];
                 [relation addObject:obj];
@@ -255,8 +271,9 @@ static NSString *commentIdentifier = @"commentIdentifier";
             }
         }];
     } else {
-        [AVObject saveAllInBackground:@[obj] block:^(BOOL succeeded, NSError *error) {
+        [AVObject saveAllInBackground:@[] block:^(BOOL succeeded, NSError *error) {
             if (error) {
+                [SVProgressHUD showErrorWithStatus:error.description];
             } else {
                 AVRelation *relation = [user relationForKey:@"musics_collections"];
                 [relation removeObject:obj];
@@ -278,11 +295,11 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 -(void)homeDetailToolViewDownloadBtnClick {
     debugMethod();
+    [SVProgressHUD setMinimumDismissTimeInterval:0.5];
     [SVProgressHUD showInfoWithStatus:@"正在加班加点的实现中...."];
 }
 
-#pragma mark - uiscrollview delegate
-
+#pragma mark - UIScrollviewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self updateHeaderView];
     if (self.tableview.contentOffset.y >= 315){
@@ -319,8 +336,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }
 }
 
-#pragma mark - webview delegate
-
+#pragma mark - UIWebviewDelegate
 -(void)webViewDidFinishLoad:(UIWebView *)webView {
     NSLog(@"%s", __func__);
     
@@ -336,8 +352,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [self.tableview reloadData];
 }
 
-#pragma mark - tableview delegate and datasource
-
+#pragma mark - UITableview Delegate and Datasource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     debugMethod();
     return 2;
@@ -349,7 +364,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
         return 1;
     }
     else {
-        return [self.commentViewModel.dataSource count];
+        return [self.commentSource count];
     }
 }
 
@@ -374,7 +389,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     else {
         MSCommentCell *cell = (MSCommentCell *)[tableView dequeueReusableCellWithIdentifier:commentIdentifier forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell setCellData:[self.commentViewModel.dataSource objectAtIndex:indexPath.row]];
+        [cell setCellData:[self.commentSource objectAtIndex:indexPath.row]];
         return cell;
     }
 }
@@ -394,19 +409,12 @@ static NSString *commentIdentifier = @"commentIdentifier";
     _model = model;
 }
 
--(void)buildComponents {
-    
-    self.lastPosition       = 0;
-    self.commentViewModel   = [[MSCommentViewModel alloc] initWithCommentTableView:self.tableview];
-}
-
 -(UIButton *)returnBtn {
     if (!_returnBtn) {
         _returnBtn = [[UIButton alloc] init];
         [_returnBtn addTarget:self action:@selector(returnBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
         [_returnBtn setImage:[UIImage imageNamed:@"detail_icon_back_normal"] forState:UIControlStateNormal];
         [_returnBtn setImage:[UIImage imageNamed:@"detail_icon_back_pressed"] forState:UIControlStateHighlighted];
-        [self.view addSubview:_returnBtn];
     }
     return _returnBtn;
 }
@@ -416,7 +424,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
         _playMusicBtn = [[MSPlayView alloc] init];
         _playMusicBtn.delegate  = self;
         _playMusicBtn.model     = self.model;
-        [self.view addSubview:_playMusicBtn];
     }
     return _playMusicBtn;
 }
@@ -490,6 +497,20 @@ static NSString *commentIdentifier = @"commentIdentifier";
     return _commentView;
 }
 
+-(NSMutableArray *)commentSource {
+    if (!_commentSource) {
+        _commentSource = [NSMutableArray new];
+    }
+    return _commentSource;
+}
+
+-(MSCommentViewModel *)commentViewModel {
+    if (!_commentViewModel) {
+        _commentViewModel   = [[MSCommentViewModel alloc] initWithCommentTableView:self.tableview];
+    }
+    return _commentViewModel;
+}
+
 -(UITableView *)tableview {
     debugMethod();
     if (!_tableview) {
@@ -504,7 +525,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
         _tableview.tableHeaderView = self.headerView;
         _tableview.tableFooterView = self.commentView;
         
-        [self.view addSubview:_tableview];
     }
     return _tableview;
 }
@@ -515,7 +535,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
         _toolBar.frame      = CGRectMake(0, 345, SCREEN_WIDTH, 30);
         _toolBar.delegate   = self;
         _toolBar.model      = _model;
-        [self.view addSubview:_toolBar];
     }
     return _toolBar;
 }
@@ -531,5 +550,4 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }
     return _webview;
 }
-
 @end

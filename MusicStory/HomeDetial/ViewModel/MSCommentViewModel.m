@@ -16,7 +16,6 @@
     self = [super init];
     if (self) {
         self.commentTableView = tableView;
-        self.dataSource = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -47,28 +46,27 @@
     }
 }
 
--(void)getCommentData:(NSInteger)page withSuccessBack:(MSHomeViewModelSuccessBack)successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack)errorCallBack
+-(void)getCommentData:(NSInteger)num withSuccessBack:(MSHomeViewModelSuccessBack)successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack)errorCallBack
 {
     self.successCallBack    = successCallBack;
     self.errorCallBack      = errorCallBack;
     
+    NSMutableArray *dataSource = [NSMutableArray new];
     AVQuery *query = [AVQuery queryWithClassName:@"Comments"];
     [query orderByDescending:@"createdAt"];
+    query.skip  = num;
+    query.limit = EVERY_DATA_NUM;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        
         if (!error) {
-            
             NSArray<AVObject *> *nearbyTodos = objects;
             for (AVObject *obj in nearbyTodos) {
                 
                 MSCommentModel *model = [[MSCommentModel alloc] initWithAVO:obj];
-                [self.dataSource addObject:model];
+                [dataSource addObject:model];
             }
             
             if (successCallBack) {
-                [self.commentTableView reloadData];
-                //[self animationTable:self.commentTableView];
-                self.successCallBack(self.dataSource);
+                self.successCallBack(dataSource);
             }
         }
         else {

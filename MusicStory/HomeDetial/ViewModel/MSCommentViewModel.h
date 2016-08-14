@@ -16,12 +16,11 @@ typedef void (^MSHomeViewModelErrorCallBack)(NSError *error);
 
 @interface MSCommentViewModel : NSObject
 
-@property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITableView *commentTableView;
 @property (nonatomic, copy) MSHomeViewModelSuccessBack successCallBack;
 @property (nonatomic, copy) MSHomeViewModelErrorCallBack errorCallBack;
 
-- (void)getCommentData:(NSInteger)page withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack )errorCallBack;
+- (void)getCommentData:(NSInteger)num withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack )errorCallBack;
 
 -(instancetype)initWithCommentTableView : (UITableView *)tableView;
 

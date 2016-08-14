@@ -8,9 +8,7 @@
 
 #import "MSCommentCell.h"
 
-#import "UIView+MS.h"
-#import "AppConfig.h"
-#import "Masonry.h"
+#import "MusicStory-Common-Header.h"
 
 @implementation MSCommentCell
 
@@ -79,14 +77,19 @@
 - (void)setCellData :(MSCommentModel *)model {
     debugMethod();
     self.userNameLabel.text     = model.author_name;
-    self.userDetailLabel.text   = @"微博美友";
+    self.userDetailLabel.text   = @"";
     self.timeLabel.text         = [NSString stringWithFormat:@"%@", [model.createdAt.description substringToIndex:10]];
     self.commentLabel.text      = model.content;
+    if (model.author_portrait && ![model.author_portrait isEqualToString:@""]) {
+        [self.userImageView setImageWithURL:[NSURL URLWithString:model.author_portrait]
+                usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    } else {
+        [self.userImageView setImage:[UIImage imageNamed:@"encourage_image"]];
+    }
 }
 
 #pragma mark 设置约束
 #pragma mark 设置SubViews的约束
-
 -(void)setConstraints {
     //[_userImageView setBackgroundColor:[UIColor blueColor]];
     //[_userNameLabel setBackgroundColor:[UIColor redColor]];

@@ -141,6 +141,7 @@
             }
             
             if (datasource.count == 0) {
+                [SVProgressHUD setMinimumDismissTimeInterval:0.5];
                 [SVProgressHUD showInfoWithStatus:@"当前没有数据了..."];
             } else {
                 [self.homeDataArray addObjectsFromArray:datasource];
