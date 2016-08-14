@@ -208,7 +208,7 @@
 /**
  显示左边菜单动画
  */
--(void) leftMenuShowAnimate {
+- (void)leftMenuShowAnimate {
     debugMethod();
     [UIView animateWithDuration:_animationDuration animations:^{
         self.centerController.view.x = self.menuWith;

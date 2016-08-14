@@ -21,7 +21,7 @@
 
 #pragma mark - Setter Getter
 
--(void)setState:(MSRefreshState)State {
+- (void)setState:(MSRefreshState)State {
     
     debugMethod();
     debugLog(@"oldState: %ld, State: %ld", (long)self.oldState, (long)self.State);
@@ -66,7 +66,7 @@
     }
 }
 
--(void)layoutSubviews {
+- (void)layoutSubviews {
     debugMethod();
     [super layoutSubviews];
     

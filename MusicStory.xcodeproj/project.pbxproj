@@ -259,7 +259,7 @@
 		439F22841CBD59B50045287B /* MSSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSlideViewController.m; path = Slide/Controller/MSSlideViewController.m; sourceTree = "<group>"; };
 		43AB96D81D58DA5800E56221 /* MSInterf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSInterf.h; path = Other/MSInterf.h; sourceTree = "<group>"; };
 		43AB96D91D58DA5800E56221 /* MSInterf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSInterf.m; path = Other/MSInterf.m; sourceTree = "<group>"; };
-		43BD00C91CA043BB006CEABC /* APIConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = APIConfig.h; path = Other/APIConfig.h; sourceTree = "<group>"; };
+		43BD00C91CA043BB006CEABC /* ApiConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ApiConfig.h; path = Other/ApiConfig.h; sourceTree = "<group>"; };
 		43BD00CF1CA04BFE006CEABC /* UIScrollView+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+MS.h"; path = "Other/MSRefresh/UIScrollView+MS.h"; sourceTree = "<group>"; };
 		43BD00D01CA04BFE006CEABC /* UIScrollView+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+MS.m"; path = "Other/MSRefresh/UIScrollView+MS.m"; sourceTree = "<group>"; };
 		43BD00D21CA04C90006CEABC /* MSRefreshBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSRefreshBase.h; path = Other/MSRefresh/MSRefreshBase.h; sourceTree = "<group>"; };
@@ -595,7 +595,7 @@
 				4330F3601CA431D500739118 /* extension */,
 				43BD00CA1CA0487B006CEABC /* lib */,
 				43515A391C9F088900EC1422 /* AppConfig.h */,
-				43BD00C91CA043BB006CEABC /* APIConfig.h */,
+				43BD00C91CA043BB006CEABC /* ApiConfig.h */,
 				43AB96D81D58DA5800E56221 /* MSInterf.h */,
 				43AB96D91D58DA5800E56221 /* MSInterf.m */,
 			);

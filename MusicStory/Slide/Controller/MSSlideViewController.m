@@ -24,38 +24,22 @@
 
 @implementation MSSlideViewController
 
-#pragma mark - life cycle
-
+#pragma mark - Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self buildComponents];
+    [self.view addSubview:self.centerView];
     [self setLayout];
     self.view.backgroundColor = UI_COLOR_APPNORMAL;
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(leftMenuSetupBackColor:) name:NOTIFY_SETUPBG object:nil];
 }
 
-#pragma mark - build components
-
--(void)buildComponents {
-    self.centerView = [MSSlideCenterView centerView];
-    self.centerView.delegate = self;
-    
-    // 默认选择音乐故事
-    self.centerView.curView = [[UIView alloc] init];
-    self.centerView.curView = self.centerView.musicStoryView;
-    self.centerView.indexView.y = self.centerView.musicStoryView.center.y;
-    
-    [self.view addSubview:self.centerView];
-}
-
 #pragma mark - Private Function
-
 - (void)setLayout {
     [self.centerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.bottom.equalTo(self.view);
@@ -77,8 +61,6 @@
 }
 
 #pragma mark - MSSlideCenterViewDelegate
-
-// 登陆
 -(void)slideCenterViewLoginViewDidClick {
     debugMethod();
     AVUser *user = [AVUser currentUser];
@@ -130,6 +112,20 @@
     debugMethod();
     MSSettingViewController *settingController = [[MSSettingViewController alloc] init];
     [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:settingController] animated:YES completion:nil];
+}
+
+#pragma mark - Setter Getter
+-(MSSlideCenterView *)centerView {
+    
+    if (!_centerView) {
+        _centerView = [MSSlideCenterView centerView];
+        _centerView.delegate = self;
+        
+        _centerView.curView = [[UIView alloc] init];
+        _centerView.curView = self.centerView.musicStoryView;
+        _centerView.indexView.y = self.centerView.musicStoryView.center.y;
+    }
+    return _centerView;
 }
 
 @end

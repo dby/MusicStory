@@ -20,14 +20,14 @@
 
 #pragma mark Setter / Getter
 
--(MSRefreshState)State
+- (MSRefreshState)State
 {
     debugMethod();
     return _State;
 }
 
 // 当状态改变时设置状态(State)就会调用这个方法
--(void)setState:(MSRefreshState)State
+- (void)setState:(MSRefreshState)State
 {
     debugMethod();
     _State = State;
@@ -57,7 +57,7 @@
 }
 
 #pragma mark - 定义方法
--(instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame{
     debugMethod();
     self = [super initWithFrame:frame];
     if (self) {
@@ -89,7 +89,7 @@
     return self;
 }
 
--(void)layoutSubviews {
+- (void)layoutSubviews {
     debugMethod();
     [super layoutSubviews];
     if (self.viewDirection == MSRefreshDirectionHorizontal) {
@@ -100,7 +100,7 @@
 }
 
 //显示到屏幕上
--(void)drawRect:(CGRect)rect {
+- (void)drawRect:(CGRect)rect {
     debugMethod();
     [super drawRect:rect];
     if (self.State == WillRefreshing) {
@@ -109,7 +109,7 @@
 }
 
 #pragma mark - 子类需要重写的方法
--(void)willMoveToSuperview:(UIView *)newSuperview {
+- (void)willMoveToSuperview:(UIView *)newSuperview {
     
     debugMethod();
     [super willMoveToSuperview:newSuperview];
@@ -139,13 +139,13 @@
 }
 
 // 判断是否正在刷新
-- (BOOL) isRefreshing {
+- (BOOL)isRefreshing {
     debugMethod();
     return RefreshStateRefreshing == self.State;
 }
 
 // 开始刷新
-- (void) beginRefreshing {
+- (void)beginRefreshing {
     debugMethod();
     // self.State = RefreshState.Refreshing;
     if (self.window != nil) {
@@ -158,7 +158,7 @@
 }
 
 //结束刷新
--(void) endRefreshing {
+- (void)endRefreshing {
     debugMethod();
     if (self.State == RefreshStateNormal) {
         return;

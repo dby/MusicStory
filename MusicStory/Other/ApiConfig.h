@@ -6,8 +6,8 @@
 //  Copyright © 2016年 sys. All rights reserved.
 //
 
-#ifndef APIConfig_h
-#define APIConfig_h
+#ifndef ApiConfig_h
+#define ApiConfig_h
 
 // 服务器ip
 #define API_Server  @"http://zuimeia.com/api"

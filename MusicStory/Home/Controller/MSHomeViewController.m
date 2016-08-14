@@ -37,6 +37,8 @@
 @property (nonatomic, strong) NSIndexPath *lastIndex;
 // 当前的index
 @property (nonatomic, assign) NSInteger index;
+// 是音乐故事 or 我的收藏
+@property (nonatomic, assign) NSString *currentCollectionType;
 
 @property (nonatomic, strong) MSHomeHeaderView *headerView;
 @property (nonatomic, strong) MSHomeCenterCollectionView *centerCollectView;
@@ -75,6 +77,7 @@
     [self showProgress];
     
     self.viewModel.type = NOTIFY_OBJ_HOME;
+    self.currentCollectionType = NOTIFY_OBJ_HOME;
     [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
         
         [self.homeDataArray addObjectsFromArray:datasource];
@@ -110,6 +113,10 @@
         debugLog(@"执行 headerViewPullToRefresh 回调函数...");
         [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
             
+            if (![self.currentCollectionType isEqualToString:self.viewModel.type]) {
+                self.homeDataArray = [NSMutableArray new];
+            }
+            
             [self.homeDataArray addObjectsFromArray:datasource];
             [self.centerCollectView reloadData];
             [self.bottomCollectView reloadData];
@@ -129,7 +136,10 @@
         debugLog(@"执行 footViewPullToRefresh 回调函数...");
         [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
             
-            self.lastIndex = nil;
+            if (![self.currentCollectionType isEqualToString:self.viewModel.type]) {
+                self.homeDataArray = [NSMutableArray new];
+            }
+            
             if (datasource.count == 0) {
                 [SVProgressHUD showInfoWithStatus:@"当前没有数据了..."];
             } else {

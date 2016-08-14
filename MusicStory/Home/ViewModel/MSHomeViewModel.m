@@ -43,8 +43,6 @@
 #pragma mark - Function
 
 /*!
- *  @author dby
- *
  *  @brief 查询
  *
  *  @param page            每页默认为20条数据
