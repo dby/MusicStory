@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4302B5581D60712E00DC1ACB /* MSShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4302B5571D60712E00DC1ACB /* MSShareView.m */; };
+		4302B55B1D607CE800DC1ACB /* ShareUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4302B55A1D607CE800DC1ACB /* ShareUtil.m */; };
 		4306F8F41D0DB67A000C23CA /* MSHomeDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4306F8F31D0DB67A000C23CA /* MSHomeDetailController.m */; };
 		4306F8FA1D0E4AF9000C23CA /* MSHomeDetailToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4306F8F71D0E4AF9000C23CA /* MSHomeDetailToolView.xib */; };
 		4306F8FD1D0E4B59000C23CA /* MSHomeDetailToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4306F8FC1D0E4B59000C23CA /* MSHomeDetailToolView.m */; };
@@ -121,6 +123,10 @@
 
 /* Begin PBXFileReference section */
 		031C0F69CE311D18FC52C8E7 /* libPods-MusicStory.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MusicStory.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4302B5561D60712E00DC1ACB /* MSShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSShareView.h; path = HomeDetial/NewView/MSShareView.h; sourceTree = "<group>"; };
+		4302B5571D60712E00DC1ACB /* MSShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSShareView.m; path = HomeDetial/NewView/MSShareView.m; sourceTree = "<group>"; };
+		4302B5591D607CE800DC1ACB /* ShareUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareUtil.h; path = HomeDetial/Utils/ShareUtil.h; sourceTree = "<group>"; };
+		4302B55A1D607CE800DC1ACB /* ShareUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareUtil.m; path = HomeDetial/Utils/ShareUtil.m; sourceTree = "<group>"; };
 		4306F8F21D0DB67A000C23CA /* MSHomeDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSHomeDetailController.h; path = HomeDetial/Controller/MSHomeDetailController.h; sourceTree = "<group>"; };
 		4306F8F31D0DB67A000C23CA /* MSHomeDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSHomeDetailController.m; path = HomeDetial/Controller/MSHomeDetailController.m; sourceTree = "<group>"; };
 		4306F8F71D0E4AF9000C23CA /* MSHomeDetailToolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSHomeDetailToolView.xib; path = HomeDetial/NewView/MSHomeDetailToolView.xib; sourceTree = "<group>"; };
@@ -607,6 +613,8 @@
 			children = (
 				4369E2851D05CB6A00DA407F /* MSHomeDetailAnimationUtil.h */,
 				4369E2861D05CB6A00DA407F /* MSHomeDetailAnimationUtil.m */,
+				4302B5591D607CE800DC1ACB /* ShareUtil.h */,
+				4302B55A1D607CE800DC1ACB /* ShareUtil.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -682,7 +690,8 @@
 			children = (
 				4306F9121D0F070F000C23CA /* MSPlayView.h */,
 				4306F9131D0F070F000C23CA /* MSPlayView.m */,
-				4306F9051D0EEA1C000C23CA /* MSComment.storyboard */,
+				4302B5561D60712E00DC1ACB /* MSShareView.h */,
+				4302B5571D60712E00DC1ACB /* MSShareView.m */,
 				4306F9061D0EEA1C000C23CA /* MSCommentCell.h */,
 				4306F9071D0EEA1C000C23CA /* MSCommentCell.m */,
 				4306F9081D0EEA1C000C23CA /* MSCommentView.h */,
@@ -691,6 +700,7 @@
 				4306F8FB1D0E4B59000C23CA /* MSHomeDetailToolView.h */,
 				4306F8FC1D0E4B59000C23CA /* MSHomeDetailToolView.m */,
 				4306F8F71D0E4AF9000C23CA /* MSHomeDetailToolView.xib */,
+				4306F9051D0EEA1C000C23CA /* MSComment.storyboard */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1092,6 +1102,7 @@
 				436895201CA7655100391424 /* MSHomeCenterFlowLayout.m in Sources */,
 				438CAAE11CFAEC9B00A039B5 /* MSSearchViewModel.m in Sources */,
 				434BCF0A1CD2803F007A4BB3 /* DOUSimpleHTTPRequest.m in Sources */,
+				4302B55B1D607CE800DC1ACB /* ShareUtil.m in Sources */,
 				43640C481D1AD58300F2C025 /* UIImageView+MS.m in Sources */,
 				43F693F51CF0A3F5002A85C0 /* MSRegisterViewController.m in Sources */,
 				4306F9141D0F070F000C23CA /* MSPlayView.m in Sources */,
@@ -1154,6 +1165,7 @@
 				434BCF071CD2803F007A4BB3 /* DOUAudioVisualizer.m in Sources */,
 				43E69FFD1CEB79730087201D /* MSLoginViewController.m in Sources */,
 				43BD00D11CA04BFE006CEABC /* UIScrollView+MS.m in Sources */,
+				4302B5581D60712E00DC1ACB /* MSShareView.m in Sources */,
 				4306F9041D0EEA07000C23CA /* MSCommentModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,6 +12,7 @@
 #import "MSCommentCell.h"
 #import "MSCommentViewModel.h"
 
+#import "ShareUtil.h"
 #import "MSPlayView.h"
 #import "MSCommentView.h"
 #import "MSHomeDetailToolView.h"
@@ -21,7 +22,7 @@
 
 #import "MusicStory-Common-Header.h"
 
-@interface MSHomeDetailController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, MSHomeDetailToolViewDelegate, UIWebViewDelegate, PlayViewDelegate, MSCommentViewDelegate>
+@interface MSHomeDetailController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, MSHomeDetailToolViewDelegate, UIWebViewDelegate, PlayViewDelegate, MSCommentViewDelegate, ShareViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableview;
 @property (nonatomic, strong) MSCommentViewModel *commentViewModel;
@@ -228,7 +229,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 #pragma mark - playview delegate
-
 -(void)playButtonDidClick:(BOOL)selected {
     if (selected) {
         [self.playMusicBtn.contentIV sd_setImageWithURL:[NSURL URLWithString:self.model.music_imgs]];
@@ -239,10 +239,10 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 #pragma mark - MSHomeDetailToolViewDelegate
-
 -(void)homeDetailToolViewShareBtnClick {
     debugMethod();
-    [SVProgressHUD showInfoWithStatus:@"正在加班加点的实现中...."];
+    [[ShareUtil shareInstance] showShareView];
+    [ShareUtil shareInstance].shareView.delegate = self;
 }
 
 -(void)homeDetailToolViewCollectBtnClick {
@@ -297,6 +297,27 @@ static NSString *commentIdentifier = @"commentIdentifier";
     debugMethod();
     [SVProgressHUD setMinimumDismissTimeInterval:0.5];
     [SVProgressHUD showInfoWithStatus:@"正在加班加点的实现中...."];
+}
+
+#pragma mark - ShareViewDelegate
+-(void)weixinShareButtonDidClick {
+    [[ShareUtil shareInstance] shareToFriend:self.model.singer_name
+                               shareImageUrl:self.model.music_imgs
+                                    shareUrl:@"www.baidu.com"
+                                  shareTitle:self.model.music_name
+                                  shareMusic:self.model.music_url];
+}
+
+-(void)friendsCircleShareButtonDidClick {
+    [[ShareUtil shareInstance] shareToFriendsCircle:self.model.singer_name
+                                         shareTitle:self.model.music_name
+                                           shareUrl:@"www.baidu.com"
+                                      shareImageUrl:self.model.music_imgs
+                                         shareMusic:self.model.music_url];
+}
+
+-(void)shareMoreButtonDidClick {
+    [[ShareUtil shareInstance] hiddenShareView];
 }
 
 #pragma mark - UIScrollviewDelegate

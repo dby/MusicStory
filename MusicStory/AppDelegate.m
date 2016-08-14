@@ -51,7 +51,6 @@
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     // Create content and menu controllers
-    //
     MSHomeViewController   *contentViewController = [[MSHomeViewController alloc] init];
     MSSlideViewController *leftMenuViewController = [[MSSlideViewController alloc] init];
     
@@ -62,25 +61,22 @@
                                       initWithCenterController:[[MSBaseNavController alloc] initWithRootViewController:contentViewController]
                                       leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
+    [self configureShareSDK];
     
-    [ShareSDK registerApp:@"iosv1101"
+    return YES;
+}
+
+- (void)configureShareSDK {
+    
+    [ShareSDK registerApp:@"150733cdd42da"
      
-          activePlatforms:@[
-                            @(SSDKPlatformTypeSinaWeibo),
-                            @(SSDKPlatformTypeWechat),
-                            @(SSDKPlatformTypeQQ)]
+          activePlatforms:@[@(SSDKPlatformTypeWechat)]
                  onImport:^(SSDKPlatformType platformType)
      {
          switch (platformType)
          {
              case SSDKPlatformTypeWechat:
                  [ShareSDKConnector connectWeChat:[WXApi class]];
-                 break;
-             case SSDKPlatformTypeQQ:
-                 [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
-                 break;
-             case SSDKPlatformTypeSinaWeibo:
-                 [ShareSDKConnector connectWeibo:[WeiboSDK class]];
                  break;
              default:
                  break;
@@ -91,28 +87,14 @@
          
          switch (platformType)
          {
-             case SSDKPlatformTypeSinaWeibo:
-                 //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
-                 [appInfo SSDKSetupSinaWeiboByAppKey:@"3976740434"
-                                           appSecret:@"454d1fad0ddba01e61e7e0ace2ec49f0"
-                                         redirectUri:@"http://www.sharesdk.cn"
-                                            authType:SSDKAuthTypeBoth];
-                 break;
              case SSDKPlatformTypeWechat:
-                 [appInfo SSDKSetupWeChatByAppId:@"wx4868b35061f87885"
-                                       appSecret:@"64020361b8ec4c99936c0e3999a9f249"];
-                 break;
-             case SSDKPlatformTypeQQ:
-                 [appInfo SSDKSetupQQByAppId:@"100371282"
-                                      appKey:@"aed9b0303e3ed1e27bae87c33761161d"
-                                    authType:SSDKAuthTypeBoth];
+                 [appInfo SSDKSetupWeChatByAppId:@"wx26eb788e8c352845"
+                                       appSecret:@"bb511342fc3e95486fcecc6a57e8cceb"];
                  break;
              default:
                  break;
          }
      }];
-    
-    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
