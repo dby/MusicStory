@@ -16,6 +16,7 @@
 
 /* libraries */
 #import "OpenShareHeader.h"
+#include "JDStatusBarNotification.h"
 #import "MSRefreshBase.h"
 #import "Masonry.h"
 #import "GRMustache.h"

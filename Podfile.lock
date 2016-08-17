@@ -44,6 +44,7 @@ PODS:
     - BlocksKit/DynamicDelegate
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
+  - JDStatusBarNotification (1.5.3)
   - JRSwizzle (1.0)
   - Masonry (1.0.1)
   - OpenShare (0.0.1)
@@ -63,6 +64,7 @@ DEPENDENCIES:
   - AVOSCloudIM
   - BlocksKit
   - GRMustache (~> 7.3.2)
+  - JDStatusBarNotification
   - Masonry
   - OpenShare
   - SDWebImage
@@ -78,6 +80,7 @@ SPEC CHECKSUMS:
   AVOSCloudIM: 6bcb080d9238e1de32a0ac1d6fe855225620feaa
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
+  JDStatusBarNotification: 29413865af11c862c17180610b0f46a21118b412
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   OpenShare: a560580dbb729d5c0c3cc1ee84cd6aa4a07e94c6
@@ -86,6 +89,6 @@ SPEC CHECKSUMS:
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
   YTKNetwork: a41c1df80d4f3b9d05c19c514a2c604e7a6ac341
 
-PODFILE CHECKSUM: 7e697a1e3d753540b728488105e03d949a830e16
+PODFILE CHECKSUM: 7c9d55c1e05fbb39f640402b2436f2c524bccded
 
 COCOAPODS: 1.0.1

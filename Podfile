@@ -13,6 +13,8 @@ target 'MusicStory' do
 	pod 'BlocksKit'
 	pod 'SVProgressHUD'
     pod 'OpenShare'
+    pod 'JDStatusBarNotification'
+
 
     # 主模块(必须)
     #pod 'ShareSDK3'

@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '394E7D48E1E928BEEF8028DB68C00DFA'
-               BlueprintName = 'UIActivityIndicator-for-SDWebImage'
+               BlueprintIdentifier = 'FF5CFD6F2B044B2583AE363E38A9D0EF'
+               BlueprintName = 'JDStatusBarNotification'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libUIActivityIndicator-for-SDWebImage.a'>
+               BuildableName = 'libJDStatusBarNotification.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JDStatusBarNotification.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JRSwizzle.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -67,12 +72,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>09B79155460DA479B8D2BEC49FCE46F6</key>
+		<key>28EDA0AC3272A77B0575F728B99261BC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>28EDA0AC3272A77B0575F728B99261BC</key>
+		<key>394E7D48E1E928BEEF8028DB68C00DFA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3AB4CFDD5326A1363F2D8721AE1FB5F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,22 +92,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4E2C90B1A04FF7B8410904E6C498F75B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7A68FA7B2CA1627D9F20AC461C601C4C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A5D74F688CD6FE4AF55160F66DA6453A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,7 +117,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EF76C9AFAB1CB117C3DD0057E403F0BF</key>
+		<key>E286E01FAAA12C25391E4994133D4AEA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E2963A15964110F524DC1365705AF03E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E4C9F6EE6240E269336757AAEAF95F75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FF5CFD6F2B044B2583AE363E38A9D0EF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
