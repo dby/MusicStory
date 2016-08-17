@@ -25,12 +25,12 @@
         shareImageUrl:(NSString *)shareImageUrl
              shareUrl:(NSString *)shareUrl
            shareTitle:(NSString *)shareTitle
-           shareMusic:(NSString *)shareMusic
-          shareLyrics:(NSString *)shareLyrics;
+           shareMusic:(NSString *)shareMusic;
 
 - (void)shareToFriendsCircle:(NSString *)shareContent
                   shareTitle:(NSString *)shareTitle
                     shareUrl:(NSString *)shareUrl
-               shareImageUrl:(NSString *)shareImageUrl;
+               shareImageUrl:(NSString *)shareImageUrl
+                  shareMusic:(NSString *)shareMusic;
 
 @end

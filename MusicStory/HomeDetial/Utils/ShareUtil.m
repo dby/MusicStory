@@ -142,7 +142,11 @@ static ShareUtil *instance = nil;
 }
 
 //分享到朋友圈
-- (void)shareToFriendsCircle:(NSString *)shareContent shareTitle:(NSString *)shareTitle shareUrl:(NSString *)shareUrl shareImageUrl:(NSString *)shareImageUrl shareMusic:(NSString *)shareMusic {
+- (void)shareToFriendsCircle:(NSString *)shareContent
+                  shareTitle:(NSString *)shareTitle
+                    shareUrl:(NSString *)shareUrl
+               shareImageUrl:(NSString *)shareImageUrl
+                  shareMusic:(NSString *)shareMusic {
     
     OSMessage *msg=[[OSMessage alloc] init];
     msg.title = shareTitle;

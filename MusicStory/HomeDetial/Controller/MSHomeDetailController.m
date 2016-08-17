@@ -305,15 +305,15 @@ static NSString *commentIdentifier = @"commentIdentifier";
                                shareImageUrl:self.model.music_imgs
                                     shareUrl:@"www.baidu.com"
                                   shareTitle:self.model.music_name
-                                  shareMusic:self.model.music_url
-                                 shareLyrics:self.model.music_lyrics];
+                                  shareMusic:self.model.music_url];
 }
 
 -(void)friendsCircleShareButtonDidClick {
     [[ShareUtil shareInstance] shareToFriendsCircle:self.model.singer_name
                                          shareTitle:self.model.music_name
                                            shareUrl:@"www.baidu.com"
-                                      shareImageUrl:self.model.music_imgs];
+                                      shareImageUrl:self.model.music_imgs
+                                         shareMusic:self.model.music_url];
 }
 
 -(void)shareMoreButtonDidClick {
