@@ -15,20 +15,6 @@
 
 #import "musicStory-Common-Header.h"
 
-#import <ShareSDK/ShareSDK.h>
-#import <ShareSDKConnector/ShareSDKConnector.h>
-
-//腾讯开放平台（对应QQ和QQ空间）SDK头文件
-#import <TencentOpenAPI/TencentOAuth.h>
-#import <TencentOpenAPI/QQApiInterface.h>
-
-//微信SDK头文件
-#import "WXApi.h"
-
-//新浪微博SDK头文件
-#import "WeiboSDK.h"
-
-
 @interface AppDelegate ()
 
 @end
@@ -68,33 +54,34 @@
 
 - (void)configureShareSDK {
     
-    [ShareSDK registerApp:@"150733cdd42da"
-     
-          activePlatforms:@[@(SSDKPlatformTypeWechat)]
-                 onImport:^(SSDKPlatformType platformType)
-     {
-         switch (platformType)
-         {
-             case SSDKPlatformTypeWechat:
-                 [ShareSDKConnector connectWeChat:[WXApi class]];
-                 break;
-             default:
-                 break;
-         }
-     }
-          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo)
-     {
-         
-         switch (platformType)
-         {
-             case SSDKPlatformTypeWechat:
-                 [appInfo SSDKSetupWeChatByAppId:@"wx26eb788e8c352845"
-                                       appSecret:@"bb511342fc3e95486fcecc6a57e8cceb"];
-                 break;
-             default:
-                 break;
-         }
-     }];
+    [OpenShare connectWeixinWithAppId:@"wx26eb788e8c352845"];
+//    [ShareSDK registerApp:@"150733cdd42da"
+//     
+//          activePlatforms:@[@(SSDKPlatformTypeWechat)]
+//                 onImport:^(SSDKPlatformType platformType)
+//     {
+//         switch (platformType)
+//         {
+//             case SSDKPlatformTypeWechat:
+//                 [ShareSDKConnector connectWeChat:[WXApi class]];
+//                 break;
+//             default:
+//                 break;
+//         }
+//     }
+//          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo)
+//     {
+//         
+//         switch (platformType)
+//         {
+//             case SSDKPlatformTypeWechat:
+//                 [appInfo SSDKSetupWeChatByAppId:@"wx26eb788e8c352845"
+//                                       appSecret:@"bb511342fc3e95486fcecc6a57e8cceb"];
+//                 break;
+//             default:
+//                 break;
+//         }
+//     }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -117,6 +104,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if ([OpenShare handleOpenURL:url]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

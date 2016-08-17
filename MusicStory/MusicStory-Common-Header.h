@@ -15,6 +15,7 @@
 #import "MSInterf.h"
 
 /* libraries */
+#import "OpenShareHeader.h"
 #import "MSRefreshBase.h"
 #import "Masonry.h"
 #import "GRMustache.h"

@@ -51,8 +51,6 @@
 
 @implementation MSHomeViewController
 
-@synthesize index = _index;
-
 #pragma mark life circle
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -110,43 +108,49 @@
 - (void)buildRefreshView {
     
     [self.centerCollectView headerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
+        if (![self.currentCollectionType isEqualToString:self.viewModel.type]) {
+            self.currentCollectionType = self.viewModel.type;
+        }
+        self.homeDataArray = [NSMutableArray new];
         debugLog(@"执行 headerViewPullToRefresh 回调函数...");
-        [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
-            
-            if (![self.currentCollectionType isEqualToString:self.viewModel.type]) {
-                self.homeDataArray = [NSMutableArray new];
+        [self.viewModel getData:0 withSuccessBack:^(NSArray *datasource) {
+            if (datasource.count == 0) {
+                [SVProgressHUD setMinimumDismissTimeInterval:0.3];
+                [SVProgressHUD showErrorWithStatus:@"没有数据"];
+            } else {
+                [self.homeDataArray addObjectsFromArray:datasource];
+                [self.centerCollectView reloadData];
+                [self.bottomCollectView reloadData];
+                
+                self.index      = 0;
+                self.lastIndex  = nil;
+                [self.bottomCollectView setContentOffset:CGPointZero animated:true];
+                [self scrollViewDidEndDecelerating:self.centerCollectView];
+                [self.centerCollectView headerViewStopPullToRefresh];
             }
-            
-            [self.homeDataArray addObjectsFromArray:datasource];
-            [self.centerCollectView reloadData];
-            [self.bottomCollectView reloadData];
-            
-            self.index      = 0;
-            self.lastIndex  = nil;
-            [self.bottomCollectView setContentOffset:CGPointZero animated:true];
-            [self scrollViewDidEndDecelerating:self.centerCollectView];
-            [self.centerCollectView headerViewStopPullToRefresh];
-            
         } withErrorCallBack:^(NSError *error) {
             [self.centerCollectView headerViewStopPullToRefresh];
         }];
     }];
     
     [self.centerCollectView footerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
+        if (![self.currentCollectionType isEqualToString:self.viewModel.type]) {
+            self.index = -1;
+            self.lastIndex = nil;
+            self.homeDataArray = [NSMutableArray new];
+            self.currentCollectionType = self.viewModel.type;
+        }
         debugLog(@"执行 footViewPullToRefresh 回调函数...");
         [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
-            
-            if (![self.currentCollectionType isEqualToString:self.viewModel.type]) {
-                self.homeDataArray = [NSMutableArray new];
-            }
-            
             if (datasource.count == 0) {
-                [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+                [SVProgressHUD setMinimumDismissTimeInterval:0.3];
                 [SVProgressHUD showInfoWithStatus:@"当前没有数据了..."];
             } else {
                 [self.homeDataArray addObjectsFromArray:datasource];
                 [self.centerCollectView reloadData];
                 [self.bottomCollectView reloadData];
+                self.index++;
+                [self scrollViewDidEndDecelerating:self.centerCollectView];
             }
             [self.centerCollectView footerViewStopPullToRefresh];
         } withErrorCallBack:^(NSError *error) {
@@ -155,8 +159,7 @@
     }];
 }
 
-#pragma mark - scrollerDelegate
-
+#pragma mark - ScrollerDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     debugMethod();
     if (scrollView.tag == 100) {
@@ -172,11 +175,11 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     debugMethod();
-    if (scrollView.tag == 100) {
+    if (scrollView.tag == 100 && self.homeDataArray.count && self.index <= self.homeDataArray.count) {
         // 设置底部动画
         [self bottomAnimation: [NSIndexPath indexPathForRow:self.index inSection:0]];
         // 发送通知改变侧边栏的颜色
-        MSMusicModel *model     = self.homeDataArray[_index];
+        MSMusicModel *model     = self.homeDataArray[self.index];
         NSNotification *noti    = [NSNotification notificationWithName:NOTIFY_SETUPBG
                                                                 object:model.recommanded_background_color];
         [[NSNotificationCenter defaultCenter] postNotification:noti];
@@ -419,15 +422,11 @@
 }
 
 #pragma mark - Setter Getter
--(NSInteger)index {
-    debugMethod();
-    return _index;
-}
 -(void)setIndex:(NSInteger)index {
     
     debugMethod();
     _index = index;
-    if ([self.homeDataArray count] == 0) {
+    if ([self.homeDataArray count] == 0 || index < 0) {
         return;
     }
     // 获取模型
@@ -472,6 +471,7 @@
         _centerCollectView.dataSource                       = self;
         _centerCollectView.showsHorizontalScrollIndicator   = false;
         _centerCollectView.pagingEnabled                    = true;
+        _centerCollectView.alwaysBounceHorizontal           = true;
         [_centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
         _centerCollectView.backgroundColor  = UI_COLOR_APPNORMAL;
         _centerCollectView.tag              = 100;

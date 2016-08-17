@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>OpenShare.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-MusicStory.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,12 +67,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>19E7DE273BB0E7B2336173121EFE6996</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>23F4C61A0CCE1089B863C9F693A3EED6</key>
+		<key>09B79155460DA479B8D2BEC49FCE46F6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,17 +82,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>4E2C90B1A04FF7B8410904E6C498F75B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>62DB1D97CD0170BF7CDA9C3D418496B6</key>
+		<key>7A68FA7B2CA1627D9F20AC461C601C4C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AEF9E0ED592E5FD39CFA045AD9DFB6D8</key>
+		<key>A5D74F688CD6FE4AF55160F66DA6453A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,7 +107,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D0630E046D391FB7BF39F8A7F427F419</key>
+		<key>D79C5D02C5B82672F3342670170FC25C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -113,6 +118,11 @@
 			<true/>
 		</dict>
 		<key>E27EBF430C46ED42D12B9A6063120384</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EF76C9AFAB1CB117C3DD0057E403F0BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

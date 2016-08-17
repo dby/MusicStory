@@ -42,6 +42,7 @@
 -(void)headerViewStopPullToRefresh {
     
     debugMethod();
+    sleep(1);
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshHeaderView class]]) {
             [(MSRefreshHeaderView *)object endRefreshing];
@@ -121,6 +122,7 @@
 -(void)footerViewStopPullToRefresh
 {
     debugMethod();
+    sleep(1);
     for (NSObject *object in self.subviews) {
         if ([object isKindOfClass:[MSRefreshFooterView class]]) {
             [(MSRefreshFooterView *)object endRefreshing];

@@ -91,6 +91,8 @@
             
             AVRelation *relation    = [user relationForKey:@"musics_collections"];
             AVQuery *query          = [relation query];
+            query.skip  = num;
+            query.limit = EVERY_DATA_NUM;
             
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {

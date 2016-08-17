@@ -85,85 +85,113 @@ static ShareUtil *instance = nil;
              shareUrl:(NSString *)shareUrl
            shareTitle:(NSString *)shareTitle
            shareMusic:(NSString *)shareMusic {
-    
-    NSMutableDictionary *shareParams = [NSMutableDictionary new];
-    [shareParams SSDKSetupWeChatParamsByText:shareContent
-                                       title:shareTitle
-                                         url:[NSURL URLWithString:shareUrl]
-                                  thumbImage:nil
-                                       image:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:shareImageUrl]]]
-                                musicFileURL:[NSURL URLWithString:shareMusic]
-                                     extInfo:nil
-                                    fileData:nil
-                                emoticonData:nil
-                         sourceFileExtension:nil
-                              sourceFileData:nil
-                                        type:SSDKContentTypeAuto
-                          forPlatformSubType:SSDKPlatformSubTypeWechatSession];
 
-    //2.进行分享
+    OSMessage *msg=[[OSMessage alloc] init];
+    msg.title = shareTitle;
+    msg.image = [NSData dataWithContentsOfURL:[NSURL URLWithString:shareImageUrl]];
+    msg.multimediaType = OSMultimediaTypeAudio;
+    msg.desc = shareContent;
+    msg.link = shareMusic;
     
-    [ShareSDK share:SSDKPlatformTypeWechat
-         parameters:shareParams
-     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-         
-         switch (state) {
-             case SSDKResponseStateBegin: {
-                 break;
-             }
-             case SSDKResponseStateSuccess: {
-                 NSLog(@"分享成功");
-                 break;
-             }
-             case SSDKResponseStateFail: {
-                 NSLog(@"分享失败");
-                 break;
-             }
-             case SSDKResponseStateCancel: {
-                 NSLog(@"分享取消");
-                 break;
-             }
-         }
-     }];
+    [OpenShare shareToWeixinSession:msg Success:^(OSMessage *message) {
+        [SVProgressHUD setMinimumDismissTimeInterval:0.3];
+        [SVProgressHUD showInfoWithStatus:@"分享成功"];
+    } Fail:^(OSMessage *message, NSError *error) {
+        
+    }];
+    
+//    NSMutableDictionary *shareParams = [NSMutableDictionary new];
+//    [shareParams SSDKSetupWeChatParamsByText:shareContent
+//                                       title:shareTitle
+//                                         url:[NSURL URLWithString:shareUrl]
+//                                  thumbImage:nil
+//                                       image:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:shareImageUrl]]]
+//                                musicFileURL:[NSURL URLWithString:shareMusic]
+//                                     extInfo:nil
+//                                    fileData:nil
+//                                emoticonData:nil
+//                         sourceFileExtension:nil
+//                              sourceFileData:nil
+//                                        type:SSDKContentTypeAuto
+//                          forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+//
+//    //2.进行分享
+//    
+//    [ShareSDK share:SSDKPlatformTypeWechat
+//         parameters:shareParams
+//     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+//         
+//         switch (state) {
+//             case SSDKResponseStateBegin: {
+//                 break;
+//             }
+//             case SSDKResponseStateSuccess: {
+//                 NSLog(@"分享成功");
+//                 break;
+//             }
+//             case SSDKResponseStateFail: {
+//                 NSLog(@"分享失败");
+//                 break;
+//             }
+//             case SSDKResponseStateCancel: {
+//                 NSLog(@"分享取消");
+//                 break;
+//             }
+//         }
+//     }];
 }
 
 //分享到朋友圈
 - (void)shareToFriendsCircle:(NSString *)shareContent shareTitle:(NSString *)shareTitle shareUrl:(NSString *)shareUrl shareImageUrl:(NSString *)shareImageUrl shareMusic:(NSString *)shareMusic {
-
-    NSMutableDictionary *shareParams = [NSMutableDictionary new];
-    [shareParams SSDKSetupWeChatParamsByText:shareContent
-                                       title:shareTitle
-                                         url:[NSURL URLWithString:shareUrl]
-                                  thumbImage:nil
-                                       image:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:shareImageUrl]]]
-                                musicFileURL:[NSURL URLWithString:shareMusic]
-                                     extInfo:nil
-                                    fileData:nil
-                                emoticonData:nil
-                                        type:SSDKContentTypeAuto
-                          forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
     
-    [ShareSDK share:SSDKPlatformSubTypeWechatTimeline
-         parameters:shareParams
-     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-         switch (state) {
-             case SSDKResponseStateBegin: {
-                 break;
-             }
-             case SSDKResponseStateSuccess: {
-                 NSLog(@"分享成功");
-                 break;
-             }
-             case SSDKResponseStateFail: {
-                 NSLog(@"分享失败");
-                 break;
-             }
-             case SSDKResponseStateCancel: {
-                 NSLog(@"分享取消");
-                 break;
-             }
-         }
-     }];
+    OSMessage *msg=[[OSMessage alloc] init];
+    msg.title = shareTitle;
+    msg.image = [NSData dataWithContentsOfURL:[NSURL URLWithString:shareImageUrl]];
+    msg.multimediaType = OSMultimediaTypeAudio;
+    msg.desc = shareContent;
+    msg.link = shareMusic;
+    
+    [OpenShare shareToWeixinTimeline:msg Success:^(OSMessage *message) {
+        [SVProgressHUD setMinimumDismissTimeInterval:0.3];
+        [SVProgressHUD showInfoWithStatus:@"分享成功"];
+    } Fail:^(OSMessage *message, NSError *error) {
+        
+    }];
+
+//    NSMutableDictionary *shareParams = [NSMutableDictionary new];
+//    [shareParams SSDKSetupWeChatParamsByText:shareContent
+//                                       title:shareTitle
+//                                         url:[NSURL URLWithString:shareUrl]
+//                                  thumbImage:nil
+//                                       image:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:shareImageUrl]]]
+//                                musicFileURL:[NSURL URLWithString:shareMusic]
+//                                     extInfo:nil
+//                                    fileData:nil
+//                                emoticonData:nil
+//                                        type:SSDKContentTypeAuto
+//                          forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+//    
+//    [ShareSDK share:SSDKPlatformSubTypeWechatTimeline
+//         parameters:shareParams
+//     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+//         switch (state) {
+//             case SSDKResponseStateBegin: {
+//                 break;
+//             }
+//             case SSDKResponseStateSuccess: {
+//                 NSLog(@"分享成功");
+//                 break;
+//             }
+//             case SSDKResponseStateFail: {
+//                 NSLog(@"分享失败");
+//                 break;
+//             }
+//             case SSDKResponseStateCancel: {
+//                 NSLog(@"分享取消");
+//                 break;
+//             }
+//         }
+//     }];
 }
 
 @end
