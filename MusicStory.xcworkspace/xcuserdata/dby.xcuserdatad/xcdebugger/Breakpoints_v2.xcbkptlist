@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicStory/Other/MSRefresh/MSRefreshHeaderView.m"
-            timestampString = "493053803.20055"
+            filePath = "MusicStory/Home/ViewModel/MSHomeViewModel.m"
+            timestampString = "493226392.981588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "-sendNotify_success:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,27 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MusicStory/Home/ViewModel/MSHomeViewModel.m"
-            timestampString = "493058598.210762"
+            timestampString = "493227288.287206"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "-getData:withSuccessBack:withErrorCallBack:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MusicStory/Home/ViewModel/MSHomeViewModel.m"
-            timestampString = "493058615.867786"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "-getData:withSuccessBack:withErrorCallBack:"
             landmarkType = "5">
          </BreakpointContent>

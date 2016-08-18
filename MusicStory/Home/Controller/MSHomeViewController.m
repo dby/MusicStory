@@ -108,10 +108,13 @@
 - (void)buildRefreshView {
     
     [self.centerCollectView headerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
+        self.homeDataArray = [NSMutableArray new];
         if (![self.currentCollectionType isEqualToString:self.viewModel.type]) {
             self.currentCollectionType = self.viewModel.type;
+            [self.centerCollectView reloadData];
+            [self.bottomCollectView reloadData];
+            [self showProgress];
         }
-        self.homeDataArray = [NSMutableArray new];
         debugLog(@"执行 headerViewPullToRefresh 回调函数...");
         [self.viewModel getData:0 withSuccessBack:^(NSArray *datasource) {
             if (datasource.count == 0) {
@@ -128,6 +131,7 @@
                 [self scrollViewDidEndDecelerating:self.centerCollectView];
                 [self.centerCollectView headerViewStopPullToRefresh];
             }
+            [self hiddenProgress];
         } withErrorCallBack:^(NSError *error) {
             [self.centerCollectView headerViewStopPullToRefresh];
         }];

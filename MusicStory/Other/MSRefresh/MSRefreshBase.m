@@ -16,16 +16,8 @@
 @end
 
 @implementation MSRefreshBase
-@synthesize State = _State;
 
 #pragma mark Setter / Getter
-
-- (MSRefreshState)State
-{
-    debugMethod();
-    return _State;
-}
-
 // 当状态改变时设置状态(State)就会调用这个方法
 - (void)setState:(MSRefreshState)State
 {
@@ -64,7 +56,7 @@
         self.viewDirection = MSRefreshDirectionHorizontal;
         
         [self setBackgroundColor:[UIColor clearColor]];
-        self.arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        self.arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, MSRefreshViewHeight, MSRefreshViewHeight)];
         self.arrowImage.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         self.arrowImage.image = [UIImage imageNamed:@"loading_1"];
         self.arrowImage.tag = 500;

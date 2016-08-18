@@ -94,7 +94,9 @@
         case RefreshStateRefreshing: {
             if (self.viewDirection == MSRefreshDirectionHorizontal) {
                 self.lastRefreshCount = [self totalDataCountInScrollView];
-                [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentSize.width-SCREEN_WIDTH+self.width, 0) animated:true];
+                [UIView animateWithDuration:MSRefreshSlowAnimationDuration animations:^{
+                    [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentSize.width-SCREEN_WIDTH+self.width, 0) animated:false];
+                }];
             } else {
                 self.lastRefreshCount = [self totalDataCountInScrollView];
                 [UIView animateWithDuration:MSRefreshSlowAnimationDuration animations:^{

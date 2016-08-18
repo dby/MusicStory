@@ -14,7 +14,7 @@
 #define SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 /// 网络超时时间
-#define NETWORK_TIMEOUT 15
+#define NETWORK_TIMEOUT 7
 
 // MARK: - 颜色
 // 默认背景色

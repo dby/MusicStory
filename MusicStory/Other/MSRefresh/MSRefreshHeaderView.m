@@ -54,11 +54,15 @@
         case RefreshStateRefreshing: {
             // 正在刷新状态
             if (self.viewDirection == MSRefreshDirectionHorizontal) {
-                [self.scrollView setContentOffset:CGPointMake(-self.width, 0) animated:false];
+                [UIView animateWithDuration:MSRefreshSlowAnimationDuration animations:^{
+                    [self.scrollView setContentOffset:CGPointMake(-self.width, 0) animated:false];
+                }];
             } else {
-                [self.scrollView setContentOffset:CGPointMake(0, -self.width) animated:false];
+                [UIView animateWithDuration:MSRefreshSlowAnimationDuration animations:^{
+                    [self.scrollView setContentOffset:CGPointMake(0, -self.width) animated:false];
+                }];
             }
-            self.scrollView.scrollEnabled = true;
+            self.scrollView.scrollEnabled = false;
             break;
         }
         default:
