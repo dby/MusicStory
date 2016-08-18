@@ -231,7 +231,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
 #pragma mark - playview delegate
 -(void)playButtonDidClick:(BOOL)selected {
     if (selected) {
-        [self.playMusicBtn.contentIV sd_setImageWithURL:[NSURL URLWithString:self.model.music_imgs]];
         [self.playMusicBtn play];
     } else {
         [self.playMusicBtn pause];
@@ -445,6 +444,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
         _playMusicBtn = [[MSPlayView alloc] init];
         _playMusicBtn.delegate  = self;
         _playMusicBtn.model     = self.model;
+        [_playMusicBtn.contentIV sd_setImageWithURL:[NSURL URLWithString:self.model.music_imgs]];
     }
     return _playMusicBtn;
 }
