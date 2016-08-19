@@ -123,7 +123,16 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 }
 
 - (void)updateBufferingRate {
-    [JDStatusBarNotification showProgress:[_streamer bufferingRatio]];
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        [JDStatusBarNotification showWithStatus:@"" styleName:JDStatusBarStyleDark];
+    });
+    
+    if ([_streamer bufferingRatio] >= 1.0) {
+        [JDStatusBarNotification dismiss];
+    } else {
+        [JDStatusBarNotification showProgress:[_streamer bufferingRatio]];
+    }
 }
 
 - (void)updateStatus
@@ -201,7 +210,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     if (!_contentIV) {
         _contentIV = [[UIImageView alloc] init];
         _contentIV.userInteractionEnabled = YES;
-        _contentIV.contentMode = UIViewContentModeScaleAspectFit;
+        _contentIV.contentMode = UIViewContentModeScaleAspectFill;
         
         // KVO观察image变化, 变化了就初始化定时器, 值变化则执行task, BlockKit框架对通知的一个拓展
 //        [_contentIV bk_addObserverForKeyPath:@"image" options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
@@ -237,7 +246,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [_playButton setHighlighted:NO];
         
         // 被点击后 "avatar_bg" 透明
-        [_playButton setBackgroundImage:[UIImage imageNamed:@"avatar_bg"] forState:UIControlStateSelected];
+//        [_playButton setBackgroundImage:[UIImage imageNamed:@"avatar_bg"] forState:UIControlStateSelected];
         [_playButton setImage:[UIImage imageNamed:@"toolbar_pause_h_p"] forState:UIControlStateSelected];
         [_playButton setImage:[UIImage imageNamed:@"tabbar_np_play"] forState:UIControlStateNormal];
         

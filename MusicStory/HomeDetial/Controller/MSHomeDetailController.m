@@ -206,7 +206,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [self.commentViewModel getCommentData:self.commentSource.count withSuccessBack:^(NSArray *datasource) {
         
         if (datasource.count == 0) {
-            [SVProgressHUD setMinimumDismissTimeInterval:0.5];
+            [SVProgressHUD setMinimumDismissTimeInterval:0.3];
             [SVProgressHUD showInfoWithStatus:@"已经没有评论了..."];
         } else {
             [self.commentSource addObjectsFromArray:datasource];

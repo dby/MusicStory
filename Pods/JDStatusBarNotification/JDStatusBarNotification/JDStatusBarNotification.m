@@ -388,6 +388,7 @@
     BOOL animated = !CGRectEqualToRect(self.progressView.frame, CGRectZero);
     [UIView animateWithDuration:animated ? 0.05 : 0.0 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.progressView.frame = frame;
+        self.topBar.textLabel.text = [NSString stringWithFormat:@"%.2f%%", (int)(progress*10000)/100.0];
     } completion:nil];
 }
 
