@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>LeanCloudSocial.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Masonry.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,17 +77,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>036C406AE497BF446FD683BB9FDF40A3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>28EDA0AC3272A77B0575F728B99261BC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>394E7D48E1E928BEEF8028DB68C00DFA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>3AB4CFDD5326A1363F2D8721AE1FB5F5</key>
+		<key>3BD4FEC3838249247EFCF97974EE34EE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,7 +102,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9B5EA7041037FB0BF72E62DA3757AF1E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B3C760711B585710870482548EF04B3F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B7AF97DFDDD5E330C8FF9E737CEB7C27</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CDF69CBB316F576EA4926E5CEEC1531C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,17 +137,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E286E01FAAA12C25391E4994133D4AEA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E2963A15964110F524DC1365705AF03E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E4C9F6EE6240E269336757AAEAF95F75</key>
+		<key>F1F075E6E603BE657CE6E7237D5628E9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

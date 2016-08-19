@@ -22,6 +22,7 @@
 #import "GRMustache.h"
 #import "SVProgressHUD.h"
 #import <AVOSCloud/AVOSCloud.h>
+#import "AVOSCloudSNS.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import <YTKNetworkConfig.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>

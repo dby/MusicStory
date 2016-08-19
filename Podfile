@@ -9,6 +9,7 @@ target 'MusicStory' do
 	pod 'AVOSCloud'
 	pod 'AVOSCloudIM'
 	pod 'AVOSCloudCrashReporting'
+    pod 'LeanCloudSocial'
 	pod 'GRMustache', '~> 7.3.2'
 	pod 'BlocksKit'
 	pod 'SVProgressHUD'

@@ -81,12 +81,29 @@
         MSUserInfoViewController *infoController = [[MSUserInfoViewController alloc] init];
         [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:infoController] animated:YES completion:nil];
     } else {
-        UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
-        UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
-        [self.navigationController presentViewController:
-         [[MSBaseNavController alloc] initWithRootViewController:loginViewController]
-                                                animated:YES
-                                              completion:nil];
+//        UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
+//        UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
+//        [self.navigationController presentViewController:
+//         [[MSBaseNavController alloc] initWithRootViewController:loginViewController]
+//                                                animated:YES
+//                                              completion:nil];
+        
+        [AVOSCloudSNS setupPlatform:AVOSCloudSNSSinaWeibo
+                         withAppKey:@"3976740434"
+                       andAppSecret:@"454d1fad0ddba01e61e7e0ace2ec49f0"
+                     andRedirectURI:@""];
+        
+        [AVOSCloudSNS loginWithCallback:^(id object, NSError *error) {
+            if (error) {
+                NSLog(@"%@", error.description);
+            } else {
+                NSString *accessToken = object[@"access_token"];
+                NSString *username = object[@"username"];
+                NSString *avatar = object[@"avatar"];
+                NSDictionary *rawUser = object[@"raw-user"]; // 性别等第三方平台返回的用户信息
+            }
+        } toPlatform:AVOSCloudSNSSinaWeibo];
+        
     }
 }
 

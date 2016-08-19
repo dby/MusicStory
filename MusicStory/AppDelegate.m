@@ -110,7 +110,17 @@
     if ([OpenShare handleOpenURL:url]) {
         return YES;
     }
-    return NO;
+    return [AVOSCloudSNS handleOpenURL:url];
+}
+
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    return [AVOSCloudSNS handleOpenURL:url];
+}
+
+// For application on system equals or larger ios 9
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+    return [AVOSCloudSNS handleOpenURL:url];
 }
 
 @end
