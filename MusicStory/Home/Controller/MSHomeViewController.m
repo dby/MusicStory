@@ -129,9 +129,9 @@
                 self.lastIndex  = nil;
                 [self.bottomCollectView setContentOffset:CGPointZero animated:true];
                 [self scrollViewDidEndDecelerating:self.centerCollectView];
-                [self.centerCollectView headerViewStopPullToRefresh];
             }
             [self hiddenProgress];
+            [self.centerCollectView headerViewStopPullToRefresh];
         } withErrorCallBack:^(NSError *error) {
             [self.centerCollectView headerViewStopPullToRefresh];
         }];
