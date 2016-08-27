@@ -17,6 +17,8 @@
 
 #import "Track.h"
 
+#import "LrcParser.h"
+
 #import "MusicStory-Common-Header.h"
 
 static void *kStatusKVOKey = &kStatusKVOKey;
@@ -27,9 +29,15 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 {
     DOUAudioStreamer *_streamer;
 }
-// 设置一个私有的定时器
-@property (nonatomic,strong) CADisplayLink *link;
+
+@property (nonatomic, strong) CADisplayLink *link;          // 按钮旋转的timer
+@property (nonatomic, strong) CADisplayLink *updateLrcLink; // 更新歌词的timer
 @property (nonatomic, strong) Track *track;
+
+@property (nonatomic, strong) LrcParser *lrcParser;
+@property (nonatomic, assign) NSInteger currentLrcLine;     // 当前歌词显示在哪一行
+@property (nonatomic, assign) BOOL hasDowloadedMusic;       // 标记是否已经下载了音乐
+
 @end
 
 //宏定义   角度转弧度
@@ -46,7 +54,8 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [self addSubview:self.backgoundIV];
         [self addSubview:self.playButton];
         
-        self.userInteractionEnabled         = YES;
+        self.userInteractionEnabled = YES;
+        self.hasDowloadedMusic = false;
         [self setupLayout];
     }
     return self;
@@ -57,9 +66,40 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     [_streamer removeObserver:self forKeyPath:@"status" context:kStatusKVOKey];
     [_streamer removeObserver:self forKeyPath:@"duration" context:kDurationKVOKey];
     [_streamer removeObserver:self forKeyPath:@"bufferingRatio" context:kBufferingRatioKVOKey];
+    
+    [self.link invalidate];
+    [self.updateLrcLink invalidate];
+    
+    self.link = nil;
+    self.updateLrcLink = nil;
 }
 
 #pragma mark - Private Function
+
+/*!
+ *  @brief 更新歌词
+ */
+- (void)updateLyrics{
+    
+    CGFloat currentTime = _streamer.currentTime;
+    NSLog(@"%d:%d", (int)currentTime / 60, (int)currentTime % 60);
+    
+    self.currentLrcLine = 0;
+    for (int i=0; i < self.lrcParser.timerArray.count; i++) {
+        NSArray *timeArray=[self.lrcParser.timerArray[i] componentsSeparatedByString:@":"];
+        float lrcTime=[timeArray[0] intValue] * 60 + [timeArray[1] floatValue];
+        if(currentTime > lrcTime){
+            self.currentLrcLine = i;
+        } else {
+            break;
+        }
+    }
+    
+    if (self.hasDowloadedMusic) {
+        [JDStatusBarNotification updateStatus:self.lrcParser.wordArray[self.currentLrcLine]];
+    }
+}
+
 - (void)setupLayout {
     [self.backgoundIV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(0);
@@ -129,10 +169,23 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     });
     
     if ([_streamer bufferingRatio] >= 1.0) {
+        self.hasDowloadedMusic = YES;
         [JDStatusBarNotification dismiss];
+        // 这里加延时，是为了使之可以正常释放
+        [NSThread sleepForTimeInterval:0.5];
     } else {
-        [JDStatusBarNotification showProgress:[_streamer bufferingRatio]];
+        NSString *status = [NSString stringWithFormat:@"%.2f%%\t\t\t%@",  (int)([_streamer bufferingRatio]*10000)/100.0, [self getDownloadSpeed]];
+        
+        [JDStatusBarNotification showProgress:[_streamer bufferingRatio]
+                                       status:status];
     }
+}
+
+- (NSString *)getDownloadSpeed {
+    // 均以kps显示
+    NSString *speedStr = @"";
+    speedStr = [NSString stringWithFormat:@"%.2lukps", (unsigned long)([_streamer downloadSpeed]/1000.0)];
+    return speedStr;
 }
 
 - (void)updateStatus
@@ -156,6 +209,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
             if ([self.delegate respondsToSelector:@selector(playButtonDidClick:)]) {
                 self.playButton.selected = !self.playButton.selected;
                 self.link.paused         = !self.playButton.selected;
+                self.updateLrcLink.paused = !self.playButton.selected;
                 [self.delegate playButtonDidClick:self.playButton.selected];
             }
             break;
@@ -238,6 +292,23 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     return _link;
 }
 
+-(LrcParser *)lrcParser {
+    if (!_lrcParser) {
+        _lrcParser = [[LrcParser alloc] initWithLyrics: self.model.music_lyrics];
+        [_lrcParser parseLrc];
+    }
+    return _lrcParser;
+}
+
+-(CADisplayLink *)updateLrcLink {
+    if (!_updateLrcLink) {
+        _updateLrcLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateLyrics)];
+        [_updateLrcLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    }
+    
+    return _updateLrcLink;
+}
+
 - (UIButton *)playButton {
     debugMethod();
     if (!_playButton) {
@@ -256,6 +327,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
             if ([self.delegate respondsToSelector:@selector(playButtonDidClick:)]) {
                 sender.selected     = !sender.selected;
                 self.link.paused    = !sender.selected;
+                self.updateLrcLink.paused = !sender.selected;
                 [self.delegate playButtonDidClick:sender.selected];
             }
         } forControlEvents:UIControlEventTouchUpInside];

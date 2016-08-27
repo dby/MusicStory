@@ -53,6 +53,10 @@
     return sharedInstance;
 }
 
++ (void)updateStatus: (NSString *)status {
+    [[self sharedInstance] updateStatus:status];
+}
+
 + (UIView*)showWithStatus:(NSString *)status;
 {
     return [[self sharedInstance] showWithStatus:status
@@ -120,6 +124,11 @@
     [[JDStatusBarNotification sharedInstance] setProgress:progress];
 }
 
++ (void)showProgress:(CGFloat)progress status:(NSString *)status
+{
+    [[JDStatusBarNotification sharedInstance] setProgress:progress status:status];
+}
+
 + (void)showActivityIndicator:(BOOL)show indicatorStyle:(UIActivityIndicatorViewStyle)style;
 {
     [[JDStatusBarNotification sharedInstance] showActivityIndicator:show indicatorStyle:style];
@@ -175,6 +184,14 @@
 }
 
 #pragma mark Presentation
+
+- (void)updateStatus:(NSString *)status {
+    if ([self isVisible]) {
+        self.topBar.textLabel.text = status;
+    } else {
+        [self showWithStatus:status styleName:nil];
+    }
+}
 
 - (UIView*)showWithStatus:(NSString *)status
                 styleName:(NSString*)styleName;
@@ -335,8 +352,12 @@
 
 #pragma mark Progress & Activity
 
-- (void)setProgress:(CGFloat)progress;
-{
+- (void)setProgress:(CGFloat)progress {
+    [self setProgress:progress status:nil];
+}
+
+- (void)setProgress:(CGFloat)progress status:(NSString *)status {
+    
     if (_topBar == nil) return;
     
     // trim progress
@@ -388,7 +409,9 @@
     BOOL animated = !CGRectEqualToRect(self.progressView.frame, CGRectZero);
     [UIView animateWithDuration:animated ? 0.05 : 0.0 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.progressView.frame = frame;
-        self.topBar.textLabel.text = [NSString stringWithFormat:@"%.2f%%", (int)(progress*10000)/100.0];
+        if (status) {
+            self.topBar.textLabel.text = status; 
+        }
     } completion:nil];
 }
 

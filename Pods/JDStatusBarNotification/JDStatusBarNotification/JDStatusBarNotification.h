@@ -31,6 +31,7 @@ typedef JDStatusBarStyle*(^JDPrepareStyleBlock)(JDStatusBarStyle *style);
 
 #pragma mark Presentation
 
++ (void)updateStatus: (NSString *)status;
 /**
  *  Show a notification. It won't hide automatically,
  *  you have to dimiss it on your own.
@@ -145,6 +146,7 @@ typedef JDStatusBarStyle*(^JDPrepareStyleBlock)(JDStatusBarStyle *style);
  *  @param progress Relative progress from 0.0 to 1.0
  */
 + (void)showProgress:(CGFloat)progress;
++ (void)showProgress:(CGFloat)progress status:(NSString *)status;
 
 /**
  *  Shows an activity indicator in front of the notification text

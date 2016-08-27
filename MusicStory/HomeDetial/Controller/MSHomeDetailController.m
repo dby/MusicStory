@@ -66,7 +66,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.automaticallyAdjustsScrollViewInsets = false;
     
-    [self buildComponents];
+    self.lastPosition       = 0;
     
     [self.view addSubview:self.tableview];
     [self.view addSubview:self.toolBar];
@@ -81,16 +81,11 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }];
     
     [self setupLayout];
-    
-    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-}
-
--(BOOL)prefersStatusBarHidden {
-    return YES;
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -111,10 +106,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 #pragma mark - 加载数据
--(void)buildComponents {
-    self.lastPosition       = 0;
-}
-
 - (void)setHeaderData {
     debugMethod();
     [self.headerImgView setImageWithURL:[NSURL URLWithString:self.model.music_imgs]
@@ -137,7 +128,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     
 }
 
-#pragma mark - Action
+#pragma mark - Event Response
 - (void)showStory {
     if (!self.storyBtn.selected) {
         [self.storyBtn setSelected:true];
@@ -219,7 +210,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }];
 }
 
-#pragma mark - CommentView delegate
+#pragma mark - commentView delegate
 -(void)commentLabelDidClick {
     debugMethod();
     UIStoryboard *story = [UIStoryboard storyboardWithName:@"MSComment" bundle:[NSBundle mainBundle]];

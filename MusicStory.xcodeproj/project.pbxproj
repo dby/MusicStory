@@ -75,6 +75,9 @@
 		438CAADE1CFADE8F00A039B5 /* MSSearchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAADD1CFADE8F00A039B5 /* MSSearchViewCell.m */; };
 		438CAAE11CFAEC9B00A039B5 /* MSSearchViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAAE01CFAEC9B00A039B5 /* MSSearchViewModel.m */; };
 		438CAAE41CFAF8B100A039B5 /* MSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAAE31CFAF8B100A039B5 /* MSImageView.m */; };
+		4391614B1D715F5900F3917D /* buzz.css in Resources */ = {isa = PBXBuildFile; fileRef = 439161491D715F5900F3917D /* buzz.css */; };
+		4391614C1D715F5900F3917D /* desktop.css in Resources */ = {isa = PBXBuildFile; fileRef = 4391614A1D715F5900F3917D /* desktop.css */; };
+		4391614F1D71DD4000F3917D /* LrcParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4391614E1D71DD4000F3917D /* LrcParser.m */; };
 		439F22811CBD59A20045287B /* MSSlideCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 439F227F1CBD59A20045287B /* MSSlideCenterView.m */; };
 		439F22821CBD59A20045287B /* MSSlideCenterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 439F22801CBD59A20045287B /* MSSlideCenterView.xib */; };
 		439F22851CBD59B50045287B /* MSSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 439F22841CBD59B50045287B /* MSSlideViewController.m */; };
@@ -258,6 +261,10 @@
 		438CAAE01CFAEC9B00A039B5 /* MSSearchViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSearchViewModel.m; path = Search/ViewModel/MSSearchViewModel.m; sourceTree = "<group>"; };
 		438CAAE21CFAF8B100A039B5 /* MSImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSImageView.h; path = Other/extension/MSImageView.h; sourceTree = "<group>"; };
 		438CAAE31CFAF8B100A039B5 /* MSImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSImageView.m; path = Other/extension/MSImageView.m; sourceTree = "<group>"; };
+		439161491D715F5900F3917D /* buzz.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = buzz.css; path = Resources/buzz.css; sourceTree = "<group>"; };
+		4391614A1D715F5900F3917D /* desktop.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = desktop.css; path = Resources/desktop.css; sourceTree = "<group>"; };
+		4391614D1D71DD4000F3917D /* LrcParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LrcParser.h; path = HomeDetial/Utils/LrcParser.h; sourceTree = "<group>"; };
+		4391614E1D71DD4000F3917D /* LrcParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LrcParser.m; path = HomeDetial/Utils/LrcParser.m; sourceTree = "<group>"; };
 		439F227E1CBD59A20045287B /* MSSlideCenterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSlideCenterView.h; path = Slide/View/MSSlideCenterView.h; sourceTree = "<group>"; };
 		439F227F1CBD59A20045287B /* MSSlideCenterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSlideCenterView.m; path = Slide/View/MSSlideCenterView.m; sourceTree = "<group>"; };
 		439F22801CBD59A20045287B /* MSSlideCenterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSSlideCenterView.xib; path = Slide/View/MSSlideCenterView.xib; sourceTree = "<group>"; };
@@ -615,6 +622,8 @@
 				4369E2861D05CB6A00DA407F /* MSHomeDetailAnimationUtil.m */,
 				4302B5591D607CE800DC1ACB /* ShareUtil.h */,
 				4302B55A1D607CE800DC1ACB /* ShareUtil.m */,
+				4391614D1D71DD4000F3917D /* LrcParser.h */,
+				4391614E1D71DD4000F3917D /* LrcParser.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -752,6 +761,8 @@
 		4385F0161CCB784400B32FCD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				439161491D715F5900F3917D /* buzz.css */,
+				4391614A1D715F5900F3917D /* desktop.css */,
 				4385F0171CCB7CD100B32FCD /* template.html */,
 			);
 			name = Resources;
@@ -1005,6 +1016,7 @@
 			files = (
 				43515A281C9EF3C900EC1422 /* MSHomeHeaderView.xib in Resources */,
 				435159E81C9EE24100EC1422 /* LaunchScreen.storyboard in Resources */,
+				4391614B1D715F5900F3917D /* buzz.css in Resources */,
 				43E10D0C1CFA882C00171FEB /* MSSearchHeaderView.xib in Resources */,
 				43CE0EB21D15127300FE8983 /* settingDataSource.plist in Resources */,
 				4306F8FA1D0E4AF9000C23CA /* MSHomeDetailToolView.xib in Resources */,
@@ -1017,6 +1029,7 @@
 				4306F90E1D0EEA1C000C23CA /* MSCommentView.xib in Resources */,
 				4385F0181CCB7CD100B32FCD /* template.html in Resources */,
 				43CE0EA11D14F54800FE8983 /* AboutCenterView.xib in Resources */,
+				4391614C1D715F5900F3917D /* desktop.css in Resources */,
 				43CE0EA31D14F54800FE8983 /* SettingViewCell.xib in Resources */,
 				43515A261C9EF3C900EC1422 /* MSHomeBottomItemView.xib in Resources */,
 				435159E51C9EE24100EC1422 /* Assets.xcassets in Resources */,
@@ -1132,6 +1145,7 @@
 				437CA7681CCFB32200444CE8 /* MSMusicModel.m in Sources */,
 				434BCF041CD2803F007A4BB3 /* DOUAudioSpatialAnalyzer.m in Sources */,
 				43EC7BCE1D009DE9001E2D82 /* MSHomeCenterCollectionView.m in Sources */,
+				4391614F1D71DD4000F3917D /* LrcParser.m in Sources */,
 				435159DA1C9EE24000EC1422 /* main.m in Sources */,
 				434BCF051CD2803F007A4BB3 /* DOUAudioStreamer.m in Sources */,
 				434BCEFC1CD2803F007A4BB3 /* DOUAudioDecoder.m in Sources */,

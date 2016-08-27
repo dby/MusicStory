@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicStory/Slide/Controller/MSSlideViewController.m"
-            timestampString = "493318270.769469"
+            filePath = "Pods/JDStatusBarNotification/JDStatusBarNotification/JDStatusBarNotification.m"
+            timestampString = "494011903.008299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "-slideCenterViewLoginViewDidClick"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "-updateStatus:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicStory/Slide/Controller/MSSlideViewController.m"
-            timestampString = "493318271.748118"
+            filePath = "Pods/JDStatusBarNotification/JDStatusBarNotification/JDStatusBarNotification.m"
+            timestampString = "494012004.531231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "-slideCenterViewLoginViewDidClick"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "-dismissAnimated:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
