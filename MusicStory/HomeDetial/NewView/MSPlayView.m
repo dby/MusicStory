@@ -16,6 +16,7 @@
 #import "DOUAudioVisualizer.h"
 
 #import "Track.h"
+#import "FileManager.h"
 
 #import "LrcParser.h"
 
@@ -126,11 +127,21 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     if ([_streamer status] == DOUAudioStreamerPaused || [_streamer status] == DOUAudioStreamerIdle) {
         [_streamer play];
     } else {
+        
+        NSString *path = [[[FileManager getDocumentsPath] stringByAppendingString:@"/MusicStory/"]
+                          stringByAppendingString:[self.model.music_name stringByReplacingOccurrencesOfString:@" " withString:@""]];
+        NSLog(@"path: %@", path);
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
-            [self.track setAudioFileURL:[NSURL URLWithString:self.model.music_url]];
+            if ([FileManager isExistAtPath:path]) {
+                [self.track setAudioFileURL:[NSURL URLWithString:path]];
+            } else {
+                [self.track setAudioFileURL:[NSURL URLWithString:self.model.music_url]];
+            }
+            
             _streamer = [DOUAudioStreamer streamerWithAudioFile:self.track];
-            [_streamer addObserver:self forKeyPath:@"status"
+            [_streamer addObserver:self
+                        forKeyPath:@"status"
                            options:NSKeyValueObservingOptionNew
                            context:kStatusKVOKey];
             

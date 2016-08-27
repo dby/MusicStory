@@ -13,6 +13,7 @@
 #import "MSCommentViewModel.h"
 
 #import "ShareUtil.h"
+#import "FileManager.h"
 #import "MSPlayView.h"
 #import "MSCommentView.h"
 #import "MSHomeDetailToolView.h"
@@ -285,8 +286,22 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 -(void)homeDetailToolViewDownloadBtnClick {
     debugMethod();
-    [SVProgressHUD setMinimumDismissTimeInterval:0.5];
-    [SVProgressHUD showInfoWithStatus:@"正在加班加点的实现中...."];
+    
+    NSString *path = [[FileManager getDocumentsPath] stringByAppendingString:@"/MusicStory"];
+    if (![FileManager isExistAtPath:path]) {
+        [FileManager createDirectory:@"MusicStory"];
+    }
+    
+    AVFile *file = [AVFile fileWithURL:self.model.music_url];
+    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        // 下载成功
+        [FileManager writeFile:path
+                      fileName:[NSString stringWithFormat:@"%@", self.model.music_name]
+                      fileData:data];
+        NSLog(@"error: %@", error.description);
+    } progressBlock:^(NSInteger percentDone) {
+        NSLog(@"progress: %ld", (long)percentDone);
+    }];
 }
 
 #pragma mark - ShareViewDelegate
