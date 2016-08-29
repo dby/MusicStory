@@ -22,5 +22,6 @@
 @property (nonatomic, strong) NSString *artist;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSURL *audioFileURL;
+@property (nonatomic, strong) NSString *audioFileHost;
 
 @end

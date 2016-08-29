@@ -95,6 +95,12 @@ static NSString *commentIdentifier = @"commentIdentifier";
     if (self.playMusicBtn) {
         [self.playMusicBtn stop];
     }
+    
+    if ([JDStatusBarNotification isVisible]) {
+        [JDStatusBarNotification dismiss];
+    }
+    
+    [self.playMusicBtn deallocTimer];
 }
 
 - (instancetype)initWithModel :(MSMusicModel *)model {
@@ -296,9 +302,11 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         // 下载成功
         [FileManager writeFile:path
-                      fileName:[NSString stringWithFormat:@"%@", self.model.music_name]
+                      fileName:[NSString stringWithFormat:@"%@.mp3", self.model.music_name]
                       fileData:data];
-        NSLog(@"error: %@", error.description);
+        
+        NSLog(@"data: %lu", (unsigned long)data.length);
+        
     } progressBlock:^(NSInteger percentDone) {
         NSLog(@"progress: %ld", (long)percentDone);
     }];

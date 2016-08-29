@@ -17,6 +17,7 @@
 
 #import "Track.h"
 #import "FileManager.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 #import "LrcParser.h"
 
@@ -87,8 +88,8 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     
     self.currentLrcLine = 0;
     for (int i=0; i < self.lrcParser.timerArray.count; i++) {
-        NSArray *timeArray=[self.lrcParser.timerArray[i] componentsSeparatedByString:@":"];
-        float lrcTime=[timeArray[0] intValue] * 60 + [timeArray[1] floatValue];
+        NSArray *timeArray = [self.lrcParser.timerArray[i] componentsSeparatedByString:@":"];
+        float lrcTime = [timeArray[0] intValue] * 60 + [timeArray[1] floatValue];
         if(currentTime > lrcTime){
             self.currentLrcLine = i;
         } else {
@@ -122,6 +123,14 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     }];
 }
 
+- (void)deallocTimer {
+    [self.link invalidate];
+    [self.updateLrcLink invalidate];
+    
+    self.link = nil;
+    self.updateLrcLink = nil;
+}
+
 - (void)play {
     debugMethod();
     if ([_streamer status] == DOUAudioStreamerPaused || [_streamer status] == DOUAudioStreamerIdle) {
@@ -129,11 +138,13 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     } else {
         
         NSString *path = [[[FileManager getDocumentsPath] stringByAppendingString:@"/MusicStory/"]
-                          stringByAppendingString:[self.model.music_name stringByReplacingOccurrencesOfString:@" " withString:@""]];
+                          stringByAppendingString:[[NSString stringWithFormat:@"%@.mp3", self.model.music_name] stringByReplacingOccurrencesOfString:@" " withString:@""]];
         NSLog(@"path: %@", path);
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
             if ([FileManager isExistAtPath:path]) {
+                // 已经下载过了，此时不需要再下载
+                NSLog(@"has downloaded...");
                 [self.track setAudioFileURL:[NSURL URLWithString:path]];
             } else {
                 [self.track setAudioFileURL:[NSURL URLWithString:self.model.music_url]];

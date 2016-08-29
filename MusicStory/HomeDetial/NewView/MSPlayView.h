@@ -28,4 +28,6 @@
 - (void)pause;
 - (void)stop;
 
+- (void)deallocTimer;
+
 @end
