@@ -136,16 +136,14 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     if ([_streamer status] == DOUAudioStreamerPaused || [_streamer status] == DOUAudioStreamerIdle) {
         [_streamer play];
     } else {
-        
-        NSString *path = [[[FileManager getDocumentsPath] stringByAppendingString:@"/MusicStory/"]
-                          stringByAppendingString:[[NSString stringWithFormat:@"%@.mp3", self.model.music_name] stringByReplacingOccurrencesOfString:@" " withString:@""]];
-        NSLog(@"path: %@", path);
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
-            if ([FileManager isExistAtPath:path]) {
-                // 已经下载过了，此时不需要再下载
-                NSLog(@"has downloaded...");
-                [self.track setAudioFileURL:[NSURL URLWithString:path]];
+            NSString *musicName = [self.model.music_name stringByReplacingOccurrencesOfString:@" "
+                                                                                   withString:@""];
+            AVURLAsset *localMusic = [FileManager getSpecialLocalMusic:musicName];
+            if (localMusic) {
+                self.hasDowloadedMusic = YES;
+                [self.track setAudioFileURL:localMusic.URL];
             } else {
                 [self.track setAudioFileURL:[NSURL URLWithString:self.model.music_url]];
             }
@@ -233,6 +231,10 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
                 self.link.paused         = !self.playButton.selected;
                 self.updateLrcLink.paused = !self.playButton.selected;
                 [self.delegate playButtonDidClick:self.playButton.selected];
+            }
+            
+            if ([JDStatusBarNotification isVisible]) {
+                [JDStatusBarNotification dismiss];
             }
             break;
         }

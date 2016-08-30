@@ -57,4 +57,24 @@
     return [[NSFileManager defaultManager] contentsAtPath:filePath];
 }
 
++ (AVURLAsset *)getSpecialLocalMusic: (NSString *)name {
+    
+    NSString *musicDir = [[FileManager getDocumentsPath] stringByAppendingString:@"/MusicStory"];
+    return [self getMp3AssetWithDir:musicDir name:name];
+}
+
++ (AVURLAsset *)getMp3AssetWithDir:(NSString *)dir name:(NSString *)name {
+    
+    NSString * musicPath = [NSBundle pathForResource:name
+                                              ofType:@"mp3"
+                                         inDirectory:dir];
+    
+    AVURLAsset *mp3Asset = nil;
+    if (musicPath != nil) {
+        NSURL *url = [NSURL fileURLWithPath:musicPath];
+        mp3Asset   = [AVURLAsset URLAssetWithURL:url options:nil];
+    }
+    return  mp3Asset;
+}
+
 @end

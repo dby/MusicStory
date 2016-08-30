@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface FileManager : NSObject
 
@@ -16,5 +17,7 @@
 + (BOOL)isExistAtPath:(NSString *)filePath;
 + (BOOL)writeFile:(NSString *)filePath fileName:(NSString *)fileName fileData:(NSData *)fileData;
 + (NSData *)readFileContent: (NSString *)filePath;
+
++ (AVURLAsset *)getSpecialLocalMusic: (NSString *)name;
 
 @end
