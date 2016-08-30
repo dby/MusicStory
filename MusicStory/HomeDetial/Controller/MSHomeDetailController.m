@@ -330,7 +330,11 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 -(void)shareMoreButtonDidClick {
-    [[ShareUtil shareInstance] hiddenShareView];
+    [[ShareUtil shareInstance] shareToSinaWeibo:self.model.singer_name
+                                     shareTitle:self.model.music_name
+                                       shareUrl:@"www.baidu.com"
+                                  shareImageUrl:self.model.music_imgs
+                                     shareMusic:self.model.music_url];
 }
 
 #pragma mark - UIScrollviewDelegate

@@ -198,4 +198,26 @@ static ShareUtil *instance = nil;
 //     }];
 }
 
+//分享到新浪微博
+- (void)shareToSinaWeibo:(NSString *)shareContent
+              shareTitle:(NSString *)shareTitle
+                shareUrl:(NSString *)shareUrl
+           shareImageUrl:(NSString *)shareImageUrl
+              shareMusic:(NSString *)shareMusic {
+    
+    OSMessage *msg=[[OSMessage alloc] init];
+    msg.title = shareTitle;
+    msg.image = [NSData dataWithContentsOfURL:[NSURL URLWithString:shareImageUrl]];
+    msg.multimediaType = OSMultimediaTypeAudio;
+    msg.desc = shareContent;
+    msg.link = shareMusic;
+    
+    [OpenShare shareToWeibo:msg Success:^(OSMessage *message) {
+        [SVProgressHUD setMinimumDismissTimeInterval:0.3];
+        [SVProgressHUD showInfoWithStatus:@"分享成功"];
+    } Fail:^(OSMessage *message, NSError *error) {
+        
+    }];
+}
+
 @end

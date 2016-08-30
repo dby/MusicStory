@@ -66,6 +66,7 @@
 - (void)configureShareSDK {
     
     [OpenShare connectWeixinWithAppId:@"wx26eb788e8c352845"];
+    [OpenShare connectWeiboWithAppKey:@"3976740434"];
 //    [ShareSDK registerApp:@"150733cdd42da"
 //     
 //          activePlatforms:@[@(SSDKPlatformTypeWechat)]

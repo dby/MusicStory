@@ -33,4 +33,10 @@
                shareImageUrl:(NSString *)shareImageUrl
                   shareMusic:(NSString *)shareMusic;
 
+- (void)shareToSinaWeibo:(NSString *)shareContent
+              shareTitle:(NSString *)shareTitle
+                shareUrl:(NSString *)shareUrl
+           shareImageUrl:(NSString *)shareImageUrl
+              shareMusic:(NSString *)shareMusic;
+
 @end
