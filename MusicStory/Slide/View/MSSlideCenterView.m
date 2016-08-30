@@ -57,7 +57,7 @@
         [self.username setText:[user objectForKey:@"username"]];
     } else {
         [self.portrait setImage:[UIImage imageNamed:@"encourage_image"]];
-        [self.username setText:@"未登陆"];
+        [self.username setText:@"微博登陆"];
     }
 }
 

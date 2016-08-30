@@ -63,12 +63,11 @@
         [self.centerView.username setText:[AVUser currentUser].username];
     } else {
         [self.centerView.portrait setImage:[UIImage imageNamed:@"encourage_image"]];
-        [self.centerView.username setText:@"未登陆"];
+        [self.centerView.username setText:@"微博登陆"];
     }
 }
 
-- (void)setContentViewController:(UIViewController *)viewController
-{
+- (void)setContentViewController:(UIViewController *)viewController {
     MSBaseNavController *nav = (MSBaseNavController *)self.sideMenuViewController.centerController;
     [nav pushViewController:viewController animated:NO];
 }
@@ -81,6 +80,7 @@
         MSUserInfoViewController *infoController = [[MSUserInfoViewController alloc] init];
         [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:infoController] animated:YES completion:nil];
     } else {
+//  使用手机号+密码登陆，，
 //        UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
 //        UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
 //        [self.navigationController presentViewController:
@@ -88,23 +88,39 @@
 //                                                animated:YES
 //                                              completion:nil];
         
-        [AVOSCloudSNS setupPlatform:AVOSCloudSNSSinaWeibo
-                         withAppKey:@"3976740434"
-                       andAppSecret:@"454d1fad0ddba01e61e7e0ace2ec49f0"
-                     andRedirectURI:@""];
-        
+        // 第三方微博登陆
         [AVOSCloudSNS loginWithCallback:^(id object, NSError *error) {
             if (error) {
                 NSLog(@"%@", error.description);
             } else {
-                NSString *accessToken = object[@"access_token"];
-                NSString *username = object[@"username"];
-                NSString *avatar = object[@"avatar"];
-                NSDictionary *rawUser = object[@"raw-user"]; // 性别等第三方平台返回的用户信息
+                [self.centerView.portrait sd_setImageWithURL:[NSURL URLWithString:object[@"avatar"]]];
+                [self.centerView.username setText:object[@"username"]];
+                
+                [AVUser loginWithAuthData:object platform:AVOSCloudSNSPlatformWeiBo block:^(AVUser *user, NSError *error) {
+                    if ([self filterError:error]) {
+                        // 更新用户名，头像
+                        AVUser *user = [AVUser currentUser];
+                        [user setObject:object[@"username"] forKey:@"username"];
+                        [user setObject:object[@"avatar"] forKey:@"portrait"];
+                        [user saveInBackgroundWithBlock:nil];
+                    }
+                }];
             }
         } toPlatform:AVOSCloudSNSSinaWeibo];
-        
     }
+}
+
+- (void)alert:(NSString *)message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+- (BOOL)filterError:(NSError *)error {
+    if (error) {
+        [self alert:[error localizedDescription]];
+        return NO;
+    }
+    return YES;
 }
 
 // 音乐故事

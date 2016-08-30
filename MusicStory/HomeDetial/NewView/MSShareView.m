@@ -157,7 +157,7 @@
 -(UIButton *)shareMoreButton {
     if (!_shareMoreButton) {
         _shareMoreButton = [UIButton new];
-        [_shareMoreButton setImage:[UIImage imageNamed:@"share_more"] forState:UIControlStateNormal];
+        [_shareMoreButton setImage:[UIImage imageNamed:@"share_weibo"] forState:UIControlStateNormal];
         _shareMoreButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [_shareMoreButton addTarget:self action:@selector(shareMoreAction) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -167,7 +167,7 @@
 -(UILabel *)shareMoreLabel {
     if (!_shareMoreLabel) {
         _shareMoreLabel = [UILabel new];
-        _shareMoreLabel.text = @"更多";
+        _shareMoreLabel.text = @"微博";
         _shareMoreLabel.textColor = [UIColor colorWithRed:82/255.0 green:78/255.0 blue:80/255.0 alpha:1.0];
         _shareMoreLabel.textAlignment = NSTextAlignmentCenter;
         _shareMoreLabel.font = [UIFont systemFontOfSize:13];

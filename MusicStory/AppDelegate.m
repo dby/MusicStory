@@ -48,8 +48,19 @@
                                       leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
     [self configureShareSDK];
+    [self configureWeiboSNSSDK];
     
     return YES;
+}
+
+- (void)configureWeiboSNSSDK {
+    [AVOSCloudSNS setupPlatform:AVOSCloudSNSSinaWeibo
+                     withAppKey:@"3976740434"
+                   andAppSecret:@"454d1fad0ddba01e61e7e0ace2ec49f0"
+                 andRedirectURI:@"http://wanpaiapp.com/oauth/callback/sina"];
+    
+    [AVOSCloud setAllLogsEnabled:YES];
+    [AVOSCloud setLastModifyEnabled:YES];
 }
 
 - (void)configureShareSDK {
