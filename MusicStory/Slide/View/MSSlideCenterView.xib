@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -16,12 +20,14 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="登录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ha2-OL-RbW">
                             <rect key="frame" x="90" y="15" width="313" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="detail_portrait_default" translatesAutoresizingMaskIntoConstraints="NO" id="f3Q-zg-TjX">
                             <rect key="frame" x="25" y="0.0" width="50" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                     <real key="value" value="25"/>
@@ -33,49 +39,6 @@
                         <constraint firstAttribute="height" constant="50" id="KA3-Gj-8E1"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pYd-t5-udU" userLabel="关于我们">
-                    <rect key="frame" x="0.0" y="297" width="600" height="40"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_beauty_normal" translatesAutoresizingMaskIntoConstraints="NO" id="iBw-ZM-sNL">
-                            <rect key="frame" x="30" y="5" width="30" height="30"/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="赞我一下" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sli-lr-zPb">
-                            <rect key="frame" x="75" y="10" width="100" height="20"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="JJ0-nE-baz"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J4U-5Z-39T" userLabel="我的收藏">
-                    <rect key="frame" x="0.0" y="242" width="600" height="40"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_fav_normal" translatesAutoresizingMaskIntoConstraints="NO" id="v0F-Ds-kpL">
-                            <rect key="frame" x="30" y="5" width="30" height="30"/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="我的收藏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GUE-yM-KqQ" userLabel="收藏">
-                            <rect key="frame" x="75" y="10" width="100" height="20"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="amD-bo-jUf"/>
-                    </constraints>
-                </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCk-Uw-9z4" userLabel="搜索">
-                    <rect key="frame" x="20" y="565" width="30" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="ezx-eH-YyG"/>
-                        <constraint firstAttribute="height" constant="30" id="sds-eA-ebr"/>
-                    </constraints>
-                    <state key="normal" image="sidebar_bottomicon_search_normal"/>
-                    <state key="highlighted" image="sidebar_bottomicon_search_pressed"/>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3RP-Rb-8T6" userLabel="音乐故事">
                     <rect key="frame" x="0.0" y="132" width="600" height="40"/>
                     <subviews>
@@ -87,12 +50,13 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="音乐故事" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qwx-ZL-AoR" userLabel="音乐故事">
-                            <rect key="frame" x="74" y="10" width="64" height="20"/>
+                            <rect key="frame" x="74" y="10" width="66" height="20"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
+                    <color key="backgroundColor" red="1" green="0.035150905490000002" blue="0.06072155915" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="0if-gq-LHP"/>
                         <constraint firstItem="Qwx-ZL-AoR" firstAttribute="centerY" secondItem="3RP-Rb-8T6" secondAttribute="centerY" id="Ip8-kd-tW4"/>
@@ -101,37 +65,22 @@
                         <constraint firstItem="Qwx-ZL-AoR" firstAttribute="leading" secondItem="SCN-cB-TFI" secondAttribute="trailing" constant="14" id="qi8-G1-XWm"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_dot" translatesAutoresizingMaskIntoConstraints="NO" id="sMW-Pg-3dZ" userLabel="小白点">
-                    <rect key="frame" x="20" y="150" width="5" height="5"/>
-                </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SHO-JQ-nsw">
-                    <rect key="frame" x="20" y="559" width="572" height="1"/>
-                    <color key="backgroundColor" red="0.80602110729999998" green="0.946247226" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="tYa-7Z-6uX"/>
-                    </constraints>
-                </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0vY-SB-mbh">
-                    <rect key="frame" x="550" y="565" width="30" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="SB3-x0-glp"/>
-                        <constraint firstAttribute="width" constant="30" id="v88-8O-nYT"/>
-                    </constraints>
-                    <state key="normal" image="sidebar_icon_more_normal"/>
-                </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GSj-CO-TKk" userLabel="音乐专栏">
-                    <rect key="frame" x="0.0" y="187" width="600" height="40"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GSj-CO-TKk" userLabel="音乐乐评">
+                    <rect key="frame" x="0.0" y="182" width="600" height="40"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_article_normal" translatesAutoresizingMaskIntoConstraints="NO" id="jat-4p-CWp">
                             <rect key="frame" x="30" y="5" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="音乐专栏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngx-09-yYB">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="音乐乐评" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngx-09-yYB">
                             <rect key="frame" x="75" y="10" width="100" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
+                    <color key="backgroundColor" red="0.5524636190064065" green="0.33615792011981138" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="JZh-F7-TyT"/>
                         <constraint firstAttribute="height" constant="40" id="fFe-Wf-g3H"/>
@@ -142,32 +91,148 @@
                         </mask>
                     </variation>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sfh-Mb-t4y" userLabel="有声小说">
+                    <rect key="frame" x="0.0" y="232" width="600" height="40"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_fav_normal" translatesAutoresizingMaskIntoConstraints="NO" id="vtZ-34-gNU">
+                            <rect key="frame" x="30" y="5" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="有声小说" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uft-2T-0qd" userLabel="有声小说">
+                            <rect key="frame" x="75" y="10" width="100" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.42411040039999998" green="1" blue="0.39046625969999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="TXi-p1-SdL"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LCe-Lm-jlg" userLabel="音乐榜单">
+                    <rect key="frame" x="0.0" y="282" width="600" height="40"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_fav_normal" translatesAutoresizingMaskIntoConstraints="NO" id="7zy-Ch-Dok">
+                            <rect key="frame" x="30" y="5" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="音乐榜单" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reb-yp-lah">
+                            <rect key="frame" x="75" y="10" width="100" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.96209982839999997" green="0.18438735749999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="BoK-Ho-fL0"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J4U-5Z-39T" userLabel="我的收藏">
+                    <rect key="frame" x="0.0" y="332" width="600" height="40"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_fav_normal" translatesAutoresizingMaskIntoConstraints="NO" id="v0F-Ds-kpL">
+                            <rect key="frame" x="30" y="5" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="我的收藏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GUE-yM-KqQ" userLabel="收藏">
+                            <rect key="frame" x="75" y="10" width="100" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.42411040038317382" green="1" blue="0.39046625971369053" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="amD-bo-jUf"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pYd-t5-udU" userLabel="赞我一下">
+                    <rect key="frame" x="0.0" y="382" width="600" height="40"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_beauty_normal" translatesAutoresizingMaskIntoConstraints="NO" id="iBw-ZM-sNL">
+                            <rect key="frame" x="30" y="5" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="赞我一下" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sli-lr-zPb">
+                            <rect key="frame" x="75" y="10" width="100" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.9620998283805513" green="0.18438735750415947" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="JJ0-nE-baz"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_dot" translatesAutoresizingMaskIntoConstraints="NO" id="sMW-Pg-3dZ" userLabel="小白点">
+                    <rect key="frame" x="20" y="150" width="5" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SHO-JQ-nsw">
+                    <rect key="frame" x="20" y="559" width="572" height="1"/>
+                    <color key="backgroundColor" red="0.20046208329175208" green="1" blue="0.15517214853756178" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="tYa-7Z-6uX"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0vY-SB-mbh">
+                    <rect key="frame" x="550" y="565" width="30" height="30"/>
+                    <color key="backgroundColor" red="1" green="0.14929760419794491" blue="0.19124206472308858" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="SB3-x0-glp"/>
+                        <constraint firstAttribute="width" constant="30" id="v88-8O-nYT"/>
+                    </constraints>
+                    <state key="normal" image="sidebar_icon_more_normal"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCk-Uw-9z4" userLabel="搜索">
+                    <rect key="frame" x="20" y="565" width="30" height="30"/>
+                    <color key="backgroundColor" red="0.55246361899999996" green="0.33615792010000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="ezx-eH-YyG"/>
+                        <constraint firstAttribute="height" constant="30" id="sds-eA-ebr"/>
+                    </constraints>
+                    <state key="normal" image="sidebar_bottomicon_search_normal"/>
+                    <state key="highlighted" image="sidebar_bottomicon_search_pressed"/>
+                </button>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="3RP-Rb-8T6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="1h8-Wd-OJh"/>
                 <constraint firstItem="J4U-5Z-39T" firstAttribute="top" secondItem="GSj-CO-TKk" secondAttribute="bottom" constant="39" id="1tN-G3-4Wg"/>
+                <constraint firstItem="sfh-Mb-t4y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="5CA-kB-ODK"/>
                 <constraint firstAttribute="trailing" secondItem="J4U-5Z-39T" secondAttribute="trailing" id="6v2-ds-6xC"/>
                 <constraint firstItem="pYd-t5-udU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7JA-1r-gGs"/>
+                <constraint firstItem="sfh-Mb-t4y" firstAttribute="top" secondItem="GSj-CO-TKk" secondAttribute="bottom" constant="10" id="AP1-U7-GcE"/>
                 <constraint firstAttribute="trailing" secondItem="SHO-JQ-nsw" secondAttribute="trailing" constant="8" id="Cfo-FF-aH4"/>
+                <constraint firstItem="J4U-5Z-39T" firstAttribute="top" secondItem="LCe-Lm-jlg" secondAttribute="bottom" constant="10" id="Djm-fa-YBC"/>
                 <constraint firstAttribute="trailing" secondItem="DUG-FX-2gZ" secondAttribute="trailing" id="DlO-I8-LG0"/>
                 <constraint firstAttribute="trailing" secondItem="pYd-t5-udU" secondAttribute="trailing" id="Dv4-q7-eBe"/>
+                <constraint firstItem="LCe-Lm-jlg" firstAttribute="top" secondItem="sfh-Mb-t4y" secondAttribute="bottom" constant="10" id="EOq-Ic-0k0"/>
                 <constraint firstAttribute="bottom" secondItem="aCk-Uw-9z4" secondAttribute="bottom" constant="5" id="FGi-Ru-RIh"/>
                 <constraint firstItem="3RP-Rb-8T6" firstAttribute="top" secondItem="DUG-FX-2gZ" secondAttribute="bottom" constant="40" id="Loh-ks-ao1"/>
                 <constraint firstItem="J4U-5Z-39T" firstAttribute="top" secondItem="Qwx-ZL-AoR" secondAttribute="bottom" constant="18" id="Na6-N2-5YP"/>
                 <constraint firstAttribute="trailing" secondItem="0vY-SB-mbh" secondAttribute="trailing" constant="20" id="Pvy-zi-gvY"/>
-                <constraint firstItem="J4U-5Z-39T" firstAttribute="top" secondItem="GSj-CO-TKk" secondAttribute="bottom" constant="15" id="SXk-Og-SA9"/>
+                <constraint firstItem="LCe-Lm-jlg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="RSJ-WU-NGO"/>
                 <constraint firstAttribute="trailing" secondItem="GSj-CO-TKk" secondAttribute="trailing" id="TBp-Zb-YBu"/>
                 <constraint firstAttribute="trailing" secondItem="3RP-Rb-8T6" secondAttribute="trailing" id="Tzl-dp-pFT"/>
                 <constraint firstAttribute="bottom" secondItem="SHO-JQ-nsw" secondAttribute="bottom" constant="40" id="V2j-Pq-V0g"/>
                 <constraint firstItem="J4U-5Z-39T" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VGt-UU-93O"/>
-                <constraint firstItem="pYd-t5-udU" firstAttribute="top" secondItem="J4U-5Z-39T" secondAttribute="bottom" constant="15" id="XFw-SO-3lc"/>
                 <constraint firstItem="DUG-FX-2gZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="42" id="cyx-nt-LYk"/>
                 <constraint firstItem="DUG-FX-2gZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dBE-8I-VVt"/>
                 <constraint firstItem="SHO-JQ-nsw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="dBy-FV-DwA"/>
+                <constraint firstItem="pYd-t5-udU" firstAttribute="top" secondItem="J4U-5Z-39T" secondAttribute="bottom" constant="10" id="jJR-Hc-h9L"/>
+                <constraint firstAttribute="trailing" secondItem="sfh-Mb-t4y" secondAttribute="trailing" id="n0T-xE-Ja9"/>
                 <constraint firstItem="J4U-5Z-39T" firstAttribute="top" secondItem="3RP-Rb-8T6" secondAttribute="bottom" constant="8" id="oCH-3q-5E5"/>
-                <constraint firstItem="GSj-CO-TKk" firstAttribute="top" secondItem="3RP-Rb-8T6" secondAttribute="bottom" constant="15" id="oZh-8M-WcJ"/>
+                <constraint firstItem="GSj-CO-TKk" firstAttribute="top" secondItem="3RP-Rb-8T6" secondAttribute="bottom" constant="10" id="oZh-8M-WcJ"/>
                 <constraint firstItem="aCk-Uw-9z4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="rpY-hh-WV7"/>
+                <constraint firstAttribute="trailing" secondItem="LCe-Lm-jlg" secondAttribute="trailing" id="sTw-Cu-lrG"/>
                 <constraint firstItem="J4U-5Z-39T" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="w9y-ix-7nE"/>
                 <constraint firstItem="GSj-CO-TKk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wmJ-nY-BFD"/>
                 <constraint firstAttribute="bottom" secondItem="0vY-SB-mbh" secondAttribute="bottom" constant="5" id="ygj-mh-yA3"/>
@@ -186,14 +251,16 @@
                 <outlet property="indexView" destination="sMW-Pg-3dZ" id="syV-FB-dDp"/>
                 <outlet property="loginview" destination="DUG-FX-2gZ" id="M7P-LX-caR"/>
                 <outlet property="musicColumnView" destination="GSj-CO-TKk" id="UvY-rU-tfK"/>
+                <outlet property="musicRankList" destination="LCe-Lm-jlg" id="bbQ-nR-Pqa"/>
                 <outlet property="musicStoryView" destination="3RP-Rb-8T6" id="trk-tA-pYN"/>
                 <outlet property="portrait" destination="f3Q-zg-TjX" id="5eB-HR-sJL"/>
                 <outlet property="praiseUsView" destination="pYd-t5-udU" id="aev-z7-9Ze"/>
                 <outlet property="searchBtn" destination="aCk-Uw-9z4" id="K7r-65-EPA"/>
                 <outlet property="settingsBtn" destination="0vY-SB-mbh" id="lXR-HQ-XnQ"/>
+                <outlet property="soundFictionView" destination="sfh-Mb-t4y" id="u6u-JS-HlH"/>
                 <outlet property="username" destination="Ha2-OL-RbW" id="Fgd-KO-e0Z"/>
             </connections>
-            <point key="canvasLocation" x="173" y="395"/>
+            <point key="canvasLocation" x="37" y="59"/>
         </view>
     </objects>
     <resources>

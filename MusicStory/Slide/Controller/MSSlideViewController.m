@@ -24,7 +24,7 @@
 
 @implementation MSSlideViewController
 
-#pragma mark - Life Cycle
+#pragma mark===Life Cycle===
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -40,7 +40,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUserAvatar) name:NOTIFY_UPDATE_USER_AVATAR object:nil];
 }
 
-#pragma mark - Private Function
+#pragma mark===Function===
 - (void)setLayout {
     [self.centerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.bottom.equalTo(self.view);
@@ -56,7 +56,6 @@
 }
 
 - (void)updateUserAvatar {
-    
     if ([AVUser currentUser]) {
         [self.centerView.portrait setImageWithURL:[NSURL URLWithString:[[AVUser currentUser] objectForKey:@"portrait"]]
                       usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -72,7 +71,22 @@
     [nav pushViewController:viewController animated:NO];
 }
 
-#pragma mark - MSSlideCenterViewDelegate
+#pragma mark===MSSlideCenterViewDelegate===
+
+- (void)alert:(NSString *)message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+- (BOOL)filterError:(NSError *)error {
+    if (error) {
+        [self alert:[error localizedDescription]];
+        return NO;
+    }
+    return YES;
+}
+
+// 登录
 -(void)slideCenterViewLoginViewDidClick {
     debugMethod();
     AVUser *user = [AVUser currentUser];
@@ -80,13 +94,13 @@
         MSUserInfoViewController *infoController = [[MSUserInfoViewController alloc] init];
         [self.navigationController presentViewController:[[MSBaseNavController alloc] initWithRootViewController:infoController] animated:YES completion:nil];
     } else {
-//  使用手机号+密码登陆，，
-//        UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
-//        UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
-//        [self.navigationController presentViewController:
-//         [[MSBaseNavController alloc] initWithRootViewController:loginViewController]
-//                                                animated:YES
-//                                              completion:nil];
+        //  使用手机号+密码登陆，，
+        //        UIStoryboard *story = [UIStoryboard storyboardWithName:@"LoginStoryBoard" bundle:[NSBundle mainBundle]];
+        //        UIViewController *loginViewController = [story instantiateViewControllerWithIdentifier:@"loginView"];
+        //        [self.navigationController presentViewController:
+        //         [[MSBaseNavController alloc] initWithRootViewController:loginViewController]
+        //                                                animated:YES
+        //                                              completion:nil];
         
         // 第三方微博登陆
         [AVOSCloudSNS loginWithCallback:^(id object, NSError *error) {
@@ -110,19 +124,6 @@
     }
 }
 
-- (void)alert:(NSString *)message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-    [alert show];
-}
-
-- (BOOL)filterError:(NSError *)error {
-    if (error) {
-        [self alert:[error localizedDescription]];
-        return NO;
-    }
-    return YES;
-}
-
 // 音乐故事
 -(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
@@ -130,9 +131,19 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_HOME];
 }
 
-// 音乐专栏
+// 音乐乐评
 -(void)slideCenterViewMusicColumnViewDidClick {
     debugMethod();
+}
+
+// 有声小说
+-(void)slideCenterViewSoundFictionViewDidClick {
+    debugMethod()
+}
+
+// 音乐榜单
+-(void)slideCenterViewMusicRankListViewDidClik {
+    debugMethod()
 }
 
 // 我的收藏
@@ -142,7 +153,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_COLLECTION];
 }
 
-// 赞我们一下
+// 赞我一下
 -(void)slideCenterViewPraiseUsViewDidClick {
     debugMethod();
 }
@@ -169,7 +180,7 @@
         
         _centerView.curView = [[UIView alloc] init];
         _centerView.curView = self.centerView.musicStoryView;
-        _centerView.indexView.y = self.centerView.musicStoryView.center.y;
+        _centerView.indexView.centerY = self.centerView.musicStoryView.center.y;
     }
     return _centerView;
 }

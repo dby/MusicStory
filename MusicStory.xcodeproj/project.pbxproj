@@ -980,7 +980,7 @@
 				TargetAttributes = {
 					435159D41C9EE24000EC1422 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3G3JV73KM2;
+						DevelopmentTeam = FT3RY85KVZ;
 					};
 					435159ED1C9EE24100EC1422 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1321,7 +1321,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunch;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 3G3JV73KM2;
+				DEVELOPMENT_TEAM = FT3RY85KVZ;
 				INFOPLIST_FILE = MusicStory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1339,7 +1339,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunch;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 3G3JV73KM2;
+				DEVELOPMENT_TEAM = FT3RY85KVZ;
 				INFOPLIST_FILE = MusicStory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
