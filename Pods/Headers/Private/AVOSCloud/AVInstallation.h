@@ -1,1 +1,1 @@
-../../../AVOSCloud/AVInstallation.h
+../../../AVOSCloud/AVOS/AVOSCloud/Push/AVInstallation.h

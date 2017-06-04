@@ -1,1 +1,1 @@
-../../../AVOSCloud/AVMessage.h
+../../../AVOSCloud/AVOS/AVOSCloud/IM/AVMessage.h

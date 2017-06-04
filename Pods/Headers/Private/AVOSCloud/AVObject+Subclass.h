@@ -1,1 +1,1 @@
-../../../AVOSCloud/AVObject+Subclass.h
+../../../AVOSCloud/AVOS/AVOSCloud/Object/AVObject+Subclass.h

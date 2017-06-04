@@ -50,7 +50,7 @@
     debugMethod();
     AVObject *avo = [[AVObject alloc] initWithClassName:@"Musics"];
     
-    avo.objectId = model.objectId;
+    //avo.objectId = model.objectId;
     [avo setObject:model.author_id   forKey:@"author_id"];
     [avo setObject:model.author_name forKey:@"author_name"];
     

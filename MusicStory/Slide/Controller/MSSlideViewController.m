@@ -128,7 +128,7 @@
 -(void)slideCenterViewMusicStoryViewDidClick {
     debugMethod();
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_HOME];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_music_story];
 }
 
 // 音乐乐评
@@ -138,19 +138,17 @@
 
 // 有声小说
 -(void)slideCenterViewSoundFictionViewDidClick {
-    debugMethod()
 }
 
 // 音乐榜单
 -(void)slideCenterViewMusicRankListViewDidClik {
-    debugMethod()
 }
 
 // 我的收藏
 -(void)slideCenterViewCollectViewDidClick {
     debugMethod();
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_COLLECTION];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_music_collection];
 }
 
 // 赞我一下

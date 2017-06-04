@@ -1,1 +1,1 @@
-../../../AVOSCloud/AVSubclassing.h
+../../../AVOSCloud/AVOS/AVOSCloud/Object/AVSubclassing.h

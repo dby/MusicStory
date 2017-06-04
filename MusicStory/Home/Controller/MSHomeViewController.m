@@ -74,8 +74,8 @@
     [self initComponents];
     [self showProgress];
     
-    self.viewModel.type = NOTIFY_OBJ_HOME;
-    self.currentCollectionType = NOTIFY_OBJ_HOME;
+    self.viewModel.type        = NOTIFY_OBJ_music_story;
+    self.currentCollectionType = NOTIFY_OBJ_music_story;
     [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
         
         [self.homeDataArray addObjectsFromArray:datasource];

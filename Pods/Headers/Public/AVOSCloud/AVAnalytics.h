@@ -1,1 +1,1 @@
-../../../AVOSCloud/AVAnalytics.h
+../../../AVOSCloud/AVOS/AVOSCloud/Analytics/AVAnalytics.h

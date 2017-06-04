@@ -1,1 +1,1 @@
-../../../AVOSCloudIM/AVIMAvailability.h
+../../../AVOSCloudIM/AVOS/AVOSCloudIM/AVIMAvailability.h

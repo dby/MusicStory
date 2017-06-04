@@ -1,1 +1,1 @@
-../../../AVOSCloudIM/AVIMSignature.h
+../../../AVOSCloudIM/AVOS/AVOSCloudIM/AVIMSignature.h

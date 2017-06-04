@@ -1,1 +1,1 @@
-../../../AVOSCloudIM/AVIMClientOpenOption.h
+../../../AVOSCloudIM/AVOS/AVOSCloudIM/AVIMClientOpenOption.h

@@ -1,1 +1,1 @@
-../../../AVOSCloudIM/AVIMConversationUpdateBuilder.h
+../../../AVOSCloudIM/AVOS/AVOSCloudIM/AVIMConversationUpdateBuilder.h

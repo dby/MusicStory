@@ -1,1 +1,1 @@
-../../../AVOSCloudCrashReporting/AVOSCloudCrashReporting.h
+../../../AVOSCloudCrashReporting/AVOS/AVOSCloudCrashReporting/AVOSCloudCrashReporting.h

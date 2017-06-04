@@ -1,1 +1,1 @@
-../../../AVOSCloud/AVGeoPoint.h
+../../../AVOSCloud/AVOS/AVOSCloud/Geo/AVGeoPoint.h

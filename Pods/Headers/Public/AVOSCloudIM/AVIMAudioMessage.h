@@ -1,1 +1,1 @@
-../../../AVOSCloudIM/AVIMAudioMessage.h
+../../../AVOSCloudIM/AVOS/AVOSCloudIM/TypedMessages/AVIMAudioMessage.h

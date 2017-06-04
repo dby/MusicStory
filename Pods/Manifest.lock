@@ -22,11 +22,25 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AVOSCloud (3.3.4)
-  - AVOSCloudCrashReporting (3.3.4):
-    - AVOSCloud
-  - AVOSCloudIM (3.3.4):
-    - AVOSCloud
+  - AVOSCloud (3.10.0)
+  - AVOSCloudCrashReporting (3.10.0):
+    - AVOSCloud (= 3.10.0)
+    - AVOSCloudCrashReporting/_ARC (= 3.10.0)
+    - AVOSCloudCrashReporting/_NOARC (= 3.10.0)
+  - AVOSCloudCrashReporting/_ARC (3.10.0):
+    - AVOSCloud (= 3.10.0)
+    - AVOSCloudCrashReporting/_NOARC (= 3.10.0)
+  - AVOSCloudCrashReporting/_NOARC (3.10.0):
+    - AVOSCloud (= 3.10.0)
+  - AVOSCloudIM (3.10.0):
+    - AVOSCloud (= 3.10.0)
+    - AVOSCloudIM/_ARC (= 3.10.0)
+    - AVOSCloudIM/_NOARC (= 3.10.0)
+  - AVOSCloudIM/_ARC (3.10.0):
+    - AVOSCloud (= 3.10.0)
+    - AVOSCloudIM/_NOARC (= 3.10.0)
+  - AVOSCloudIM/_NOARC (3.10.0):
+    - AVOSCloud (= 3.10.0)
   - BlocksKit (2.2.5):
     - BlocksKit/All (= 2.2.5)
   - BlocksKit/All (2.2.5):
@@ -44,20 +58,20 @@ PODS:
     - BlocksKit/DynamicDelegate
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
-  - JDStatusBarNotification (1.5.3)
+  - JDStatusBarNotification (1.5.5)
   - JRSwizzle (1.0)
   - LeanCloudSocial (0.0.8):
     - AFNetworking (~> 2.0)
     - AVOSCloud (~> 3.1)
-  - Masonry (1.0.1)
+  - Masonry (1.0.2)
   - OpenShare (0.0.1)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
-  - SVProgressHUD (2.0.3)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - SVProgressHUD (2.1.2)
   - UIActivityIndicator-for-SDWebImage (1.2):
     - SDWebImage (~> 3.7)
-  - YTKNetwork (1.1.0):
+  - YTKNetwork (1.3.0):
     - AFDownloadRequestOperation (~> 2.0)
     - AFNetworking (~> 2.0)
 
@@ -79,21 +93,21 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFDownloadRequestOperation: 748a1643423e1ddb23f2178f778087d4f0ae8ac7
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  AVOSCloud: d501e7f43719884b748214d3cb5a3da18a20fb46
-  AVOSCloudCrashReporting: d554b9505a772bce33dac69030bc9b3ae160b566
-  AVOSCloudIM: 6bcb080d9238e1de32a0ac1d6fe855225620feaa
+  AVOSCloud: 839b30ac3b382ad56c957ed6dd28a0a537d33d67
+  AVOSCloudCrashReporting: 931211f7185b6849d1bf9dfc935202745182cc8d
+  AVOSCloudIM: 13c9cf14b42304f4243d01906c17b5ee8f5529db
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
-  JDStatusBarNotification: 29413865af11c862c17180610b0f46a21118b412
+  JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   LeanCloudSocial: f7787dfc1559dc47263bbfd37a03c870352ad98a
-  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   OpenShare: a560580dbb729d5c0c3cc1ee84cd6aa4a07e94c6
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
-  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
-  YTKNetwork: a41c1df80d4f3b9d05c19c514a2c604e7a6ac341
+  YTKNetwork: a9fdf7968deefb06a58d988148558453005564c4
 
 PODFILE CHECKSUM: c768bf147c43a4623ddd6e2b73393886a7bebd0a
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.2.1.rc.1

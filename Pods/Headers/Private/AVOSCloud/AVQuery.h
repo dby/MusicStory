@@ -1,1 +1,1 @@
-../../../AVOSCloud/AVQuery.h
+../../../AVOSCloud/AVOS/AVOSCloud/Query/AVQuery.h

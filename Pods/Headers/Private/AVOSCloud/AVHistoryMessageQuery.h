@@ -1,1 +1,1 @@
-../../../AVOSCloud/AVHistoryMessageQuery.h
+../../../AVOSCloud/AVOS/AVOSCloud/IM/AVHistoryMessageQuery.h

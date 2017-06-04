@@ -98,7 +98,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     }
     
     if (self.hasDowloadedMusic) {
-        [JDStatusBarNotification updateStatus:self.lrcParser.wordArray[self.currentLrcLine]];
+        [JDStatusBarNotification showWithStatus:self.lrcParser.wordArray[self.currentLrcLine] styleName:JDStatusBarStyleDark];
     }
 }
 
@@ -190,14 +190,14 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     
     if ([_streamer bufferingRatio] >= 1.0) {
         self.hasDowloadedMusic = YES;
-        [JDStatusBarNotification dismiss];
+        //[JDStatusBarNotification dismiss];
         // 这里加延时，是为了使之可以正常释放
         [NSThread sleepForTimeInterval:0.5];
     } else {
         NSString *status = [NSString stringWithFormat:@"%.2f%%\t\t\t%@",  (int)([_streamer bufferingRatio]*10000)/100.0, [self getDownloadSpeed]];
         
-        [JDStatusBarNotification showProgress:[_streamer bufferingRatio]
-                                       status:status];
+        [JDStatusBarNotification showWithStatus:status styleName:JDStatusBarStyleDark];
+        [JDStatusBarNotification showProgress:[_streamer bufferingRatio]];
     }
 }
 
@@ -341,7 +341,6 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [_playButton setHighlighted:NO];
         
         // 被点击后 "avatar_bg" 透明
-//        [_playButton setBackgroundImage:[UIImage imageNamed:@"avatar_bg"] forState:UIControlStateSelected];
         [_playButton setImage:[UIImage imageNamed:@"toolbar_pause_h_p"] forState:UIControlStateSelected];
         [_playButton setImage:[UIImage imageNamed:@"tabbar_np_play"] forState:UIControlStateNormal];
         

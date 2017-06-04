@@ -57,14 +57,14 @@
     
     self.dataSource = [[NSMutableArray alloc] init];
     
-    if ([_type isEqualToString:NOTIFY_OBJ_HOME]) {
+    if ([_type isEqualToString:NOTIFY_OBJ_music_story]) {
         // 音乐故事
         AVQuery *query = [AVQuery queryWithClassName:@"Musics"];
         query.limit = EVERY_DATA_NUM;
         query.skip  = num;
-        [query orderByDescending:@"createdAt"];
+        [query orderByDescending:@"id"];
+        [query whereKey:@"id" greaterThanOrEqualTo:@(0)];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        
             if (!error) {
         
                 NSArray<AVObject *> *nearbyTodos = objects;
@@ -84,7 +84,7 @@
                 }
             }
         }];
-    } else if ([_type isEqualToString:NOTIFY_OBJ_COLLECTION]) {
+    } else if ([_type isEqualToString:NOTIFY_OBJ_music_collection]) {
         // 我的收藏
         AVUser *user = [AVUser currentUser];
         if (user) {

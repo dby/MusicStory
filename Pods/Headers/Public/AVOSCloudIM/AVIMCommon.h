@@ -1,1 +1,1 @@
-../../../AVOSCloudIM/AVIMCommon.h
+../../../AVOSCloudIM/AVOS/AVOSCloudIM/AVIMCommon.h

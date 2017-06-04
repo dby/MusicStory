@@ -1,1 +1,1 @@
-../../../AVOSCloud/AVSearchSortBuilder.h
+../../../AVOSCloud/AVOS/AVOSCloud/Search/AVSearchSortBuilder.h

@@ -40,8 +40,17 @@
 #define NOTIFY_ERRORBTNCLICK    @"NOTIFY_ERRORBTNCLICK"
 // 设置homeview类型 - 用于请求api
 #define NOTIFY_SETUPHOMEVIEWTYPE    @"NOTIFY_SETUPHOMEVIEWTYPE"
-#define NOTIFY_OBJ_HOME             @"homeViewHomeType"
-#define NOTIFY_OBJ_COLLECTION       @"homeViewCollectionType"
+/// 音乐故事
+#define NOTIFY_OBJ_music_story      @"musicStoryType"
+/// 音乐乐评
+#define NOTIFY_OBJ_music_criticism  @"musicCriticimsType"
+/// 音乐小文
+#define NOTIFY_OBJ_music_article    @"musicArticleType"
+/// 音乐榜单
+#define NOTIFY_OBJ_music_ranklist   @"musicRankListType"
+/// 我的收藏
+#define NOTIFY_OBJ_music_collection @"musicCollectionType"
+
 // 设置menu centreview 类型 - 用于切换centerView
 #define NOTIFY_SETUPCENTERVIEW      @"NOTIFY_SETUPCENTERVIEW"
 
@@ -56,7 +65,7 @@
 //每次从数据中读取20条数据
 #define EVERY_DATA_NUM 20
 
-//#define debugdebug
+#define debugdebug
 #ifdef debugdebug
 
 #define debugLog(...) NSLog(__VA_ARGS__)

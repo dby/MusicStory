@@ -102,7 +102,7 @@
 }
 // 有声小说事件
 - (void)soundFictionDidClick {
-    debugMethod()
+    //debugMethod();
     if (_curView == self.soundFictionView)
         return;
     self.curView            = self.soundFictionView;
@@ -112,7 +112,7 @@
 }
 // 音乐榜单事件
 - (void)musicRankListDidClick {
-    debugMethod()
+    //debugMethod()
     if (_curView == self.musicRankList)
         return;
     self.curView            = self.musicRankList;
