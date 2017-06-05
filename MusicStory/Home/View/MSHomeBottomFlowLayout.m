@@ -14,9 +14,9 @@
 -(void)prepareLayout {
     debugMethod();
     [super prepareLayout];
-    self.itemSize           = CGSizeMake(SCREEN_WIDTH/7 - 2, 70);
+    self.itemSize           = CGSizeMake(SCREEN_WIDTH/7 - 2, bottomViewHeight);
     self.scrollDirection    = UICollectionViewScrollDirectionHorizontal;
-    self.sectionInset       = UIEdgeInsetsMake(0, 2, 0, 2);
+    self.sectionInset       = UIEdgeInsetsMake(0, 0, 0, 0);
     self.minimumLineSpacing = 2;    //设置间距
 }
 

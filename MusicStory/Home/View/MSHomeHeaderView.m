@@ -50,14 +50,6 @@
         [self showMoveToFirstAnimation];
     }
     self.weakLabel.text = [NSDate weekWithDateString:homeModel.publish_date];
-    /*
-    [UIView animateWithDuration:0.5 animations:^{
-        self.weakLabel.backgroundColor  = [UIColor colorWithHexString:homeModel.recommanded_background_color];
-        self.dayLabel.backgroundColor   = [UIColor colorWithHexString:homeModel.recommanded_background_color];
-        self.rightTitleLabel.backgroundColor    = [UIColor colorWithHexString:homeModel.recommanded_background_color];
-        self.moveToFirstBtn.backgroundColor     = [UIColor colorWithHexString:homeModel.recommanded_background_color];
-    }];
-    */
 }
 
 -(instancetype)init {

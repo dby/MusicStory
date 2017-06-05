@@ -71,7 +71,14 @@
                                                  name:NOTIFY_ERRORBTNCLICK
                                                object:nil];
     
-    [self initComponents];
+    [self.view addSubview:self.headerView];
+    [self.view addSubview:self.bottomCollectView];
+    [self.view addSubview:self.centerCollectView];
+    
+    self.view.userInteractionEnabled = YES;
+    self.view.backgroundColor = UI_COLOR_APPNORMAL;
+    
+    [self buildRefreshView];
     [self showProgress];
     
     self.viewModel.type        = NOTIFY_OBJ_music_story;
@@ -91,19 +98,12 @@
         [self showNetWorkErrorView];
         [self hiddenProgress];
     }];
+    
     // 适配屏幕
     [self setupLayout];
 }
 
 #pragma mark - init
-
-- (void)initComponents {
-    
-    self.view.userInteractionEnabled = YES;
-    self.view.backgroundColor = UI_COLOR_APPNORMAL;
-    
-    [self buildRefreshView];
-}
 
 - (void)buildRefreshView {
     
@@ -119,7 +119,7 @@
         [self.viewModel getData:0 withSuccessBack:^(NSArray *datasource) {
             if (datasource.count == 0) {
                 [SVProgressHUD setMinimumDismissTimeInterval:0.3];
-                [SVProgressHUD showErrorWithStatus:@"没有数据"];
+                [SVProgressHUD showErrorWithStatus:@"温馨提示，没有更多数据了..."];
             } else {
                 [self.homeDataArray addObjectsFromArray:datasource];
                 [self.centerCollectView reloadData];
@@ -148,7 +148,7 @@
         [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
             if (datasource.count == 0) {
                 [SVProgressHUD setMinimumDismissTimeInterval:0.3];
-                [SVProgressHUD showInfoWithStatus:@"当前没有数据了..."];
+                [SVProgressHUD showInfoWithStatus:@"温馨提示，没有数据了..."];
             } else {
                 [self.homeDataArray addObjectsFromArray:datasource];
                 [self.centerCollectView reloadData];
@@ -383,15 +383,15 @@
     
     debugMethod();
     [UIView animateWithDuration:0.2 animations:^{
-        cell.y = 15;
+        cell.y = BOTTOM_VIEW_MINEST_Y;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.05 animations:^{
-            cell.y = 20;
-            debugLog(@"bottom vertical222 %lf", cell.y);
+            cell.y = BOTTOM_VIEW_MIN_Y;
+            NSLog(@"bottom vertical222 %lf", cell.y);
         }];
     }];
     
-    debugLog(@"bottom vertical %lf", cell.y);
+    NSLog(@"bottom vertical %lf", cell.y);
     UICollectionViewCell *lastBottomView = [self.bottomCollectView cellForItemAtIndexPath:self.lastIndex];
     
     if (lastBottomView != nil) {
@@ -408,20 +408,20 @@
 - (void)setupLayout {
     debugMethod();
     [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(20);
-        make.height.equalTo(@(SCREEN_HEIGHT*50/IPHONE5_HEIGHT));
+        make.top.equalTo(self.view).offset(20);
+        make.height.equalTo(@headerViewHeight);
         make.left.right.equalTo(self.view);
     }];
     
     [self.bottomCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
-        make.height.equalTo(@(SCREEN_HEIGHT*70/IPHONE5_HEIGHT));
+        make.height.equalTo(@bottomViewHeight);
     }];
     
     [self.centerCollectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.center.equalTo(self.view);
-        make.height.equalTo(@(SCREEN_HEIGHT*430/IPHONE5_HEIGHT));
+        make.top.equalTo(self.headerView.mas_bottom);
+        make.bottom.equalTo(self.bottomCollectView.mas_top);
     }];
 }
 
@@ -458,9 +458,8 @@
 
 -(MSHomeHeaderView *)headerView {
     if (!_headerView) {
-        _headerView             = [[MSHomeHeaderView alloc] init];
+        _headerView             = [MSHomeHeaderView new];
         _headerView.delegate    = self;
-        [self.view addSubview:_headerView];
     }
     return _headerView;
 }
@@ -468,7 +467,7 @@
 -(MSHomeCenterCollectionView *)centerCollectView {
     if (!_centerCollectView) {
         MSHomeCenterFlowLayout *collectLayout = [[MSHomeCenterFlowLayout alloc] init];
-        _centerCollectView = [[MSHomeCenterCollectionView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 420)
+        _centerCollectView = [[MSHomeCenterCollectionView alloc] initWithFrame:CGRectZero
                                                           collectionViewLayout:collectLayout];
         
         _centerCollectView.delegate                         = self;
@@ -476,10 +475,11 @@
         _centerCollectView.showsHorizontalScrollIndicator   = false;
         _centerCollectView.pagingEnabled                    = true;
         _centerCollectView.alwaysBounceHorizontal           = true;
-        [_centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
+
         _centerCollectView.backgroundColor  = UI_COLOR_APPNORMAL;
         _centerCollectView.tag              = 100;
-        [self.view addSubview:_centerCollectView];
+        
+        [_centerCollectView registerNib:[UINib nibWithNibName:@"MSHomeCenterItemView" bundle:nil] forCellWithReuseIdentifier:@"MSHomeCenterItemViewID"];
     }
     return _centerCollectView;
 }
@@ -487,12 +487,12 @@
 -(MSHomeBottomCollectView *)bottomCollectView {
     if (!_bottomCollectView) {
         MSHomeBottomFlowLayout *collectionLayout = [[MSHomeBottomFlowLayout alloc] init];
-        _bottomCollectView = [[MSHomeBottomCollectView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH-60, SCREEN_WIDTH, 60) collectionViewLayout:collectionLayout];
+        _bottomCollectView = [[MSHomeBottomCollectView alloc] initWithFrame:CGRectZero
+                                                       collectionViewLayout:collectionLayout];
         _bottomCollectView.bottomViewDelegate   = self;
         _bottomCollectView.delegate             = self;
         _bottomCollectView.dataSource           = self;
-        _bottomCollectView.backgroundColor = UI_COLOR_APPNORMAL;
-        [self.view addSubview:_bottomCollectView];
+        _bottomCollectView.backgroundColor      = UI_COLOR_APPNORMAL;
     }
     return _bottomCollectView;
 }

@@ -72,6 +72,7 @@
 		437CA7681CCFB32200444CE8 /* MSMusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 437CA7671CCFB32200444CE8 /* MSMusicModel.m */; };
 		4385F00F1CCB695E00B32FCD /* MSBaseNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4385F00E1CCB695E00B32FCD /* MSBaseNavController.m */; };
 		4385F0181CCB7CD100B32FCD /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 4385F0171CCB7CD100B32FCD /* template.html */; };
+		4387DD851EE53AAA009375EE /* UILabel+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 4387DD841EE53AAA009375EE /* UILabel+MS.m */; };
 		438CAADE1CFADE8F00A039B5 /* MSSearchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAADD1CFADE8F00A039B5 /* MSSearchViewCell.m */; };
 		438CAAE11CFAEC9B00A039B5 /* MSSearchViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAAE01CFAEC9B00A039B5 /* MSSearchViewModel.m */; };
 		438CAAE41CFAF8B100A039B5 /* MSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAAE31CFAF8B100A039B5 /* MSImageView.m */; };
@@ -256,6 +257,8 @@
 		4385F00D1CCB695E00B32FCD /* MSBaseNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSBaseNavController.h; path = Base/ViewController/MSBaseNavController.h; sourceTree = "<group>"; };
 		4385F00E1CCB695E00B32FCD /* MSBaseNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSBaseNavController.m; path = Base/ViewController/MSBaseNavController.m; sourceTree = "<group>"; };
 		4385F0171CCB7CD100B32FCD /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = template.html; path = Resources/template.html; sourceTree = "<group>"; };
+		4387DD831EE53AAA009375EE /* UILabel+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+MS.h"; path = "Other/extension/UILabel+MS.h"; sourceTree = "<group>"; };
+		4387DD841EE53AAA009375EE /* UILabel+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+MS.m"; path = "Other/extension/UILabel+MS.m"; sourceTree = "<group>"; };
 		438CAADC1CFADE8F00A039B5 /* MSSearchViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSearchViewCell.h; path = Search/View/MSSearchViewCell.h; sourceTree = "<group>"; };
 		438CAADD1CFADE8F00A039B5 /* MSSearchViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSearchViewCell.m; path = Search/View/MSSearchViewCell.m; sourceTree = "<group>"; };
 		438CAADF1CFAEC9B00A039B5 /* MSSearchViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSearchViewModel.h; path = Search/ViewModel/MSSearchViewModel.h; sourceTree = "<group>"; };
@@ -375,6 +378,8 @@
 				43640C441D1AD02700F2C025 /* UIImage+MS.m */,
 				43640C461D1AD58300F2C025 /* UIImageView+MS.h */,
 				43640C471D1AD58300F2C025 /* UIImageView+MS.m */,
+				4387DD831EE53AAA009375EE /* UILabel+MS.h */,
+				4387DD841EE53AAA009375EE /* UILabel+MS.m */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -1186,6 +1191,7 @@
 				43E69FFD1CEB79730087201D /* MSLoginViewController.m in Sources */,
 				43BD00D11CA04BFE006CEABC /* UIScrollView+MS.m in Sources */,
 				4302B5581D60712E00DC1ACB /* MSShareView.m in Sources */,
+				4387DD851EE53AAA009375EE /* UILabel+MS.m in Sources */,
 				4306F9041D0EEA07000C23CA /* MSCommentModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

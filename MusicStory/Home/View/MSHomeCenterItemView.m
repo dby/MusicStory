@@ -9,6 +9,7 @@
 #import "MSHomeCenterItemView.h"
 
 #import "MusicStory-Common-Header.h"
+#import "UILabel+MS.h"
 
 @interface MSHomeCenterItemView()
 
@@ -34,7 +35,9 @@
     self.centerImgView.clipsToBounds = YES;
     
     self.iconFlowerButton.userInteractionEnabled = YES;
-    self.fovView.layer.cornerRadius = 5;
+    
+    self.fovView.alpha = 0.5;
+    self.fovView.layer.cornerRadius = 10;
     
     [self.titleLabel    setBackgroundColor:[UIColor whiteColor]];
     [self.subTitleLabel setBackgroundColor:[UIColor whiteColor]];
@@ -56,7 +59,8 @@
     [_centerImgView setImageWithURL:[NSURL URLWithString:homeModel.music_imgs]
                    placeholderImage:[UIImage imageNamed:@"home_logo_pressed"] usingActivityIndicatorStyle:YES];
     
-    self.detailLabel.text   = homeModel.music_story;
+    [self.detailLabel setAttributText: homeModel.music_story lineSpace:5.0 isCenter:false];
+    
     self.authorLabel.text   = homeModel.author_name;
     self.fovCountLabel.text = homeModel.like_count;
     

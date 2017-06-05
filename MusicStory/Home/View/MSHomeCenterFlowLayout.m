@@ -14,7 +14,7 @@
 -(void)prepareLayout {
     [super prepareLayout];
     debugMethod();
-    self.itemSize = CGSizeMake(SCREEN_WIDTH-2*UI_MARGIN_5, SCREEN_HEIGHT*420/IPHONE5_HEIGHT);
+    self.itemSize = CGSizeMake(SCREEN_WIDTH-2*UI_MARGIN_5, SCREEN_HEIGHT-headerViewHeight-bottomViewHeight-2*UI_MARGIN_10);
     self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     self.sectionInset = UIEdgeInsetsMake(0, UI_MARGIN_5, 0, UI_MARGIN_5);
 }

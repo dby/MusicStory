@@ -58,14 +58,19 @@
 #define NOTIFY_UPDATE_USER_AVATAR   @"NOTIFY_UPDATE_USER_AVATAR"
 
 // HomeBottomView的item的Y坐标大小
-#define BOTTOM_VIEW_MAX_Y 70
-#define BOTTOM_VIEW_NOR_Y 60
-#define BOTTOM_VIEW_MIN_Y 15
+#define BOTTOM_VIEW_MAX_Y (SCREEN_HEIGHT*60/IPHONE5_HEIGHT)
+#define BOTTOM_VIEW_NOR_Y (SCREEN_HEIGHT*60/IPHONE5_HEIGHT)-10
+#define BOTTOM_VIEW_MIN_Y    5
+#define BOTTOM_VIEW_MINEST_Y 3
 
 //每次从数据中读取20条数据
 #define EVERY_DATA_NUM 20
 
-#define debugdebug
+//
+#define headerViewHeight (SCREEN_HEIGHT*50/IPHONE5_HEIGHT)
+#define bottomViewHeight (SCREEN_HEIGHT*60/IPHONE5_HEIGHT)
+
+//#define debugdebug
 #ifdef debugdebug
 
 #define debugLog(...) NSLog(__VA_ARGS__)
