@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSString *music_name;
 // 音乐背后的故事
 @property (nonatomic, strong) NSString *music_story;
+//
+@property (nonatomic, strong) NSString *music_intro;
 // 歌词
 @property (nonatomic, strong) NSString *music_lyrics;
 // 公开时间

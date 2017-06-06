@@ -36,13 +36,20 @@
     
     self.iconFlowerButton.userInteractionEnabled = YES;
     
-    self.fovView.alpha = 0.5;
+    self.fovView.opaque = 0.2;
+    self.fovView.backgroundColor = [UIColor colorWithRed:158/255.0 green:164/255.0 blue:170/255.0 alpha:0.5];
     self.fovView.layer.cornerRadius = 10;
     
-    [self.titleLabel    setBackgroundColor:[UIColor whiteColor]];
-    [self.subTitleLabel setBackgroundColor:[UIColor whiteColor]];
-    [self.detailLabel   setBackgroundColor:[UIColor whiteColor]];
-    [self.authorLabel   setBackgroundColor:[UIColor whiteColor]];
+    self.fovCountLabel.font = [UIFont boldSystemFontOfSize:12];
+    
+    self.titleLabel.backgroundColor = [UIColor whiteColor];
+    
+    self.detailLabel.verticalAlignment = VerticalAlignmentTop;
+    self.detailLabel.backgroundColor = [UIColor whiteColor];
+    
+    self.authorLabel.font = [UIFont boldSystemFontOfSize:16];
+    self.authorLabel.textColor = [UIColor colorWithRed:81/255.0 green:81/255.0 blue:81/255.0 alpha:1.0];
+    self.authorLabel.backgroundColor = [UIColor whiteColor];
     
 }
 
@@ -53,13 +60,12 @@
     _homeModel = homeModel;
     
     // 设置数据
-    self.titleLabel.text        = homeModel.music_name;
-    self.subTitleLabel.text     = homeModel.singer_name;
+    [self setTitle:homeModel.music_name singer_name:homeModel.singer_name];
     
     [_centerImgView setImageWithURL:[NSURL URLWithString:homeModel.music_imgs]
                    placeholderImage:[UIImage imageNamed:@"home_logo_pressed"] usingActivityIndicatorStyle:YES];
     
-    [self.detailLabel setAttributText: homeModel.music_story lineSpace:5.0 isCenter:false];
+    [self.detailLabel setAttributText: homeModel.music_intro lineSpace:5.0 isCenter:false];
     
     self.authorLabel.text   = homeModel.author_name;
     self.fovCountLabel.text = homeModel.like_count;
@@ -71,6 +77,31 @@
     } else {
         [self.iconFlowerButton setHighlighted:NO];
     }
+}
+
+#pragma mark - Function
+-(void)setTitle: (NSString *)music_name singer_name:(NSString *)singer_name
+{
+    music_name = [music_name stringByAppendingString:@"  "];
+    NSString *content = [music_name stringByAppendingString:singer_name];
+    NSMutableAttributedString *attrs = [[NSMutableAttributedString alloc] initWithString:content];
+    
+    [attrs addAttribute:NSFontAttributeName
+                  value:[UIFont boldSystemFontOfSize:20]
+                  range:NSMakeRange(0, music_name.length)];
+    [attrs addAttribute:NSForegroundColorAttributeName
+                  value:[UIColor colorWithRed:81/255.0 green:81/255.0 blue:81/255.0 alpha:1.0]
+                  range:NSMakeRange(0, music_name.length)];
+    
+    [attrs addAttribute:NSFontAttributeName
+                  value:[UIFont boldSystemFontOfSize:15]
+                  range:NSMakeRange(music_name.length, singer_name.length)];
+    
+    [attrs addAttribute:NSForegroundColorAttributeName
+                  value:[UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
+                  range:NSMakeRange(music_name.length, singer_name.length)];
+    
+    self.titleLabel.attributedText = attrs;
 }
 
 // 加载cell

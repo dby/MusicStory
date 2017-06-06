@@ -20,6 +20,7 @@
         self.icon_image     = [avo objectForKey:@"icon_image"];
         self.music_name     = [avo objectForKey:@"music_name"];
         self.music_story    = [avo objectForKey:@"music_story"];
+        self.music_intro    = [avo objectForKey:@"music_intro"];
         self.music_lyrics   = [avo objectForKey:@"music_lyrics"];
         self.publish_date   = [avo objectForKey:@"publish_date"];
         self.like_count     = [avo objectForKey:@"like_count"];
@@ -64,6 +65,7 @@
     [avo setObject:model.icon_image   forKey:@"icon_image"];
     [avo setObject:model.music_lyrics forKey:@"music_lyrics"];
     [avo setObject:model.music_story  forKey:@"music_story"];
+    [avo setObject:model.music_intro  forKey:@"music_intro"];
     [avo setObject:model.music_url    forKey:@"music_url"];
     
     [avo setObject:model.recommanded_background_color forKey:@"recommanded_background_color"];

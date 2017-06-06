@@ -344,7 +344,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
         self.toolBar.y = self.returnBtn.y;
         // 显示在标题栏动画
         [MSHomeDetailAnimationUtil homeDetailToolBarToNavAnimation:self.toolBar];
-        
     } else {
         self.toolBar.y = 345 - self.tableview.contentOffset.y;
         [MSHomeDetailAnimationUtil homeDetailToolBarToScrollAnimation:self.toolBar];
@@ -358,8 +357,8 @@ static NSString *commentIdentifier = @"commentIdentifier";
             make.top.equalTo(self.view.mas_bottom);
             make.leading.equalTo(@(self.view.width / 2 - 30));
         }];
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.playMusicBtn layoutIfNeeded];
+        [UIView animateWithDuration:0.35 animations:^{
+            [self.view layoutIfNeeded];
         }];
     }
     else if (currentPosition - self.lastPosition < -50){
@@ -368,8 +367,8 @@ static NSString *commentIdentifier = @"commentIdentifier";
             make.bottom.equalTo(self.view.mas_bottom);
             make.leading.equalTo(@(self.view.width / 2 - 30));
         }];
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.playMusicBtn layoutIfNeeded];
+        [UIView animateWithDuration:0.35 animations:^{
+            [self.view layoutIfNeeded];
         }];
     }
 }

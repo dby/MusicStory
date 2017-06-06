@@ -57,13 +57,16 @@
     debugMethod();
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = true;
+    
 }
 
 - (void)viewDidLoad {
     
     debugMethod();
     [super viewDidLoad];
-    [NSThread sleepForTimeInterval:0.5]; // 启动界面延长0.5秒
+    
+    [self setNeedsStatusBarAppearanceUpdate];
+    //[NSThread sleepForTimeInterval:0.5]; // 启动界面延长0.5秒
     
     self.automaticallyAdjustsScrollViewInsets = false;
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -387,11 +390,9 @@
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.05 animations:^{
             cell.y = BOTTOM_VIEW_MIN_Y;
-            NSLog(@"bottom vertical222 %lf", cell.y);
         }];
     }];
     
-    NSLog(@"bottom vertical %lf", cell.y);
     UICollectionViewCell *lastBottomView = [self.bottomCollectView cellForItemAtIndexPath:self.lastIndex];
     
     if (lastBottomView != nil) {
