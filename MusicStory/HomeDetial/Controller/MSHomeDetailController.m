@@ -201,8 +201,8 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 - (void)loadData {
     debugMethod();
+    [self showProgress];
     [self.commentViewModel getCommentData:self.commentSource.count withSuccessBack:^(NSArray *datasource) {
-        
         if (datasource.count == 0) {
             [SVProgressHUD setMinimumDismissTimeInterval:0.3];
             [SVProgressHUD showInfoWithStatus:@"已经没有评论了..."];
@@ -375,8 +375,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 #pragma mark - UIWebviewDelegate
 -(void)webViewDidFinishLoad:(UIWebView *)webView {
-    NSLog(@"%s", __func__);
-    
     CGRect frame        = webView.frame;
     frame.size.height   = 1;
     webView.frame       = frame;
@@ -386,7 +384,12 @@ static NSString *commentIdentifier = @"commentIdentifier";
     newFrame.size.height    = webViewHeight;
     webView.frame           = newFrame;
     
+    [self hiddenProgress];
     [self.tableview reloadData];
+}
+
+-(void)webViewDidStartLoad:(UIWebView *)webView {
+    [self showProgress];
 }
 
 #pragma mark - UITableview Delegate and Datasource
@@ -471,7 +474,8 @@ static NSString *commentIdentifier = @"commentIdentifier";
         _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
         // 顶部图片
         self.headerImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 270)];
-        self.headerImgView.contentMode = UIViewContentModeScaleAspectFill;
+        self.headerImgView.contentMode   = UIViewContentModeScaleAspectFill;
+        self.headerImgView.clipsToBounds = true;
         
         [_headerView addSubview:self.headerImgView];
         // appIcon

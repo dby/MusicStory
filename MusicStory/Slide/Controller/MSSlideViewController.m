@@ -116,7 +116,7 @@
                         AVUser *user = [AVUser currentUser];
                         [user setObject:object[@"username"] forKey:@"username"];
                         [user setObject:object[@"avatar"] forKey:@"portrait"];
-                        [user saveInBackgroundWithBlock:nil];
+                        [user saveInBackground];
                     }
                 }];
             }
@@ -138,6 +138,8 @@
 
 // 有声小说
 -(void)slideCenterViewSoundFictionViewDidClick {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_music_article];
 }
 
 // 音乐榜单

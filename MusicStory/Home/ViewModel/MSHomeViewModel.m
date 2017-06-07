@@ -84,6 +84,28 @@
                 }
             }
         }];
+    } else if ([_type isEqualToString:NOTIFY_OBJ_music_article]) {
+        // 音乐小文
+        AVQuery *query = [AVQuery queryWithClassName:@"NeighborEar"];
+        query.limit = EVERY_DATA_NUM;
+        query.skip = num;
+        [query orderByDescending:@"id"];
+        [query whereKey:@"id" greaterThanOrEqualTo:@(0)];
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            if (!error) {
+                NSArray<AVObject *> *nearbyTodos = objects;
+                for (AVObject *obj in nearbyTodos) {
+                    
+                    MSMusicModel *model = [[MSMusicModel alloc] initWithAVO:obj];
+                    [self.dataSource addObject:model];
+                }
+                
+                if (successCallBack) {
+                    self.successCallBack(self.dataSource);
+                }
+            }
+        }];
+        
     } else if ([_type isEqualToString:NOTIFY_OBJ_music_collection]) {
         // 我的收藏
         AVUser *user = [AVUser currentUser];
