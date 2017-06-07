@@ -57,7 +57,6 @@
     debugMethod();
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = true;
-    
 }
 
 - (void)viewDidLoad {

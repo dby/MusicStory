@@ -19,7 +19,6 @@
 
 @interface MSSlideViewController () < MSSlideCenterViewDelegate>
 
-
 @end
 
 @implementation MSSlideViewController
@@ -149,6 +148,12 @@
 // 我的收藏
 -(void)slideCenterViewCollectViewDidClick {
     debugMethod();
+    AVUser *user = [AVUser currentUser];
+    if (user == NULL) {
+        [SVProgressHUD showErrorWithStatus:@"温馨提示：请先登录..."];
+        return;
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_music_collection];
 }

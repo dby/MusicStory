@@ -201,7 +201,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 - (void)loadData {
     debugMethod();
-    [self showProgress];
     [self.commentViewModel getCommentData:self.commentSource.count withSuccessBack:^(NSArray *datasource) {
         if (datasource.count == 0) {
             [SVProgressHUD setMinimumDismissTimeInterval:0.3];

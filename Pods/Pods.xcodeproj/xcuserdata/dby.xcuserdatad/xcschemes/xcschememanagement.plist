@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JDStatusBarNotification.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -97,7 +102,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0D5FF1914A01E16FECC7286D43E2CAEC</key>
+		<key>0F6010548495CE24ABFC6A91E7F2CFE7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,22 +122,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>31D43FF6ACAEBE024F3E496943EAC018</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>539F4DF0261F3B65B49A0A16024A43FE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6D6593D54253E0A91BF79BA6F377558D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>82CA472C54474A3DCD2B0B62A702AB79</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8BE21730C45411A7BF4490CABCADEF08</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,17 +142,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9ED19D526CFC9BD148E242F828B581D1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A4282C514243C8CA2774E0CA6C8A40F8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>AB80AE15807CF9EC5D36687F29D39A80</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B5A5D10D4B30AF32976B9301824FFFB5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -172,7 +167,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>D7F1D470C0801FDA2A390505107D65F8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E063821EB849C602CC143CD9011186BE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E1BBB76ADBF2EF4EF2CE5DF6BBC77296</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E6F18E9CBC4B94C39F30B655F92CBA5C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

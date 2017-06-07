@@ -56,6 +56,24 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
+  - Firebase/AdMob (4.0.0):
+    - Firebase/Core
+    - Google-Mobile-Ads-SDK (= 7.20.0)
+  - Firebase/Core (4.0.0):
+    - FirebaseAnalytics (= 4.0.0)
+    - FirebaseCore (= 4.0.0)
+  - FirebaseAnalytics (4.0.0):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (4.0.0):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (2.0.0):
+    - FirebaseCore (~> 4.0)
+  - Google-Mobile-Ads-SDK (7.20.0)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
   - JDStatusBarNotification (1.5.5)
@@ -80,6 +98,8 @@ DEPENDENCIES:
   - AVOSCloudCrashReporting
   - AVOSCloudIM
   - BlocksKit
+  - Firebase/AdMob
+  - Firebase/Core
   - GRMustache (~> 7.3.2)
   - JDStatusBarNotification
   - LeanCloudSocial
@@ -97,6 +117,12 @@ SPEC CHECKSUMS:
   AVOSCloudCrashReporting: 931211f7185b6849d1bf9dfc935202745182cc8d
   AVOSCloudIM: 13c9cf14b42304f4243d01906c17b5ee8f5529db
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  Firebase: 284eea779b73fdff309791817da7c68bff8dd572
+  FirebaseAnalytics: 6f08e746f7d66f5452931bc2e822b5df9c66b64a
+  FirebaseCore: 85ad466044c2f013cdb167f85d426d15b128114a
+  FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
+  Google-Mobile-Ads-SDK: 168312cdc167fa22746d4ea8e839fc4825dd2966
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
@@ -108,6 +134,6 @@ SPEC CHECKSUMS:
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
   YTKNetwork: a9fdf7968deefb06a58d988148558453005564c4
 
-PODFILE CHECKSUM: c768bf147c43a4623ddd6e2b73393886a7bebd0a
+PODFILE CHECKSUM: 5a0614fffdf1cde431bdeab1e4e41763d07575ee
 
 COCOAPODS: 1.2.1.rc.1

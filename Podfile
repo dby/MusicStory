@@ -1,3 +1,5 @@
+source 'http://github.com/CocoaPods/Specs.git'
+
 platform :ios, '7.0'
 
 target 'MusicStory' do
@@ -15,6 +17,8 @@ target 'MusicStory' do
 	pod 'SVProgressHUD'
     pod 'OpenShare'
     pod 'JDStatusBarNotification'
+    pod 'Firebase/Core'
+    pod 'Firebase/AdMob'
 
 
     # 主模块(必须)
