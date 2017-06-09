@@ -10,6 +10,7 @@
 
 #import "MusicStory-Common-Header.h"
 
+#import "MusicContributionController.h"
 #import "MSBaseNavController.h"
 #import "MSHomeViewController.h"
 #import "MSLoginViewController.h"
@@ -130,19 +131,21 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_music_story];
 }
 
-// 音乐乐评
+// 音乐专栏
 -(void)slideCenterViewMusicColumnViewDidClick {
     debugMethod();
-}
-
-// 有声小说
--(void)slideCenterViewSoundFictionViewDidClick {
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_music_article];
 }
 
 // 音乐榜单
 -(void)slideCenterViewMusicRankListViewDidClik {
+}
+
+// 音乐投稿
+-(void)slideCenterViewMusicContributionViewDidClick {
+    MusicContributionController *controller = [MusicContributionController new];
+    [self presentViewController:controller animated:true completion:nil];
 }
 
 // 我的收藏

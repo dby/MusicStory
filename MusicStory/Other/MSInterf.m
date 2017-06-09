@@ -15,9 +15,17 @@
 @implementation MSInterf
 
 +(instancetype)shareInstance {
-    return [MSInterf new];
-}
+    
+    static MSInterf *sharedMyManager = nil;
+    static dispatch_once_t onceToken;
 
+    dispatch_once(&onceToken, ^{
+        sharedMyManager = [self new];
+        sharedMyManager.isNetWorkConnected = false;
+    });
+    
+    return sharedMyManager;
+}
 
 -(NSMutableArray *)backGroundColors {
     if (!_backGroundColors) {
@@ -43,6 +51,7 @@
     
     return _backGroundColors;
 }
+
 
 
 @end

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -65,14 +65,14 @@
                         <constraint firstItem="Qwx-ZL-AoR" firstAttribute="leading" secondItem="SCN-cB-TFI" secondAttribute="trailing" constant="14" id="qi8-G1-XWm"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GSj-CO-TKk" userLabel="音乐乐评">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GSj-CO-TKk" userLabel="音乐专栏">
                     <rect key="frame" x="0.0" y="182" width="600" height="40"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_article_normal" translatesAutoresizingMaskIntoConstraints="NO" id="jat-4p-CWp">
                             <rect key="frame" x="30" y="5" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="音乐乐评" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngx-09-yYB">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="音乐专栏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngx-09-yYB">
                             <rect key="frame" x="75" y="10" width="100" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
@@ -91,14 +91,14 @@
                         </mask>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sfh-Mb-t4y" userLabel="有声小说">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sfh-Mb-t4y" userLabel="音乐榜单">
                     <rect key="frame" x="0.0" y="232" width="600" height="40"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_fav_normal" translatesAutoresizingMaskIntoConstraints="NO" id="vtZ-34-gNU">
                             <rect key="frame" x="30" y="5" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="有声小说" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uft-2T-0qd" userLabel="有声小说">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="音乐榜单" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uft-2T-0qd">
                             <rect key="frame" x="75" y="10" width="100" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
@@ -111,14 +111,14 @@
                         <constraint firstAttribute="height" constant="40" id="TXi-p1-SdL"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LCe-Lm-jlg" userLabel="音乐榜单">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LCe-Lm-jlg" userLabel="音乐投稿">
                     <rect key="frame" x="0.0" y="282" width="600" height="40"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidebar_icon_fav_normal" translatesAutoresizingMaskIntoConstraints="NO" id="7zy-Ch-Dok">
                             <rect key="frame" x="30" y="5" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="音乐榜单" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reb-yp-lah">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="音乐投稿" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reb-yp-lah">
                             <rect key="frame" x="75" y="10" width="100" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
@@ -184,14 +184,13 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0vY-SB-mbh">
                     <rect key="frame" x="550" y="565" width="30" height="30"/>
-                    <color key="backgroundColor" red="1" green="0.14929760419794491" blue="0.19124206472308858" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="SB3-x0-glp"/>
                         <constraint firstAttribute="width" constant="30" id="v88-8O-nYT"/>
                     </constraints>
-                    <state key="normal" image="sidebar_icon_more_normal"/>
+                    <state key="normal" image="sidebar_icon_setting_normal"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCk-Uw-9z4" userLabel="搜索">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCk-Uw-9z4" userLabel="搜索">
                     <rect key="frame" x="20" y="565" width="30" height="30"/>
                     <color key="backgroundColor" red="0.55246361899999996" green="0.33615792010000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -251,13 +250,13 @@
                 <outlet property="indexView" destination="sMW-Pg-3dZ" id="syV-FB-dDp"/>
                 <outlet property="loginview" destination="DUG-FX-2gZ" id="M7P-LX-caR"/>
                 <outlet property="musicColumnView" destination="GSj-CO-TKk" id="UvY-rU-tfK"/>
-                <outlet property="musicRankList" destination="LCe-Lm-jlg" id="bbQ-nR-Pqa"/>
+                <outlet property="musicContribution" destination="LCe-Lm-jlg" id="vMX-Xp-vS4"/>
+                <outlet property="musicRankList" destination="sfh-Mb-t4y" id="qCu-m5-CEl"/>
                 <outlet property="musicStoryView" destination="3RP-Rb-8T6" id="trk-tA-pYN"/>
                 <outlet property="portrait" destination="f3Q-zg-TjX" id="5eB-HR-sJL"/>
                 <outlet property="praiseUsView" destination="pYd-t5-udU" id="aev-z7-9Ze"/>
                 <outlet property="searchBtn" destination="aCk-Uw-9z4" id="K7r-65-EPA"/>
                 <outlet property="settingsBtn" destination="0vY-SB-mbh" id="lXR-HQ-XnQ"/>
-                <outlet property="soundFictionView" destination="sfh-Mb-t4y" id="u6u-JS-HlH"/>
                 <outlet property="username" destination="Ha2-OL-RbW" id="Fgd-KO-e0Z"/>
             </connections>
             <point key="canvasLocation" x="37" y="59"/>
@@ -272,6 +271,6 @@
         <image name="sidebar_icon_article_normal" width="66" height="66"/>
         <image name="sidebar_icon_beauty_normal" width="66" height="66"/>
         <image name="sidebar_icon_fav_normal" width="66" height="66"/>
-        <image name="sidebar_icon_more_normal" width="66" height="66"/>
+        <image name="sidebar_icon_setting_normal" width="26" height="26"/>
     </resources>
 </document>

@@ -13,6 +13,8 @@
 #import "MSMenuViewController.h"
 #import "MSSlideViewController.h"
 
+#import "AFNetworking.h"
+
 #import "musicStory-Common-Header.h"
 
 @interface AppDelegate ()
@@ -23,7 +25,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+
     //Set Network
     [AFNetworkActivityIndicatorManager sharedManager].enabled   = YES;
     [YTKNetworkConfig sharedInstance].baseUrl                   = API_Server;
@@ -49,6 +51,7 @@
     
     [self configureShareSDK];
     [self configureWeiboSNSSDK];
+    [self monitorNetWorkStatus];
     
     return YES;
 }
@@ -94,6 +97,38 @@
 //                 break;
 //         }
 //     }];
+}
+
+- (void)monitorNetWorkStatus {
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    //设置监听
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                MSInterf.shareInstance.isNetWorkConnected = true;
+                NSLog(@"未识别的网络");
+                break;
+                
+            case AFNetworkReachabilityStatusNotReachable:
+                MSInterf.shareInstance.isNetWorkConnected = false;
+                NSLog(@"不可达的网络(未连接)");
+                break;
+                
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                MSInterf.shareInstance.isNetWorkConnected = true;
+                NSLog(@"2G,3G,4G...的网络");
+                break;
+                
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                MSInterf.shareInstance.isNetWorkConnected = false;
+                NSLog(@"wifi的网络");
+                break;
+            default:
+                break;
+        }
+    }];
+    //开始监听
+    [manager startMonitoring];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

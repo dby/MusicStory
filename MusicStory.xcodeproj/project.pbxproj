@@ -73,6 +73,7 @@
 		4385F00F1CCB695E00B32FCD /* MSBaseNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4385F00E1CCB695E00B32FCD /* MSBaseNavController.m */; };
 		4385F0181CCB7CD100B32FCD /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 4385F0171CCB7CD100B32FCD /* template.html */; };
 		4387DD851EE53AAA009375EE /* UILabel+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 4387DD841EE53AAA009375EE /* UILabel+MS.m */; };
+		4387DD8A1EEA9B35009375EE /* MusicContributionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4387DD891EEA9B35009375EE /* MusicContributionController.m */; };
 		438CAADE1CFADE8F00A039B5 /* MSSearchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAADD1CFADE8F00A039B5 /* MSSearchViewCell.m */; };
 		438CAAE11CFAEC9B00A039B5 /* MSSearchViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAAE01CFAEC9B00A039B5 /* MSSearchViewModel.m */; };
 		438CAAE41CFAF8B100A039B5 /* MSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAAE31CFAF8B100A039B5 /* MSImageView.m */; };
@@ -259,6 +260,8 @@
 		4385F0171CCB7CD100B32FCD /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = template.html; path = Resources/template.html; sourceTree = "<group>"; };
 		4387DD831EE53AAA009375EE /* UILabel+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+MS.h"; path = "Other/extension/UILabel+MS.h"; sourceTree = "<group>"; };
 		4387DD841EE53AAA009375EE /* UILabel+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+MS.m"; path = "Other/extension/UILabel+MS.m"; sourceTree = "<group>"; };
+		4387DD881EEA9B35009375EE /* MusicContributionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MusicContributionController.h; path = Contribution/ViewController/MusicContributionController.h; sourceTree = "<group>"; };
+		4387DD891EEA9B35009375EE /* MusicContributionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MusicContributionController.m; path = Contribution/ViewController/MusicContributionController.m; sourceTree = "<group>"; };
 		438CAADC1CFADE8F00A039B5 /* MSSearchViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSearchViewCell.h; path = Search/View/MSSearchViewCell.h; sourceTree = "<group>"; };
 		438CAADD1CFADE8F00A039B5 /* MSSearchViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSearchViewCell.m; path = Search/View/MSSearchViewCell.m; sourceTree = "<group>"; };
 		438CAADF1CFAEC9B00A039B5 /* MSSearchViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSearchViewModel.h; path = Search/ViewModel/MSSearchViewModel.h; sourceTree = "<group>"; };
@@ -459,6 +462,7 @@
 				435159DB1C9EE24000EC1422 /* AppDelegate.h */,
 				435159DC1C9EE24000EC1422 /* AppDelegate.m */,
 				43515A0C1C9EE6C400EC1422 /* Base */,
+				4387DD861EEA9ABF009375EE /* Contribution */,
 				434BCED11CD2800E007A4BB3 /* DOUAudioStreamer */,
 				43E69FF61CEB78D60087201D /* Login */,
 				43515A0B1C9EE6BD00EC1422 /* Home */,
@@ -776,6 +780,23 @@
 				4385F0171CCB7CD100B32FCD /* template.html */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		4387DD861EEA9ABF009375EE /* Contribution */ = {
+			isa = PBXGroup;
+			children = (
+				4387DD871EEA9AD5009375EE /* ViewController */,
+			);
+			name = Contribution;
+			sourceTree = "<group>";
+		};
+		4387DD871EEA9AD5009375EE /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4387DD881EEA9B35009375EE /* MusicContributionController.h */,
+				4387DD891EEA9B35009375EE /* MusicContributionController.m */,
+			);
+			name = ViewController;
 			sourceTree = "<group>";
 		};
 		43BD00CA1CA0487B006CEABC /* lib */ = {
@@ -1188,6 +1209,7 @@
 				4306F91A1D10308C000C23CA /* MSMenuViewController.m in Sources */,
 				436895261CA777EE00391424 /* UIView+MS.m in Sources */,
 				434BCF071CD2803F007A4BB3 /* DOUAudioVisualizer.m in Sources */,
+				4387DD8A1EEA9B35009375EE /* MusicContributionController.m in Sources */,
 				43E69FFD1CEB79730087201D /* MSLoginViewController.m in Sources */,
 				43BD00D11CA04BFE006CEABC /* UIScrollView+MS.m in Sources */,
 				4302B5581D60712E00DC1ACB /* MSShareView.m in Sources */,

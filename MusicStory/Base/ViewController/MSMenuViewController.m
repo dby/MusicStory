@@ -63,6 +63,7 @@
     self = [super init];
     if (self) {
         self.view.backgroundColor = UI_COLOR_APPNORMAL;
+
         self.centerController = centerController;
         self.homeController = (MSHomeViewController *)centerController.viewControllers.firstObject;
         self.leftController = leftController;
@@ -88,7 +89,7 @@
     if (_type == MenuViewControllerTypeHome) {
         
         if ([self.currentController isKindOfClass:[MSHomeViewController class]]) {
-            [self leftMenuHiddenAnimate];
+            //[self leftMenuHiddenAnimate];
             return;
         }
         
@@ -109,7 +110,8 @@
         
     }
     [self.centerController.view addSubview:self.currentController.view];
-    [self leftMenuHiddenAnimate];
+    //[self leftMenuHiddenAnimate];
+    [self leftMenuShowAnimate];
 }
 
 #pragma mark - build

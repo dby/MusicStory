@@ -26,7 +26,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mmH-qX-juy">
-                    <rect key="frame" x="199" y="8" width="36" height="36"/>
+                    <rect key="frame" x="194" y="8" width="36" height="36"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="9cg-Zi-LKa"/>
                         <constraint firstAttribute="height" constant="36" id="9oo-DI-i7i"/>
@@ -79,7 +79,7 @@
                         </mask>
                     </variation>
                 </label>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文章专栏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hkx-ZV-WQk">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="音乐专栏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hkx-ZV-WQk">
                     <rect key="frame" x="250" y="10" width="60" height="32"/>
                     <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -90,9 +90,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2c-ME-CzS">
-                    <rect key="frame" x="235" y="0.0" width="40" height="52"/>
+                    <rect key="frame" x="230" y="0.0" width="45" height="52"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="40" id="MFR-aT-Wcg"/>
+                        <constraint firstAttribute="width" constant="45" id="MFR-aT-Wcg"/>
                         <constraint firstAttribute="height" constant="52" id="hxb-L9-lhQ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="33"/>
@@ -104,7 +104,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_icon_sidebar_normal" translatesAutoresizingMaskIntoConstraints="NO" id="SAd-jV-473">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_list_normal" translatesAutoresizingMaskIntoConstraints="NO" id="SAd-jV-473">
                     <rect key="frame" x="8" y="9" width="35" height="35"/>
                 </imageView>
             </subviews>
@@ -169,6 +169,6 @@
     <resources>
         <image name="backtohome_normal" width="70" height="70"/>
         <image name="backtohome_pressed" width="70" height="70"/>
-        <image name="home_icon_sidebar_normal" width="60" height="60"/>
+        <image name="icon_list_normal" width="26" height="26"/>
     </resources>
 </document>

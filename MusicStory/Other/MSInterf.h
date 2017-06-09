@@ -11,7 +11,11 @@
 
 @interface MSInterf : NSObject
 
+// 网络是否可达
+@property (nonatomic, assign) BOOL isNetWorkConnected;
 @property (nonatomic, strong) NSMutableArray *backGroundColors;
+
+
 +(instancetype)shareInstance;
 
 @end

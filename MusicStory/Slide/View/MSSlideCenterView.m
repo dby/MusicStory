@@ -32,12 +32,12 @@
     // 音乐乐评
     [self.musicColumnView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                       action:@selector(musicColumnDidClick)]];
-    // 有声小说
-    [self.soundFictionView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                        action:@selector(soundFictionDidClick)]];
     // 音乐榜单
     [self.musicRankList addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                      action:@selector(musicRankListDidClick)]];
+    // 音乐投稿
+    [self.musicContribution addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                         action:@selector(musicContributionDidClick)]];
     // 我的收藏
     [self.collectView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self
                                                                                   action:@selector(collectViewDidClick)]];
@@ -77,7 +77,7 @@
 - (void)loginViewDidClick {
     debugMethod();
     self.curView = self.loginview;
-    self.indexView.hidden = true;
+    //self.indexView.hidden = true;
     [self.delegate slideCenterViewLoginViewDidClick];
 }
 // 音乐故事事件
@@ -90,7 +90,7 @@
     self.indexView.centerY  = self.musicStoryView.center.y;
     [self.delegate slideCenterViewMusicStoryViewDidClick];
 }
-// 音乐乐评事件
+// 音乐专栏事件
 - (void)musicColumnDidClick {
     debugMethod();
     if (_curView == self.musicColumnView)
@@ -100,25 +100,25 @@
     self.indexView.centerY  = self.musicColumnView.center.y;
     [self.delegate slideCenterViewMusicColumnViewDidClick];
 }
-// 有声小说事件
-- (void)soundFictionDidClick {
-    //debugMethod();
-    if (_curView == self.soundFictionView)
-        return;
-    self.curView            = self.soundFictionView;
-    self.indexView.hidden   = false;
-    self.indexView.centerY  = self.soundFictionView.center.y;
-    [self.delegate slideCenterViewSoundFictionViewDidClick];
-}
 // 音乐榜单事件
 - (void)musicRankListDidClick {
-    //debugMethod()
+    //debugMethod();
     if (_curView == self.musicRankList)
         return;
     self.curView            = self.musicRankList;
     self.indexView.hidden   = false;
     self.indexView.centerY  = self.musicRankList.center.y;
     [self.delegate slideCenterViewMusicRankListViewDidClik];
+}
+// 音乐榜单事件
+- (void)musicContributionDidClick {
+    //debugMethod()
+    if (_curView == self.musicContribution)
+        return;
+    self.curView            = self.musicContribution;
+    self.indexView.hidden   = false;
+    self.indexView.centerY  = self.musicContribution.center.y;
+    [self.delegate slideCenterViewMusicContributionViewDidClick];
 }
 // 我的收藏事件
 - (void)collectViewDidClick {

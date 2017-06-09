@@ -15,12 +15,12 @@
 -(void)slideCenterViewLoginViewDidClick;
 // 音乐故事
 -(void)slideCenterViewMusicStoryViewDidClick;
-// 音乐乐评
+// 音乐专栏
 - (void)slideCenterViewMusicColumnViewDidClick;
-// 有声小说
-- (void)slideCenterViewSoundFictionViewDidClick;
 // 音乐榜单
 - (void)slideCenterViewMusicRankListViewDidClik;
+// 音乐榜单
+- (void)slideCenterViewMusicContributionViewDidClick;
 // 赞我一下
 -(void)slideCenterViewPraiseUsViewDidClick;
 // 我的收藏
@@ -40,12 +40,12 @@
 @property (weak, nonatomic) IBOutlet UIView *loginview;
 // 音乐故事
 @property (weak, nonatomic) IBOutlet UIView *musicStoryView;
-// 音乐乐评
+// 音乐专栏
 @property (weak, nonatomic) IBOutlet UIView *musicColumnView;
-// 有声小说
-@property (weak, nonatomic) IBOutlet UIView *soundFictionView;
 // 音乐榜单
 @property (weak, nonatomic) IBOutlet UIView *musicRankList;
+// 音乐投稿
+@property (weak, nonatomic) IBOutlet UIView *musicContribution;
 // 我的收藏
 @property (weak, nonatomic) IBOutlet UIView *collectView;
 // 赞我一下

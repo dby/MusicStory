@@ -223,7 +223,7 @@
         
         MSHomeBottomitemView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeBottomItemViewID" forIndexPath:indexPath];
         cell.y          = BOTTOM_VIEW_NOR_Y;
-        cell.iconUrl    = model.icon_image;
+        cell.iconUrl    = model.singer_portrait;
         
         return cell;
     }
