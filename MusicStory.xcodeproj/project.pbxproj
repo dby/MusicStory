@@ -74,6 +74,8 @@
 		4385F0181CCB7CD100B32FCD /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 4385F0171CCB7CD100B32FCD /* template.html */; };
 		4387DD851EE53AAA009375EE /* UILabel+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 4387DD841EE53AAA009375EE /* UILabel+MS.m */; };
 		4387DD8A1EEA9B35009375EE /* MusicContributionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4387DD891EEA9B35009375EE /* MusicContributionController.m */; };
+		4387DD8F1EEAE59A009375EE /* ErrorPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4387DD8E1EEAE59A009375EE /* ErrorPromptView.m */; };
+		4387DD961EEAE949009375EE /* ErrorPromptUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4387DD951EEAE949009375EE /* ErrorPromptUtil.m */; };
 		438CAADE1CFADE8F00A039B5 /* MSSearchViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAADD1CFADE8F00A039B5 /* MSSearchViewCell.m */; };
 		438CAAE11CFAEC9B00A039B5 /* MSSearchViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAAE01CFAEC9B00A039B5 /* MSSearchViewModel.m */; };
 		438CAAE41CFAF8B100A039B5 /* MSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 438CAAE31CFAF8B100A039B5 /* MSImageView.m */; };
@@ -262,6 +264,10 @@
 		4387DD841EE53AAA009375EE /* UILabel+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+MS.m"; path = "Other/extension/UILabel+MS.m"; sourceTree = "<group>"; };
 		4387DD881EEA9B35009375EE /* MusicContributionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MusicContributionController.h; path = Contribution/ViewController/MusicContributionController.h; sourceTree = "<group>"; };
 		4387DD891EEA9B35009375EE /* MusicContributionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MusicContributionController.m; path = Contribution/ViewController/MusicContributionController.m; sourceTree = "<group>"; };
+		4387DD8D1EEAE59A009375EE /* ErrorPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorPromptView.h; path = Other/ErrorPrompt/ErrorPromptView.h; sourceTree = "<group>"; };
+		4387DD8E1EEAE59A009375EE /* ErrorPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ErrorPromptView.m; path = Other/ErrorPrompt/ErrorPromptView.m; sourceTree = "<group>"; };
+		4387DD941EEAE949009375EE /* ErrorPromptUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorPromptUtil.h; path = Other/ErrorPrompt/ErrorPromptUtil.h; sourceTree = "<group>"; };
+		4387DD951EEAE949009375EE /* ErrorPromptUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ErrorPromptUtil.m; path = Other/ErrorPrompt/ErrorPromptUtil.m; sourceTree = "<group>"; };
 		438CAADC1CFADE8F00A039B5 /* MSSearchViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSearchViewCell.h; path = Search/View/MSSearchViewCell.h; sourceTree = "<group>"; };
 		438CAADD1CFADE8F00A039B5 /* MSSearchViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSearchViewCell.m; path = Search/View/MSSearchViewCell.m; sourceTree = "<group>"; };
 		438CAADF1CFAEC9B00A039B5 /* MSSearchViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSearchViewModel.h; path = Search/ViewModel/MSSearchViewModel.h; sourceTree = "<group>"; };
@@ -616,6 +622,7 @@
 		43515A381C9F084400EC1422 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				4387DD8B1EEAE536009375EE /* ErrorPrompt */,
 				43CE0EB01D15123300FE8983 /* plist */,
 				4330F3601CA431D500739118 /* extension */,
 				43BD00CA1CA0487B006CEABC /* lib */,
@@ -797,6 +804,17 @@
 				4387DD891EEA9B35009375EE /* MusicContributionController.m */,
 			);
 			name = ViewController;
+			sourceTree = "<group>";
+		};
+		4387DD8B1EEAE536009375EE /* ErrorPrompt */ = {
+			isa = PBXGroup;
+			children = (
+				4387DD8D1EEAE59A009375EE /* ErrorPromptView.h */,
+				4387DD8E1EEAE59A009375EE /* ErrorPromptView.m */,
+				4387DD941EEAE949009375EE /* ErrorPromptUtil.h */,
+				4387DD951EEAE949009375EE /* ErrorPromptUtil.m */,
+			);
+			name = ErrorPrompt;
 			sourceTree = "<group>";
 		};
 		43BD00CA1CA0487B006CEABC /* lib */ = {
@@ -1140,6 +1158,7 @@
 				434BCF021CD2803F007A4BB3 /* DOUAudioPlaybackItem.m in Sources */,
 				4306F90D1D0EEA1C000C23CA /* MSCommentView.m in Sources */,
 				43515A221C9EF34100EC1422 /* MSHomeViewController.m in Sources */,
+				4387DD961EEAE949009375EE /* ErrorPromptUtil.m in Sources */,
 				434BCF0E1CD284C5007A4BB3 /* Track.m in Sources */,
 				436895231CA7690B00391424 /* MSHomeBottomCollectView.m in Sources */,
 				43515A311C9EF53900EC1422 /* MSHomeHeaderView.m in Sources */,
@@ -1155,6 +1174,7 @@
 				4306F9111D0EEA36000C23CA /* MSCommentViewModel.m in Sources */,
 				434BCEFD1CD2803F007A4BB3 /* DOUAudioEventLoop.m in Sources */,
 				4306F8FD1D0E4B59000C23CA /* MSHomeDetailToolView.m in Sources */,
+				4387DD8F1EEAE59A009375EE /* ErrorPromptView.m in Sources */,
 				4333485B1CE4F02D004689FA /* MSRefreshFooterView.m in Sources */,
 				43CE0EB51D151CC800FE8983 /* MSAboutViewController.m in Sources */,
 				435151E41CA6E9DB00094EDD /* UIColor+MS.m in Sources */,

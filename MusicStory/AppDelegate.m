@@ -14,6 +14,7 @@
 #import "MSSlideViewController.h"
 
 #import "AFNetworking.h"
+#import "ErrorPromptUtil.h"
 
 #import "musicStory-Common-Header.h"
 
@@ -106,21 +107,25 @@
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
                 MSInterf.shareInstance.isNetWorkConnected = true;
+                [ErrorPromptUtil hideErrorPrompt];
                 NSLog(@"未识别的网络");
                 break;
                 
             case AFNetworkReachabilityStatusNotReachable:
                 MSInterf.shareInstance.isNetWorkConnected = false;
+                [ErrorPromptUtil showErrorPrompt:@"网络未连接，请检查当前网络状态..."];
                 NSLog(@"不可达的网络(未连接)");
                 break;
                 
             case AFNetworkReachabilityStatusReachableViaWWAN:
                 MSInterf.shareInstance.isNetWorkConnected = true;
+                [ErrorPromptUtil hideErrorPrompt];
                 NSLog(@"2G,3G,4G...的网络");
                 break;
                 
             case AFNetworkReachabilityStatusReachableViaWiFi:
-                MSInterf.shareInstance.isNetWorkConnected = false;
+                MSInterf.shareInstance.isNetWorkConnected = true;
+                [ErrorPromptUtil hideErrorPrompt];
                 NSLog(@"wifi的网络");
                 break;
             default:

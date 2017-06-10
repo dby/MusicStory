@@ -20,6 +20,15 @@
 // 默认背景色
 #define UI_COLOR_APPNORMAL  [UIColor colorWithRed:54/255.0 green:142/255.0 blue:198/155.0 alpha:1]
 #define UI_COLOR_BORDER     [UIColor colorWithRed: 240/255.0  green: 240/255.0 blue: 240/255.0 alpha: 1]
+
+#define MS_BLACK        [UIColor colorWithRed: 67.0/255.0   green: 65.0/255.0  blue: 66.0/255.0  alpha: 1]
+#define MS_GRAY         [UIColor colorWithRed: 158.0/255.0  green: 154.0/255.0 blue: 152.0/255.0 alpha: 1]
+#define MS_LIGHTGRAY    [UIColor colorWithRed: 203.0/255.0  green: 201.0/255.0 blue: 202.0/255.0 alpha: 1]
+#define MS_GREEN        [UIColor colorWithRed: 74.0/255.0   green: 186.0/255.0 blue: 78.0/255.0  alpha: 1]
+#define MS_RED          [UIColor colorWithRed: 244.0/255.0  green: 66.0/255.0  blue: 54.0/255.0  alpha: 1]
+#define MS_YELLOW       [UIColor colorWithRed: 247.0/255.0  green: 147.0/255.0 blue: 0.0/255.0   alpha: 1]
+#define MS_PINK         [UIColor colorWithRed: 252.0/255.0  green: 221.0/255.0 blue: 220.0/255.0 alpha: 1]
+
 // MARK: - 字体
 #define UI_FONT_20 [UIFont systemFontOfSize:20]
 #define UI_FONT_18 [UIFont systemFontOfSize:18]
