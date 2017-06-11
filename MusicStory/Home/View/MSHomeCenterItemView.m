@@ -37,6 +37,7 @@
     self.iconFlowerButton.userInteractionEnabled = YES;
     
     self.fovView.opaque = 0.2;
+    self.fovView.userInteractionEnabled = true;
     self.fovView.backgroundColor = [UIColor colorWithRed:158/255.0 green:164/255.0 blue:170/255.0 alpha:0.5];
     self.fovView.layer.cornerRadius = 10;
     

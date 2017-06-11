@@ -12,8 +12,10 @@
 
 @interface MSMusicModel : NSObject
 
-// id
+// objectId
 @property (nonatomic, strong) NSString *objectId;
+// id
+@property (nonatomic, assign) NSInteger iid;
 // 中间照片
 @property (nonatomic, strong) NSString *music_imgs;
 // 底部的照片
@@ -49,7 +51,7 @@
 // 歌手头像
 @property (nonatomic, strong) NSString *singer_portrait;
 
-// 背景色
+// 背景色===数据库中并没有该字段
 @property (nonatomic, strong) UIColor *recommanded_background_color;
 
 @property (nonatomic, strong) NSDate *createdAt;

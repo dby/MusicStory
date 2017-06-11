@@ -16,6 +16,7 @@
     if (self) {
         
         self.objectId       = avo.objectId;
+        self.iid            = [[avo objectForKey:@"id"] integerValue];
         self.music_imgs     = [avo objectForKey:@"music_imgs"];
         self.icon_image     = [avo objectForKey:@"icon_image"];
         self.music_name     = [avo objectForKey:@"music_name"];
@@ -35,9 +36,8 @@
         self.singer_brief   = [avo objectForKey:@"singer_brief"];
         
         self.singer_portrait                = [avo objectForKey:@"singer_portrait"];
-//        self.recommanded_background_color   = [avo objectForKey:@"recommanded_background_color"];
-        self.recommanded_background_color = [MSInterf shareInstance].backGroundColors[rand()%16];
-        
+        self.recommanded_background_color = [MSInterf shareInstance].backGroundColors[rand()%14];
+
         self.createdAt = avo.createdAt;
         self.updatedAt = avo.updatedAt;
         self.ACL       = avo.ACL;
@@ -49,9 +49,8 @@
 + (AVObject *)MusicModelToAVObject :(MSMusicModel *)model {
     
     debugMethod();
-    AVObject *avo = [[AVObject alloc] initWithClassName:@"Musics"];
-    
-    //avo.objectId = model.objectId;
+    AVObject *avo = [AVObject objectWithClassName:@"Musics" objectId:model.objectId];
+    [avo setObject:[NSNumber numberWithInteger:model.iid] forKey:@"id"];
     [avo setObject:model.author_id   forKey:@"author_id"];
     [avo setObject:model.author_name forKey:@"author_name"];
     
@@ -68,7 +67,6 @@
     [avo setObject:model.music_intro  forKey:@"music_intro"];
     [avo setObject:model.music_url    forKey:@"music_url"];
     
-    [avo setObject:model.recommanded_background_color forKey:@"recommanded_background_color"];
     [avo setObject:model.like_count   forKey:@"like_count"];
     [avo setObject:model.publish_date forKey:@"publish_date"];
     

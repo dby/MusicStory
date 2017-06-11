@@ -62,8 +62,6 @@
 static NSString *homeDetailCellID = @"HomeDetailCell";
 static NSString *commentIdentifier = @"commentIdentifier";
 
-
-
 @implementation MSHomeDetailController
 
 #pragma mark - Life Cycle
@@ -238,8 +236,8 @@ static NSString *commentIdentifier = @"commentIdentifier";
     debugMethod();
     [self.commentViewModel getCommentData:self.commentSource.count withSuccessBack:^(NSArray *datasource) {
         if (datasource.count == 0) {
-            [SVProgressHUD setMinimumDismissTimeInterval:0.3];
             [SVProgressHUD showInfoWithStatus:@"已经没有评论了..."];
+            [SVProgressHUD dismissWithDelay:0.5];
         } else {
             [self.commentSource addObjectsFromArray:datasource];
             [self.tableview reloadData];
@@ -308,11 +306,11 @@ static NSString *commentIdentifier = @"commentIdentifier";
                 [relation addObject:obj];
                 [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {
-                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
                         [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
+                        [SVProgressHUD dismissWithDelay:0.5];
                     } else {
-                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
                         [SVProgressHUD showSuccessWithStatus:error.debugDescription];
+                        [SVProgressHUD dismissWithDelay:0.5];
                     }
                 }];
                 [self.toolBar.collectButton setSelected:YES];
@@ -328,11 +326,11 @@ static NSString *commentIdentifier = @"commentIdentifier";
                 [relation removeObject:obj];
                 [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {
-                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
                         [SVProgressHUD showSuccessWithStatus:@"取消收藏"];
+                        [SVProgressHUD dismissWithDelay:0.5];
                     } else {
-                        [SVProgressHUD setMinimumDismissTimeInterval:0.5];
                         [SVProgressHUD showSuccessWithStatus:error.debugDescription];
+                        [SVProgressHUD dismissWithDelay:0.5];
                     }
                 }];
                 [self.toolBar.collectButton setSelected:NO];
