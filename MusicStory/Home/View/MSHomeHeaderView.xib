@@ -104,7 +104,7 @@
                     </variation>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_list_normal" translatesAutoresizingMaskIntoConstraints="NO" id="SAd-jV-473">
-                    <rect key="frame" x="8" y="9" width="35" height="35"/>
+                    <rect key="frame" x="11" y="13.5" width="29" height="26"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -134,12 +134,11 @@
                 <constraint firstAttribute="bottom" secondItem="gov-Mw-e8J" secondAttribute="bottom" id="hQS-Ti-c8S"/>
                 <constraint firstItem="Hkx-ZV-WQk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="kfi-Cd-L3u"/>
                 <constraint firstItem="G2c-ME-CzS" firstAttribute="centerY" secondItem="mmH-qX-juy" secondAttribute="centerY" id="lTf-yb-p3O"/>
-                <constraint firstItem="SAd-jV-473" firstAttribute="bottom" secondItem="mmH-qX-juy" secondAttribute="bottom" id="m1t-mb-7Be"/>
                 <constraint firstAttribute="trailing" secondItem="wh1-XB-3H5" secondAttribute="trailing" constant="10" id="mKm-Mq-ZEA"/>
                 <constraint firstAttribute="trailing" secondItem="wh1-XB-3H5" secondAttribute="trailing" constant="10" id="nI4-hg-1tO"/>
                 <constraint firstAttribute="bottom" secondItem="Hkx-ZV-WQk" secondAttribute="bottom" constant="10" id="pae-Se-JEO"/>
                 <constraint firstAttribute="bottom" secondItem="xgL-EZ-0hc" secondAttribute="bottom" id="tgx-TA-G3J"/>
-                <constraint firstItem="SAd-jV-473" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="wFC-4v-ppg"/>
+                <constraint firstItem="SAd-jV-473" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" constant="3" id="wFC-4v-ppg"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">

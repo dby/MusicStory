@@ -57,6 +57,9 @@
     debugMethod();
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = true;
+    
+    // 取消播放电影
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"STOP_PLAY_MUSIC" object:nil];
 }
 
 - (void)viewDidLoad {

@@ -162,6 +162,7 @@
         _conttentTextView = [UITextView new];
         _conttentTextView.layer.borderWidth = 1;
         _conttentTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _conttentTextView.returnKeyType = UIReturnKeyDone;
         //_conttentTextView.backgroundColor = [UIColor blueColor];
     }
     return _conttentTextView;

@@ -85,6 +85,8 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [self setHeaderData];
     [self setWebViewData:self.model.music_story];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopMusicPlaying) name:@"STOP_PLAY_MUSIC" object:nil];
+    
     [self.tableview footerViewPullToRefresh:MSRefreshDirectionVertical callback: ^{
         [self loadData];
     }];
@@ -111,6 +113,10 @@ static NSString *commentIdentifier = @"commentIdentifier";
     
     [self.playMusicBtn deallocTimer];
      */
+}
+
+-(void)dealloc {
+    
 }
 
 - (instancetype)initWithModel :(MSMusicModel *)model {
@@ -169,7 +175,17 @@ static NSString *commentIdentifier = @"commentIdentifier";
         [self.storyBtn setSelected:false];
         [self.lyricsBtn setSelected:true];
         [self.infoLabel setText:@"音乐歌词"];
-        [self setWebViewData:self.model.music_lyrics];
+        
+        NSArray *lyricsArr = [self.model.music_lyrics componentsSeparatedByString:@"\r"];
+        NSString *lyrics = @"";
+        
+        for (NSString *item in lyricsArr) {
+            lyrics = [lyrics stringByAppendingString:@"<p>"];
+            lyrics = [lyrics stringByAppendingString:item];
+            lyrics = [lyrics stringByAppendingString:@"</p>"];
+        }
+        
+        [self setWebViewData:lyrics];
     }
 }
 
@@ -233,6 +249,18 @@ static NSString *commentIdentifier = @"commentIdentifier";
     } withErrorCallBack:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:error.description];
     }];
+}
+
+- (void)stopMusicPlaying {
+    if (self.playMusicBtn) {
+        [self.playMusicBtn stop];
+    }
+    
+    if ([JDStatusBarNotification isVisible]) {
+        [JDStatusBarNotification dismiss];
+    }
+    
+    [self.playMusicBtn deallocTimer];
 }
 
 #pragma mark - commentView delegate
@@ -318,9 +346,19 @@ static NSString *commentIdentifier = @"commentIdentifier";
     debugMethod();
     
     NSString *path = [[FileManager getDocumentsPath] stringByAppendingString:@"/MusicStory"];
+    NSString *fileName = [path stringByAppendingString: [NSString stringWithFormat:@"/%@.mp3", self.model.music_name]];
+    
     if (![FileManager isExistAtPath:path]) {
         [FileManager createDirectory:@"MusicStory"];
     }
+    
+    if ([FileManager isExistAtPath:fileName]) {
+        [SVProgressHUD showInfoWithStatus:@"该音乐已经下载过..."];
+        [SVProgressHUD dismissWithDelay:0.5];
+        
+        return;
+    }
+    
     
     AVFile *file = [AVFile fileWithURL:self.model.music_url];
     [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -329,10 +367,11 @@ static NSString *commentIdentifier = @"commentIdentifier";
                       fileName:[NSString stringWithFormat:@"%@.mp3", self.model.music_name]
                       fileData:data];
         
-        NSLog(@"data: %lu", (unsigned long)data.length);
+        [SVProgressHUD showInfoWithStatus:@"下载成功!!!"];
+        [SVProgressHUD dismissWithDelay:0.5];
         
     } progressBlock:^(NSInteger percentDone) {
-        NSLog(@"progress: %ld", (long)percentDone);
+        [SVProgressHUD showProgress:percentDone/100.0 status:@"正在下载中..."];
     }];
 }
 
@@ -440,7 +479,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     debugMethod();
     if ([indexPath section] == 0) {
         UITableViewCell *cell           = [self.tableview dequeueReusableCellWithIdentifier:homeDetailCellID forIndexPath:indexPath];
@@ -512,11 +551,13 @@ static NSString *commentIdentifier = @"commentIdentifier";
         CGFloat appTitleLabelX  = CGRectGetMaxX(_appIconView.frame) + UI_MARGIN_20;
         CGFloat appTitleLabelW  = SCREEN_WIDTH - UI_MARGIN_20 - appTitleLabelX;
         self.appTitleLabel      = [[UILabel alloc] initWithFrame:CGRectMake(appTitleLabelX, CGRectGetMaxY(_headerImgView.frame)+25, appTitleLabelW, 20)];
-        self.appTitleLabel.font = UI_FONT_18;
+        self.appTitleLabel.font = [UIFont boldSystemFontOfSize:18];
+        self.appTitleLabel.textColor = MS_BLACK;
         [_headerView addSubview:self.appTitleLabel];
         // app详情
         self.appDetailLabel         = [[UILabel alloc] initWithFrame:CGRectMake(appTitleLabelX, CGRectGetMaxY(_appTitleLabel.frame), appTitleLabelW, 20)];
         self.appDetailLabel.font    = UI_FONT_14;
+        self.appDetailLabel.textColor = MS_BLACK;
         [_headerView addSubview:self.appDetailLabel];
         
         

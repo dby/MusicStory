@@ -44,6 +44,7 @@
 - (void)setupNavView {
     debugMethod();
     _headerView = [SettingHeaderView headerView];
+    _headerView.title.text = @"关于我们";
     [self.view addSubview:_headerView];
     [_headerView backBtnDidClickWithBlock:^{
         [self.navigationController popViewControllerAnimated:YES];

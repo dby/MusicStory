@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_alert_red" translatesAutoresizingMaskIntoConstraints="NO" id="Jrh-KY-ap4">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome" translatesAutoresizingMaskIntoConstraints="NO" id="Jrh-KY-ap4">
                                 <rect key="frame" x="-4" y="0.0" width="383" height="667"/>
                             </imageView>
                         </subviews>
@@ -41,6 +41,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_alert_red" width="19" height="19"/>
+        <image name="welcome" width="1242" height="2208"/>
     </resources>
 </document>
