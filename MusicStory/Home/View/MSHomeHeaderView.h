@@ -27,4 +27,6 @@
 @property (nonatomic, strong) MSMusicModel *homeModel;
 @property (strong, nonatomic) NSString *rightTitle;
 
+- (void) setRightTitleHidden:(BOOL)flag;
+
 @end

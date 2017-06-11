@@ -40,6 +40,8 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 @property (nonatomic, assign) NSInteger currentLrcLine;     // 当前歌词显示在哪一行
 @property (nonatomic, assign) BOOL hasDowloadedMusic;       // 标记是否已经下载了音乐
 
+@property (nonatomic, assign) BOOL hasShowedGoogleAds;      // 是否已经显示广告
+
 @end
 
 //宏定义   角度转弧度
@@ -58,6 +60,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         
         self.userInteractionEnabled = YES;
         self.hasDowloadedMusic = false;
+        self.hasShowedGoogleAds = false;
         [self setupLayout];
     }
     return self;
@@ -84,7 +87,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 - (void)updateLyrics{
     
     CGFloat currentTime = _streamer.currentTime;
-    NSLog(@"%d:%d", (int)currentTime / 60, (int)currentTime % 60);
+    CGFloat duration = _streamer.duration;
     
     self.currentLrcLine = 0;
     for (int i=0; i < self.lrcParser.timerArray.count; i++) {
@@ -98,7 +101,15 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     }
     
     if (self.hasDowloadedMusic) {
+        CGFloat ratio = currentTime/duration;
+        
+        if (currentTime >= 60 && !self.hasShowedGoogleAds) {
+            [self.delegate loadingGoogleAd];
+            self.hasShowedGoogleAds = true;
+        }
+        
         [JDStatusBarNotification showWithStatus:self.lrcParser.wordArray[self.currentLrcLine] styleName:JDStatusBarStyleDark];
+        [JDStatusBarNotification showProgress:ratio];
     }
 }
 
@@ -174,7 +185,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     if (context == kStatusKVOKey) {
         [self performSelector:@selector(updateStatus) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
     } else if (context == kDurationKVOKey) {
-        
+        NSLog(@"duration kv0 %f", [_streamer duration]);
     } else if (context == kBufferingRatioKVOKey) {
         [self performSelector:@selector(updateBufferingRate) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
     } else {

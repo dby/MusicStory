@@ -95,6 +95,7 @@
     self.rightTitleLabel.hidden = flag;
     self.dateLabel.hidden = !flag;
     self.weakLabel.hidden = !flag;
+    self.dayLabel.hidden = !flag;
     self.moveToFirstBtn.hidden = !flag;
 }
 @end

@@ -23,6 +23,8 @@
 
 #import "MusicStory-Common-Header.h"
 
+@import GoogleMobileAds;
+
 @interface MSHomeDetailController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, MSHomeDetailToolViewDelegate, UIWebViewDelegate, PlayViewDelegate, MSCommentViewDelegate, ShareViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableview;
@@ -52,10 +54,15 @@
 @property (nonatomic, strong) UIButton *lyricsBtn;
 @property (nonatomic, strong) UILabel *infoLabel;
 
+// GoogleAds
+@property (nonatomic, strong) GADInterstitial *interstitial;
+
 @end
 
 static NSString *homeDetailCellID = @"HomeDetailCell";
 static NSString *commentIdentifier = @"commentIdentifier";
+
+
 
 @implementation MSHomeDetailController
 
@@ -74,6 +81,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [self.view addSubview:self.returnBtn];
     [self.view addSubview:self.playMusicBtn];
     
+    [self loadGoogleAdsData];
     [self setHeaderData];
     [self setWebViewData:self.model.music_story];
     
@@ -92,6 +100,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     debugMethod();
+    /*
     if (self.playMusicBtn) {
         [self.playMusicBtn stop];
     }
@@ -101,6 +110,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }
     
     [self.playMusicBtn deallocTimer];
+     */
 }
 
 - (instancetype)initWithModel :(MSMusicModel *)model {
@@ -113,6 +123,15 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 #pragma mark - 加载数据
+- (void)loadGoogleAdsData {
+    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-3940256099942544/4411468910"];
+    
+    GADRequest *request = [GADRequest request];
+    // Requests test ads on test devices.
+    request.testDevices = @[@"2077ef9a63d2b398840261c8221a0c9b"];
+    [self.interstitial loadRequest:request];
+}
+
 - (void)setHeaderData {
     debugMethod();
     [self.headerImgView setImageWithURL:[NSURL URLWithString:self.model.music_imgs]
@@ -231,6 +250,12 @@ static NSString *commentIdentifier = @"commentIdentifier";
         [self.playMusicBtn play];
     } else {
         [self.playMusicBtn pause];
+    }
+}
+
+-(void)loadingGoogleAd {
+    if ([self.interstitial isReady]) {
+        [self.interstitial presentFromRootViewController:self];
     }
 }
 

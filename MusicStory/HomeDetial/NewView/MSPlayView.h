@@ -12,6 +12,7 @@
 @protocol PlayViewDelegate <NSObject>
 
 - (void)playButtonDidClick:(BOOL)selected;
+- (void)loadingGoogleAd;
 
 @end
 

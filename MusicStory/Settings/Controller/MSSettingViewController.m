@@ -106,15 +106,18 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     debugMethod();
-    return [_dataSource count];
+    return 1;//[_dataSource count];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
     if (indexPath.row == 0) {
         // 关于我们
         MSAboutViewController *aboutController = [[MSAboutViewController alloc] init];
         [self.navigationController pushViewController:aboutController animated:YES];
-    } else if (indexPath.row == 1) {
+    }
+    /*
+    else if (indexPath.row == 1) {
         // 推荐给朋友
         [SVProgressHUD showInfoWithStatus:@"正在加班加点的研发中..."];
     } else if (indexPath.row == 2) {
@@ -124,6 +127,7 @@
         // 清空缓存
         [SVProgressHUD showInfoWithStatus:@"正在加班加点的研发中..."];
     }
+     */
 }
 
 @end

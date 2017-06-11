@@ -110,14 +110,14 @@
     self.indexView.centerY  = self.musicRankList.center.y;
     [self.delegate slideCenterViewMusicRankListViewDidClik];
 }
-// 音乐榜单事件
+// 音乐投稿事件
 - (void)musicContributionDidClick {
     //debugMethod()
     if (_curView == self.musicContribution)
         return;
-    self.curView            = self.musicContribution;
-    self.indexView.hidden   = false;
-    self.indexView.centerY  = self.musicContribution.center.y;
+    //self.curView            = self.musicContribution;
+    //self.indexView.hidden   = false;
+    //self.indexView.centerY  = self.musicContribution.center.y;
     [self.delegate slideCenterViewMusicContributionViewDidClick];
 }
 // 我的收藏事件
@@ -125,6 +125,7 @@
     debugMethod();
     if (_curView == self.collectView)
         return;
+    
     self.curView            = self.collectView;
     self.indexView.hidden   = false;
     self.indexView.centerY  = self.collectView.center.y;

@@ -143,8 +143,22 @@
 
 - (void)sendNotify_success:(NSNotification *)notify {
     debugMethod();
-    _type = notify.object;
+    self.type = notify.object;
     [self.centerView headerViewBeginRefreshing];
+    
+}
+
+/*
+ *
+ */
+-(void)setType:(NSString *)type {
+    _type = type;
+    
+    if ([_type isEqualToString:NOTIFY_OBJ_music_story]) {
+        [self.headerView setRightTitleHidden:false];
+    } else {
+        [self.headerView setRightTitleHidden:true];
+    }
 }
 
 @end
