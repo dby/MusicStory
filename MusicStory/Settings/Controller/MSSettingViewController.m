@@ -34,13 +34,6 @@
     
     [self buildComponent];
     [self setLayout];
-    
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    debugMethod();
-    [super viewWillAppear:animated];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
 #pragma mark - build

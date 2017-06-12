@@ -38,9 +38,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(leftMenuSetupBackColor:) name:NOTIFY_SETUPBG object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(leftMenuSetupCenterView:) name:NOTIFY_SETUPCENTERVIEW object:nil];
     
-    [self.view bringSubviewToFront:self.centerController.view];
-    
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    [self.view bringSubviewToFront:self.centerController.view];    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

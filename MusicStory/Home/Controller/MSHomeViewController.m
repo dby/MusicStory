@@ -75,9 +75,6 @@
     [self configureGoogleAds];
     self.interstitial = [self createAndLoadInterstitial];
     
-    [self setNeedsStatusBarAppearanceUpdate];
-    //[NSThread sleepForTimeInterval:0.5]; // 启动界面延长0.5秒
-    
     self.automaticallyAdjustsScrollViewInsets = false;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(errorBtnDidClick)
