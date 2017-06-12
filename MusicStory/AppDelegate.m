@@ -22,6 +22,8 @@
 
 @interface AppDelegate ()
 
+@property (nonatomic, strong) dispatch_source_t timer;
+
 @end
 
 @implementation AppDelegate
@@ -53,6 +55,7 @@
                                       leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
     [FIRApp configure];
+    [self showGoogleAds];
     [self configureShareSDK];
     [self configureWeiboSNSSDK];
     [self monitorNetWorkStatus];
@@ -139,6 +142,23 @@
     [manager startMonitoring];
 }
 
+- (void)showGoogleAds {
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    
+    // 创建定时器
+    self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_time_t start = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(180.0 * NSEC_PER_SEC));
+    dispatch_time_t interval = (uint64_t)(300.0 * NSEC_PER_SEC);
+    dispatch_source_set_timer(self.timer, start, interval, 0);
+    
+    dispatch_source_set_event_handler(self.timer, ^{
+        NSLog(@"调用回调函数");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOWING_GOOGLE_ADS" object:nil];
+    });
+    
+    dispatch_resume(self.timer);
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -159,6 +179,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    dispatch_source_cancel(self.timer);
 }
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

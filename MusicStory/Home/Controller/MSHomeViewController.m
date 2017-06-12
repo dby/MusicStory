@@ -23,10 +23,12 @@
 #import "MSRefreshBase.h"
 #import "MSHomeViewModel.h"
 
+@import GoogleMobileAds;
+
 #import "musicStory-Common-Header.h"
 
 
-@interface MSHomeViewController () <MSHomeHeaderViewDelegate, MSHomeHeaderViewDelegate,MSHomeBottomCollectViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface MSHomeViewController () <MSHomeHeaderViewDelegate, MSHomeHeaderViewDelegate,MSHomeBottomCollectViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, GADInterstitialDelegate>
 
 // 当前评论的偏移
 @property (nonatomic, assign) NSInteger pos;
@@ -47,6 +49,9 @@
 @property (nonatomic, strong) MSHomeCenterItemView *currentCenterItemView;
 @property (nonatomic, strong) MSMusicModel *currentModel;
 
+// GoogleAds
+@property (nonatomic, strong) GADInterstitial *interstitial;
+
 @end
 
 @implementation MSHomeViewController
@@ -62,10 +67,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"STOP_PLAY_MUSIC" object:nil];
 }
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     
     debugMethod();
     [super viewDidLoad];
+    
+    [self configureGoogleAds];
+    self.interstitial = [self createAndLoadInterstitial];
     
     [self setNeedsStatusBarAppearanceUpdate];
     //[NSThread sleepForTimeInterval:0.5]; // 启动界面延长0.5秒
@@ -110,7 +118,7 @@
 
 #pragma mark - init
 
-- (void)buildRefreshView {
+-(void)buildRefreshView {
     
     [self.centerCollectView headerViewPullToRefresh:MSRefreshDirectionHorizontal callback:^{
         self.homeDataArray = [NSMutableArray new];
@@ -166,6 +174,17 @@
             [self.centerCollectView footerViewStopPullToRefresh];
         }];
     }];
+}
+
+#pragma mark - Function
+-(void)configureGoogleAds {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showingGoogleAd) name:@"SHOWING_GOOGLE_ADS" object:nil];
+}
+
+-(void)showingGoogleAd {
+    if ([self.interstitial isReady]) {
+        [self.interstitial presentFromRootViewController:self];
+    }
 }
 
 #pragma mark - ScrollerDelegate
@@ -275,6 +294,20 @@
     [[NSNotificationCenter defaultCenter] postNotification:noti];
     
     self.lastIndex = indexPath;
+}
+
+- (GADInterstitial *)createAndLoadInterstitial {
+    GADInterstitial *interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-3940256099942544/4411468910"];
+    interstitial.delegate = self;
+    GADRequest *request = [GADRequest request];
+    // Requests test ads on test devices.
+    request.testDevices = @[@"2077ef9a63d2b398840261c8221a0c9b"];
+    [interstitial loadRequest:request];
+    return interstitial;
+}
+
+-(void)interstitialDidDismissScreen:(GADInterstitial *)ad {
+    self.interstitial = [self createAndLoadInterstitial];
 }
 
 #pragma mark - Action
