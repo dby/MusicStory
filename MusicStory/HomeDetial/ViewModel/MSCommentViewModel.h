@@ -20,7 +20,7 @@ typedef void (^MSHomeViewModelErrorCallBack)(NSError *error);
 @property (nonatomic, copy) MSHomeViewModelSuccessBack successCallBack;
 @property (nonatomic, copy) MSHomeViewModelErrorCallBack errorCallBack;
 
-- (void)getCommentData:(NSInteger)num withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack )errorCallBack;
+- (void)getCommentData:(NSInteger)num  music_id:(NSString *)music_id withSuccessBack:(MSHomeViewModelSuccessBack )successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack )errorCallBack;
 
 -(instancetype)initWithCommentTableView : (UITableView *)tableView;
 

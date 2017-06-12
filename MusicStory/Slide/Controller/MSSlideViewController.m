@@ -153,7 +153,13 @@
     debugMethod();
     AVUser *user = [AVUser currentUser];
     if (user == NULL) {
-        [SVProgressHUD showErrorWithStatus:@"温馨提示：请先登录..."];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示"
+                                                                                 message:@"您尚未登录，请先登录..."
+                                                                          preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alertController addAction:okAction];
+        [self presentViewController:alertController animated:true completion:nil];
+        
         return;
     }
     
@@ -164,6 +170,9 @@
 // 赞我一下
 -(void)slideCenterViewPraiseUsViewDidClick {
     debugMethod();
+    NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@&pageNumber=0&sortOrdering=2&mt=8", @"1236619918"];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
 }
 
 // 搜索

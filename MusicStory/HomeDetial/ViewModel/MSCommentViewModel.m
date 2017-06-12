@@ -46,13 +46,14 @@
     }
 }
 
--(void)getCommentData:(NSInteger)num withSuccessBack:(MSHomeViewModelSuccessBack)successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack)errorCallBack
+-(void)getCommentData:(NSInteger)num music_id:(NSString *)music_id withSuccessBack:(MSHomeViewModelSuccessBack)successCallBack withErrorCallBack:(MSHomeViewModelErrorCallBack)errorCallBack
 {
     self.successCallBack    = successCallBack;
     self.errorCallBack      = errorCallBack;
     
     NSMutableArray *dataSource = [NSMutableArray new];
     AVQuery *query = [AVQuery queryWithClassName:@"Comments"];
+    [query whereKey:@"music_id" equalTo:music_id];
     [query orderByDescending:@"createdAt"];
     query.skip  = num;
     query.limit = EVERY_DATA_NUM;

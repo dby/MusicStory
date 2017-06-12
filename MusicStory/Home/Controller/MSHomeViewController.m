@@ -208,6 +208,7 @@
     
     MSMusicModel *model = [self.homeDataArray objectAtIndex:indexPath.row];
     if (collectionView.tag == 100) {
+        NSLog(@"center indexPath.row %ld", (long)indexPath.row);
         
         MSHomeCenterItemView *cell  = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSHomeCenterItemViewID" forIndexPath:indexPath];
         cell.homeModel              = model;
@@ -219,7 +220,7 @@
         UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                             action:@selector(addLike:)];
         [cell.fovView addGestureRecognizer:gestureRecognizer];
-        [cell.iconFlowerButton addGestureRecognizer:gestureRecognizer];
+        //[cell.iconFlowerButton addGestureRecognizer:gestureRecognizer];
         
         return cell;
         
@@ -286,7 +287,14 @@
     debugMethod();
     if (self.currentCenterItemView) {
         
-        UIImageView *imageView = (UIImageView *)[gestureRecognizer view];
+        UIView *fovView = (UIView *)[gestureRecognizer view];
+        UIImageView *imageView = NULL;
+        
+        for (UIView *item in fovView.subviews) {
+            if (item.tag == 999) {
+                imageView = (UIImageView *)item;
+            }
+        }
         debugLog(@"%d", [imageView isHighlighted]);
         
         if (![imageView isHighlighted]) {

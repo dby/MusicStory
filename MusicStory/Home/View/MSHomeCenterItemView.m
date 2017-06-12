@@ -35,6 +35,7 @@
     self.centerImgView.clipsToBounds = YES;
     
     self.iconFlowerButton.userInteractionEnabled = YES;
+    self.iconFlowerButton.tag = 999;
     
     self.fovView.opaque = 0.2;
     self.fovView.userInteractionEnabled = true;

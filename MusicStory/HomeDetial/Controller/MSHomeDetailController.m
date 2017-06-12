@@ -234,7 +234,8 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 - (void)loadData {
     debugMethod();
-    [self.commentViewModel getCommentData:self.commentSource.count withSuccessBack:^(NSArray *datasource) {
+    NSLog(@"%@", self.model.objectId);
+    [self.commentViewModel getCommentData:self.commentSource.count music_id:self.model.objectId withSuccessBack:^(NSArray *datasource) {
         if (datasource.count == 0) {
             [SVProgressHUD showInfoWithStatus:@"已经没有评论了..."];
             [SVProgressHUD dismissWithDelay:0.5];
@@ -264,10 +265,17 @@ static NSString *commentIdentifier = @"commentIdentifier";
 #pragma mark - commentView delegate
 -(void)commentLabelDidClick {
     debugMethod();
-    UIStoryboard *story = [UIStoryboard storyboardWithName:@"MSComment" bundle:[NSBundle mainBundle]];
-    MSMakeCommentsController *vc = [story instantiateViewControllerWithIdentifier:@"msmakecommentscontroller"];
-    vc.model = self.model;
-    [self.navigationController presentViewController:vc animated:YES completion:nil];
+    AVUser *user = [AVUser currentUser];
+    
+    if (user != NULL) {
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"MSComment" bundle:[NSBundle mainBundle]];
+        MSMakeCommentsController *vc = [story instantiateViewControllerWithIdentifier:@"msmakecommentscontroller"];
+        vc.model = self.model;
+        [self.navigationController presentViewController:vc animated:YES completion:nil];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"请先登录..."];
+        [SVProgressHUD dismissWithDelay:0.5];
+    }
 }
 
 #pragma mark - playview delegate

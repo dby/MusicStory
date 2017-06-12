@@ -32,7 +32,7 @@
         AVObject *commentAvobject = [[AVObject alloc] initWithClassName:@"Comments"];
         [commentAvobject setObject:user.objectId forKey:@"author_id"];
         [commentAvobject setObject:[user objectForKey:@"username"] forKey:@"author_name"];
-        [commentAvobject setObject:[user objectForKey:@"author_portrait"] forKey:@"author_portrait"];
+        [commentAvobject setObject:[user objectForKey:@"portrait"] forKey:@"author_portrait"];
         [commentAvobject setObject:_model.objectId forKey:@"music_id"];
         [commentAvobject setObject:_contentTextField.text forKey:@"content"];
         [commentAvobject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
