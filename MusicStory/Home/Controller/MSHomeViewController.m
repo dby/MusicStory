@@ -233,9 +233,9 @@
         self.currentModel = [self.homeDataArray objectAtIndex:indexPath.row];
         
         cell.userInteractionEnabled = YES;
-        UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                            action:@selector(addLike:)];
-        [cell.fovView addGestureRecognizer:gestureRecognizer];
+        //UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+        //                                                                                    action:@selector(addLike:)];
+        //[cell.fovView addGestureRecognizer:gestureRecognizer];
         //[cell.iconFlowerButton addGestureRecognizer:gestureRecognizer];
         
         return cell;
