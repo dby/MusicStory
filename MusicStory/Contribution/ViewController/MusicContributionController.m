@@ -9,15 +9,16 @@
 #import "MusicContributionController.h"
 
 #import "musicStory-Common-Header.h"
+#import "SettingHeaderView.h"
 
-@interface MusicContributionController ()
+@interface MusicContributionController () <UITextFieldDelegate>
 
-@property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UITextField *musicNameTextField;
 @property (nonatomic, strong) UITextField *singerNameTextField;
 @property (nonatomic, strong) UILabel *contentHintLabel;
 @property (nonatomic, strong) UITextView *conttentTextView;
-@property (nonatomic ,strong) UIButton *confirmButton;
+@property (nonatomic, strong) UIButton *confirmButton;
+@property (nonatomic, strong) SettingHeaderView *headerView;
 
 @end
 
@@ -28,7 +29,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self.view addSubview:self.cancelButton];
+    [self.view addSubview:self.headerView];
     [self.view addSubview:self.musicNameTextField];
     [self.view addSubview:self.singerNameTextField];
     [self.view addSubview:self.contentHintLabel];
@@ -70,13 +71,13 @@
 }
 
 - (void)setupLayout {
-    [self.cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.equalTo(self.view).offset(20);
-        make.height.equalTo(@45);
+    [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(self.view);
+        make.height.equalTo(@(60));
     }];
     
     [self.musicNameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.cancelButton.mas_bottom);
+        make.top.equalTo(self.headerView.mas_bottom);
         make.left.equalTo(self.view).offset(20);
         make.right.equalTo(self.view).offset(-20);
         make.height.equalTo(@40);
@@ -111,26 +112,21 @@
     }];
 }
 
-#pragma mark - Getter Setter
--(UIButton *)cancelButton {
-    if (!_cancelButton) {
-        _cancelButton = [UIButton new];
-        [_cancelButton setImage:[UIImage imageNamed:@"icon_back_highlighted"] forState:UIControlStateNormal];
-        [_cancelButton setImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateSelected];
-        [_cancelButton setContentMode:UIViewContentModeScaleAspectFill];
-        [_cancelButton addTarget:self action:@selector(cancelButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
-        //_cancelButton.backgroundColor = [UIColor purpleColor];
-    }
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
     
-    return _cancelButton;
+    [textField resignFirstResponder];
+    return true;
 }
 
+#pragma mark - Getter Setter
 -(UITextField *)musicNameTextField {
     if (!_musicNameTextField) {
         _musicNameTextField = [UITextField new];
         _musicNameTextField.placeholder = @"音乐名称";
-        _musicNameTextField.layer.borderWidth = 1;
-        _musicNameTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _musicNameTextField.delegate = self;
+        _musicNameTextField.returnKeyType = UIReturnKeyDone;
+        //_musicNameTextField.layer.borderWidth = 1;
+        //_musicNameTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
         //_musicNameTextField.backgroundColor = [UIColor redColor];
     }
     return _musicNameTextField;
@@ -140,8 +136,10 @@
     if (!_singerNameTextField) {
         _singerNameTextField = [UITextField new];
         _singerNameTextField.placeholder = @"歌手名称";
-        _singerNameTextField.layer.borderWidth = 1;
-        _singerNameTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _singerNameTextField.delegate = self;
+        _singerNameTextField.returnKeyType = UIReturnKeyDone;
+        //_singerNameTextField.layer.borderWidth = 1;
+        //_singerNameTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
         //_singerNameTextField.backgroundColor = [UIColor orangeColor];
     }
     return _singerNameTextField;
@@ -150,8 +148,9 @@
 -(UILabel *)contentHintLabel {
     if (!_contentHintLabel) {
         _contentHintLabel = [UILabel new];
-        _contentHintLabel.text = @"音乐背后的故事：";
-        _contentHintLabel.font = [UIFont systemFontOfSize:16];
+        _contentHintLabel.text   = @"音乐背后的故事：";
+        _contentHintLabel.hidden = true;
+        _contentHintLabel.font   = [UIFont systemFontOfSize:16];
         //_contentHintLabel.backgroundColor = [UIColor yellowColor];
     }
     return _contentHintLabel;
@@ -161,6 +160,7 @@
     if (!_conttentTextView) {
         _conttentTextView = [UITextView new];
         _conttentTextView.layer.borderWidth = 1;
+        _conttentTextView.hidden = true;
         _conttentTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _conttentTextView.returnKeyType = UIReturnKeyDone;
         //_conttentTextView.backgroundColor = [UIColor blueColor];
@@ -178,6 +178,18 @@
         [_confirmButton addTarget:self action:@selector(updateContribution) forControlEvents:UIControlEventTouchUpInside];
     }
     return _confirmButton;
+}
+
+- (SettingHeaderView *)headerView {
+    if (!_headerView) {
+        _headerView = [SettingHeaderView headerView];
+        _headerView.title.text = @"音乐投稿";
+        __weak typeof(self) weakSelf = self;
+        _headerView.block = ^{
+            [weakSelf dismissViewControllerAnimated:true completion:nil];
+        };
+    }
+    return _headerView;
 }
 
 @end

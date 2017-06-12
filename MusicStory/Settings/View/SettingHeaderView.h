@@ -14,6 +14,7 @@ typedef void(^backBtnClickBlock)();
 
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (nonatomic, copy) backBtnClickBlock block;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 -(void) backBtnDidClickWithBlock:(backBtnClickBlock)block;
 +(SettingHeaderView *) headerView ;

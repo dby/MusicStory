@@ -24,6 +24,7 @@
 		4306F91D1D115445000C23CA /* UIViewController+Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4306F91C1D115445000C23CA /* UIViewController+Menu.m */; };
 		4312365D1CEF6E700009485A /* LoginStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4312365C1CEF6E700009485A /* LoginStoryBoard.storyboard */; };
 		431E31BD1CEA10F10072009B /* MSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 431E31BC1CEA10F10072009B /* MSView.m */; };
+		432C4D9F1EEE434E00811891 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 432C4D9E1EEE434E00811891 /* GoogleService-Info.plist */; };
 		4330F3631CA4320000739118 /* NSDate+MS.m in Sources */ = {isa = PBXBuildFile; fileRef = 4330F3621CA4320000739118 /* NSDate+MS.m */; };
 		433348581CE4E0E1004689FA /* MSRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 433348571CE4E0E1004689FA /* MSRefreshHeaderView.m */; };
 		4333485B1CE4F02D004689FA /* MSRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4333485A1CE4F02D004689FA /* MSRefreshFooterView.m */; };
@@ -162,6 +163,7 @@
 		4312365C1CEF6E700009485A /* LoginStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LoginStoryBoard.storyboard; path = Login/Controller/LoginStoryBoard.storyboard; sourceTree = "<group>"; };
 		431E31BB1CEA10F10072009B /* MSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSView.h; path = Other/extension/MSView.h; sourceTree = "<group>"; };
 		431E31BC1CEA10F10072009B /* MSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSView.m; path = Other/extension/MSView.m; sourceTree = "<group>"; };
+		432C4D9E1EEE434E00811891 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4330F3611CA4320000739118 /* NSDate+MS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+MS.h"; path = "Other/extension/NSDate+MS.h"; sourceTree = "<group>"; };
 		4330F3621CA4320000739118 /* NSDate+MS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+MS.m"; path = "Other/extension/NSDate+MS.m"; sourceTree = "<group>"; };
 		433348561CE4E0E1004689FA /* MSRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSRefreshHeaderView.h; path = Other/MSRefresh/MSRefreshHeaderView.h; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 				4385F0161CCB784400B32FCD /* Resources */,
 				435159E41C9EE24100EC1422 /* Assets.xcassets */,
 				435159E61C9EE24100EC1422 /* LaunchScreen.storyboard */,
+				432C4D9E1EEE434E00811891 /* GoogleService-Info.plist */,
 				435159E91C9EE24100EC1422 /* Info.plist */,
 				4306F8FE1D0E633F000C23CA /* MusicStory-Common-Header.h */,
 				435159D81C9EE24000EC1422 /* Supporting Files */,
@@ -1080,6 +1083,7 @@
 				43CE0EA11D14F54800FE8983 /* AboutCenterView.xib in Resources */,
 				4391614C1D715F5900F3917D /* desktop.css in Resources */,
 				43CE0EA31D14F54800FE8983 /* SettingViewCell.xib in Resources */,
+				432C4D9F1EEE434E00811891 /* GoogleService-Info.plist in Resources */,
 				43515A261C9EF3C900EC1422 /* MSHomeBottomItemView.xib in Resources */,
 				435159E51C9EE24100EC1422 /* Assets.xcassets in Resources */,
 			);
@@ -1376,7 +1380,7 @@
 				INFOPLIST_FILE = MusicStory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sys.MusicStory;
+				PRODUCT_BUNDLE_IDENTIFIER = sys.dupeifu.MusicStory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1393,7 +1397,7 @@
 				INFOPLIST_FILE = MusicStory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sys.MusicStory;
+				PRODUCT_BUNDLE_IDENTIFIER = sys.dupeifu.MusicStory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

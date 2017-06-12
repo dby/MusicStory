@@ -16,6 +16,8 @@
 #import "AFNetworking.h"
 #import "ErrorPromptUtil.h"
 
+@import Firebase;
+
 #import "musicStory-Common-Header.h"
 
 @interface AppDelegate ()
@@ -50,6 +52,7 @@
                                       initWithCenterController:[[MSBaseNavController alloc] initWithRootViewController:contentViewController]
                                       leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
+    [FIRApp configure];
     [self configureShareSDK];
     [self configureWeiboSNSSDK];
     [self monitorNetWorkStatus];
