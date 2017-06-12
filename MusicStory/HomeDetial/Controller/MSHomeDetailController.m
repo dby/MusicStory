@@ -164,9 +164,14 @@ static NSString *commentIdentifier = @"commentIdentifier";
         NSString *lyrics = @"";
         
         for (NSString *item in lyricsArr) {
-            lyrics = [lyrics stringByAppendingString:@"<p>"];
-            lyrics = [lyrics stringByAppendingString:item];
-            lyrics = [lyrics stringByAppendingString:@"</p>"];
+            
+            NSArray *tmp = [item componentsSeparatedByString:@"]"];
+            
+            if ([tmp count] > 1) {
+                lyrics = [lyrics stringByAppendingString:@"<p>"];
+                lyrics = [lyrics stringByAppendingString:tmp[1]];
+                lyrics = [lyrics stringByAppendingString:@"</p>"];
+            }
         }
         
         [self setWebViewData:lyrics];

@@ -55,7 +55,7 @@
                                       leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
     [FIRApp configure];
-    [self showGoogleAds];
+    [self updateConfigInfo];
     [self configureShareSDK];
     [self configureWeiboSNSSDK];
     [self monitorNetWorkStatus];
@@ -147,8 +147,8 @@
     
     // 创建定时器
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_time_t start = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(180.0 * NSEC_PER_SEC));
-    dispatch_time_t interval = (uint64_t)(300.0 * NSEC_PER_SEC);
+    dispatch_time_t start = dispatch_time(DISPATCH_TIME_NOW, (int64_t)([MSInterf shareInstance].googleAdsStart * NSEC_PER_SEC));
+    dispatch_time_t interval = (uint64_t)([MSInterf shareInstance].googleAdsInterval * NSEC_PER_SEC);
     dispatch_source_set_timer(self.timer, start, interval, 0);
     
     dispatch_source_set_event_handler(self.timer, ^{
@@ -157,6 +157,20 @@
     });
     
     dispatch_resume(self.timer);
+}
+
+- (void)updateConfigInfo{
+    AVQuery *query = [AVQuery queryWithClassName:@"Config"];
+    [query getObjectInBackgroundWithId:@"593e5efe128fe1006af2411b" block:^(AVObject *object, NSError *error) {
+        if (!error) {
+            [MSInterf shareInstance].appId = [object objectForKey:@"appId"];
+            [MSInterf shareInstance].applicationId = [object objectForKey:@"applicationId"];
+            [MSInterf shareInstance].cellId = [object objectForKey:@"cellId"];
+            [MSInterf shareInstance].googleAdsStart = [[object objectForKey:@"googleAdsStart"] integerValue];
+            [MSInterf shareInstance].googleAdsInterval = [[object objectForKey:@"googleAdsInterval"] integerValue];
+        }
+        [self showGoogleAds];
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

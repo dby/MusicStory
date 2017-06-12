@@ -170,7 +170,7 @@
 // 赞我一下
 -(void)slideCenterViewPraiseUsViewDidClick {
     debugMethod();
-    NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@&pageNumber=0&sortOrdering=2&mt=8", @"1236619918"];
+    NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@&pageNumber=0&sortOrdering=2&mt=8", [MSInterf shareInstance].appId];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
 }

@@ -15,6 +15,16 @@
 @property (nonatomic, assign) BOOL isNetWorkConnected;
 @property (nonatomic, strong) NSMutableArray *backGroundColors;
 
+// 打开应用之后，多长时间第一次显示广告
+@property (nonatomic, assign) NSInteger googleAdsStart;
+// 显示广告的间隔
+@property (nonatomic, assign) NSInteger googleAdsInterval;
+// admob 应用 id
+@property (nonatomic, strong) NSString *applicationId;
+// admob 广告单元 id
+@property (nonatomic, strong) NSString *cellId;
+// app上传App Store之后 id
+@property (nonatomic, strong) NSString *appId;
 
 +(instancetype)shareInstance;
 
