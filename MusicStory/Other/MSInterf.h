@@ -25,6 +25,10 @@
 @property (nonatomic, strong) NSString *cellId;
 // app上传App Store之后 id
 @property (nonatomic, strong) NSString *appId;
+// 是否上传到App Store
+@property (nonatomic, assign) Boolean hasPassedAppStore;
+// 是否显示歌词
+@property (nonatomic, assign) Boolean dosShowLyrics;
 
 +(instancetype)shareInstance;
 

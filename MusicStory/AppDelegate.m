@@ -163,11 +163,13 @@
     AVQuery *query = [AVQuery queryWithClassName:@"Config"];
     [query getObjectInBackgroundWithId:@"593e5efe128fe1006af2411b" block:^(AVObject *object, NSError *error) {
         if (!error) {
-            [MSInterf shareInstance].appId = [object objectForKey:@"appId"];
-            [MSInterf shareInstance].applicationId = [object objectForKey:@"applicationId"];
-            [MSInterf shareInstance].cellId = [object objectForKey:@"cellId"];
-            [MSInterf shareInstance].googleAdsStart = [[object objectForKey:@"googleAdsStart"] integerValue];
-            [MSInterf shareInstance].googleAdsInterval = [[object objectForKey:@"googleAdsInterval"] integerValue];
+            [MSInterf shareInstance].appId              = [object objectForKey:@"appId"];
+            [MSInterf shareInstance].applicationId      = [object objectForKey:@"applicationId"];
+            [MSInterf shareInstance].cellId             = [object objectForKey:@"cellId"];
+            [MSInterf shareInstance].googleAdsStart     = [[object objectForKey:@"googleAdsStart"] integerValue];
+            [MSInterf shareInstance].googleAdsInterval  = [[object objectForKey:@"googleAdsInterval"] integerValue];
+            [MSInterf shareInstance].hasPassedAppStore  = [[object objectForKey:@"hasPassedAppStore"] boolValue];
+            [MSInterf shareInstance].dosShowLyrics      = [[object objectForKey:@"dosShowLyrics"] boolValue];
         }
         [self showGoogleAds];
     }];

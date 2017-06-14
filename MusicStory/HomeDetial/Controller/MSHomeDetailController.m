@@ -160,13 +160,14 @@ static NSString *commentIdentifier = @"commentIdentifier";
         [self.lyricsBtn setSelected:true];
         [self.infoLabel setText:@"音乐歌词"];
         
-        NSArray *lyricsArr = [self.model.music_lyrics componentsSeparatedByString:@"\r"];
         NSString *lyrics = @"";
+        NSArray *lyricsArr = [self.model.music_lyrics componentsSeparatedByString:@"\n"];
+        if (lyricsArr.count <= 2) {
+            lyricsArr = [self.model.music_lyrics componentsSeparatedByString:@"\r"];
+        }
         
         for (NSString *item in lyricsArr) {
-            
             NSArray *tmp = [item componentsSeparatedByString:@"]"];
-            
             if ([tmp count] > 1) {
                 lyrics = [lyrics stringByAppendingString:@"<p>"];
                 lyrics = [lyrics stringByAppendingString:tmp[1]];
@@ -555,7 +556,6 @@ static NSString *commentIdentifier = @"commentIdentifier";
         self.appDetailLabel.textColor = MS_BLACK;
         [_headerView addSubview:self.appDetailLabel];
         
-        
         // Division View
         self.storyBtn  = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, 380, 50, 50)];
         self.lyricsBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 110, 380, 50, 50)];
@@ -565,6 +565,8 @@ static NSString *commentIdentifier = @"commentIdentifier";
         self.infoLabel.text = @"音乐故事";
         self.storyBtn.contentMode    = UIViewContentModeScaleAspectFill;
         self.lyricsBtn.contentMode   = UIViewContentModeScaleAspectFill;
+        self.lyricsBtn.hidden = ![MSInterf shareInstance].dosShowLyrics;
+        
         [seperateLine setBackgroundColor:[UIColor lightGrayColor]];
         [self.storyBtn   setBackgroundImage:[UIImage imageNamed:@"music_story_default"] forState:UIControlStateNormal];
         [self.storyBtn   setBackgroundImage:[UIImage imageNamed:@"music_story_selected"] forState:UIControlStateSelected];
@@ -637,6 +639,9 @@ static NSString *commentIdentifier = @"commentIdentifier";
         _toolBar.frame      = CGRectMake(0, 345, SCREEN_WIDTH, 30);
         _toolBar.delegate   = self;
         _toolBar.model      = _model;
+        
+        _toolBar.downloadLabel.hidden  = ![MSInterf shareInstance].hasPassedAppStore;
+        _toolBar.downloadButton.hidden = ![MSInterf shareInstance].hasPassedAppStore;
     }
     return _toolBar;
 }

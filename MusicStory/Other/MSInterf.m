@@ -21,12 +21,14 @@
 
     dispatch_once(&onceToken, ^{
         sharedMyManager = [self new];
-        sharedMyManager.isNetWorkConnected = false;
+        sharedMyManager.isNetWorkConnected  = false;
         sharedMyManager.applicationId       = @"";
         sharedMyManager.cellId              = @"ca-app-pub-3940256099942544/4411468910";
         sharedMyManager.googleAdsStart      = 180;
         sharedMyManager.googleAdsInterval   = 300;
         sharedMyManager.appId               = @"1236619918";
+        sharedMyManager.hasPassedAppStore   = false;
+        sharedMyManager.dosShowLyrics       = false;
     });
     
     return sharedMyManager;
