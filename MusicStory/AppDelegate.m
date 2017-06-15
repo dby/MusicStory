@@ -55,7 +55,7 @@
                                       leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
     [FIRApp configure];
-    [GADMobileAds configureWithApplicationID:@"ca-app-pub-3940256099942544~1458002511"];
+    [GADMobileAds configureWithApplicationID:@"ca-app-pub-5501213248608554~1179068820"];
     
     [self updateConfigInfo];
     [self configureShareSDK];
