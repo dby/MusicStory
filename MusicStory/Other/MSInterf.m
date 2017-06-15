@@ -23,7 +23,8 @@
         sharedMyManager = [self new];
         sharedMyManager.isNetWorkConnected  = false;
         sharedMyManager.applicationId       = @"";
-        sharedMyManager.cellId              = @"ca-app-pub-3940256099942544/4411468910";
+        sharedMyManager.insertUnitId        = @"ca-app-pub-3940256099942544/4411468910";
+        sharedMyManager.bannerUnitId        = @"ca-app-pub-3940256099942544/2934735716";
         sharedMyManager.googleAdsStart      = 180;
         sharedMyManager.googleAdsInterval   = 300;
         sharedMyManager.appId               = @"1236619918";

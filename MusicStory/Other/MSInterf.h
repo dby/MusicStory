@@ -21,8 +21,10 @@
 @property (nonatomic, assign) NSInteger googleAdsInterval;
 // admob 应用 id
 @property (nonatomic, strong) NSString *applicationId;
-// admob 广告单元 id
-@property (nonatomic, strong) NSString *cellId;
+// admob 插页式 广告单元 id
+@property (nonatomic, strong) NSString *insertUnitId;
+// admob 横幅 广告单元 id
+@property (nonatomic, strong) NSString *bannerUnitId;
 // app上传App Store之后 id
 @property (nonatomic, strong) NSString *appId;
 // 是否上传到App Store

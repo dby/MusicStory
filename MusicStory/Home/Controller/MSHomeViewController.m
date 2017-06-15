@@ -294,7 +294,7 @@
 }
 
 - (GADInterstitial *)createAndLoadInterstitial {
-    GADInterstitial *interstitial = [[GADInterstitial alloc] initWithAdUnitID:[MSInterf shareInstance].cellId];
+    GADInterstitial *interstitial = [[GADInterstitial alloc] initWithAdUnitID:[MSInterf shareInstance].insertUnitId];
     interstitial.delegate = self;
     GADRequest *request = [GADRequest request];
     // Requests test ads on test devices.

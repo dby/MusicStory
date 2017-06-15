@@ -23,7 +23,9 @@
 
 #import "MusicStory-Common-Header.h"
 
-@interface MSHomeDetailController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, MSHomeDetailToolViewDelegate, UIWebViewDelegate, PlayViewDelegate, MSCommentViewDelegate, ShareViewDelegate>
+@import GoogleMobileAds;
+
+@interface MSHomeDetailController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, MSHomeDetailToolViewDelegate, UIWebViewDelegate, PlayViewDelegate, MSCommentViewDelegate, ShareViewDelegate, GADBannerViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableview;
 @property (nonatomic, strong) MSCommentViewModel *commentViewModel;
@@ -52,6 +54,10 @@
 @property (nonatomic, strong) UIButton *lyricsBtn;
 @property (nonatomic, strong) UILabel *infoLabel;
 
+@property (nonatomic, strong) UIImageView *adBackgroundView;
+@property (nonatomic, strong) UILabel *adBackLabel;
+@property (nonatomic, strong) GADBannerView *bannerView;
+
 @end
 
 static NSString *homeDetailCellID = @"HomeDetailCell";
@@ -73,6 +79,9 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [self.view addSubview:self.toolBar];
     [self.view addSubview:self.returnBtn];
     [self.view addSubview:self.playMusicBtn];
+    [self.view addSubview:self.adBackgroundView];
+    [self.view addSubview:self.adBackLabel];
+    [self.view addSubview:self.bannerView];
     
     [self setHeaderData];
     [self setWebViewData:self.model.music_story];
@@ -107,7 +116,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
      */
 }
 
--(void)dealloc {
+- (void)dealloc {
     
 }
 
@@ -184,6 +193,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 #pragma mark - Private Function
+
 - (NSString *)demoFormatWithName:(NSString *)name value:(NSString *)value musicImg:(NSString *)imgurl {
     
     debugMethod();
@@ -219,7 +229,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
         make.height.equalTo(@30);
     }];
     [self.playMusicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view.mas_bottom);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-50);
         make.leading.equalTo(@(self.view.width / 2 - 30));
     }];
 }
@@ -252,6 +262,19 @@ static NSString *commentIdentifier = @"commentIdentifier";
     }
     
     [self.playMusicBtn deallocTimer];
+}
+
+#pragma mark - GADBannerViewDelegate
+- (void)adViewDidReceiveAd:(GADBannerView *)bannerView {
+    bannerView.hidden = NO;
+}
+
+- (void)adView:(GADBannerView *)bannerView didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"adView:didFailToReceiveAdWithError: %@", error.description);
+}
+
+-(void)adViewWillPresentScreen:(GADBannerView *)bannerView {
+    
 }
 
 #pragma mark - commentView delegate
@@ -416,17 +439,17 @@ static NSString *commentIdentifier = @"commentIdentifier";
             make.top.equalTo(self.view.mas_bottom);
             make.leading.equalTo(@(self.view.width / 2 - 30));
         }];
-        [UIView animateWithDuration:0.35 animations:^{
+        [UIView animateWithDuration:0.5 animations:^{
             [self.view layoutIfNeeded];
         }];
     }
     else if (currentPosition - self.lastPosition < -50){
         self.lastPosition = currentPosition;
         [self.playMusicBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.mas_bottom);
+            make.bottom.equalTo(self.view.mas_bottom).offset(-50);
             make.leading.equalTo(@(self.view.width / 2 - 30));
         }];
-        [UIView animateWithDuration:0.35 animations:^{
+        [UIView animateWithDuration:0.5 animations:^{
             [self.view layoutIfNeeded];
         }];
     }
@@ -503,6 +526,40 @@ static NSString *commentIdentifier = @"commentIdentifier";
 }
 
 #pragma mark - Setter Getter
+-(UILabel *)adBackLabel {
+    if (!_adBackLabel) {
+        _adBackLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+        _adBackLabel.text = @"音    乐   故   事";
+        _adBackLabel.textAlignment = NSTextAlignmentCenter;
+        _adBackLabel.font = [UIFont systemFontOfSize:28];
+        _adBackLabel.textColor = [UIColor whiteColor];
+        _adBackLabel.alpha = 0.5;
+    }
+    return _adBackLabel;
+}
+
+-(UIImageView *)adBackgroundView {
+    if (!_adBackgroundView) {
+        _adBackgroundView               = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+        _adBackgroundView.image         = [UIImage imageNamed:@"buzz_header_background"];
+        _adBackgroundView.contentMode   = UIViewContentModeScaleAspectFill;
+        _adBackgroundView.clipsToBounds = true;
+    }
+    return _adBackgroundView;
+}
+
+-(GADBannerView *)bannerView {
+    if (!_bannerView) {
+        _bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait origin:CGPointMake(0, SCREEN_HEIGHT-50)];
+        _bannerView.adUnitID = [MSInterf shareInstance].bannerUnitId;
+        _bannerView.rootViewController = self;
+        _bannerView.delegate = self;
+
+        [_bannerView loadRequest:[GADRequest request]];
+    }
+    return _bannerView;
+}
+
 -(void)setModel:(MSMusicModel *)model {
     debugMethod();
     _model = model;
@@ -622,6 +679,7 @@ static NSString *commentIdentifier = @"commentIdentifier";
         _tableview.delegate     = self;
         _tableview.dataSource   = self;
         _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableview.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
         
         [_tableview registerClass:[UITableViewCell class] forCellReuseIdentifier:homeDetailCellID];
         [_tableview registerClass:[MSCommentCell class] forCellReuseIdentifier:commentIdentifier];

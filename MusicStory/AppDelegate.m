@@ -55,6 +55,8 @@
                                       leftController:[[MSBaseNavController alloc] initWithRootViewController:leftMenuViewController]];
     
     [FIRApp configure];
+    [GADMobileAds configureWithApplicationID:@"ca-app-pub-3940256099942544~1458002511"];
+    
     [self updateConfigInfo];
     [self configureShareSDK];
     [self configureWeiboSNSSDK];
@@ -159,13 +161,15 @@
     dispatch_resume(self.timer);
 }
 
+// 更新google ads 配置信息
 - (void)updateConfigInfo{
     AVQuery *query = [AVQuery queryWithClassName:@"Config"];
     [query getObjectInBackgroundWithId:@"593e5efe128fe1006af2411b" block:^(AVObject *object, NSError *error) {
         if (!error) {
             [MSInterf shareInstance].appId              = [object objectForKey:@"appId"];
             [MSInterf shareInstance].applicationId      = [object objectForKey:@"applicationId"];
-            [MSInterf shareInstance].cellId             = [object objectForKey:@"cellId"];
+            [MSInterf shareInstance].insertUnitId       = [object objectForKey:@"insertUnitId"];
+            [MSInterf shareInstance].bannerUnitId       = [object objectForKey:@"bannerUnitId"];
             [MSInterf shareInstance].googleAdsStart     = [[object objectForKey:@"googleAdsStart"] integerValue];
             [MSInterf shareInstance].googleAdsInterval  = [[object objectForKey:@"googleAdsInterval"] integerValue];
             [MSInterf shareInstance].hasPassedAppStore  = [[object objectForKey:@"hasPassedAppStore"] boolValue];
