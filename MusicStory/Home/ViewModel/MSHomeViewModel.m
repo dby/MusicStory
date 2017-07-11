@@ -84,7 +84,7 @@
                 }
             }
         }];
-    } else if ([_type isEqualToString:NOTIFY_OBJ_music_article]) {
+    } else if ([_type isEqualToString:NOTIFY_OBJ_MUSIC_COLUMN]) {
         // 音乐小文
         AVQuery *query = [AVQuery queryWithClassName:@"NeighborEar"];
         query.limit = EVERY_DATA_NUM;

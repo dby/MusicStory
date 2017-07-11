@@ -135,7 +135,7 @@
 -(void)slideCenterViewMusicColumnViewDidClick {
     debugMethod();
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HIDDEMENU object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_music_article];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_SETUPHOMEVIEWTYPE object:NOTIFY_OBJ_MUSIC_COLUMN];
 }
 
 // 音乐榜单
@@ -196,8 +196,8 @@
         _centerView.delegate = self;
         
         _centerView.curView = [[UIView alloc] init];
-        _centerView.curView = self.centerView.musicStoryView;
-        _centerView.indexView.centerY = self.centerView.musicStoryView.center.y;
+        _centerView.curView = self.centerView.musicColumnView;
+        _centerView.indexView.centerY = self.centerView.musicColumnView.center.y;
     }
     return _centerView;
 }

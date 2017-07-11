@@ -91,8 +91,8 @@
     [self buildRefreshView];
     [self showProgress];
     
-    self.viewModel.type        = NOTIFY_OBJ_music_story;
-    self.currentCollectionType = NOTIFY_OBJ_music_story;
+    self.viewModel.type        = NOTIFY_OBJ_MUSIC_COLUMN;
+    self.currentCollectionType = NOTIFY_OBJ_MUSIC_COLUMN;
     [self.viewModel getData:self.homeDataArray.count withSuccessBack:^(NSArray *datasource) {
         
         [self.homeDataArray addObjectsFromArray:datasource];
@@ -297,8 +297,6 @@
     GADInterstitial *interstitial = [[GADInterstitial alloc] initWithAdUnitID:[MSInterf shareInstance].insertUnitId];
     interstitial.delegate = self;
     GADRequest *request = [GADRequest request];
-    // Requests test ads on test devices.
-    request.testDevices = @[@"2077ef9a63d2b398840261c8221a0c9b"];
     [interstitial loadRequest:request];
     return interstitial;
 }

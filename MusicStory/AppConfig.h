@@ -54,7 +54,7 @@
 /// 音乐乐评
 #define NOTIFY_OBJ_music_criticism  @"musicCriticimsType"
 /// 音乐小文
-#define NOTIFY_OBJ_music_article    @"musicArticleType"
+#define NOTIFY_OBJ_MUSIC_COLUMN    @"NOTIFY_MUSIC_COLUMNTYPE"
 /// 音乐榜单
 #define NOTIFY_OBJ_music_ranklist   @"musicRankListType"
 /// 我的收藏

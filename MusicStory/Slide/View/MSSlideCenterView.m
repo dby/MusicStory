@@ -21,7 +21,7 @@
     
     self.portrait.layer.cornerRadius    = 25;
     self.portrait.layer.masksToBounds   = YES;
-    self.indexView.centerY = self.musicStoryView.centerY;
+    self.indexView.centerY = self.musicColumnView.centerY;
     
     // 登陆
     [self.loginview addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
