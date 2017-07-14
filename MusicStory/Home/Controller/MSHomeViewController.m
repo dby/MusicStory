@@ -49,6 +49,8 @@
 @property (nonatomic, strong) MSHomeCenterItemView *currentCenterItemView;
 @property (nonatomic, strong) MSMusicModel *currentModel;
 
+@property (nonatomic, assign) NSInteger loadingThisPageNum;
+
 // GoogleAds
 @property (nonatomic, strong) GADInterstitial *interstitial;
 
@@ -65,6 +67,17 @@
     
     // 取消播放电影
     [[NSNotificationCenter defaultCenter] postNotificationName:@"STOP_PLAY_MUSIC" object:nil];
+    
+    // 显示广告
+    if (self.loadingThisPageNum != 1) {
+        int randomNumber = arc4random()%100 + 1;
+        NSLog(@"randomNumber: %d", randomNumber);
+        if (randomNumber < [MSInterf shareInstance].googleAdsStart) {
+            [self showingGoogleAd];
+        }
+    }
+    
+    self.loadingThisPageNum++;
 }
 
 -(void)viewDidLoad {
@@ -108,6 +121,8 @@
         [self showNetWorkErrorView];
         [self hiddenProgress];
     }];
+    
+    self.loadingThisPageNum = self.loadingThisPageNum + 1;
     
     // 适配屏幕
     [self setupLayout];
@@ -181,6 +196,8 @@
 -(void)showingGoogleAd {
     if ([self.interstitial isReady]) {
         [self.interstitial presentFromRootViewController:self];
+    } else {
+        NSLog(@"Google ads 没有准备好...");
     }
 }
 

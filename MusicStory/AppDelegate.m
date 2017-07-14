@@ -145,6 +145,7 @@
 }
 
 - (void)showGoogleAds {
+    /*
     dispatch_queue_t queue = dispatch_get_main_queue();
     
     // 创建定时器
@@ -159,6 +160,7 @@
     });
     
     dispatch_resume(self.timer);
+     */
 }
 
 // 更新google ads 配置信息
