@@ -80,12 +80,14 @@
     debugMethod();
     [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.moveToFirstBtn.alpha = 0;
+        self.dayLabel.alpha = 0;
     } completion:nil];
 }
 - (void) showMoveToFirstAnimation {
     debugMethod();
     [UIView animateWithDuration:0.5 delay: 0.0 options: UIViewAnimationOptionCurveEaseOut animations: ^{
         self.moveToFirstBtn.alpha = 1;
+        self.dayLabel.alpha = 1;
     } completion: nil];
 }
 
