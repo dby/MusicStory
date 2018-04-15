@@ -26,6 +26,8 @@
 #import "LCIMConversationCache.h"
 #import "MessagesProtoOrig.pbobjc.h"
 #import "AVUtils.h"
+#import "AVIMRuntimeHelper.h"
+#import "AVIMRecalledMessage.h"
 
 #define LCIM_VALID_LIMIT(limit) ({      \
     int32_t limit_ = (int32_t)(limit);  \
@@ -47,27 +49,256 @@
     timestamp_;  \
 })
 
+NSString *LCIMClientIdKey = @"clientId";
+NSString *LCIMConversationIdKey = @"conversationId";
+NSString *LCIMConversationPropertyNameKey = @"propertyName";
+NSString *LCIMConversationPropertyValueKey = @"propertyValue";
+NSNotificationName LCIMConversationPropertyUpdateNotification = @"LCIMConversationPropertyUpdateNotification";
+
+NSNotificationName LCIMConversationMessagePatchNotification = @"LCIMConversationMessagePatchNotification";
+NSNotificationName LCIMConversationDidReceiveMessageNotification = @"LCIMConversationDidReceiveMessageNotification";
+
+@implementation AVIMMessageIntervalBound
+
+- (instancetype)initWithMessageId:(NSString *)messageId
+                        timestamp:(int64_t)timestamp
+                           closed:(BOOL)closed
+{
+    self = [super init];
+
+    if (self) {
+        _messageId = [messageId copy];
+        _timestamp = timestamp;
+        _closed = closed;
+    }
+
+    return self;
+}
+
+@end
+
+@implementation AVIMMessageInterval
+
+- (instancetype)initWithStartIntervalBound:(AVIMMessageIntervalBound *)startIntervalBound
+                          endIntervalBound:(AVIMMessageIntervalBound *)endIntervalBound
+{
+    self = [super init];
+
+    if (self) {
+        _startIntervalBound = startIntervalBound;
+        _endIntervalBound = endIntervalBound;
+    }
+
+    return self;
+}
+
+@end
+
 @interface AVIMConversation()
 
-@property (nonatomic, strong) NSMutableDictionary *mutableAttributes;
+@property (nonatomic, strong) NSMutableDictionary *propertiesForUpdate;
 
 @end
 
 @implementation AVIMConversation
 
-- (instancetype)initWithConversationId:(NSString *)conversationId {
-    if (self = [super init]) {
-        self.conversationId = conversationId;
+static dispatch_queue_t messageCacheOperationQueue;
+
++ (void)initialize {
+    static dispatch_once_t onceToken;
+
+    dispatch_once(&onceToken, ^{
+        messageCacheOperationQueue = dispatch_queue_create("leancloud.message-cache-operation-queue", DISPATCH_QUEUE_CONCURRENT);
+    });
+}
+
+- (instancetype)init {
+    self = [super init];
+
+    if (self) {
+        [self doInitialize];
     }
+
     return self;
 }
 
-- (NSMutableDictionary *)mutableAttributes {
-    if (_mutableAttributes == nil) {
-        _mutableAttributes = [[NSMutableDictionary alloc] init];
-        [_mutableAttributes addEntriesFromDictionary:self.attributes];
+- (instancetype)initWithConversationId:(NSString *)conversationId {
+    self = [self init];
+
+    if (self) {
+        _conversationId = [conversationId copy];
     }
-    return _mutableAttributes;
+
+    return self;
+}
+
+- (void)doInitialize {
+    _properties = [NSMutableDictionary dictionary];
+    _propertiesForUpdate = [NSMutableDictionary dictionary];
+
+    _delegates = [NSHashTable weakObjectsHashTable];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(propertyDidUpdate:)
+                                                 name:LCIMConversationPropertyUpdateNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceivePatchItem:)
+                                                 name:LCIMConversationMessagePatchNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveMessageNotification:)
+                                                 name:LCIMConversationDidReceiveMessageNotification
+                                               object:nil];
+}
+
+- (void)addDelegate:(id<AVIMConversationDelegate>)delegate {
+    @synchronized(_delegates) {
+        [_delegates addObject:delegate];
+    }
+}
+
+- (void)removeDelegate:(id<AVIMConversationDelegate>)delegate {
+    @synchronized(_delegates) {
+        [_delegates removeObject:delegate];
+    }
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)propertyDidUpdate:(NSNotification *)notification {
+    if (!self.conversationId)
+        return;
+
+    NSDictionary *userInfo = notification.userInfo;
+
+    NSString *clientId = userInfo[LCIMClientIdKey];
+    NSString *conversationId = userInfo[LCIMConversationIdKey];
+    NSString *propertyName = userInfo[LCIMConversationPropertyNameKey];
+    NSString *propertyValue = userInfo[LCIMConversationPropertyValueKey];
+
+    if (!propertyName
+        || (!clientId || ![clientId isEqualToString:self.imClient.clientId])
+        || (!conversationId || ![conversationId isEqualToString:self.conversationId]))
+        return;
+
+    [self tryUpdateKey:propertyName toValue:propertyValue];
+}
+
+- (void)tryUpdateKey:(NSString *)key toValue:(id)value {
+    if ([self shouldUpdateKey:key toValue:value]) {
+        [self updateKey:key toValue:value];
+    }
+}
+
+- (BOOL)shouldUpdateKey:(NSString *)key toValue:(id)value {
+    if ([key isEqualToString:@"lastMessage"]) {
+        AVIMMessage *lastMessage = value;
+        AVIMMessage *originLastMessage = self.lastMessage;
+
+        BOOL shouldUpdate = (lastMessage && (!originLastMessage || lastMessage.sendTimestamp > originLastMessage.sendTimestamp));
+
+        if (shouldUpdate) {
+            NSDate *lastMessageAt = [NSDate dateWithTimeIntervalSince1970:(lastMessage.sendTimestamp / 1000.0)];
+            [self updateKey:@"lastMessageAt" toValue:lastMessageAt];
+        }
+
+        return shouldUpdate;
+    }
+
+    return YES;
+}
+
+- (void)updateKey:(NSString *)key toValue:(id)value {
+    [self setValue:value forKey:key];
+    [self postUpdateNotificationForKey:key];
+}
+
+- (void)postUpdateNotificationForKey:(NSString *)key {
+    id  delegate = self.imClient.delegate;
+    SEL selector = @selector(conversation:didUpdateForKey:);
+
+    if (![delegate respondsToSelector:selector])
+        return;
+
+    [AVIMRuntimeHelper callMethodInMainThreadWithTarget:delegate
+                                               selector:selector
+                                              arguments:@[self, key]];
+}
+
+- (void)didReceivePatchItem:(NSNotification *)notification {
+    if (!self.conversationId)
+        return;
+    if (notification.object != self.imClient)
+        return;
+
+    NSDictionary *userInfo = notification.userInfo;
+    AVIMPatchItem *patchItem = userInfo[@"patchItem"];
+
+    if (![patchItem.cid isEqualToString:self.conversationId])
+        return;
+
+    NSString *messageId = patchItem.mid;
+    LCIMMessageCacheStore *messageCacheStore = [self messageCacheStore];
+
+    AVIMMessage *message = [messageCacheStore messageForId:messageId];
+
+    if (!message)
+        return;
+
+    if ([message.messageId isEqualToString:self.lastMessage.messageId])
+        self.lastMessage = message;
+
+    [self callDelegateMethod:@selector(conversation:messageHasBeenUpdated:)
+               withArguments:@[self, message]];
+}
+
+- (void)didReceiveMessageNotification:(NSNotification *)notification {
+    if (!self.conversationId)
+        return;
+    if (notification.object != self.imClient)
+        return;
+
+    NSDictionary *userInfo = notification.userInfo;
+    AVIMMessage *message = userInfo[@"message"];
+
+    if (![message.conversationId isEqualToString:self.conversationId])
+        return;
+
+    [self didReceiveMessage:message];
+}
+
+- (void)didReceiveMessage:(AVIMMessage *)message {
+    if (!message.transient) {
+        self.lastMessage = message;
+        [self postUpdateNotificationForKey:NSStringFromSelector(@selector(lastMessage))];
+
+        /* Update last message timestamp if needed. */
+        NSDate *sentAt = [NSDate dateWithTimeIntervalSince1970:(message.sendTimestamp / 1000.0)];
+
+        if (!self.lastMessageAt || [self.lastMessageAt compare:sentAt] == NSOrderedAscending) {
+            self.lastMessageAt = sentAt;
+            [self postUpdateNotificationForKey:NSStringFromSelector(@selector(lastMessageAt))];
+        }
+
+        /* Increase unread messages count. */
+        self.unreadMessagesCount += 1;
+        [self postUpdateNotificationForKey:NSStringFromSelector(@selector(unreadMessagesCount))];
+    }
+}
+
+- (void)callDelegateMethod:(SEL)method withArguments:(NSArray *)arguments {
+    NSArray<id<AVIMConversationDelegate>> *delegates = [self.delegates allObjects];
+
+    for (id<AVIMConversationDelegate> delegate in delegates) {
+        [AVIMRuntimeHelper callMethodInMainThreadWithTarget:delegate
+                                                   selector:method
+                                                  arguments:arguments];
+    }
 }
 
 - (NSString *)clientId {
@@ -103,12 +334,37 @@
     _members = members;
 }
 
+- (void)setProperties:(NSMutableDictionary *)properties {
+    if (properties)
+        _properties = properties;
+    else
+        _properties = [NSMutableDictionary dictionary];
+}
+
 - (void)setObject:(nullable id)object forKey:(NSString *)key {
-    [self.mutableAttributes setObject:object forKey:key];
+    [self.propertiesForUpdate setObject:object forKey:key];
+    [self.properties setObject:object forKey:key];
+}
+
+- (void)setObject:(id)object forKeyedSubscript:(NSString *)key {
+    [self setObject:object forKey:key];
 }
 
 - (nullable id)objectForKey:(NSString *)key {
-    return [self.mutableAttributes objectForKey:key];
+    id object = (
+        [self.propertiesForUpdate objectForKey:key] ?:
+        [self.properties objectForKey:key]
+    );
+
+    return object;
+}
+
+- (id)objectForKeyedSubscript:(NSString *)key {
+    return [self objectForKey:key];
+}
+
+- (void)cleanAttributesForUpdate {
+    [self.propertiesForUpdate removeAllObjects];
 }
 
 - (AVIMConversationUpdateBuilder *)newUpdateBuilder {
@@ -152,6 +408,22 @@
     _creator = creator;
 }
 
+- (NSString *)name {
+    return self.properties[KEY_NAME];
+}
+
+- (void)setName:(NSString *)name {
+    self.properties[KEY_NAME] = name;
+}
+
+- (NSDictionary *)attributes {
+    return self.properties[KEY_ATTR];
+}
+
+- (void)setAttributes:(NSDictionary *)attributes {
+    self.properties[KEY_ATTR] = attributes;
+}
+
 - (void)fetchWithCallback:(AVIMBooleanResultBlock)callback {
     AVIMConversationQuery *query = [self.imClient conversationQuery];
     query.cachePolicy = kAVCachePolicyNetworkOnly;
@@ -164,6 +436,41 @@
             [AVIMBlockHelper callBooleanResultBlock:callback error:error];
         });
     }];
+}
+
+- (void)fetchReceiptTimestampsInBackground {
+    dispatch_async([AVIMClient imClientQueue], ^{
+        AVIMGenericCommand *genericCommand = [[AVIMGenericCommand alloc] init];
+
+        genericCommand.cmd = AVIMCommandType_Conv;
+        genericCommand.op = AVIMOpType_MaxRead;
+        genericCommand.peerId = self.imClient.clientId;
+        genericCommand.needResponse = YES;
+
+        AVIMConvCommand *convCommand = [[AVIMConvCommand alloc] init];
+        convCommand.cid = self.conversationId;
+
+        genericCommand.convMessage = convCommand;
+
+        [genericCommand setCallback:^(AVIMGenericCommand *outCommand, AVIMGenericCommand *inCommand, NSError *error) {
+            if (error)
+                return;
+
+            AVIMConvCommand *convCommand = inCommand.convMessage;
+            NSDate *lastDeliveredAt = [NSDate dateWithTimeIntervalSince1970:convCommand.maxAckTimestamp / 1000.0];
+            NSDate *lastReadAt = [NSDate dateWithTimeIntervalSince1970:convCommand.maxReadTimestamp / 1000.0];
+
+            [self.imClient updateReceipt:lastDeliveredAt
+                          ofConversation:self
+                                  forKey:NSStringFromSelector(@selector(lastDeliveredAt))];
+
+            [self.imClient updateReceipt:lastReadAt
+                          ofConversation:self
+                                  forKey:NSStringFromSelector(@selector(lastReadAt))];
+        }];
+
+        [self.imClient sendCommand:genericCommand];
+    });
 }
 
 - (void)joinWithCallback:(AVIMBooleanResultBlock)callback {
@@ -292,50 +599,51 @@
     return genericCommand;
 }
 
-- (void)updateAttributesWithUpdateBuilderDataSource:(NSDictionary *)dataSource customAttributes:(NSDictionary *)customAttributes {
-    NSString *name = [dataSource objectForKey:KEY_NAME];
-    if (name) {
+- (void)updateLocalAttributes:(NSDictionary *)attributes {
+    NSString *name = attributes[KEY_NAME];
+    NSDictionary *attr = attributes[KEY_ATTR];
+
+    if (name)
         self.name = name;
+
+    if (attr) {
+        NSMutableDictionary *attributes = (
+            self.attributes ?
+            [NSMutableDictionary dictionaryWithDictionary:self.attributes] :
+            [NSMutableDictionary dictionary]
+        );
+
+        [attributes addEntriesFromDictionary:attr];
+
+        self.attributes = attributes;
     }
-    
-    if (customAttributes) {
-        NSMutableDictionary *attributes = [self.attributes mutableCopy];
-        if (!attributes) {
-            attributes = [[NSMutableDictionary alloc] init];
-        }
-        [attributes addEntriesFromDictionary:customAttributes];
-        self.attributes = [attributes copy];
-    }
-    
-    [self removeCachedConversation];
 }
 
 - (void)updateWithCallback:(AVIMBooleanResultBlock)callback {
-    dispatch_async([AVIMClient imClientQueue], ^{
-        NSDictionary *updateBuilderDataSource = [self.mutableAttributes copy];
-        NSDictionary *customAttributes = [[self class] filterCustomAttributesFromDictionary:updateBuilderDataSource];
-        AVIMGenericCommand *genericCommand = [self generateGenericCommandWithAttributes:customAttributes];
-        [genericCommand setCallback:^(AVIMGenericCommand *outCommand, AVIMGenericCommand *inCommand, NSError *error) {
-            if (!error) {
-                [self updateAttributesWithUpdateBuilderDataSource:updateBuilderDataSource customAttributes:updateBuilderDataSource];
-            }
-            self.mutableAttributes = nil;
-            [AVIMBlockHelper callBooleanResultBlock:callback error:error];
-        }];
-        [_imClient sendCommand:genericCommand];
-    });
+    [self updateAttributes:self.propertiesForUpdate callback:callback];
 }
 
-- (void)update:(NSDictionary *)updateDict callback:(AVIMBooleanResultBlock)callback {
+- (void)update:(NSDictionary *)attributes callback:(AVIMBooleanResultBlock)callback {
+    [self updateAttributes:attributes callback:^(BOOL succeeded, NSError * _Nullable error) {
+        if (!error)
+            [self updateLocalAttributes:attributes];
+
+        [AVIMBlockHelper callBooleanResultBlock:callback error:error];
+    }];
+}
+
+- (void)updateAttributes:(NSDictionary *)attributes callback:(AVIMBooleanResultBlock)callback {
+    attributes = [attributes copy];
+
     dispatch_async([AVIMClient imClientQueue], ^{
-        NSDictionary *updateBuilderDataSource = updateDict;
-        AVIMGenericCommand *genericCommand = [self generateGenericCommandWithAttributes:updateBuilderDataSource];
+        AVIMGenericCommand *genericCommand = [self generateGenericCommandWithAttributes:attributes];
         [genericCommand setCallback:^(AVIMGenericCommand *outCommand, AVIMGenericCommand *inCommand, NSError *error) {
             if (!error) {
-                NSDictionary *customAttributes = [updateBuilderDataSource objectForKey:KEY_ATTR];
-                [self updateAttributesWithUpdateBuilderDataSource:updateBuilderDataSource customAttributes:customAttributes];
+                [self cleanAttributesForUpdate];
+                [self removeCachedConversation];
             }
-            [AVIMBlockHelper callBooleanResultBlock:callback error:error];
+            if (callback)
+                callback(error == nil, error);
         }];
         [_imClient sendCommand:genericCommand];
     });
@@ -407,6 +715,48 @@
     });
 }
 
+- (void)readInBackground {
+    dispatch_async([AVIMClient imClientQueue], ^{
+        int64_t lastTimestamp = 0;
+        NSString *lastMessageId = nil;
+
+        /* NOTE:
+           We do not care about the owner of last message.
+           Server will do the right thing.
+         */
+        AVIMMessage *lastMessage = self.lastMessage;
+
+        if (lastMessage) {
+            lastTimestamp = lastMessage.sendTimestamp;
+            lastMessageId = lastMessage.messageId;
+        } else if (self.lastMessageAt)
+            lastTimestamp = [self.lastMessageAt timeIntervalSince1970] * 1000;
+
+        if (lastTimestamp <= 0) {
+            AVLoggerInfo(AVLoggerDomainIM, @"No message to read.");
+            return;
+        }
+
+        AVIMReadTuple *readTuple = [[AVIMReadTuple alloc] init];
+        AVIMReadCommand *readCommand = [[AVIMReadCommand alloc] init];
+        AVIMGenericCommand *genericCommand = [[AVIMGenericCommand alloc] init];
+
+        readTuple.cid = self.conversationId;
+        readTuple.mid = lastMessageId;
+        readTuple.timestamp = lastTimestamp;
+
+        readCommand.convsArray = [NSMutableArray arrayWithObject:readTuple];
+
+        genericCommand.cmd = AVIMCommandType_Read;
+        genericCommand.peerId = self.imClient.clientId;
+
+        [genericCommand avim_addRequiredKeyWithCommand:readCommand];
+
+        [self.imClient resetUnreadMessagesCountForConversation:self];
+        [self.imClient sendCommand:genericCommand];
+    });
+}
+
 - (void)sendMessage:(AVIMMessage *)message
            callback:(AVIMBooleanResultBlock)callback
 {
@@ -470,44 +820,22 @@
     
     if ([message isKindOfClass:[AVIMTypedMessage class]]) {
         AVIMTypedMessage *typedMessage = (AVIMTypedMessage *)message;
-        
-        AVFile *file = nil;
-        
-        if (typedMessage.file) {
-            file = typedMessage.file;
-        } else if (typedMessage.attachedFilePath) {
-            NSString *attachedFilePath = typedMessage.attachedFilePath;
-            
-            if (![[NSFileManager defaultManager] fileExistsAtPath:attachedFilePath]) {
-                [AVIMBlockHelper callBooleanResultBlock:callback error:[AVErrorUtils fileNotFoundError]];
-                return;
-            }
-            
-            NSString *name = [attachedFilePath lastPathComponent];
-            
-            file = [AVFile fileWithName:name contentsAtPath:attachedFilePath];
-        }
+        AVFile *file = typedMessage.file;
         
         if (file) {
-            if ([file isDirty]) {
-                /* File need to be uploaded */
-                [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if (succeeded) {
-                        /* If uploading is success, bind file to message */
+            [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    /* If uploading is success, bind file to message */
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                         [self fillTypedMessage:typedMessage withFile:file];
                         [self fillTypedMessageForLocationIfNeeded:typedMessage];
                         [self sendRealMessage:message option:option callback:callback];
-                    } else {
-                        message.status = AVIMMessageStatusFailed;
-                        [AVIMBlockHelper callBooleanResultBlock:callback error:error];
-                    }
-                } progressBlock:progressBlock];
-            } else {
-                /* File has already been uploaded, bind file to message */
-                [self fillTypedMessage:typedMessage withFile:file];
-                [self fillTypedMessageForLocationIfNeeded:typedMessage];
-                [self sendRealMessage:message option:option callback:callback];
-            }
+                    });
+                } else {
+                    message.status = AVIMMessageStatusFailed;
+                    [AVIMBlockHelper callBooleanResultBlock:callback error:error];
+                }
+            } progressBlock:progressBlock];
         } else {
             [self fillTypedMessageForLocationIfNeeded:typedMessage];
             [self sendRealMessage:message option:option callback:callback];
@@ -602,15 +930,9 @@
 
 - (void)sendRealMessage:(AVIMMessage *)message option:(AVIMMessageOption *)option callback:(AVIMBooleanResultBlock)callback {
     dispatch_async([AVIMClient imClientQueue], ^{
-        bool transient = option.transient;
-        bool requestReceipt = option.receipt;
-
-        if ([message isKindOfClass:[AVIMTypedMessage class]]) {
-            AVIMTypedMessage *typedMessage = (AVIMTypedMessage *)message;
-            if (!typedMessage.messageObject._lctext && !typedMessage.messageObject._lcloc && !typedMessage.messageObject._lcfile && !typedMessage.messageObject._lcattrs) {
-                [NSException raise:NSInternalInconsistencyException format:@"AVIMTypedMessage should have one of text, file, location or attributes not be nil."];
-            }
-        }
+        BOOL will = option.will;
+        BOOL transient = option.transient;
+        BOOL receipt = option.receipt;
 
         AVIMGenericCommand *genericCommand = [[AVIMGenericCommand alloc] init];
         genericCommand.needResponse = YES;
@@ -628,11 +950,14 @@
         [genericCommand avim_addRequiredKeyWithCommand:directCommand];
         [genericCommand avim_addRequiredKeyForDirectMessageWithMessage:message transient:NO];
 
+        if (will) {
+            directCommand.will = YES;
+        }
         if (transient) {
             directCommand.transient = YES;
             genericCommand.needResponse = NO;
         }
-        if (requestReceipt) {
+        if (receipt) {
             directCommand.r = YES;
         }
         if (option.pushData) {
@@ -648,6 +973,12 @@
                     directCommand.pushData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 }
             }
+        }
+        if (message.mentionAll) {
+            directCommand.mentionAll = YES;
+        }
+        if (message.mentionList.count) {
+            directCommand.mentionPidsArray = [message.mentionList mutableCopy];
         }
 
         [genericCommand setCallback:^(AVIMGenericCommand *outCommand, AVIMGenericCommand *inCommand, NSError *error) {
@@ -666,11 +997,11 @@
                     self.lastMessage = message;
                 }
                 if (!directCommand.transient && self.imClient.messageQueryCacheEnabled) {
-                    [[self messageCacheStore] insertMessage:message withBreakpoint:NO];
+                    [[self messageCacheStore] insertOrUpdateMessage:message withBreakpoint:NO];
                 }
                 if (!transient) {
                     if (directOutCommand.r) {
-                        [_imClient addMessage:message];
+                        [_imClient stageMessage:message];
                     }
                     [self updateConversationAfterSendMessage:message];
                 }
@@ -682,45 +1013,128 @@
     });
 }
 
+- (void)sendCommand:(AVIMGenericCommand *)command {
+    [self.imClient sendCommand:command];
+}
+
+- (AVIMGenericCommand *)patchCommandWithOldMessage:(AVIMMessage *)oldMessage
+                                        newMessage:(AVIMMessage *)newMessage
+{
+    AVIMGenericCommand *command = [[AVIMGenericCommand alloc] init];
+
+    command.needResponse = YES;
+    command.cmd = AVIMCommandType_Patch;
+    command.op = AVIMOpType_Modify;
+    command.peerId = self.clientId;
+
+    AVIMPatchItem *patchItem = [[AVIMPatchItem alloc] init];
+
+    patchItem.cid = self.conversationId;
+    patchItem.mid = oldMessage.messageId;
+    patchItem.timestamp = oldMessage.sendTimestamp;
+    patchItem.data_p = newMessage.payload;
+
+    if (newMessage.mentionAll) {
+        patchItem.mentionAll = newMessage.mentionAll;
+    }
+    if (newMessage.mentionList.count) {
+        patchItem.mentionPidsArray = [newMessage.mentionList mutableCopy];
+    }
+
+    NSArray<AVIMPatchItem*> *patchesArray = @[patchItem];
+    AVIMPatchCommand *patchMessage = [[AVIMPatchCommand alloc] init];
+
+    patchMessage.patchesArray = [patchesArray mutableCopy];
+    command.patchMessage = patchMessage;
+
+    return command;
+}
+
+- (BOOL)containsMessage:(AVIMMessage *)message {
+    if (!message.messageId)
+        return NO;
+    if (!message.conversationId)
+        return NO;
+
+    return [self.conversationId isEqualToString:message.conversationId];
+}
+
+- (void)didUpdateMessage:(AVIMMessage *)oldMessage
+            toNewMessage:(AVIMMessage *)newMessage
+            patchCommand:(AVIMPatchCommand *)command
+{
+    newMessage.messageId            = oldMessage.messageId;
+    newMessage.clientId             = oldMessage.clientId;
+    newMessage.localClientId        = oldMessage.localClientId;
+    newMessage.conversationId       = oldMessage.conversationId;
+    newMessage.sendTimestamp        = oldMessage.sendTimestamp;
+    newMessage.readTimestamp        = oldMessage.readTimestamp;
+    newMessage.deliveredTimestamp   = oldMessage.deliveredTimestamp;
+    newMessage.offline              = oldMessage.offline;
+    newMessage.status               = oldMessage.status;
+    newMessage.updatedAt            = [NSDate dateWithTimeIntervalSince1970:command.lastPatchTime / 1000.0];
+
+    LCIMMessageCache *messageCache = [self messageCache];
+    [messageCache updateMessage:newMessage forConversationId:self.conversationId];
+}
+
+- (void)updateMessage:(AVIMMessage *)oldMessage
+         toNewMessage:(AVIMMessage *)newMessage
+             callback:(AVIMBooleanResultBlock)callback
+{
+    if (!newMessage) {
+        NSError *error = [AVErrorUtils errorWithCode:kAVIMErrorMessageNotFound errorText:@"Cannot update a message to nil."];
+        [AVUtils callBooleanResultBlock:callback error:error];
+        return;
+    }
+    if (![self containsMessage:oldMessage]) {
+        NSError *error = [AVErrorUtils errorWithCode:kAVIMErrorMessageNotFound errorText:@"Cannot find a message to update."];
+        [AVUtils callBooleanResultBlock:callback error:error];
+        return;
+    }
+
+    AVIMGenericCommand *patchCommand = [self patchCommandWithOldMessage:oldMessage
+                                                             newMessage:newMessage];
+
+    patchCommand.callback = ^(AVIMGenericCommand *outCommand, AVIMGenericCommand *inCommand, NSError *error) {
+        if (error) {
+            [AVUtils callBooleanResultBlock:callback error:error];
+            return;
+        }
+        [self didUpdateMessage:oldMessage toNewMessage:newMessage patchCommand:inCommand.patchMessage];
+        [AVUtils callBooleanResultBlock:callback error:nil];
+    };
+
+    [self sendCommand:patchCommand];
+}
+
+- (void)recallMessage:(AVIMMessage *)oldMessage
+             callback:(nonnull void (^)(BOOL, NSError * _Nullable, AVIMRecalledMessage * _Nullable))callback
+{
+    AVIMRecalledMessage *recalledMessage = [[AVIMRecalledMessage alloc] init];
+
+    [self updateMessage:oldMessage
+           toNewMessage:recalledMessage
+               callback:^(BOOL succeeded, NSError * _Nullable error) {
+                   if (!callback)
+                       return;
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                       callback(succeeded, error, (succeeded ? recalledMessage : nil));
+                   });
+               }];
+}
+
 - (void)updateConversationAfterSendMessage:(AVIMMessage *)message {
     NSDate *messageSentAt = [NSDate dateWithTimeIntervalSince1970:(message.sendTimestamp / 1000.0)];
     self.lastMessageAt = messageSentAt;
     [self.conversationCache updateConversationForLastMessageAt:messageSentAt conversationId:self.conversationId];
 }
 
-+ (NSDictionary *)filterCustomAttributesFromDictionary:(NSDictionary *)dictionary {
-    NSMutableDictionary *mutableDictionary = [dictionary mutableCopy];
-    NSArray *defaultAttributes = @[
-                                   @"createdAt",
-                                   @"updatedAt",
-                                   @"objectId",
-                                   @"lm",
-                                   KEY_NAME,
-                                   @"c",
-                                   @"m",
-                                   @"muted",
-                                   @"tr"
-                                   ];
-    [mutableDictionary removeObjectsForKeys:defaultAttributes];
-    NSDictionary *customAttributes = [mutableDictionary copy];
-    
-    //v3.7.0之前的旧版产生的数据中会有attr字段
-    NSDictionary *attr = [customAttributes objectForKey:KEY_ATTR];
-    if (!attr) {
-        return customAttributes;
-    }
-    //新版本中也可能产生同时含有attr字段，以及和attr字段同级的其他自定义属性
-    //同时含有attr和同一个层级的自定义属性，如果包含同一个自定义名称，则以新形式的自定义属性为准。
-    NSMutableDictionary *campatibleCustomAttributes = [attr mutableCopy];
-    [campatibleCustomAttributes addEntriesFromDictionary:customAttributes];
-    return [campatibleCustomAttributes copy];
-}
-
 #pragma mark -
 
 - (NSArray *)takeContinuousMessages:(NSArray *)messages {
     NSMutableArray *continuousMessages = [NSMutableArray array];
-    
+
     for (AVIMMessage *message in messages.reverseObjectEnumerator) {
         if (!message.breakpoint) {
             [continuousMessages insertObject:message atIndex:0];
@@ -746,13 +1160,13 @@
 }
 
 - (LCIMConversationCache *)conversationCache {
-    NSString *clientId = self.clientId;
-
-    return clientId ? [[LCIMConversationCache alloc] initWithClientId:clientId] : nil;
+    return self.imClient.conversationCache;
 }
 
 - (void)cacheContinuousMessages:(NSArray *)messages {
     [self cacheContinuousMessages:messages withBreakpoint:YES];
+
+    [self messagesDidCache];
 }
 
 - (void)cacheContinuousMessages:(NSArray *)messages plusMessage:(AVIMMessage *)message {
@@ -762,14 +1176,23 @@
     if (message)  [cachedMessages addObject:message];
     
     [self cacheContinuousMessages:cachedMessages withBreakpoint:YES];
+
+    [self messagesDidCache];
 }
 
 - (void)cacheContinuousMessages:(NSArray *)messages withBreakpoint:(BOOL)breakpoint {
     if (breakpoint) {
         [[self messageCache] addContinuousMessages:messages forConversationId:self.conversationId];
     } else {
-        [[self messageCacheStore] insertMessages:messages];
+        [[self messageCacheStore] insertOrUpdateMessages:messages];
     }
+
+    [self messagesDidCache];
+}
+
+- (void)messagesDidCache {
+    AVIMMessage *lastMessage = [[self queryMessagesFromCacheWithLimit:1] firstObject];
+    [self tryUpdateKey:@"lastMessage" toValue:lastMessage];
 }
 
 - (void)removeCachedConversation {
@@ -780,11 +1203,26 @@
     [[self messageCacheStore] cleanCache];
 }
 
+- (void)addMessageToCache:(AVIMMessage *)message {
+    message.clientId = _imClient.clientId;
+    message.conversationId = _conversationId;
+
+    [[self messageCacheStore] insertOrUpdateMessage:message];
+}
+
+- (void)removeMessageFromCache:(AVIMMessage *)message {
+    [[self messageCacheStore] deleteMessage:message];
+}
+
 #pragma mark - Message Query
 
 - (void)sendACKIfNeeded:(NSArray *)messages {
     NSDictionary *userOptions = [AVIMClient userOptions];
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     BOOL useUnread = [userOptions[AVIMUserOptionUseUnread] boolValue];
+#pragma clang diagnostic pop
     
     if (useUnread) {
         AVIMClient *client = self.imClient;
@@ -835,6 +1273,12 @@
                     message.sendTimestamp = [logsItem timestamp];
                     message.clientId = [logsItem from];
                     message.messageId = [logsItem msgId];
+                    message.mentionAll = logsItem.mentionAll;
+                    message.mentionList = [logsItem.mentionPidsArray copy];
+
+                    if (logsItem.hasPatchTimestamp)
+                        message.updatedAt = [NSDate dateWithTimeIntervalSince1970:(logsItem.patchTimestamp / 1000.0)];
+
                     [messages addObject:message];
                 }
                 self.lastMessage = messages.lastObject;
@@ -865,7 +1309,10 @@
     logsCommand.cid    = _conversationId;
     logsCommand.mid    = messageId;
     logsCommand.t      = LCIM_VALID_TIMESTAMP(timestamp);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     logsCommand.l      = LCIM_VALID_LIMIT(limit);
+#pragma clang diagnostic pop
     
     [genericCommand avim_addRequiredKeyWithCommand:logsCommand];
     [self queryMessagesFromServerWithCommand:genericCommand callback:callback];
@@ -888,7 +1335,10 @@
     logsCommand.tmid   = toMessageId;
     logsCommand.tt     = MAX(toTimestamp, 0);
     logsCommand.t      = MAX(timestamp, 0);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     logsCommand.l      = LCIM_VALID_LIMIT(limit);
+#pragma clang diagnostic pop
     [genericCommand avim_addRequiredKeyWithCommand:logsCommand];
     [self queryMessagesFromServerWithCommand:genericCommand callback:callback];
 }
@@ -896,7 +1346,10 @@
 - (void)queryMessagesFromServerWithLimit:(NSUInteger)limit
                                 callback:(AVIMArrayResultBlock)callback
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     limit = LCIM_VALID_LIMIT(limit);
+#pragma clang diagnostic pop
     
     [self queryMessagesFromServerBeforeId:nil
                                 timestamp:LCIM_DISTANT_FUTURE_TIMESTAMP
@@ -904,14 +1357,21 @@
                                  callback:^(NSArray *messages, NSError *error)
      {
          if (self.imClient.messageQueryCacheEnabled) {
-             [self cacheContinuousMessages:messages];
+             dispatch_async(messageCacheOperationQueue, ^{
+                 [self cacheContinuousMessages:messages];
+                 [AVIMBlockHelper callArrayResultBlock:callback array:messages error:error];
+             });
+         } else {
+             [AVIMBlockHelper callArrayResultBlock:callback array:messages error:error];
          }
-         [AVIMBlockHelper callArrayResultBlock:callback array:messages error:error];
      }];
 }
 
 - (NSArray *)queryMessagesFromCacheWithLimit:(NSUInteger)limit {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     limit = LCIM_VALID_LIMIT(limit);
+#pragma clang diagnostic pop
     NSArray *cachedMessages = [[self messageCacheStore] latestMessagesWithLimit:limit];
     [self postprocessMessages:cachedMessages];
     
@@ -921,7 +1381,10 @@
 - (void)queryMessagesWithLimit:(NSUInteger)limit
                       callback:(AVIMArrayResultBlock)callback
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     limit = LCIM_VALID_LIMIT(limit);
+#pragma clang diagnostic pop
     
     BOOL socketOpened = self.imClient.status == AVIMClientStatusOpened;
     // 如果屏蔽了本地缓存则全部走网络
@@ -944,12 +1407,12 @@
                                      callback:^(NSArray *messages, NSError *error)
          {
              if (!error) {
-                 /* Everything is OK, we cache messages and return */
-                 BOOL truncated = [messages count] < limit;
-                 [self cacheContinuousMessages:messages withBreakpoint:!truncated];
-                 
-                 NSArray *cachedMessages = [self queryMessagesFromCacheWithLimit:limit];
-                 [AVIMBlockHelper callArrayResultBlock:callback array:cachedMessages error:nil];
+                 dispatch_async(messageCacheOperationQueue, ^{
+                     [self cacheContinuousMessages:messages withBreakpoint:YES];
+
+                     NSArray *messages = [self queryMessagesFromCacheWithLimit:limit];
+                     [AVIMBlockHelper callArrayResultBlock:callback array:messages error:nil];
+                 });
              } else if ([error.domain isEqualToString:NSURLErrorDomain]) {
                  /* If network has an error, fallback to query from cache */
                  NSArray *messages = [self queryMessagesFromCacheWithLimit:limit];
@@ -971,10 +1434,14 @@
                         limit:(NSUInteger)limit
                      callback:(AVIMArrayResultBlock)callback
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     limit     = LCIM_VALID_LIMIT(limit);
+#pragma clang diagnostic pop
     timestamp = LCIM_VALID_TIMESTAMP(timestamp);
+
     /*
-     * Firstly,if message query cache is not enabled,just forward query request.
+     * Firstly, if message query cache is not enabled, just forward query request.
      */
     if (!self.imClient.messageQueryCacheEnabled) {
         [self queryMessagesFromServerBeforeId:messageId
@@ -986,77 +1453,100 @@
          }];
         return;
     }
+
     /*
-     * Secondly,if message query cache is enabled, fetch message from cache.
+     * Secondly, if message query cache is enabled, fetch message from cache.
      */
-    BOOL continuous = YES;
-    LCIMMessageCache *cache = [self messageCache];
-    LCIMMessageCacheStore *cacheStore = [self messageCacheStore];
-    AVIMMessage *fromMessage = [cacheStore messageForId:messageId];
-    NSArray *cachedMessages = [cache messagesBeforeTimestamp:timestamp
-                                                   messageId:messageId
-                                              conversationId:self.conversationId
-                                                       limit:limit
-                                                  continuous:&continuous];
-    
-    [self postprocessMessages:cachedMessages];
-    
-    /*
-     * If message is continuous or socket connect is not opened, return fetched messages directly.
-     */
-    BOOL socketOpened = self.imClient.status == AVIMClientStatusOpened;
-    
-    if ((continuous && [cachedMessages count] == limit) || !socketOpened) {
-        [AVIMBlockHelper callArrayResultBlock:callback array:cachedMessages error:nil];
-        return;
-    }
-    
-    /*
-     * If cached messages exist, only fetch the rest uncontinuous messages.
-     */
-    if ([cachedMessages count] > 0) {
-        NSArray *continuousMessages = [self takeContinuousMessages:cachedMessages];
+    dispatch_async(messageCacheOperationQueue, ^{
+        BOOL continuous = YES;
+        LCIMMessageCache *cache = [self messageCache];
+        LCIMMessageCacheStore *cacheStore = [self messageCacheStore];
+        AVIMMessage *fromMessage = [cacheStore messageForId:messageId];
+        NSArray *cachedMessages = [cache messagesBeforeTimestamp:timestamp
+                                                       messageId:messageId
+                                                  conversationId:self.conversationId
+                                                           limit:limit
+                                                      continuous:&continuous];
         
-        BOOL hasContinuous = [continuousMessages count] > 0;
+        [self postprocessMessages:cachedMessages];
         
         /*
-         * Then, fetch rest of messages from remote server.
+         * If message is continuous or socket connect is not opened, return fetched messages directly.
          */
-        NSUInteger restCount = 0;
-        AVIMMessage *startMessage = nil;
+        BOOL socketOpened = self.imClient.status == AVIMClientStatusOpened;
         
-        if (hasContinuous) {
-            restCount = limit - [continuousMessages count];
-            startMessage = [continuousMessages firstObject];
-        } else {
-            restCount = limit;
-            AVIMMessage *last = [cachedMessages lastObject];
-            startMessage = [cache nextMessageForMessage:last
-                                         conversationId:self.conversationId];
+        if ((continuous && [cachedMessages count] == limit) || !socketOpened) {
+            [AVIMBlockHelper callArrayResultBlock:callback array:cachedMessages error:nil];
+            return;
         }
         
         /*
-         * If start message not nil, query messages before it.
+         * If cached messages exist, only fetch the rest uncontinuous messages.
          */
-        if (startMessage) {
-            [self queryMessagesFromServerBeforeId:startMessage.messageId
-                                        timestamp:startMessage.sendTimestamp
-                                            limit:restCount
-                                         callback:^(NSArray *messages, NSError *error)
-             {
-                 if (!messages) {
-                     messages = @[];
-                 }
-                 
-                 NSMutableArray *fetchedMessages = [NSMutableArray arrayWithArray:messages];
-                 
-                 if (hasContinuous) {
-                     [fetchedMessages addObjectsFromArray:continuousMessages];
-                 }
-                 
-                 [self cacheContinuousMessages:fetchedMessages plusMessage:fromMessage];
-                 [AVIMBlockHelper callArrayResultBlock:callback array:fetchedMessages error:nil];
-             }];
+        if ([cachedMessages count] > 0) {
+            NSArray *continuousMessages = [self takeContinuousMessages:cachedMessages];
+            
+            BOOL hasContinuous = [continuousMessages count] > 0;
+            
+            /*
+             * Then, fetch rest of messages from remote server.
+             */
+            NSUInteger restCount = 0;
+            AVIMMessage *startMessage = nil;
+            
+            if (hasContinuous) {
+                restCount = limit - [continuousMessages count];
+                startMessage = [continuousMessages firstObject];
+            } else {
+                restCount = limit;
+                AVIMMessage *last = [cachedMessages lastObject];
+                startMessage = [cache nextMessageForMessage:last
+                                             conversationId:self.conversationId];
+            }
+            
+            /*
+             * If start message not nil, query messages before it.
+             */
+            if (startMessage) {
+                [self queryMessagesFromServerBeforeId:startMessage.messageId
+                                            timestamp:startMessage.sendTimestamp
+                                                limit:restCount
+                                             callback:^(NSArray *messages, NSError *error)
+                 {
+                     if (!messages) {
+                         messages = @[];
+                     }
+                     
+                     NSMutableArray *fetchedMessages = [NSMutableArray arrayWithArray:messages];
+                     
+                     if (hasContinuous) {
+                         [fetchedMessages addObjectsFromArray:continuousMessages];
+                     }
+
+                     dispatch_async(messageCacheOperationQueue, ^{
+                         [self cacheContinuousMessages:fetchedMessages plusMessage:fromMessage];
+
+                         NSArray *messages = [[self messageCacheStore] messagesBeforeTimestamp:timestamp
+                                                                                     messageId:messageId
+                                                                                         limit:limit];
+                         [AVIMBlockHelper callArrayResultBlock:callback array:messages error:nil];
+                     });
+                 }];
+            } else {
+                /*
+                 * Otherwise, just forward query request.
+                 */
+                [self queryMessagesFromServerBeforeId:messageId
+                                            timestamp:timestamp
+                                                limit:limit
+                                             callback:^(NSArray *messages, NSError *error)
+                 {
+                     dispatch_async(messageCacheOperationQueue, ^{
+                         [self cacheContinuousMessages:messages plusMessage:fromMessage];
+                         [AVIMBlockHelper callArrayResultBlock:callback array:messages error:error];
+                     });
+                 }];
+            }
         } else {
             /*
              * Otherwise, just forward query request.
@@ -1066,23 +1556,56 @@
                                             limit:limit
                                          callback:^(NSArray *messages, NSError *error)
              {
-                 [self cacheContinuousMessages:messages plusMessage:fromMessage];
-                 [AVIMBlockHelper callArrayResultBlock:callback array:messages error:error];
+                 dispatch_async(messageCacheOperationQueue, ^{
+                     [self cacheContinuousMessages:messages plusMessage:fromMessage];
+                     [AVIMBlockHelper callArrayResultBlock:callback array:messages error:error];
+                 });
              }];
         }
-    } else {
-        /*
-         * Otherwise, just forward query request.
-         */
-        [self queryMessagesFromServerBeforeId:messageId
-                                    timestamp:timestamp
-                                        limit:limit
-                                     callback:^(NSArray *messages, NSError *error)
-         {
-             [self cacheContinuousMessages:messages plusMessage:fromMessage];
-             [AVIMBlockHelper callArrayResultBlock:callback array:messages error:error];
-         }];
-    }
+    });
+}
+
+- (void)queryMessagesInInterval:(AVIMMessageInterval *)interval
+                      direction:(AVIMMessageQueryDirection)direction
+                          limit:(NSUInteger)limit
+                       callback:(AVIMArrayResultBlock)callback
+{
+    AVIMLogsCommand *logsCommand = [[AVIMLogsCommand alloc] init];
+
+    logsCommand.cid  = _conversationId;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    logsCommand.l    = LCIM_VALID_LIMIT(limit);
+#pragma clang diagnostic pop
+
+    logsCommand.direction = (direction == AVIMMessageQueryDirectionFromOldToNew)
+        ? AVIMLogsCommand_QueryDirection_New
+        : AVIMLogsCommand_QueryDirection_Old;
+
+    AVIMMessageIntervalBound *startIntervalBound = interval.startIntervalBound;
+    AVIMMessageIntervalBound *endIntervalBound = interval.endIntervalBound;
+
+    logsCommand.mid  = startIntervalBound.messageId;
+    logsCommand.tmid = endIntervalBound.messageId;
+
+    logsCommand.tIncluded = startIntervalBound.closed;
+    logsCommand.ttIncluded = endIntervalBound.closed;
+
+    int64_t t = startIntervalBound.timestamp;
+    int64_t tt = endIntervalBound.timestamp;
+
+    if (t > 0)
+        logsCommand.t = t;
+    if (tt > 0)
+        logsCommand.tt = tt;
+
+    AVIMGenericCommand *genericCommand = [[AVIMGenericCommand alloc] init];
+    genericCommand.needResponse = YES;
+    genericCommand.cmd = AVIMCommandType_Logs;
+    genericCommand.peerId = _imClient.clientId;
+    genericCommand.logsMessage = logsCommand;
+
+    [self queryMessagesFromServerWithCommand:genericCommand callback:callback];
 }
 
 - (void)postprocessMessages:(NSArray *)messages {

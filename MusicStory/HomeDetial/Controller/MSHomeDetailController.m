@@ -86,7 +86,10 @@ static NSString *commentIdentifier = @"commentIdentifier";
     [self setHeaderData];
     [self setWebViewData:self.model.music_story];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopMusicPlaying) name:@"STOP_PLAY_MUSIC" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stopMusicPlaying)
+                                                 name:@"STOP_PLAY_MUSIC"
+                                               object:nil];
     
     [self.tableview footerViewPullToRefresh:MSRefreshDirectionVertical callback: ^{
         [self loadData];
@@ -133,10 +136,15 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 - (void)setHeaderData {
     debugMethod();
-    [self.headerImgView setImageWithURL:[NSURL URLWithString:self.model.music_imgs]
+    
+    NSString *baseUrl = @"http://lc-xjvf4uf6.cn-n1.lcfile.com/";
+    NSString *headerUrl = [baseUrl stringByAppendingString:self.model.music_imgs];
+    NSString *iconUrl = [baseUrl stringByAppendingString:self.model.singer_portrait];
+    
+    [self.headerImgView setImageWithURL:[NSURL URLWithString:headerUrl]
             usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
-    [self.appIconView setImageWithURL:[NSURL URLWithString:self.model.singer_portrait]
+    [self.appIconView setImageWithURL:[NSURL URLWithString:iconUrl]
           usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     self.appTitleLabel.text     = self.model.singer_name;
@@ -223,8 +231,8 @@ static NSString *commentIdentifier = @"commentIdentifier";
 
 - (void)setupLayout {
     [self.returnBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leftMargin.equalTo(self.view.mas_leftMargin).offset(10);
-        make.topMargin.equalTo(self.view.mas_topMargin).offset(40);
+        make.left.equalTo(self.view.mas_left).offset(10);
+        make.top.equalTo(self.view.mas_top).offset(40);
         make.width.equalTo(@30);
         make.height.equalTo(@30);
     }];

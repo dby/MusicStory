@@ -55,14 +55,7 @@
     [[AVPaasClient sharedInstance]
      performRequest:request
      success:^(NSHTTPURLResponse *response, id responseObject) {
-         NSError *serverError = [AVErrorUtils errorFromJSON:responseObject];
-
-         if (serverError) {
-             error = serverError;
-         } else {
-             result = [self processedFunctionResultFromObject:responseObject[@"result"]];
-         }
-
+         result = [self processedFunctionResultFromObject:responseObject[@"result"]];
          finished = YES;
      }
      failure:^(NSHTTPURLResponse *response, id responseObject, NSError *inError) {
@@ -88,7 +81,7 @@
 
 + (void)callFunctionInBackground:(NSString *)function withParameters:(NSDictionary *)parameters block:(AVIdResultBlock)block
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *error;
         id result = [[self class] callFunction:function withParameters:parameters error:&error];
         [AVUtils callIdResultBlock:block object:result error:error];
@@ -140,14 +133,8 @@
     [[AVPaasClient sharedInstance]
      performRequest:request
      success:^(NSHTTPURLResponse *response, id responseObject) {
-         NSError *error = [AVErrorUtils errorFromJSON:responseObject];
-
-         if (error) {
-             [AVUtils callIdResultBlock:block object:nil error:error];
-         } else {
-             id result = [self processedFunctionResultFromObject:responseObject[@"result"]];
-             [AVUtils callIdResultBlock:block object:result error:nil];
-         }
+         id result = [self processedFunctionResultFromObject:responseObject[@"result"]];
+         [AVUtils callIdResultBlock:block object:result error:nil];
      }
      failure:^(NSHTTPURLResponse *response, id responseObject, NSError *inError) {
          NSError *error = [AVErrorUtils errorFromJSON:responseObject] ?: inError;

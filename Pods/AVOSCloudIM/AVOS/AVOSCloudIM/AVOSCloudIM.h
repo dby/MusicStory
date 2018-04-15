@@ -27,14 +27,18 @@
 #import "AVIMVideoMessage.h"
 #import "AVIMLocationMessage.h"
 #import "AVIMFileMessage.h"
+#import "AVIMRecalledMessage.h"
 #import "AVIMSignature.h"
 #import "AVIMUserOptions.h"
+#import "AVIMOptions.h"
 
 @class AVInstallation;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AVOSCloudIM : NSObject
+
++ (AVIMOptions *)defaultOptions;
 
 /**
  * Register remote notification with all types (badge, alert, sound) and empty categories.

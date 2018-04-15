@@ -1,0 +1,1 @@
+../../../LeanCloudSocial/Classes/Vendor/AFNetworking/LCSHTTPSessionManager.h

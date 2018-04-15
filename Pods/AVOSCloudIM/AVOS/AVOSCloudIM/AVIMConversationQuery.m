@@ -392,27 +392,41 @@ NSString *const kAVIMKeyConversationId = @"objectId";
     NSMutableArray *conversations = [NSMutableArray arrayWithCapacity:[results count]];
 
     for (NSDictionary *dict in results) {
-        AVIMConversation *conversation = [[AVIMConversation alloc] init];
+        NSString *conversationId = [dict objectForKey:@"objectId"];
+        AVIMConversation *conversation = [self.client conversationWithId:conversationId];
 
-        NSString *createdAt = dict[@"createdAt"];
-        NSString *updatedAt = dict[@"updatedAt"];
-        NSDictionary *lastMessageAt = dict[KEY_LAST_MESSAGE_AT];
+        /* Note:
+         * We store all properties into conversation for custom attributes access.
+         * But the custom attributes will not be cached at present.
+         */
+        conversation.properties = [dict mutableCopy];
 
         conversation.imClient = self.client;
-        NSString *conversationId = [dict objectForKey:@"objectId"];
         conversation.conversationId = conversationId;
         conversation.name = [dict objectForKey:KEY_NAME];
-        conversation.attributes = [AVIMConversation filterCustomAttributesFromDictionary:dict];
+        conversation.attributes = [dict objectForKey:KEY_ATTR];
         conversation.creator = [dict objectForKey:@"c"];
-        if (createdAt) conversation.createAt = [AVObjectUtils dateFromString:createdAt];
-        if (updatedAt) conversation.updateAt = [AVObjectUtils dateFromString:updatedAt];
-        if (lastMessageAt) {
-            conversation.lastMessageAt = [AVObjectUtils dateFromDictionary:lastMessageAt];
-            conversation.lastMessage = [AVIMMessage parseMessageWithConversationId:conversationId result:dict];
-        }
+        conversation.lastMessage = [AVIMMessage parseMessageWithConversationId:conversationId result:dict];
         conversation.members = [dict objectForKey:@"m"];
         conversation.muted = [[dict objectForKey:@"muted"] boolValue];
         conversation.transient = [[dict objectForKey:@"tr"] boolValue];
+
+        NSDictionary    *lastMessageDate        = dict[@"lm"];
+        NSNumber        *lastMessageTimestamp   = dict[@"msg_timestamp"];
+        NSString        *createdAt              = dict[@"createdAt"];
+        NSString        *updatedAt              = dict[@"updatedAt"];
+
+        /* For system conversation, there's no `lm` field.
+           Instead, we read `msg_timestamp`field. */
+        if (lastMessageDate)
+            conversation.lastMessageAt = [AVObjectUtils dateFromDictionary:lastMessageDate];
+        else if (lastMessageTimestamp)
+            conversation.lastMessageAt = [NSDate dateWithTimeIntervalSince1970:([lastMessageTimestamp doubleValue] / 1000.0)];
+
+        if (createdAt)
+            conversation.createAt = [AVObjectUtils dateFromString:createdAt];
+        if (updatedAt)
+            conversation.updateAt = [AVObjectUtils dateFromString:updatedAt];
 
         [conversations addObject:conversation];
     }
@@ -429,7 +443,7 @@ NSString *const kAVIMKeyConversationId = @"objectId";
 }
 
 - (LCIMConversationCache *)conversationCache {
-    return [[LCIMConversationCache alloc] initWithClientId:self.client.clientId];
+    return self.client.conversationCache;
 }
 
 /*!

@@ -74,10 +74,6 @@ static uint16_t _searial_id = 0;
             self.errorMessage = (AVIMErrorCommand *)command;
             break;
             
-        case AVIMCommandType_Login:
-            self.loginMessage = (AVIMLoginCommand *)command;
-            break;
-            
         case AVIMCommandType_Data:
             self.dataMessage = (AVIMDataCommand *)command;
             break;
@@ -96,6 +92,9 @@ static uint16_t _searial_id = 0;
             
         case AVIMCommandType_Report:
             self.reportMessage = (AVIMReportCommand *)command;
+            break;
+            
+        default:
             break;
     }
 }
@@ -411,10 +410,6 @@ static uint16_t _searial_id = 0;
             result = self.errorMessage;
             break;
             
-        case AVIMCommandType_Login:
-            result = self.loginMessage;
-            break;
-            
         case AVIMCommandType_Data:
             result = self.dataMessage;
             break;
@@ -433,6 +428,9 @@ static uint16_t _searial_id = 0;
             
         case AVIMCommandType_Report:
             result = self.reportMessage;
+            break;
+            
+        default:
             break;
     }
     return result;

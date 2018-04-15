@@ -64,13 +64,15 @@
     // 设置数据
     [self setTitle:homeModel.music_name singer_name:homeModel.singer_name];
     
-    [_centerImgView setImageWithURL:[NSURL URLWithString:homeModel.music_imgs]
+    NSString *baseUrl = @"http://lc-xjvf4uf6.cn-n1.lcfile.com/";
+    NSString *url = [baseUrl stringByAppendingString:_homeModel.music_imgs];
+    [_centerImgView setImageWithURL:[NSURL URLWithString: url]
                    placeholderImage:[UIImage imageNamed:@"home_logo_pressed"] usingActivityIndicatorStyle:YES];
     
-    [self.detailLabel setAttributText: homeModel.music_intro lineSpace:5.0 isCenter:false];
+    [self.detailLabel setAttributText: _homeModel.music_intro lineSpace:5.0 isCenter:false];
     
-    self.authorLabel.text   = homeModel.author_name;
-    self.fovCountLabel.text = homeModel.like_count;
+    self.authorLabel.text   = _homeModel.author_name;
+    self.fovCountLabel.text = _homeModel.like_count;
     
     AVUser *user = [AVUser currentUser];
     NSArray *likedMusicsArr = [user objectForKey:@"hasLikedMusic"];

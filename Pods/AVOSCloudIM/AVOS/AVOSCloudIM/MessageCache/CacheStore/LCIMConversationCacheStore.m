@@ -9,6 +9,7 @@
 #import "LCIMConversationCacheStore.h"
 #import "LCIMConversationCacheStoreSQL.h"
 #import "LCIMMessageCacheStoreSQL.h"
+#import "AVIMClient_Internal.h"
 #import "AVIMConversation.h"
 #import "AVIMConversation_Internal.h"
 #import "LCDatabaseMigrator.h"
@@ -16,31 +17,6 @@
 #define LCIM_CONVERSATION_MAX_CACHE_AGE 60 * 60 * 24
 
 @implementation LCIMConversationCacheStore
-
-- (void)databaseQueueDidLoad {
-    LCIM_OPEN_DATABASE(db, ({
-        [db executeUpdate:LCIM_SQL_CREATE_CONVERSATION_TABLE];
-    }));
-
-    [self migrateDatabaseIfNeeded:self.databaseQueue.path];
-}
-
-- (void)migrateDatabaseIfNeeded:(NSString *)databasePath {
-    LCDatabaseMigrator *migrator = [[LCDatabaseMigrator alloc] initWithDatabasePath:databasePath];
-
-    [migrator executeMigrations:@[
-        /* Version 1: Add muted column. */
-        [LCDatabaseMigration migrationWithBlock:^(LCDatabase *db) {
-            [db executeUpdate:@"ALTER TABLE conversation ADD COLUMN muted INTEGER"];
-        }],
-        
-        /* Version 2: Add lastMessage column. */
-        [LCDatabaseMigration migrationWithBlock:^(LCDatabase *db) {
-            [db executeUpdate:@"ALTER TABLE conversation ADD COLUMN last_message BLOB"];
-        }]
-        
-    ]];
-}
 
 - (NSArray *)insertionRecordForConversation:(AVIMConversation *)conversation expireAt:(NSTimeInterval)expireAt {
     return @[
@@ -166,9 +142,10 @@
 }
 
 - (AVIMConversation *)conversationWithResult:(LCResultSet *)result {
-    AVIMConversation *conversation = [[AVIMConversation alloc] init];
+    NSString *conversationId = [result stringForColumn:LCIM_FIELD_CONVERSATION_ID];
 
-    conversation.conversationId = [result stringForColumn:LCIM_FIELD_CONVERSATION_ID];
+    AVIMConversation *conversation = [self.client conversationWithId:conversationId];
+
     conversation.name           = [result stringForColumn:LCIM_FIELD_NAME];
     conversation.creator        = [result stringForColumn:LCIM_FIELD_CREATOR];
     conversation.transient      = [result boolForColumn:LCIM_FIELD_TRANSIENT];

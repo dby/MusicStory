@@ -1027,8 +1027,8 @@
 				TargetAttributes = {
 					435159D41C9EE24000EC1422 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = FT3RY85KVZ;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 3G3JV73KM2;
+						ProvisioningStyle = Automatic;
 					};
 					435159ED1C9EE24100EC1422 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1376,15 +1376,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = FT3RY85KVZ;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3G3JV73KM2;
 				INFOPLIST_FILE = MusicStory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sys.dupeifu.MusicStory;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dby.musicStoryNew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4ff06355-094c-4460-a8a9-d5328b4c5737";
-				PROVISIONING_PROFILE_SPECIFIER = MusicStory;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1395,15 +1396,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = FT3RY85KVZ;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3G3JV73KM2;
 				INFOPLIST_FILE = MusicStory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sys.dupeifu.MusicStory;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dby.musicStoryNew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4ff06355-094c-4460-a8a9-d5328b4c5737";
-				PROVISIONING_PROFILE_SPECIFIER = MusicStory;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

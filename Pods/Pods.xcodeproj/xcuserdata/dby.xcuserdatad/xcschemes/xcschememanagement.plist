@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>AFDownloadRequestOperation.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>AFNetworking.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -94,99 +89,13 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>nanopb.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>0AC55E754182E1FCF070AC7F74379523</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>0F6010548495CE24ABFC6A91E7F2CFE7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1C7BFAAF2DC57C05F4C5C3BB08A53907</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>23E3FF788B747B20DE41155F5E817A3C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>28AFBC0E511B8F40FE4F8AB64E3F6F22</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>82CA472C54474A3DCD2B0B62A702AB79</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8BE21730C45411A7BF4490CABCADEF08</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9691DB62208EC75C7C4F182B11F8DF79</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9DC8D9E02903E93BD0B2FEC9D846EA20</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9ED19D526CFC9BD148E242F828B581D1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A4282C514243C8CA2774E0CA6C8A40F8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AB80AE15807CF9EC5D36687F29D39A80</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B5E289E0A32AE19BC4BE45CA79E10436</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B952A5217EA83678754BC044D9DFAD7E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D7F1D470C0801FDA2A390505107D65F8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E063821EB849C602CC143CD9011186BE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E1BBB76ADBF2EF4EF2CE5DF6BBC77296</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E6F18E9CBC4B94C39F30B655F92CBA5C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>

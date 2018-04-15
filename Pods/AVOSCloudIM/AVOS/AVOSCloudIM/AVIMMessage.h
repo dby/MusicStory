@@ -8,6 +8,17 @@
 
 #import "AVIMCommon.h"
 
+typedef NS_ENUM(int8_t, AVIMMessageMediaType) {
+    kAVIMMessageMediaTypeNone = 0,
+    kAVIMMessageMediaTypeText = -1,
+    kAVIMMessageMediaTypeImage = -2,
+    kAVIMMessageMediaTypeAudio = -3,
+    kAVIMMessageMediaTypeVideo = -4,
+    kAVIMMessageMediaTypeLocation = -5,
+    kAVIMMessageMediaTypeFile = -6,
+    kAVIMMessageMediaTypeRecalled = -127
+};
+
 typedef NS_ENUM(int8_t, AVIMMessageIOType) {
     AVIMMessageIOTypeIn = 1,
     AVIMMessageIOTypeOut,
@@ -19,11 +30,14 @@ typedef NS_ENUM(int8_t, AVIMMessageStatus) {
     AVIMMessageStatusSent,
     AVIMMessageStatusDelivered,
     AVIMMessageStatusFailed,
+    AVIMMessageStatusRead
 };
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AVIMMessage : NSObject <NSCopying, NSCoding>
+
+@property (nonatomic, assign, readonly) AVIMMessageMediaType mediaType;
 
 /*!
  * 表示接收和发出的消息
@@ -46,6 +60,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly, nullable) NSString *clientId;
 
 /*!
+ * A flag indicates whether this message mentions all members in conversation or not.
+ */
+@property (nonatomic, assign) BOOL mentionAll;
+
+/*!
+ * An ID list of clients who mentioned by this message.
+ */
+@property (nonatomic, strong, nullable) NSArray<NSString *> *mentionList;
+
+/*!
+ * Whether current client is mentioned by this message.
+ */
+@property (nonatomic, assign, readonly) BOOL mentioned;
+
+/*!
  * 消息所属对话的 id
  */
 @property (nonatomic, copy, readonly, nullable) NSString *conversationId;
@@ -58,17 +87,27 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  * 发送时间（精确到毫秒）
  */
-@property (nonatomic, assign) int64_t sendTimestamp;
+@property (nonatomic, assign, readonly) int64_t sendTimestamp;
 
 /*!
  * 接收时间（精确到毫秒）
  */
-@property (nonatomic, assign) int64_t deliveredTimestamp;
+@property (nonatomic, assign, readonly) int64_t deliveredTimestamp;
+
+/*!
+ * 被标记为已读的时间（精确到毫秒）
+ */
+@property (nonatomic, assign, readonly) int64_t readTimestamp;
 
 /*!
  * 是否是暂态消息
  */
 @property (nonatomic, assign, readonly) BOOL transient;
+
+/*!
+ The message update time.
+ */
+@property (nonatomic, strong, readonly) NSDate *updatedAt;
 
 - (nullable NSString *)payload;
 

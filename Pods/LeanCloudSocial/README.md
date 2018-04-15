@@ -74,12 +74,25 @@ xcodebuild -target UniversalFramework -config Release
 编译之后的结果文件目录和上面示例一致。
 
 ## 其他问题
-我要增加其他平台，该怎么做？
 
-我可以使用其他 SDK 来做登录，然后把授权信息绑定到 AVUser 吗？
+Q： 使用 CocoaPods 安装，提示无法找到  ` AVUser+SNS.h ` 文件的错误
+
+A：删除你项目根目录下的 Pods 文件夹以及 Podfile.lock这个文件，然后重新 pod install 
+
+![enter image description here](http://i68.tinypic.com/28u19xx.jpg)
+
+
+Q ：我要增加其他平台，该怎么做？
+
+A：我可以使用其他 SDK 来做登录，然后把授权信息绑定到 AVUser 吗？
+
 
 ## 发布日志
 发布流程：更改 podspec 版本，打 tag，推送到仓库，执行`pod trunk push LeanCloudSocial.podspec --verbose --allow-warnings --use-libraries`。
+
+0.0.8
+
+* fix bug：修复因为 null 而引起崩溃的 bug
 
 0.0.7   
 * 因为 AFNetworking 2.6 最低支持 7.0，同时考虑到微信等应用也是最低支持 7.0。故 LeanCloudSocial 项目支持的 iOS 版本从 6.0 提升成 7.0。

@@ -101,6 +101,15 @@ The name of the file.
 @property (nonatomic, strong, nullable) AVACL *ACL;
 
 /*!
+ Request headers for file uploading.
+
+ Some file hosting services allow you set custom headers in uploading request.
+ Currently, it only supports files in US node, aka. the files hosted on AmazonS3.
+ See http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPUT.html for all request headers.
+ */
+@property (nonatomic, strong, nullable) NSDictionary<NSString *, NSString *> *uploadingHeaders;
+
+/*!
  Saves the file.
  @return whether the save succeeded.
  */
@@ -121,7 +130,6 @@ The name of the file.
 
 /*!
  Saves the file asynchronously.
- @return whether the save succeeded.
  */
 - (void)saveInBackground;
 
@@ -327,6 +335,14 @@ The name of the file.
  @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error)
  */
 - (void)deleteInBackgroundWithBlock:(AVBooleanResultBlock)block;
+
+/*!
+ Delete an array of files asynchronously.
+
+ @param files The files to be deleted.
+ @param block The callback of deletion request.
+ */
++ (void)deleteFiles:(NSArray<AVFile *> *)files inBackgroundWithBlock:(AVBooleanResultBlock)block;
 
 /*!
  Remove file in background.

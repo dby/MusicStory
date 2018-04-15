@@ -7,6 +7,7 @@
 #import "AVPaasClient.h"
 #import "AVUtils.h"
 #import "AVNetworking.h"
+#import "LCNetworking.h"
 #import "AVErrorUtils.h"
 #import "AVPersistenceUtils.h"
 #import "AVObjectUtils.h"
@@ -20,6 +21,8 @@ static NSString * fileMd5Tag =@"_checksum";
 
 static NSMutableDictionary *downloadingMap = nil;
 
+static LCHTTPSessionManager *imageSessionManager = nil;
+
 @interface _CallBack : NSObject
 @property(nonatomic, strong) AVBooleanResultBlock resultBlock;
 @property(nonatomic, strong) AVProgressBlock progressBlock;
@@ -28,7 +31,29 @@ static NSMutableDictionary *downloadingMap = nil;
 
 @end
 
+@interface AVFile ()
+
+@property (nonatomic, copy) NSString *token;
+
+@end
+
 @implementation AVFile
+
++ (void)initialize {
+    static dispatch_once_t onceToken;
+
+    dispatch_once(&onceToken, ^{
+        [self doInitialize];
+    });
+}
+
++ (void)doInitialize {
+    imageSessionManager = ({
+        LCHTTPSessionManager *sessionManager = [[LCHTTPSessionManager alloc] init];
+        sessionManager.responseSerializer = [[LCImageResponseSerializer alloc] init];
+        sessionManager;
+    });
+}
 
 - (NSMutableDictionary *)metadata {
     return _metaData;
@@ -213,13 +238,26 @@ static NSMutableDictionary *downloadingMap = nil;
 - (void)uploadFileWithResultBlock:(AVBooleanResultBlock)resultBlock progressBlock:(AVProgressBlock)progressBlock {
     __weak typeof(self) ws=self;
     [[AVUploaderManager sharedInstance] uploadWithAVFile:self progressBlock:progressBlock resultBlock:^(BOOL succeeded, NSError *error) {
-        if (!succeeded) {
-            [ws deleteInBackground];
-        } else {
+        if (succeeded)
             ws.isDirty = NO;
-        }
-        resultBlock(succeeded,error);
+
+        [AVUtils callBooleanResultBlock:resultBlock error:error];
+        [ws feedbackUploadResult:succeeded];
     }];
+}
+
+- (void)feedbackUploadResult:(BOOL)succeeded {
+    NSString *token = self.token;
+
+    if (token) {
+        NSDictionary *parameters = @{@"token":token, @"result":@(succeeded)};
+        [[AVPaasClient sharedInstance] postObject:@"fileCallback" withParameters:parameters block:nil];
+    }
+
+    /* If upload did fail, reset the objectId for later upload. */
+    if (!succeeded) {
+        self.objectId = nil;
+    }
 }
 
 - (void)updateURLWithResultBlock:(AVBooleanResultBlock)resultBlock progressBlock:(AVProgressBlock)progressBlock {
@@ -757,6 +795,17 @@ typedef void (^AVFileSizeBlock)(long long fileSize);
     return [NSString stringWithFormat:@"classes/_file"];
 }
 
+- (NSString *)objectEndpoint {
+    NSString *objectId = self.objectId;
+
+    if (!objectId)
+        return nil;
+
+    NSString *endpoint = [@"files" stringByAppendingPathComponent:objectId];
+
+    return endpoint;
+}
+
 + (void)getFileWithObjectId:(NSString*)objectId
                   withBlock:(AVFileResultBlock)block
 {
@@ -831,12 +880,12 @@ typedef void (^AVFileSizeBlock)(long long fileSize);
 {
     NSString *url = [self getThumbnailURLWithScaleToFit:scaleToFit width:width height:height];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    AVImageRequestOperation * operation = [AVImageRequestOperation imageRequestOperationWithRequest:request imageProcessingBlock:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        [AVUtils callImageResultBlock:block image:image error:nil];
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        [AVUtils callImageResultBlock:block image:nil error:error];
-    }];
-    [[AVPaasClient sharedInstance].clientImpl enqueueHTTPRequestOperation:operation];
+    NSURLSessionDataTask *task = [imageSessionManager
+                                  dataTaskWithRequest:request
+                                  completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                                      [AVUtils callImageResultBlock:block image:responseObject error:error];
+                                  }];
+    [task resume];
 }
 
 -(void)setOwnerId:(NSString *)ownerId
@@ -878,6 +927,40 @@ typedef void (^AVFileSizeBlock)(long long fileSize);
                                           block:^(id object, NSError *error) {
                                               [AVUtils callBooleanResultBlock:block error:error];
                                           }];
+}
+
++ (void)deleteFiles:(NSArray<AVFile *> *)files inBackgroundWithBlock:(AVBooleanResultBlock)block {
+    if (!files.count) {
+        [AVUtils callBooleanResultBlock:block error:nil];
+        return;
+    }
+
+    NSMutableArray *requests = [NSMutableArray array];
+
+    for (AVFile *file in files) {
+        NSError *error = nil;
+
+        if (![file isKindOfClass:[AVFile class]])
+            error = [AVErrorUtils errorWithText:@"Invalid file object."];
+
+        NSString *endpoint = file.objectEndpoint;
+
+        if (!endpoint)
+            error = [AVErrorUtils errorWithText:@"Cannot delete a file that has not been saved."];
+
+        if (error) {
+            [AVUtils callBooleanResultBlock:block error:error];
+            return;
+        }
+
+        NSMutableDictionary *request = [AVPaasClient batchMethod:@"DELETE" path:endpoint body:nil parameters:nil];
+
+        [requests addObject:request];
+    }
+
+    [[AVPaasClient sharedInstance] postBatchObject:requests block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        [AVUtils callBooleanResultBlock:block error:error];
+    }];
 }
 
 - (void)deleteInBackground {

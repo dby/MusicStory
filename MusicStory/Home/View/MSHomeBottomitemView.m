@@ -22,11 +22,15 @@
 -(void)setIconUrl:(NSString *)iconUrl {
     debugMethod();
     _iconUrl = iconUrl;
-    [self.iconView setImageWithURL:[NSURL URLWithString:iconUrl]
+    
+    NSString *baseUrl = @"http://lc-xjvf4uf6.cn-n1.lcfile.com/";
+    NSString *url = [baseUrl stringByAppendingString: iconUrl];
+    
+    [self.iconView setImageWithURL:[NSURL URLWithString:url]
                   placeholderImage:[UIImage imageNamed:@"ic_launcher"]
        usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
-    [self.iconView setImageWithURL:[NSURL URLWithString:iconUrl]
+    [self.iconView setImageWithURL:[NSURL URLWithString:url]
                   placeholderImage:[UIImage imageNamed:@"ic_launcher"]
                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                              if (!error) {

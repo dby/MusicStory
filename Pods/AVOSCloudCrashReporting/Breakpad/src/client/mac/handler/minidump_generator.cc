@@ -121,54 +121,74 @@ int MinidumpGenerator::os_build_number_ = 0;
 
 // static
 void MinidumpGenerator::GatherSystemInformation() {
-  // If this is non-zero, then we've already gathered the information
-  if (os_major_version_)
-    return;
-
-  // This code extracts the version and build information from the OS
-  CFStringRef vers_path =
+    // If this is non-zero, then we've already gathered the information
+    if (os_major_version_)
+        return;
+    
+    // This code extracts the version and build information from the OS
+    CFStringRef vers_path =
     CFSTR("/System/Library/CoreServices/SystemVersion.plist");
-  CFURLRef sys_vers =
+    CFURLRef sys_vers =
     CFURLCreateWithFileSystemPath(NULL,
                                   vers_path,
                                   kCFURLPOSIXPathStyle,
                                   false);
-  CFDataRef data;
-  SInt32 error;
-  CFURLCreateDataAndPropertiesFromResource(NULL, sys_vers, &data, NULL, NULL,
-                                           &error);
-
-  if (!data) {
+    CFReadStreamRef read_stream = CFReadStreamCreateWithFile(NULL, sys_vers);
     CFRelease(sys_vers);
-    return;
-  }
-
-  CFDictionaryRef list = static_cast<CFDictionaryRef>
-    (CFPropertyListCreateFromXMLData(NULL, data, kCFPropertyListImmutable,
-                                     NULL));
-  if (!list) {
-    CFRelease(sys_vers);
+    if (!read_stream) {
+        return;
+    }
+    if (!CFReadStreamOpen(read_stream)) {
+        CFRelease(read_stream);
+        return;
+    }
+    CFMutableDataRef data = NULL;
+    while (true) {
+        // Actual data file tests: Mac at 480 bytes and iOS at 413 bytes.
+        const CFIndex kMaxBufferLength = 1024;
+        UInt8 data_bytes[kMaxBufferLength];
+        CFIndex num_bytes_read =
+        CFReadStreamRead(read_stream, data_bytes, kMaxBufferLength);
+        if (num_bytes_read < 0) {
+            if (data) {
+                CFRelease(data);
+                data = NULL;
+            }
+            break;
+        } else if (num_bytes_read == 0) {
+            break;
+        } else if (!data) {
+            data = CFDataCreateMutable(NULL, 0);
+        }
+        CFDataAppendBytes(data, data_bytes, num_bytes_read);
+    }
+    CFReadStreamClose(read_stream);
+    CFRelease(read_stream);
+    if (!data) {
+        return;
+    }
+    CFDictionaryRef list =
+    static_cast<CFDictionaryRef>(CFPropertyListCreateWithData(
+                                                              NULL, data, kCFPropertyListImmutable, NULL, NULL));
     CFRelease(data);
-    return;
-  }
-
-  CFStringRef build_version = static_cast<CFStringRef>
+    if (!list) {
+        return;
+    }
+    CFStringRef build_version = static_cast<CFStringRef>
     (CFDictionaryGetValue(list, CFSTR("ProductBuildVersion")));
-  CFStringRef product_version = static_cast<CFStringRef>
+    CFStringRef product_version = static_cast<CFStringRef>
     (CFDictionaryGetValue(list, CFSTR("ProductVersion")));
-  string build_str = ConvertToString(build_version);
-  string product_str = ConvertToString(product_version);
-
-  CFRelease(list);
-  CFRelease(sys_vers);
-  CFRelease(data);
-
-  strlcpy(build_string_, build_str.c_str(), sizeof(build_string_));
-
-  // Parse the string that looks like "10.4.8"
-  os_major_version_ = IntegerValueAtIndex(product_str, 0);
-  os_minor_version_ = IntegerValueAtIndex(product_str, 1);
-  os_build_number_ = IntegerValueAtIndex(product_str, 2);
+    string build_str = ConvertToString(build_version);
+    string product_str = ConvertToString(product_version);
+    
+    CFRelease(list);
+    
+    strlcpy(build_string_, build_str.c_str(), sizeof(build_string_));
+    
+    // Parse the string that looks like "10.4.8"
+    os_major_version_ = IntegerValueAtIndex(product_str, 0);
+    os_minor_version_ = IntegerValueAtIndex(product_str, 1);
+    os_build_number_ = IntegerValueAtIndex(product_str, 2);
 }
 
 void MinidumpGenerator::SetTaskContext(breakpad_ucontext_t *task_context) {

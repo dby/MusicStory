@@ -33,7 +33,7 @@
 
     //Set Network
     [AFNetworkActivityIndicatorManager sharedManager].enabled   = YES;
-    [YTKNetworkConfig sharedInstance].baseUrl                   = API_Server;
+    [YTKNetworkConfig sharedConfig].baseUrl                   = API_Server;
     
     //Set UserAgent
     NSDictionary *userAgent = @{@"UserAgent": @"Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H143 Safari/600.1.4"};

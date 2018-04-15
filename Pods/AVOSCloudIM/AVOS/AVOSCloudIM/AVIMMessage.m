@@ -44,7 +44,7 @@
         message.content = _content;
         message.sendTimestamp = _sendTimestamp;
         message.deliveredTimestamp = _deliveredTimestamp;
-        //        message.requestReceipt = _requestReceipt;
+        message.readTimestamp = _readTimestamp;
     }
     return message;
 }
@@ -63,6 +63,10 @@
     if (self.deliveredTimestamp != 0) {
         object.deliveredTimestamp = self.deliveredTimestamp;
     }
+    if (self.readTimestamp != 0) {
+        object.readTimestamp = self.readTimestamp;
+    }
+    object.updatedAt = self.updatedAt;
     NSData *data = [object messagePack];
     [coder encodeObject:data forKey:@"data"];
     [coder encodeObject:self.localClientId forKey:NSStringFromSelector(@selector(localClientId))];
@@ -79,23 +83,15 @@
         self.content = object.content;
         self.sendTimestamp = object.sendTimestamp;
         self.deliveredTimestamp = object.deliveredTimestamp;
+        self.readTimestamp = object.readTimestamp;
+        self.updatedAt = object.updatedAt;
         self.localClientId = [coder decodeObjectForKey:NSStringFromSelector(@selector(localClientId))];
     }
     return self;
 }
 
-- (NSString *)messageId {
-    return _messageId ?: (_messageId = [self tempMessageId]);
-}
-
 - (NSString *)payload {
     return self.content;
-}
-
-/* [-9223372036854775808 .. 9223372036854775807]~ */
-- (NSString *)tempMessageId {
-    static int64_t idx = INT64_MIN;
-    return [NSString stringWithFormat:@"%lld~", idx++];
 }
 
 - (AVIMMessageIOType)ioType {
@@ -108,6 +104,16 @@
     } else {
         return AVIMMessageIOTypeIn;
     }
+}
+
+- (BOOL)mentioned {
+    if (self.ioType == AVIMMessageIOTypeOut)
+        return NO;
+
+    if (self.mentionAll || [self.mentionList containsObject:self.localClientId])
+        return YES;
+
+    return NO;
 }
 
 /*!
@@ -139,6 +145,12 @@
     message.clientId = from;
     message.messageId = messageId;
     message.status = AVIMMessageStatusDelivered;
+
+    NSNumber *patchTimestamp = result[@"patch_timestamp"];
+
+    if (patchTimestamp)
+        message.updatedAt = [NSDate dateWithTimeIntervalSince1970:[patchTimestamp doubleValue] / 1000.0];
+
     return message;
 }
 
