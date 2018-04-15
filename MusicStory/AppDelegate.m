@@ -18,7 +18,7 @@
 
 @import Firebase;
 
-#import "musicStory-Common-Header.h"
+#import "MusicStory-Common-Header.h"
 
 @interface AppDelegate ()
 
@@ -61,7 +61,7 @@
     [self configureShareSDK];
     [self configureWeiboSNSSDK];
     [self monitorNetWorkStatus];
-    
+        
     return YES;
 }
 
@@ -164,7 +164,7 @@
 }
 
 // 更新google ads 配置信息
-- (void)updateConfigInfo{
+- (void)updateConfigInfo {
     AVQuery *query = [AVQuery queryWithClassName:@"Config"];
     [query getObjectInBackgroundWithId:@"593e5efe128fe1006af2411b" block:^(AVObject *object, NSError *error) {
         if (!error) {
